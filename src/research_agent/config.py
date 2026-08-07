@@ -14,9 +14,15 @@ class Settings(BaseSettings):
     # Models. API keys are read by their SDKs from OPENAI_API_KEY / TAVILY_API_KEY
     # directly; they are not RA_-prefixed settings.
     agent_model: str = "gpt-5.4-nano"
-    judge_model: str = "gpt-5.6-terra"
-    reasoning_effort: str = "low"  # none|low|medium|high|xhigh — "low" is the cost sweet spot
-    temperature: float = 0.0
+    # luna at $1/$0.10/$6 rather than terra at $2.50/$0.25/$15. Phase 7 judges 30
+    # items with both and publishes the agreement, so this is a validated choice
+    # rather than an assumed one.
+    judge_model: str = "gpt-5.6-luna"
+    judge_reference_model: str = "gpt-5.6-terra"
+    # none|low|medium|high|xhigh. Reasoning tokens bill as output at the full rate,
+    # so the loop defaults to none and the planning steps opt in.
+    reasoning_effort: str = "none"
+    plan_reasoning_effort: str = "low"
 
     # Per-run budgets. A breach never crashes: it routes to finalize and returns
     # a partial answer. See budget.py for the layering.
@@ -29,7 +35,11 @@ class Settings(BaseSettings):
 
     # Process-level kill switch, independent of any CostTracker. Guards a runaway
     # dev loop even when a caller forgets to pass a tracker. 0 disables it.
-    max_process_cost_usd: float = 2.00
+    max_process_cost_usd: float = 0.50
+    # Hard ceiling on everything this project ever spends, persisted across restarts
+    # in .spend.json. Neither of the guards above survives a process exit, so
+    # neither can bound a few hundred short development runs. 0 disables it.
+    max_project_cost_usd: float = 5.00
 
     # Observations are truncated before entering the prompt. A Tavily raw-content
     # response is routinely 100k+ chars; one uncapped search would blow both the

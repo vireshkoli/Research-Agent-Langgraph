@@ -1,30 +1,37 @@
-"""Phase-1 spike: settle the OpenAI unknowns before anything is built on them.
+"""Phase-1 spike: settle the OpenAI unknowns, through the real llm.py code path.
 
-Four questions, each of which would force a rewrite if answered late:
+Every check here goes through the public wrapper rather than the SDK, so a pass
+means the thing the agent will actually call works — not that something adjacent
+to it does.
 
-  1. Does the agent model work on Chat Completions with native `tools=`?
-     (The gpt-5.4 model cards list Chat Completions and Batch but not Responses.)
-  2. Does `.parse()` structured output work on it? plan/reflect/judge all depend on it.
-  3. Does prompt caching actually engage on a repeated prefix? The cost model assumes
-     a ~58% cache hit rate; if `cached_tokens` stays 0, every cost estimate is wrong.
-  4. Does the Batch API accept the judge model? The eval budget assumes 50% off.
+MEASURED RESULTS (2026-07-30):
+
+  Chat Completions + tools + reasoning_effort  ->  400 on gpt-5.4-nano AND -mini
+      "Function tools with reasoning_effort are not supported ... use /v1/responses
+       or set reasoning_effort to 'none'."
+  Responses + tools + reasoning                ->  works on nano
+  Prompt caching, identical 2120-token prefix  ->  1792/2120 cached on call 2 (84.5%)
+  Batch API                                    ->  accepts gpt-5.6-terra
+
+The first line reversed a locked plan decision: the plan specified Chat Completions
+to avoid a suspected lack of Responses support on 5.4-series models. The opposite is
+true — it is Chat Completions that carries the restriction — so llm.py is built on
+Responses.
 
 Costs a few cents. Run: `uv run python scripts/spike_openai.py`
 """
 
-import json
 import sys
+from typing import Any
 
 from pydantic import BaseModel
 
+from research_agent import spend
 from research_agent.config import settings
-from research_agent.llm import PRICES, _client, _usage_of, cost_usd
+from research_agent.llm import CostTracker, call_tools, complete, cost_usd, parse
+from research_agent.tools import openai_schemas
 
 results: list[tuple[str, bool, str]] = []
-
-
-def check(name: str) -> "Check":
-    return Check(name)
 
 
 class Check:
@@ -36,7 +43,7 @@ class Check:
 
     def __exit__(self, exc_type: object, exc: object, tb: object) -> bool:
         if exc_type is not None:
-            results.append((self.name, False, f"{type(exc).__name__}: {exc}"))
+            results.append((self.name, False, f"{type(exc).__name__}: {str(exc)[:150]}"))
             return True
         return False
 
@@ -51,127 +58,118 @@ class Subquestions(BaseModel):
     subquestions: list[str]
 
 
-AGENT = settings().agent_model
-JUDGE = settings().judge_model
-
-WEB_SEARCH_TOOL = {
-    "type": "function",
-    "function": {
-        "name": "web_search",
-        "description": "Search the web for current information.",
-        "parameters": {
-            "type": "object",
-            "properties": {"query": {"type": "string", "description": "The search query"}},
-            "required": ["query"],
-            "additionalProperties": False,
-        },
-    },
-}
+def responses_tool_schemas() -> list[dict[str, Any]]:
+    """The registry emits Chat-Completions-shaped schemas; Responses wants them flat."""
+    flat = []
+    for schema in openai_schemas(["web_search"]):
+        function = schema["function"]
+        flat.append({"type": "function", **function})
+    return flat
 
 
 def main() -> int:
-    client = _client()
+    config = settings()
+    agent, judge = config.agent_model, config.judge_model
+    tracker = CostTracker(budget_usd=0.50)
 
-    # 1. Basic completion, and which sampling parameters the model accepts.
-    with check("chat.completions + reasoning_effort") as c:
-        response = client.chat.completions.create(
-            model=AGENT,
-            messages=[{"role": "user", "content": "Reply with the single word: ok"}],
-            max_completion_tokens=2048,
-            reasoning_effort=settings().reasoning_effort,
+    with Check("complete() -> text") as check:
+        text = complete(
+            "You are terse.",
+            "Reply with the single word: ok",
+            model=agent,
+            purpose="spike",
+            tracker=tracker,
         )
-        usage = _usage_of(response)
-        c.ok(f"content={response.choices[0].message.content!r} usage(in,cached,out,reason)={usage}")
+        check.ok(f"{text.strip()[:40]!r}")
 
-    with check("temperature accepted (mutually exclusive with reasoning_effort?)") as c:
-        response = client.chat.completions.create(
-            model=AGENT,
-            messages=[{"role": "user", "content": "Reply with the single word: ok"}],
-            max_completion_tokens=2048,
-            temperature=0.0,
+    with Check("parse() -> structured output") as check:
+        plan = parse(
+            "Decompose the question into sub-questions.",
+            "Which is larger, the GDP of Japan or Germany?",
+            Subquestions,
+            model=agent,
+            reasoning_effort=config.plan_reasoning_effort,
+            purpose="spike",
+            tracker=tracker,
         )
-        c.ok(f"accepted; content={response.choices[0].message.content!r}")
-
-    # 2. Native tool calling — the act node depends entirely on this.
-    with check("native tool calling") as c:
-        response = client.chat.completions.create(
-            model=AGENT,
-            messages=[
-                {"role": "user", "content": "What did the Nobel committee announce in 2024?"}
-            ],
-            tools=[WEB_SEARCH_TOOL],
-            max_completion_tokens=2048,
-            reasoning_effort=settings().reasoning_effort,
-        )
-        calls = response.choices[0].message.tool_calls or []
-        if not calls:
-            raise AssertionError("model returned no tool_calls — the act node cannot work")
-        args = json.loads(calls[0].function.arguments)
-        c.ok(f"name={calls[0].function.name} args={args}")
-
-    # 3. Structured output — plan, reflect and judge all depend on this.
-    with check("structured output via .parse()") as c:
-        response = client.chat.completions.parse(
-            model=AGENT,
-            messages=[
-                {"role": "system", "content": "Decompose the question into sub-questions."},
-                {"role": "user", "content": "Which is larger, the GDP of Japan or Germany?"},
-            ],
-            response_format=Subquestions,
-            max_completion_tokens=2048,
-            reasoning_effort=settings().reasoning_effort,
-        )
-        parsed = response.choices[0].message.parsed
-        if parsed is None:
+        if plan is None:
             raise AssertionError("model refused to produce structured output")
-        c.ok(f"{len(parsed.subquestions)} subquestions: {parsed.subquestions}")
+        check.ok(f"{len(plan.subquestions)} subquestions")
 
-    # 4. Prompt caching. The cost model assumes a large cached share; verify the
-    #    mechanism engages at all on a >1024-token identical prefix.
-    with check("prompt caching engages on a repeated prefix") as c:
+    with Check("call_tools() -> native function call") as check:
+        turn = call_tools(
+            [{"role": "user", "content": "What did the Nobel committee announce in 2024?"}],
+            responses_tool_schemas(),
+            model=agent,
+            reasoning_effort=config.reasoning_effort or None,
+            purpose="spike",
+            tracker=tracker,
+        )
+        if not turn.tool_calls:
+            raise AssertionError("no tool_calls returned — the act node cannot work")
+        call = turn.tool_calls[0]
+        check.ok(f"{call['name']}({call['args']})")
+
+    with Check("multi-turn: tool output fed back") as check:
+        history: list[dict[str, Any]] = [
+            {"role": "user", "content": "What did the Nobel committee announce in 2024?"}
+        ]
+        history += turn.items
+        history.append(
+            {
+                "type": "function_call_output",
+                "call_id": turn.tool_calls[0]["call_id"],
+                "output": "Hopfield and Hinton won the 2024 Physics prize for neural networks.",
+            }
+        )
+        second = call_tools(
+            history,
+            responses_tool_schemas(),
+            model=agent,
+            reasoning_effort=config.reasoning_effort or None,
+            purpose="spike",
+            tracker=tracker,
+        )
+        check.ok(f"answered: {second.text.strip()[:70]!r}")
+
+    with Check("prompt caching engages on a repeated prefix") as check:
         prefix = "You are a research assistant. " + ("Context filler. " * 700)
-        messages = [{"role": "system", "content": prefix}, {"role": "user", "content": "Say ok."}]
-        first = client.chat.completions.create(
-            model=AGENT, messages=messages, max_completion_tokens=2048
-        )
-        second = client.chat.completions.create(
-            model=AGENT, messages=messages, max_completion_tokens=2048
-        )
-        in1, cached1, _, _ = _usage_of(first)
-        in2, cached2, _, _ = _usage_of(second)
-        c.ok(f"call1 in={in1} cached={cached1} | call2 in={in2} cached={cached2}")
+        before = tracker.total_cached_tokens
+        complete(prefix, "Say ok.", model=agent, purpose="spike", tracker=tracker)
+        complete(prefix, "Say ok.", model=agent, purpose="spike", tracker=tracker)
+        gained = tracker.total_cached_tokens - before
+        check.ok(f"{gained} tokens served from cache; run hit rate {tracker.cache_hit_rate:.1%}")
 
-    # 5. Batch API on the judge model. The eval budget assumes the 50% discount.
-    with check(f"Batch API accepts {JUDGE}") as c:
+    with Check(f"Batch API accepts {judge}") as check:
         import io
+        import json
+
+        from research_agent.llm import _client
 
         line = {
             "custom_id": "spike-1",
             "method": "POST",
-            "url": "/v1/chat/completions",
-            "body": {
-                "model": JUDGE,
-                "messages": [{"role": "user", "content": "Reply with: ok"}],
-                "max_completion_tokens": 2048,
-            },
+            "url": "/v1/responses",
+            "body": {"model": judge, "input": "Reply with: ok", "max_output_tokens": 2048},
         }
-        upload = client.files.create(file=io.BytesIO(json.dumps(line).encode()), purpose="batch")
-        batch = client.batches.create(
-            input_file_id=upload.id,
-            endpoint="/v1/chat/completions",
-            completion_window="24h",
+        upload = _client().files.create(file=io.BytesIO(json.dumps(line).encode()), purpose="batch")
+        batch = _client().batches.create(
+            input_file_id=upload.id, endpoint="/v1/responses", completion_window="24h"
         )
-        c.ok(f"accepted: batch={batch.id} status={batch.status} (not waited on)")
+        check.ok(f"batch={batch.id} status={batch.status} (not waited on)")
 
-    # --- report ---
     print()
     width = max(len(name) for name, _, _ in results)
     for name, passed, detail in results:
         print(f"  {'PASS' if passed else 'FAIL'}  {name.ljust(width)}  {detail}")
 
-    print(f"\n  Models under test: agent={AGENT} judge={JUDGE}")
-    if AGENT in PRICES:
-        print(f"  Sanity: 10k in / 1k out on {AGENT} = ${cost_usd(AGENT, 10_000, 0, 1_000):.6f}")
+    print(f"\n  agent={agent}  judge={judge}")
+    print(
+        f"  this run: ${tracker.total_cost_usd:.5f} over {len(tracker.calls)} calls, "
+        f"cache hit rate {tracker.cache_hit_rate:.1%}"
+    )
+    print(f"  sanity:   10k in / 1k out on {agent} = ${cost_usd(agent, 10_000, 0, 1_000):.6f}")
+    print(f"  {spend.summary()}")
 
     failed = [name for name, passed, _ in results if not passed]
     if failed:

@@ -1,19 +1,34 @@
 """The OpenAI client. Every LLM call in this project goes through this module.
 
-Three things live here and nowhere else:
+Built on the **Responses API**. The original plan specified Chat Completions, on the
+research finding that the gpt-5.4 model cards list Chat Completions and Batch but not
+Responses. A Phase-1 spike measured the opposite constraint:
 
-1. **Token and cost accounting.** Cost is computed from real usage at published list
-   prices, so every number in the README and the eval report is money actually spent.
-2. **The per-run budget guard.** `CostTracker.record` raises the moment cumulative
-   spend crosses the cap, with a reserve held back so `finalize` can always afford to
-   synthesise an answer.
-3. **A process-level kill switch**, independent of any tracker, so a runaway
-   development loop cannot burn real money even if a caller forgets to pass one.
+    Chat Completions + tools + reasoning_effort  ->  400 on nano *and* mini
+        "Function tools with reasoning_effort are not supported for gpt-5.4-nano
+         in /v1/chat/completions. To use function tools, use /v1/responses or set
+         reasoning_effort to 'none'."
+    Responses + tools + reasoning                ->  works
 
-Chat Completions is used deliberately rather than the Responses API: the gpt-5.4
-model cards list Chat Completions and Batch only, and nothing here needs Responses.
+Responses supports both modes at identical cost when reasoning is off, so it is
+strictly more flexible, and it is what OpenAI recommends for new projects.
+
+Four guards sit between this project and an unexpected bill, each catching what the
+one below it cannot:
+
+  1. `CostTracker`      one run     — raises the moment cumulative spend crosses the
+                                      cap, holding back a reserve so `finalize` can
+                                      always afford to answer.
+  2. process guard      one process — fires even when a caller forgets a tracker,
+                                      which is exactly the runaway-dev-loop case.
+  3. project ledger     forever     — survives restarts; a few hundred short dev runs
+                                      across a few hundred processes are invisible to
+                                      the first two.
+  4. cassettes          dev only    — replays a recorded response for $0 instead of
+                                      paying for the same prompt a hundredth time.
 """
 
+import json
 import os
 import time
 from dataclasses import dataclass, field
@@ -23,7 +38,9 @@ from typing import Any
 
 from pydantic import BaseModel
 
+from research_agent import cassette
 from research_agent.config import settings
+from research_agent.spend import record as record_project_spend
 
 # USD per 1M tokens (input, cached input, output) — OpenAI list prices.
 # Cached input is uniformly 10% of input across this generation.
@@ -46,11 +63,15 @@ class QueryBudgetExceeded(Exception):
 
 
 class ProcessBudgetExceeded(Exception):
-    """Raised when total spend across this process crosses RA_MAX_PROCESS_COST_USD.
+    """Raised when spend across this process crosses RA_MAX_PROCESS_COST_USD.
 
-    This is the guard of last resort. It fires regardless of whether the caller
-    passed a CostTracker, and it is not resettable from configuration.
+    Fires regardless of whether the caller passed a CostTracker, which is exactly
+    the case a runaway development loop hits.
     """
+
+
+class CassetteMiss(Exception):
+    """Strict replay mode was asked for a call that was never recorded."""
 
 
 @dataclass
@@ -63,6 +84,22 @@ class LLMCall:
     reasoning_tokens: int
     cost_usd: float
     latency_ms: float
+    replayed: bool = False
+
+
+@dataclass
+class ToolTurn:
+    """One tool-calling turn.
+
+    `items` are the model's own output items with `status` stripped, ready to be
+    echoed straight back as conversation history — the Responses API rejects the
+    field it emits there, and reasoning items must be returned alongside tool
+    outputs for reasoning models to work correctly across turns.
+    """
+
+    items: list[dict[str, Any]]
+    tool_calls: list[dict[str, Any]]  # {"call_id", "name", "args"}
+    text: str
 
 
 @dataclass
@@ -71,8 +108,8 @@ class CostTracker:
 
     `reserve_usd` is withheld from the loop so that when the budget is exhausted
     there is still headroom for the final synthesis call. Without it, hitting the
-    cap mid-loop would return no answer at all. `finalize` calls
-    `release_reserve()` before its own call.
+    cap mid-loop would return no answer at all. `finalize` calls `release_reserve()`
+    before its own call.
     """
 
     budget_usd: float
@@ -195,54 +232,56 @@ def _client() -> Any:
 
 
 def _usage_of(response: Any) -> tuple[int, int, int, int]:
-    """Extract (input, cached, output, reasoning) tokens from a Chat Completions response."""
+    """Extract (input, cached, output, reasoning) tokens from a Responses result."""
     usage = getattr(response, "usage", None)
     if usage is None:
         return 0, 0, 0, 0
-    prompt_details = getattr(usage, "prompt_tokens_details", None)
-    completion_details = getattr(usage, "completion_tokens_details", None)
+    input_details = getattr(usage, "input_tokens_details", None)
+    output_details = getattr(usage, "output_tokens_details", None)
     return (
-        getattr(usage, "prompt_tokens", 0) or 0,
-        getattr(prompt_details, "cached_tokens", 0) or 0,
-        getattr(usage, "completion_tokens", 0) or 0,
-        getattr(completion_details, "reasoning_tokens", 0) or 0,
+        getattr(usage, "input_tokens", 0) or 0,
+        getattr(input_details, "cached_tokens", 0) or 0,
+        getattr(usage, "output_tokens", 0) or 0,
+        getattr(output_details, "reasoning_tokens", 0) or 0,
     )
 
 
-def _request_kwargs(
-    model: str,
-    max_tokens: int,
-    temperature: float | None,
-    reasoning_effort: str | None,
-) -> dict[str, Any]:
-    """Assemble the parameters that vary by model family.
+def _echoable(item: Any) -> dict[str, Any]:
+    """One output item, shaped so it can be sent straight back as history.
 
-    Reasoning models reject `temperature`, so the two are mutually exclusive here.
+    The API emits `status` on its own output items but rejects it on input, so it
+    has to come off before the next turn.
     """
-    kwargs: dict[str, Any] = {"model": model, "max_completion_tokens": max_tokens}
-    if reasoning_effort is not None:
-        kwargs["reasoning_effort"] = reasoning_effort
-    elif temperature is not None:
-        kwargs["temperature"] = temperature
+    payload = item.model_dump(exclude_none=True) if hasattr(item, "model_dump") else dict(item)
+    payload.pop("status", None)
+    return payload
+
+
+def _request_kwargs(model: str, max_tokens: int, reasoning_effort: str | None) -> dict[str, Any]:
+    kwargs: dict[str, Any] = {"model": model, "max_output_tokens": max_tokens}
+    if reasoning_effort:
+        kwargs["reasoning"] = {"effort": reasoning_effort}
     return kwargs
 
 
-def _record(
-    response: Any,
+def _settle(
     *,
     model: str,
     purpose: str,
+    usage: tuple[int, int, int, int],
     elapsed_ms: float,
     batch: bool,
+    replayed: bool,
     tracker: CostTracker | None,
 ) -> LLMCall:
-    """Price one response, charge the process guard, and record it on the tracker.
+    """Price one call and charge it to every guard, innermost last.
 
-    The process guard is charged first and unconditionally: it must fire even when
-    no tracker was passed, which is exactly the case a runaway dev loop hits.
+    Order matters. The project ledger and process guard are charged before the
+    tracker, so a run that blows its own budget still leaves both of them truthful
+    about what it spent on the way.
     """
-    input_tokens, cached_tokens, output_tokens, reasoning_tokens = _usage_of(response)
-    spend = cost_usd(model, input_tokens, cached_tokens, output_tokens, batch=batch)
+    input_tokens, cached_tokens, output_tokens, reasoning_tokens = usage
+    spend = 0.0 if replayed else cost_usd(model, input_tokens, cached_tokens, output_tokens, batch)
     call = LLMCall(
         purpose=purpose,
         model=model,
@@ -252,11 +291,34 @@ def _record(
         reasoning_tokens=reasoning_tokens,
         cost_usd=spend,
         latency_ms=elapsed_ms,
+        replayed=replayed,
     )
-    _charge_process(spend)
+    if spend:
+        record_project_spend(spend, purpose, settings().max_project_cost_usd)
+        _charge_process(spend)
     if tracker is not None:
         tracker.record(call)
     return call
+
+
+def _cached(cache_key: str) -> dict[str, Any] | None:
+    hit = cassette.load(cache_key)
+    if hit is None and cassette.misses_are_fatal():
+        raise CassetteMiss(
+            f"no recording for {cache_key} and RA_LLM_CACHE=replay. "
+            "Re-record with RA_LLM_CACHE=auto, or set RA_LLM_CACHE=off."
+        )
+    return hit
+
+
+def _usage_from_cache(payload: dict[str, Any]) -> tuple[int, int, int, int]:
+    usage = payload.get("usage", {})
+    return (
+        int(usage.get("input_tokens", 0)),
+        int(usage.get("cached_tokens", 0)),
+        int(usage.get("output_tokens", 0)),
+        int(usage.get("reasoning_tokens", 0)),
+    )
 
 
 # --- public API ----------------------------------------------------------------
@@ -266,72 +328,117 @@ def complete(
     system: str,
     user: str,
     model: str | None = None,
-    max_tokens: int = 2048,
-    temperature: float | None = 0.0,
+    max_tokens: int = 4096,
     reasoning_effort: str | None = None,
     purpose: str = "generate",
     tracker: CostTracker | None = None,
 ) -> str:
     """One text completion. Returns the text; records tokens and cost on the tracker."""
     model = model or settings().agent_model
+    request = _request_kwargs(model, max_tokens, reasoning_effort)
+    cache_key = cassette.key({"kind": "complete", "system": system, "user": user, **request})
+
+    if (hit := _cached(cache_key)) is not None:
+        _settle(
+            model=model,
+            purpose=purpose,
+            usage=_usage_from_cache(hit),
+            elapsed_ms=0.0,
+            batch=False,
+            replayed=True,
+            tracker=tracker,
+        )
+        return str(hit["text"])
+
     started = time.perf_counter()
-    response = _client().chat.completions.create(
-        messages=[{"role": "system", "content": system}, {"role": "user", "content": user}],
-        **_request_kwargs(model, max_tokens, temperature, reasoning_effort),
+    response = _client().responses.create(
+        input=[
+            {"role": "system", "content": system},
+            {"role": "user", "content": user},
+        ],
+        **request,
     )
-    _record(
-        response,
+    usage = _usage_of(response)
+    _settle(
         model=model,
         purpose=purpose,
+        usage=usage,
         elapsed_ms=(time.perf_counter() - started) * 1000,
         batch=False,
+        replayed=False,
         tracker=tracker,
     )
-    return response.choices[0].message.content or ""
+    text = response.output_text or ""
+    cassette.save(cache_key, {"text": text, "usage": _usage_dict(usage)})
+    return text
 
 
 def call_tools(
-    messages: list[dict[str, Any]],
+    history: list[dict[str, Any]],
     tools: list[dict[str, Any]],
     model: str | None = None,
-    max_tokens: int = 2048,
+    max_tokens: int = 4096,
     reasoning_effort: str | None = None,
     purpose: str = "act",
     tracker: CostTracker | None = None,
-) -> dict[str, Any]:
-    """One tool-calling turn. Returns the assistant message as a plain wire-format dict.
+) -> ToolTurn:
+    """One tool-calling turn over the running conversation.
 
-    Native function calling is used rather than JSON-in-text: the tool call arrives
-    already structured, which removes an entire class of parse failure from the loop.
+    Native function calling rather than JSON-in-text: the call arrives already
+    structured, which removes an entire class of parse failure from the loop.
     """
     model = model or settings().agent_model
+    request = _request_kwargs(model, max_tokens, reasoning_effort)
+    cache_key = cassette.key({"kind": "call_tools", "history": history, "tools": tools, **request})
+
+    if (hit := _cached(cache_key)) is not None:
+        _settle(
+            model=model,
+            purpose=purpose,
+            usage=_usage_from_cache(hit),
+            elapsed_ms=0.0,
+            batch=False,
+            replayed=True,
+            tracker=tracker,
+        )
+        return ToolTurn(items=hit["items"], tool_calls=hit["tool_calls"], text=hit["text"])
+
     started = time.perf_counter()
-    response = _client().chat.completions.create(
-        messages=messages,
-        tools=tools,
-        **_request_kwargs(model, max_tokens, None, reasoning_effort),
-    )
-    _record(
-        response,
+    response = _client().responses.create(input=history, tools=tools, **request)
+    usage = _usage_of(response)
+    _settle(
         model=model,
         purpose=purpose,
+        usage=usage,
         elapsed_ms=(time.perf_counter() - started) * 1000,
         batch=False,
+        replayed=False,
         tracker=tracker,
     )
-    message = response.choices[0].message
-    return {
-        "role": "assistant",
-        "content": message.content,
-        "tool_calls": [
+
+    turn = ToolTurn(
+        items=[_echoable(item) for item in response.output],
+        tool_calls=[
             {
-                "id": call.id,
-                "type": "function",
-                "function": {"name": call.function.name, "arguments": call.function.arguments},
+                "call_id": item.call_id,
+                "name": item.name,
+                "args": _safe_json(item.arguments),
             }
-            for call in (message.tool_calls or [])
+            for item in response.output
+            if getattr(item, "type", "") == "function_call"
         ],
-    }
+        text=response.output_text or "",
+    )
+    cassette.save(
+        cache_key,
+        {
+            "items": turn.items,
+            "tool_calls": turn.tool_calls,
+            "text": turn.text,
+            "usage": _usage_dict(usage),
+        },
+    )
+    return turn
 
 
 def parse[T: BaseModel](
@@ -339,8 +446,7 @@ def parse[T: BaseModel](
     user: str,
     schema: type[T],
     model: str | None = None,
-    max_tokens: int = 2048,
-    temperature: float | None = 0.0,
+    max_tokens: int = 4096,
     reasoning_effort: str | None = None,
     purpose: str = "parse",
     tracker: CostTracker | None = None,
@@ -348,22 +454,77 @@ def parse[T: BaseModel](
 ) -> T | None:
     """One structured-output call. Returns a validated model, or None if it refused.
 
-    Callers must handle None with a deterministic default rather than crashing —
-    an unparseable judgement is data ("unparseable"), not an exception.
+    Callers must handle None with a deterministic default rather than crashing — an
+    unparseable judgement is data ("unparseable"), not an exception.
     """
     model = model or settings().agent_model
-    started = time.perf_counter()
-    response = _client().chat.completions.parse(
-        messages=[{"role": "system", "content": system}, {"role": "user", "content": user}],
-        response_format=schema,
-        **_request_kwargs(model, max_tokens, temperature, reasoning_effort),
+    request = _request_kwargs(model, max_tokens, reasoning_effort)
+    cache_key = cassette.key(
+        {
+            "kind": "parse",
+            "system": system,
+            "user": user,
+            "schema": schema.model_json_schema(),
+            **request,
+        }
     )
-    _record(
-        response,
+
+    if (hit := _cached(cache_key)) is not None:
+        _settle(
+            model=model,
+            purpose=purpose,
+            usage=_usage_from_cache(hit),
+            elapsed_ms=0.0,
+            batch=batch,
+            replayed=True,
+            tracker=tracker,
+        )
+        return schema.model_validate(hit["parsed"]) if hit.get("parsed") is not None else None
+
+    started = time.perf_counter()
+    response = _client().responses.parse(
+        input=[
+            {"role": "system", "content": system},
+            {"role": "user", "content": user},
+        ],
+        text_format=schema,
+        **request,
+    )
+    usage = _usage_of(response)
+    _settle(
         model=model,
         purpose=purpose,
+        usage=usage,
         elapsed_ms=(time.perf_counter() - started) * 1000,
         batch=batch,
+        replayed=False,
         tracker=tracker,
     )
-    return response.choices[0].message.parsed
+    parsed = response.output_parsed
+    cassette.save(
+        cache_key,
+        {
+            "parsed": parsed.model_dump() if parsed is not None else None,
+            "usage": _usage_dict(usage),
+        },
+    )
+    return parsed
+
+
+def _usage_dict(usage: tuple[int, int, int, int]) -> dict[str, int]:
+    input_tokens, cached_tokens, output_tokens, reasoning_tokens = usage
+    return {
+        "input_tokens": input_tokens,
+        "cached_tokens": cached_tokens,
+        "output_tokens": output_tokens,
+        "reasoning_tokens": reasoning_tokens,
+    }
+
+
+def _safe_json(raw: str) -> dict[str, Any]:
+    """Tool arguments as a dict. Malformed JSON becomes data the agent can react to."""
+    try:
+        value = json.loads(raw)
+    except (json.JSONDecodeError, TypeError):
+        return {"__malformed__": raw}
+    return value if isinstance(value, dict) else {"__malformed__": raw}
