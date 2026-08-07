@@ -11,7 +11,9 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Install uv
-        uses: astral-sh/setup-uv@v9
+        # setup-uv publishes floating major tags only through v7, so this pins the
+        # exact release instead.
+        uses: astral-sh/setup-uv@v9.0.0
         with:
           python-version: "3.12"
       - name: Install dependencies
