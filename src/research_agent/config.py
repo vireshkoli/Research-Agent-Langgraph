@@ -29,6 +29,19 @@ class Settings(BaseSettings):
     max_steps: int = 8  # act->observe rounds
     max_seconds: float = 120.0
     max_run_cost_usd: float = 0.05
+    # Unbounded replanning is a loop generator, so one corrective replan only.
+    max_replans: int = 1
+    # Circuit breaker: three failures in a row means the tool is down or the model
+    # is stuck calling it wrong. Either way, more attempts will not help.
+    max_tool_failures: int = 3
+    # Steps kept verbatim at the tail of the scratchpad when compacting; the model
+    # needs recent detail to choose the next call.
+    keep_last_steps: int = 3
+    # Compaction fires on the last act call's real prompt_tokens, not an estimate.
+    # Low enough to actually trigger on multi-hop runs: with a 400k context this is
+    # a cost and attention control, not a context-overflow necessity.
+    compact_threshold_tokens: int = 12_000
+    max_compactions: int = 3
     # Held back from the loop so finalize can always afford to synthesise an answer.
     # Without this, exhausting the budget mid-loop would return nothing at all.
     finalize_reserve_usd: float = 0.008

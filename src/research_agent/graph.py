@@ -1,0 +1,171 @@
+"""The state graph: six nodes, two routers, all edges static.
+
+    START -> plan -> act -> observe -> {route_after_observe}
+                                        |-> finalize      (budget verdict)
+                                        |-> compact -> reflect
+                                        `-> reflect
+             reflect -> {route_after_reflect}
+                                        |-> act           (gaps remain)
+                                        |-> plan          (plan is wrong)
+                                        `-> finalize      (covered, or budget)
+             finalize -> END
+
+Built explicitly rather than with `create_react_agent` (which LangGraph deprecated
+in 1.0 in favour of `langchain.agents.create_agent`) because the point of this
+project is that the control flow and the eval surface are inspectable. A prebuilt
+agent hides both.
+
+Three structural choices:
+
+**`act` always edges to `observe`**, even when the model emitted no tool calls. In
+that case `observe` is a no-op that sets `act_requested_stop`. Keeping the edge
+static costs one cheap super-step and keeps the diagram honest — a reader can trust
+that the arrows are the whole story.
+
+**No error node.** Tool failures become error observations plus a
+`consecutive_tool_failures` counter that the router reads. An error node would add a
+super-step and buy nothing.
+
+**Routers are pure.** They cannot write state, so `early_exit_reason` is set by
+`finalize` re-running the same `budget_verdict` the router used. See budget.py.
+"""
+
+from collections.abc import Callable
+from typing import Any, Final, Literal
+
+from langgraph.graph import END, START, StateGraph
+
+from research_agent.budget import budget_verdict
+from research_agent.config import Settings, settings
+from research_agent.state import ResearchState
+
+# Nodes return a *partial* state update. ResearchState is total=False, so a partial
+# dict is a valid instance of it — which keeps the return type honest instead of
+# widening it to dict[str, Any] and losing key checking inside the node bodies.
+NodeFn = Callable[[ResearchState], ResearchState]
+
+# Node names. Final makes mypy infer the literal type, so a router returning the
+# wrong constant is a type error rather than a silently dead edge.
+PLAN: Final = "plan"
+ACT: Final = "act"
+OBSERVE: Final = "observe"
+COMPACT: Final = "compact"
+REFLECT: Final = "reflect"
+FINALIZE: Final = "finalize"
+
+
+def _last_act_prompt_tokens(state: ResearchState) -> int:
+    """Real prompt size of the most recent act call.
+
+    Compaction triggers on this rather than on a character estimate because the
+    number is already there — every call records its usage — and an estimate would
+    be wrong in exactly the case that matters, a single huge tool observation.
+    """
+    for call in reversed(state.get("llm_calls", [])):
+        if call.get("purpose") == "act":
+            return int(call.get("input_tokens", 0))
+    return 0
+
+
+def route_after_observe(
+    state: ResearchState, cfg: Settings | None = None
+) -> Literal["compact", "reflect", "finalize"]:
+    """Budget first, then compaction, then the coverage check."""
+    cfg = cfg or settings()
+
+    if budget_verdict(state, cfg) is not None:
+        return FINALIZE
+
+    # baseline answers from one pass; no_reflect skips the coverage check entirely.
+    if state.get("variant") == "baseline":
+        return FINALIZE
+    if state.get("variant") == "no_reflect":
+        return FINALIZE if state.get("act_requested_stop") else REFLECT
+
+    if (
+        _last_act_prompt_tokens(state) > cfg.compact_threshold_tokens
+        and state.get("compactions", 0) < cfg.max_compactions
+    ):
+        return COMPACT
+
+    return REFLECT
+
+
+def route_after_reflect(
+    state: ResearchState, cfg: Settings | None = None
+) -> Literal["act", "plan", "finalize"]:
+    """Continue, replan, or answer.
+
+    Budget is re-checked here because `reflect` itself costs money and time; a run
+    can cross its cap between the two routers.
+    """
+    cfg = cfg or settings()
+
+    if budget_verdict(state, cfg) is not None:
+        return FINALIZE
+
+    decision = state.get("reflect_decision")
+    if decision == "replan":
+        # max_replans is enforced by budget_verdict above, so an over-budget
+        # replan has already been routed to finalize by the time we get here.
+        return PLAN
+    if decision == "continue":
+        return ACT
+    return FINALIZE
+
+
+def build_graph(nodes: dict[str, NodeFn], checkpointer: Any = None) -> Any:
+    """Wire the graph from a mapping of node name to implementation.
+
+    Taking the implementations as an argument is what lets the routing be tested
+    exhaustively with stubs and zero API calls — the topology under test is the
+    same object the real agent runs.
+    """
+    missing = {PLAN, ACT, OBSERVE, COMPACT, REFLECT, FINALIZE} - set(nodes)
+    if missing:
+        raise ValueError(f"build_graph is missing node(s): {sorted(missing)}")
+
+    builder = StateGraph(ResearchState)
+    for name, fn in nodes.items():
+        # add_node's overloads are written against LangGraph's own _Node protocols
+        # and do not admit a plain Callable held in a variable, whatever its
+        # signature. Passing the functions in a dict is what makes the routing
+        # testable with stubs, so the dict stays and the overload is waived here
+        # rather than the design bending around a type stub.
+        builder.add_node(name, fn)  # type: ignore[call-overload]
+
+    builder.add_edge(START, PLAN)
+    builder.add_edge(PLAN, ACT)
+    builder.add_edge(ACT, OBSERVE)
+    builder.add_conditional_edges(
+        OBSERVE,
+        route_after_observe,
+        {COMPACT: COMPACT, REFLECT: REFLECT, FINALIZE: FINALIZE},
+    )
+    builder.add_edge(COMPACT, REFLECT)
+    builder.add_conditional_edges(
+        REFLECT,
+        route_after_reflect,
+        {ACT: ACT, PLAN: PLAN, FINALIZE: FINALIZE},
+    )
+    builder.add_edge(FINALIZE, END)
+
+    return builder.compile(checkpointer=checkpointer)
+
+
+def mermaid() -> str:
+    """The diagram in the README, generated from the same constants as the graph."""
+    return f"""flowchart TD
+    S([START]) --> {PLAN}["{PLAN} · decompose into sub-questions"]
+    {PLAN} --> {ACT}["{ACT} · LLM emits tool calls"]
+    {ACT} --> {OBSERVE}["{OBSERVE} · run tools · mint source ids"]
+    {OBSERVE} --> r1{{route_after_observe}}
+    r1 -->|budget verdict| {FINALIZE}
+    r1 -->|prompt over threshold| {COMPACT}["{COMPACT} · summarise old steps"]
+    r1 -->|otherwise| {REFLECT}
+    {COMPACT} --> {REFLECT}["{REFLECT} · coverage check"]
+    {REFLECT} --> r2{{route_after_reflect}}
+    r2 -->|gaps remain| {ACT}
+    r2 -->|plan is wrong| {PLAN}
+    r2 -->|covered or budget| {FINALIZE}["{FINALIZE} · cited synthesis"]
+    {FINALIZE} --> E([END])"""
