@@ -1,6 +1,7 @@
 """Central configuration. All values overridable via environment (prefix RA_) or .env."""
 
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -34,6 +35,19 @@ class Settings(BaseSettings):
     # response is routinely 100k+ chars; one uncapped search would blow both the
     # context window and the budget in a single step.
     max_observation_chars: int = 4000
+
+    # Tools
+    # Everything file_ops can reach. Resolved to an absolute path and used as a
+    # confinement root, so nothing outside it is addressable.
+    workspace_dir: Path = Path("workspace")
+    search_max_results: int = 5
+    # "basic" costs 1 Tavily credit, "advanced" 2. The free tier is 1000/month and
+    # a full 30-case x 3-run evaluation spends ~360 of them.
+    search_depth: str = "basic"
+    fetch_timeout_seconds: float = 15.0
+    # Dev-only. The official evaluation runs with --no-cache: a shared search cache
+    # would make repeated runs non-independent and invalidate pass^k.
+    search_cache_enabled: bool = False
 
 
 @lru_cache
