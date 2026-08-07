@@ -7,6 +7,7 @@ is the important one, because it proves the second layer works on its own.
 """
 
 import os
+import signal
 import sys
 
 import pytest
@@ -149,13 +150,19 @@ def test_screen_reports_syntax_errors_with_a_line_number() -> None:
 
 
 def test_runaway_cpu_is_killed(monkeypatch: pytest.MonkeyPatch) -> None:
+    # The wall clock is set far higher than the CPU limit so that a pass here can
+    # only mean RLIMIT_CPU fired, not that the timeout quietly did the work.
     monkeypatch.setattr(code_exec, "CPU_SECONDS", 1)
     monkeypatch.setattr(code_exec, "WALL_SECONDS", 30.0)
 
     result = execute("x = 0\nwhile True:\n    x += 1")
 
     assert not result.ok
-    assert "CPU limit" in result.content
+    assert not result.meta.get("timed_out")
+    # macOS delivers SIGXCPU at the soft limit; Linux may escalate to SIGKILL.
+    # Both are reported as a resource limit rather than an opaque return code.
+    assert "limit" in result.content, result.content
+    assert result.meta["returncode"] in (-signal.SIGXCPU, -signal.SIGKILL)
 
 
 def test_wall_clock_timeout_kills_a_sleeping_child(monkeypatch: pytest.MonkeyPatch) -> None:

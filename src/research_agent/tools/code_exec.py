@@ -118,24 +118,35 @@ BLOCKED_NAMES = frozenset(
 BOOTSTRAP = """\
 import resource, sys
 
+# (name, soft, hard). soft == hard makes a limit irreversible, since a process may
+# lower a limit but never raise it above its hard limit.
+#
+# RLIMIT_CPU is the deliberate exception. Exceeding the *soft* limit raises
+# SIGXCPU, which the parent can recognise and report as "you used too much CPU";
+# exceeding the *hard* limit is an unconditional SIGKILL. With soft == hard, Linux
+# escalates to SIGKILL before CPython reaches a bytecode boundary where the signal
+# would surface, and the parent only ever sees an opaque -9. One second of grace
+# makes the diagnosable signal arrive first and keeps SIGKILL as the backstop.
 LIMITS = [
-    ("RLIMIT_CPU", {cpu}),
-    ("RLIMIT_FSIZE", {fsize}),
-    ("RLIMIT_NOFILE", {nofile}),
-    ("RLIMIT_CORE", 0),
+    ("RLIMIT_CPU", {cpu}, {cpu} + 1),
+    ("RLIMIT_FSIZE", {fsize}, {fsize}),
+    ("RLIMIT_NOFILE", {nofile}, {nofile}),
+    ("RLIMIT_CORE", 0, 0),
 ]
 if sys.platform.startswith("linux"):
     # RLIMIT_AS is skipped on macOS, where it is unreliable and can kill the
     # interpreter during start-up. RLIMIT_NPROC is per-*user*, not per-process,
     # so on a development machine it would count the developer's own shells.
-    LIMITS += [("RLIMIT_AS", {address_space}), ("RLIMIT_NPROC", 64)]
+    LIMITS += [
+        ("RLIMIT_AS", {address_space}, {address_space}),
+        ("RLIMIT_NPROC", 64, 64),
+    ]
 
-for name, value in LIMITS:
+for name, soft, hard in LIMITS:
     limit = getattr(resource, name, None)
     if limit is not None:
         try:
-            # soft == hard makes the limit irreversible for this process.
-            resource.setrlimit(limit, (value, value))
+            resource.setrlimit(limit, (soft, hard))
         except (ValueError, OSError):
             pass
 
@@ -249,10 +260,14 @@ def execute(code: str) -> ToolResult:
 
     if process.returncode != 0:
         detail = (stderr or "").strip() or f"exited with status {process.returncode}"
-        # CPU-limit kills arrive as SIGXCPU; without this the agent sees an opaque
-        # negative return code and tends to retry the same expensive thing.
+        # Without these the agent sees an opaque negative return code and tends to
+        # retry the same expensive thing. SIGXCPU is the soft CPU limit. SIGKILL is
+        # the hard backstop, and is also what RLIMIT_AS and the OOM killer produce,
+        # so it is reported as the resource kill it is without over-claiming which.
         if process.returncode == -signal.SIGXCPU:
             detail = f"exceeded the {CPU_SECONDS}s CPU limit"
+        elif process.returncode == -signal.SIGKILL:
+            detail = f"killed after exceeding a resource limit ({CPU_SECONDS}s CPU, or memory)"
         content, raw_chars, was_truncated = truncate(detail, MAX_OUTPUT_CHARS)
         return ToolResult(
             ok=False,
