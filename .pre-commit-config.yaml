@@ -1,0 +1,30 @@
+# Install with: uv run pre-commit install
+#
+# These hooks are a convenience, not a guarantee — they only run for people who
+# install them. The enforced versions of lint, types, tests and secret scanning
+# live in .github/workflows/ci.yml.
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.1
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.0
+    hooks:
+      - id: gitleaks
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-added-large-files
+        args: [--maxkb=2048]
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: check-toml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      # Belt and braces: .env is gitignored, but a `git add -f` would sail past that.
+      - id: detect-private-key
