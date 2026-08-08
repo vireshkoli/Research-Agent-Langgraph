@@ -37,8 +37,12 @@ def compact_node(
     end = max(start, len(scratchpad) - cfg.keep_last_steps)
 
     to_fold = scratchpad[start:end]
-    if not to_fold:
-        return {"scratchpad": [make_step(state, "compact", note="nothing to compact")]}
+    # Nodes append a bookkeeping step even when they do no work, so the window can
+    # slide forward over steps that carry nothing worth summarising. Folding those
+    # would pay for a summary of "(no observations in this range)" and, worse,
+    # compound the drift a rolling summary already has.
+    if not any(step.get("observations") or step.get("reflection") for step in to_fold):
+        return {"scratchpad": [make_step(state, "compact", note="nothing new to compact")]}
 
     try:
         summary = complete(
