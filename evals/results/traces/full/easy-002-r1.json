@@ -1,0 +1,409 @@
+{
+  "schema_version": "1",
+  "run_id": "ec0701be0eb5",
+  "ts": "2026-08-08T17:32:33+00:00",
+  "question": "How many parameters does the largest Llama 3.1 model have?",
+  "variant": "full",
+  "config": {
+    "agent_model": "gpt-5.4-nano",
+    "reasoning_effort": "none",
+    "max_steps": 8,
+    "max_seconds": 120.0,
+    "max_run_cost_usd": 0.05,
+    "finalize_reserve_usd": 0.008,
+    "compact_threshold_tokens": 12000,
+    "git_sha": "f3492ae",
+    "prompt_hash": "sha256:512e8e5d8eaa"
+  },
+  "plan": {
+    "version": 1,
+    "subquestions": [
+      "What is the parameter count (number of parameters) for the largest Llama 3.1 model variant?"
+    ],
+    "replans": 0
+  },
+  "steps": [
+    {
+      "i": 1,
+      "node": "plan",
+      "plan_version": 0,
+      "ts_offset_ms": 2145.402499998454,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 2,
+      "node": "act",
+      "plan_version": 1,
+      "ts_offset_ms": 3745.9879999951227,
+      "tool_calls": [
+        {
+          "call_id": "call_nfe3N2JauAXxzEd3GoMVJj5v",
+          "name": "web_search",
+          "args": {
+            "query": "Llama 3.1 largest model parameters 405B"
+          }
+        }
+      ],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 3,
+      "node": "observe",
+      "plan_version": 1,
+      "ts_offset_ms": 26096.252916991943,
+      "tool_calls": [],
+      "observations": [
+        {
+          "call_id": "call_nfe3N2JauAXxzEd3GoMVJj5v",
+          "tool": "web_search",
+          "args": {
+            "query": "Llama 3.1 largest model parameters 405B"
+          },
+          "ok": true,
+          "content": "[1] Llama 3.1 - 405B, 70B & 8B with multilinguality and long context\n    https://huggingface.co/blog/llama31\n    A very large dense model of 405 billion parameters. A more permissive license. Let’s dive into these! The Llama 3.1 release introduces six new open LLM models based on the Llama 3 architecture.\n\n[2] Meta Llama 3.1: Open-Source AI Model Takes on GPT-4o mini\n    https://www.analyticsvidhya.com/blog/2024/07/meta-llama-3-1/\n    Explore Meta Llama 3.1, a powerful open-source AI model. Compare its performance with GPT-4o mini across 10 tasks and more.\n\n[3] Llama 3.1 Tulu 3 405B - AI Model Details | Writingmate\n    https://writingmate.ai/models/allenai/llama-3.1-tulu-3-405b\n    About Llama 3.1 Tulu 3 405B. Tülu 3 405B is the largest model in the Tülu 3 family, applying fully open post-training recipes at a 405B parameter scale.\n\n[4] How to Use Llama 3.1 with Langchain and Ollama?\n    https://readmedium.com/how-to-use-llama-3-1-with-langchain-and-ollama-b5b9a9ce91d9\n    It outlines the key features of Llama 3.1, such as its status as the largest open model with 405 billion parameters, extended context length, multilingual support, and high-performance training.\n\n[5] Llama 3.1 is a new state-of-the-art model from Meta available in...\n    https://ollama.com/library/llama3.1:latest\n    Llama 3.1 405B is the first openly available model that rivals the top AI models when it comes to state-of-the-art capabilities in general knowledge, steerability, math, tool use, and multilingual translation.",
+          "error": null,
+          "latency_ms": 22349.042290996294,
+          "raw_chars": 1516,
+          "truncated": false,
+          "source_ids": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5"
+          ]
+        }
+      ],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 4,
+      "node": "reflect",
+      "plan_version": 1,
+      "ts_offset_ms": 26097.695249991375,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": "skipped on first step"
+    },
+    {
+      "i": 5,
+      "node": "act",
+      "plan_version": 1,
+      "ts_offset_ms": 31722.19616700022,
+      "tool_calls": [
+        {
+          "call_id": "call_QW0LGe0CvRWREilv1glnSBtb",
+          "name": "fetch_page",
+          "args": {
+            "url": "https://huggingface.co/blog/llama31"
+          }
+        }
+      ],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 6,
+      "node": "observe",
+      "plan_version": 1,
+      "ts_offset_ms": 32145.059083995875,
+      "tool_calls": [],
+      "observations": [
+        {
+          "call_id": "call_QW0LGe0CvRWREilv1glnSBtb",
+          "tool": "fetch_page",
+          "args": {
+            "url": "https://huggingface.co/blog/llama31"
+          },
+          "ok": false,
+          "content": "Tool failed: request failed: ConnectError: [Errno 54] Connection reset by peer",
+          "error": "request failed: ConnectError: [Errno 54] Connection reset by peer",
+          "latency_ms": 421.49895799229853,
+          "raw_chars": 0,
+          "truncated": false,
+          "source_ids": []
+        }
+      ],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 7,
+      "node": "reflect",
+      "plan_version": 1,
+      "ts_offset_ms": 34180.54770899471,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": {
+        "decision": "continue",
+        "reasoning": "Only one web search snippet was captured and the primary source page fetch failed, so we don’t have solid, verifiable evidence for the parameter count of the largest Llama 3.1 model yet.",
+        "covered": {
+          "What is the parameter count (number of parameters) for the largest Llama 3.1 model variant?": false
+        },
+        "open_gaps": [
+          "What is the parameter count (number of parameters) for the largest Llama 3.1 model variant?"
+        ],
+        "overruled_stop": false
+      },
+      "note": null
+    },
+    {
+      "i": 8,
+      "node": "act",
+      "plan_version": 1,
+      "ts_offset_ms": 35549.714708991814,
+      "tool_calls": [
+        {
+          "call_id": "call_858BOqbRfrLmWAwWRkDhGbjN",
+          "name": "fetch_page",
+          "args": {
+            "url": "https://www.analyticsvidhya.com/blog/2024/07/meta-llama-3-1/"
+          }
+        }
+      ],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 9,
+      "node": "observe",
+      "plan_version": 1,
+      "ts_offset_ms": 43629.74479199329,
+      "tool_calls": [],
+      "observations": [
+        {
+          "call_id": "call_858BOqbRfrLmWAwWRkDhGbjN",
+          "tool": "fetch_page",
+          "args": {
+            "url": "https://www.analyticsvidhya.com/blog/2024/07/meta-llama-3-1/"
+          },
+          "ok": true,
+          "content": "Meta Llama 3.1: Open-Source AI Model Takes on GPT-4o mini\nhttps://www.analyticsvidhya.com/blog/2024/07/meta-llama-3-1/\n\nMeta Llama 3.1: Open-Source AI Model Takes on GPT-4o mini\n\nIndia's Most Futuristic AI Conference Is Back – Bigger, Sharper, Bolder\n\nd\n\n:\n\nh\n\n:\n\nm\n\n:\n\ns\n\nGet Details\n\nInterview Prep\nCareer\nGenAI\nPrompt Engg\nChatGPT\nLLM\nLangchain\nRAG\nAI Agents\nMachine Learning\nDeep Learning\nGenAI Tools\nLLMOps\nPython\nNLP\nSQL\nAIML Projects\n\nReading list\n\nIntroduction to Generative AI\nWhat is Generative AI?\n\nIntroduction to Generative AI applications\nOverview of generative AI applications and their impact\n\nNo-code Generative AI app development\nIntroduction to No-code AI Development\n\nCode-focused Generative AI App Development\nIntroduction to LangChain, ChatGPT and Gemini Pro\n\nIntroduction to Responsible AI\nIntroduction to Responsible AI\n\nLLMS\nWhat are Large Language Models? GPT models Mistral Llama Gemini How to build diffferent LLM AppIications?\n\nPrompt Engineering\nIntroduction to Prompt Engineering Best Practices and Guidelines for Prompt Engineering N shot prompting Chain of Thought Tree of Thoughts Skeleton of Thoughts Chain of Emotion\n\nFinetuning LLMs\nIntroduction to Finetuning LLMs Parameter-Efficient Finetuning (PEFT) LORA QLORA using Unsloth using Huggingface\n\nTraining LLMs from Scratch\nWhat do you mean by Training LLMs from Scratch?\n\nLangchain\nIntro to the LangChain Ecosystem Core Components of LangChain Applications of LCEL Chains RAG using LangChain LangGraph LangSmith\n\nRAG\nIntroduction to RAG systems Evaluation of RAG systems\n\nLlamaIndex\nGetting Started with LlamaIndex Components of LlamaIndex Advanced approaches for powerful RAG system\n\nStable Diffusion\nIntroduction to Stable Diffusion Generating image using Stable diffusion Diffusion models Prompt Engineering Concepts for Stable Diffusion MidJourney Understanding Dalle 3\n\nMeta Llama 3.1: Latest Open-Source AI Model Takes on GPT-4o mini\n\nDipanjan (DJ) Sarkar\nLast Updated :\n04 Jan, 2025\n\n24 min read\n\nThe year 2024 is turning out to be one of the best years in terms of progress on Generative AI. Just last week, we had Open AI launch GPT-4o mini, and just yesterday (23rd July 2024), we had Meta launch Llama 3.1, which has yet again taken the world by storm. This latest version of Llama 3.1 brings notable enhancements, making it a strong competitor in the AI landscape. What could be the reasons this time?\n\nFirstly, Meta has heavily focused on open-source models , and by open-source it truly means open-source. They release everything including code and datasets. This is our first time having a MASSIVE open-source LLM of 405 Billion parameters. This is close to 2.5x the size of GPT-3.5. Just let that settle in your brain for a second. Besides this, Meta has also launched 2 smaller variants of Llama 3.1 and made it one of the best multilingual and general-purpose LLMs focusing on various advanced tasks. These models have native support for tool usage, and a large context window. While many official benchmark results and performance comparisons have been released, I thought of putting this model to the test against Open AI’s latest GPT-4o mini. So let&#8217;s dive in and see more details about Llama 3.1 and its performance. But most importantly, let&#8217;s see if it can answer the dreaded question that has stumped almost all LLMs correctly once and for all, “Which number is larger, 13.11 or 13.8?”\n\nTable of contents\nUnboxing Llama 3.1 and its Architecture Training Methodology\nArchitecture Details\nPost-Training Methodology\n\nLlama 3.1 Performance Comparisons Benchmark Evaluations\nHuman Evaluations\nPerformance Comparisons\n\nLlama 3.1 Availability and Pricing Comparisons\nPutting Llama 3.1 to the test Install Dependencies\nEnter Open AI API Key\nSetup Open AI API Key\nSetup HuggingFace Access Token\nCreate ChatGPT Completion Access Function\nCreate Llama 3.1 Completion Access Function\nLet&#8217;s Try Out the GPT-4o Mini\nLet&#8217;s try out Llama 3.1\nTask 1: Zero-shot Classification\nTask 2: Few-shot Classification\nTask 3: Coding Tasks &#8211; Python\nTask 4: Coding Tasks &#8211; SQL\nTask 5: Information Extraction\nTask 6: Closed-Domain Question Answering\nTask 7: Open-Domain Question Answering\nTask 8: Document Summarization\nTask 9: Transformation\nTask 10: Translation\n\nThe Verdict\nConclusion\n\nUnboxing Llama 3.1 and its Architecture\n\nIn this section, let’s try to understand all the details about Meta’s new Llama 3 model. Based on their recent announcement, their flagship open-source model has a massive 405 Billion parameters. This model has been said to have beaten other LLMs in almost every benchmark out there (more on this shortly). The model is said to have superior capabilities, especially considering general knowledge, steerability, math, tool use, and multilingual translation. Llama 3.1 also has really good support for synthetic data generation. Meta has also distilled this flagship model to release two other variant models of Llama 3.1, including Llama 3.1 8B and 70B.\n\nTraining Methodology\n\nAll these models are multilingual, have a really large context window of 128K tokens. They are built for use in AI agents as they support native tool use and function calling capabilities. Llama 3.1 claims to be stronger in math, logical, and reasoning problems. It supports several advanced use cases, including long-form text summarization, multilingual conversational agents, and coding assistants. They have also jointly trained these models on images, audio and video making them multimodal. However the multimodal variants are still being tested and haven’t been released as of today (24th July, 2024). Given the overall family of Llama models, as you can see in the following snapshot, this is the first model with native support for tools. This signifies the shift towards companies focusing on building Agentic AI systems.\n\nComparison of the Llama 3 Family of Models; Image Source: The Llama 3 Herd of Models, Meta\n\nThe development of this LLM consists of two major stages in the training process:\n\nPre-training: Here Meta tokenizes a large, multilingual text corpus to discrete\n\n[truncated: 41,103 of 47,096 chars]",
+          "error": null,
+          "latency_ms": 8078.675958997337,
+          "raw_chars": 47096,
+          "truncated": true,
+          "source_ids": [
+            "S2"
+          ]
+        }
+      ],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 10,
+      "node": "reflect",
+      "plan_version": 1,
+      "ts_offset_ms": 61065.46066699957,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": {
+        "decision": "finalize",
+        "reasoning": "The web search result explicitly states that the largest Llama 3.1 variant is the 405B model, which directly answers the parameter-count sub-question. Additional fetching would be unlikely to change the parameter count.",
+        "covered": {
+          "What is the parameter count (number of parameters) for the largest Llama 3.1 model variant?": true
+        },
+        "open_gaps": [],
+        "overruled_stop": false
+      },
+      "note": null
+    },
+    {
+      "i": 11,
+      "node": "finalize",
+      "plan_version": 1,
+      "ts_offset_ms": 62864.73879199184,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    }
+  ],
+  "sources": [
+    {
+      "sid": "S1",
+      "url": "https://huggingface.co/blog/llama31",
+      "title": "Llama 3.1 - 405B, 70B & 8B with multilinguality and long context",
+      "snippet": "A very large dense model of 405 billion parameters. A more permissive license. Let’s dive into these! The Llama 3.1 release introduces six new open LLM models based on the Llama 3 architecture.",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S2",
+      "url": "https://www.analyticsvidhya.com/blog/2024/07/meta-llama-3-1/",
+      "title": "Meta Llama 3.1: Open-Source AI Model Takes on GPT-4o mini",
+      "snippet": "Explore Meta Llama 3.1, a powerful open-source AI model. Compare its performance with GPT-4o mini across 10 tasks and more.",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S3",
+      "url": "https://writingmate.ai/models/allenai/llama-3.1-tulu-3-405b",
+      "title": "Llama 3.1 Tulu 3 405B - AI Model Details | Writingmate",
+      "snippet": "About Llama 3.1 Tulu 3 405B. Tülu 3 405B is the largest model in the Tülu 3 family, applying fully open post-training recipes at a 405B parameter scale.",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S4",
+      "url": "https://readmedium.com/how-to-use-llama-3-1-with-langchain-and-ollama-b5b9a9ce91d9",
+      "title": "How to Use Llama 3.1 with Langchain and Ollama?",
+      "snippet": "It outlines the key features of Llama 3.1, such as its status as the largest open model with 405 billion parameters, extended context length, multilingual support, and high-performance training.",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S5",
+      "url": "https://ollama.com/library/llama3.1:latest",
+      "title": "Llama 3.1 is a new state-of-the-art model from Meta available in...",
+      "snippet": "Llama 3.1 405B is the first openly available model that rivals the top AI models when it comes to state-of-the-art capabilities in general knowledge, steerability, math, tool use, and multilingual translation.",
+      "tool": "web_search",
+      "first_seen_step": 1
+    }
+  ],
+  "answer": "The largest Llama 3.1 model variant has **405 billion parameters (405B)** [S1][S3].",
+  "citations": [
+    "S1",
+    "S3"
+  ],
+  "coverage": {
+    "What is the parameter count (number of parameters) for the largest Llama 3.1 model variant?": true
+  },
+  "outcome": {
+    "status": "completed",
+    "early_exit_reason": null,
+    "used_deterministic_finalize": false,
+    "reflect_overrules": 0,
+    "error": null
+  },
+  "usage": {
+    "llm_calls": [
+      {
+        "purpose": "plan",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 224,
+        "cached_tokens": 0,
+        "output_tokens": 92,
+        "reasoning_tokens": 24,
+        "cost_usd": 0.0001598,
+        "latency_ms": 2136.166000011144,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 790,
+        "cached_tokens": 0,
+        "output_tokens": 29,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.00019425,
+        "latency_ms": 1597.6798329938902,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 1527,
+        "cached_tokens": 0,
+        "output_tokens": 28,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.00034040000000000003,
+        "latency_ms": 5620.777249991079,
+        "replayed": false
+      },
+      {
+        "purpose": "reflect",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 530,
+        "cached_tokens": 0,
+        "output_tokens": 175,
+        "reasoning_tokens": 28,
+        "cost_usd": 0.00032475,
+        "latency_ms": 2032.0975830109091,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 1585,
+        "cached_tokens": 0,
+        "output_tokens": 40,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.000367,
+        "latency_ms": 1365.711165999528,
+        "replayed": false
+      },
+      {
+        "purpose": "reflect",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 634,
+        "cached_tokens": 0,
+        "output_tokens": 130,
+        "reasoning_tokens": 38,
+        "cost_usd": 0.0002893,
+        "latency_ms": 17430.992417008383,
+        "replayed": false
+      },
+      {
+        "purpose": "finalize",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 647,
+        "cached_tokens": 0,
+        "output_tokens": 30,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.00016690000000000002,
+        "latency_ms": 1795.4496250022203,
+        "replayed": false
+      }
+    ],
+    "totals": {
+      "input_tokens": 5937,
+      "cached_tokens": 0,
+      "output_tokens": 524,
+      "reasoning_tokens": 90,
+      "cost_usd": 0.0018424000000000001,
+      "cache_hit_rate": 0.0
+    },
+    "by_purpose": {
+      "plan": {
+        "calls": 1,
+        "cost_usd": 0.0001598,
+        "output_tokens": 92
+      },
+      "act": {
+        "calls": 3,
+        "cost_usd": 0.0009016499999999999,
+        "output_tokens": 97
+      },
+      "reflect": {
+        "calls": 2,
+        "cost_usd": 0.00061405,
+        "output_tokens": 305
+      },
+      "finalize": {
+        "calls": 1,
+        "cost_usd": 0.00016690000000000002,
+        "output_tokens": 30
+      }
+    },
+    "search_credits": 0,
+    "steps": 3
+  },
+  "timings_ms": {
+    "total": 62860.65895798674
+  },
+  "compaction": {
+    "count": 0,
+    "compacted_upto": 0
+  }
+}

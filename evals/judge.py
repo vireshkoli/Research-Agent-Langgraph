@@ -20,9 +20,11 @@ The judge runs through the Batch API where possible: eval scoring has no latency
 requirement, and Batch is half price.
 """
 
+import time
 from collections import Counter
 from typing import Literal
 
+from openai import APIConnectionError, APIStatusError, APITimeoutError, RateLimitError
 from pydantic import BaseModel, Field
 
 from research_agent.config import Settings, settings
@@ -109,17 +111,33 @@ def judge_once(
     cfg: Settings | None = None,
     tracker: CostTracker | None = None,
     batch: bool = True,
+    attempts: int = 3,
 ) -> Judgement | None:
+    """One judgement, retrying transient transport failures.
+
+    A DNS hiccup or a dropped connection is not a judgement — it is noise, and
+    letting it propagate once killed an entire 90-run evaluation on run five. It
+    retries with backoff and, if the network is genuinely down, returns None so the
+    caller records "unparseable" and carries on. The count of those is published.
+    """
     cfg = cfg or settings()
-    return parse(
-        JUDGE_SYSTEM,
-        judge_user(question, reference, answer, notes),
-        Judgement,
-        model=model or cfg.judge_model,
-        purpose="judge",
-        tracker=tracker,
-        batch=batch,
-    )
+
+    for attempt in range(attempts):
+        try:
+            return parse(
+                JUDGE_SYSTEM,
+                judge_user(question, reference, answer, notes),
+                Judgement,
+                model=model or cfg.judge_model,
+                purpose="judge",
+                tracker=tracker,
+                batch=batch,
+            )
+        except (APIConnectionError, APITimeoutError, RateLimitError, APIStatusError):
+            if attempt == attempts - 1:
+                return None
+            time.sleep(2**attempt)
+    return None
 
 
 def judge(

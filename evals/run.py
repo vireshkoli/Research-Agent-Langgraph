@@ -29,6 +29,7 @@ from typing import Any
 from evals.judge import judge
 from evals.metrics import (
     CaseResult,
+    ToolMetrics,
     citation_metrics,
     is_success,
     step_efficiency,
@@ -65,7 +66,35 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--out", type=Path, help="Results file (defaults to results/<variant>.json)."
     )
+    parser.add_argument(
+        "--resume", action="store_true", help="Skip runs already in the checkpoint."
+    )
     return parser.parse_args(argv)
+
+
+def checkpoint_path(variant: str) -> Path:
+    return RESULTS_DIR / f".{variant}.partial.jsonl"
+
+
+def load_checkpoint(variant: str) -> list[dict[str, Any]]:
+    """Scored runs recovered from an interrupted invocation.
+
+    One line per run, appended and flushed as it completes, so a crash costs at most
+    the run in flight. This exists because a transient DNS failure on a judge call
+    once discarded four completed runs and twenty minutes of work: a 90-run job that
+    cannot resume is a bet on the network staying up for half an hour.
+    """
+    path = checkpoint_path(variant)
+    if not path.is_file():
+        return []
+    rows: list[dict[str, Any]] = []
+    for line in path.read_text().splitlines():
+        if line.strip():
+            try:
+                rows.append(json.loads(line))
+            except json.JSONDecodeError:
+                pass  # torn final line from a hard kill; that run is simply redone
+    return rows
 
 
 def select(cases: list[EvalCase], args: argparse.Namespace) -> list[EvalCase]:
@@ -169,23 +198,47 @@ def main(argv: list[str] | None = None) -> int:
     traces_dir.mkdir(parents=True, exist_ok=True)
 
     judge_tracker = CostTracker(budget_usd=10.0)
-    results: list[CaseResult] = []
     started = time.perf_counter()
 
-    for index, case in enumerate(cases, start=1):
-        for run_index in range(1, args.runs + 1):
-            trace = run_agent(case.question, variant=args.variant, cfg=cfg)
-            write_trace(trace, traces_dir / f"{case.id}-r{run_index}.json")
-            result = score(case, trace, run_index, args, judge_tracker)
-            results.append(result)
+    recovered = load_checkpoint(args.variant) if args.resume else []
+    done = {(row["case_id"], row["run"]) for row in recovered}
+    if recovered:
+        print(f"resuming: {len(recovered)} runs recovered from the checkpoint")
+    else:
+        checkpoint_path(args.variant).unlink(missing_ok=True)
 
-            flag = "ok " if result.success else "FAIL"
-            print(
-                f"  [{index:>2}/{len(cases)}] {case.id} r{run_index} [{flag}] "
-                f"{result.steps} steps  ${result.cost_usd:.5f}  "
-                f"{result.latency_ms / 1000:.1f}s"
-                + (f"  ({result.reasons[0]})" if result.reasons else "")
-            )
+    serialised: list[dict[str, Any]] = list(recovered)
+    checkpoint = checkpoint_path(args.variant).open("a", encoding="utf-8")
+
+    try:
+        for index, case in enumerate(cases, start=1):
+            for run_index in range(1, args.runs + 1):
+                if (case.id, run_index) in done:
+                    continue
+
+                trace = run_agent(case.question, variant=args.variant, cfg=cfg)
+                write_trace(trace, traces_dir / f"{case.id}-r{run_index}.json")
+                result = score(case, trace, run_index, args, judge_tracker)
+
+                row = _serialise(result)
+                serialised.append(row)
+                # Flushed immediately: an interrupted run must cost at most the one
+                # in flight, never the twenty minutes before it.
+                checkpoint.write(json.dumps(row) + "\n")
+                checkpoint.flush()
+
+                flag = "ok " if result.success else "FAIL"
+                print(
+                    f"  [{index:>2}/{len(cases)}] {case.id} r{run_index} [{flag}] "
+                    f"{result.steps} steps  ${result.cost_usd:.5f}  "
+                    f"{result.latency_ms / 1000:.1f}s"
+                    + (f"  ({result.reasons[0]})" if result.reasons else ""),
+                    flush=True,
+                )
+    finally:
+        checkpoint.close()
+
+    results = [_deserialise(row) for row in serialised]
 
     payload: dict[str, Any] = {
         "variant": args.variant,
@@ -197,7 +250,7 @@ def main(argv: list[str] | None = None) -> int:
         "elapsed_s": round(time.perf_counter() - started, 1),
         "agent_cost_usd": round(sum(r.cost_usd for r in results), 6),
         "judge_cost_usd": round(judge_tracker.total_cost_usd, 6),
-        "results": [_serialise(result) for result in results],
+        "results": serialised,
     }
 
     out = args.out or RESULTS_DIR / f"{args.variant}.json"
@@ -214,6 +267,12 @@ def _serialise(result: CaseResult) -> dict[str, Any]:
     data = asdict(result)
     data["tools"] = asdict(result.tools)
     return data
+
+
+def _deserialise(row: dict[str, Any]) -> CaseResult:
+    data = dict(row)
+    data["tools"] = ToolMetrics(**row["tools"])
+    return CaseResult(**data)
 
 
 if __name__ == "__main__":
