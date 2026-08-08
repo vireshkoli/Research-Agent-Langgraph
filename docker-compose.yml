@@ -1,0 +1,45 @@
+# Two profiles that do real work. A single-service compose file that just wraps
+# `docker run` would be cargo-cult, so this only exists because these two differ
+# meaningfully from it.
+#
+#   docker compose up demo                     the published container, as deployed
+#   docker compose --profile dev up dev        source mounted, edits are live
+#   docker compose --profile eval run eval     eval writing results back to the repo
+
+services:
+  demo:
+    build: .
+    ports:
+      - "7860:7860"
+    env_file: [.env]
+    volumes:
+      # Keeps the daily demo-spend counter across restarts; without it the cap
+      # resets every time the container does.
+      - ./data:/app/data
+
+  dev:
+    profiles: [dev]
+    build: .
+    ports:
+      - "7860:7860"
+    env_file: [.env]
+    environment:
+      # Replay recorded LLM responses so iterating costs nothing.
+      RA_LLM_CACHE: auto
+    volumes:
+      - ./src:/app/src
+      - ./app.py:/app/app.py
+      - ./data:/app/data
+      - ./.cache:/app/.cache
+    command: sh -c "pip install --no-deps -e . >/dev/null && python app.py"
+
+  eval:
+    profiles: [eval]
+    build: .
+    env_file: [.env]
+    volumes:
+      # Results are the audit trail behind every README number, so they have to
+      # land in the repo rather than inside a container that gets thrown away.
+      - ./evals:/app/evals
+      - ./data:/app/data
+    command: python -m evals.run --dry-run

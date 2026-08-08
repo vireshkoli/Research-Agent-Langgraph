@@ -1,0 +1,33 @@
+# Render blueprint. `render.com/deploy` reads this; the free instance type gives
+# 750 hours a month, which covers one always-registered service.
+#
+# The trade-off to know before clicking: a free instance spins down after 15
+# minutes idle and takes roughly a minute to wake. The README says so next to the
+# link, and the app shows a banner, because a recruiter hitting a cold start with
+# no warning concludes the demo is broken.
+services:
+  - type: web
+    name: research-agent
+    runtime: docker
+    plan: free
+    region: oregon
+    healthCheckPath: /
+    envVars:
+      # Set in the Render dashboard, never here.
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: TAVILY_API_KEY
+        sync: false
+      # A public URL needs a dollar ceiling of its own; concurrency_limit bounds
+      # simultaneous calls, not spend. See src/research_agent/demo_guard.py.
+      - key: RA_DAILY_CAP_USD
+        value: "0.25"
+      - key: RA_MAX_RUN_COST_USD
+        value: "0.05"
+      # The project-wide ledger is for development. On the demo the daily cap is
+      # the control, so this is disabled rather than silently bricking the app
+      # when cumulative spend crosses it.
+      - key: RA_MAX_PROJECT_COST_USD
+        value: "0"
+      - key: RA_DEMO_DB
+        value: /app/data/demo.sqlite3

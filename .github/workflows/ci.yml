@@ -27,6 +27,26 @@ jobs:
       - name: Unit tests (LLM calls are faked; no API key needed)
         run: uv run pytest -q
 
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build the image
+        run: docker build -t research-agent:ci .
+      - name: Boot it and check it serves
+        # A build that succeeds is not the same as an image that runs. This also
+        # pins the unprivileged-user property the sandbox notes depend on.
+        run: |
+          docker run -d --rm --name ra-ci -p 7860:7860 \
+            -e RA_DAILY_CAP_USD=0 -e OPENAI_API_KEY=sk-dummy research-agent:ci
+          for i in $(seq 1 30); do
+            if curl -sf -o /dev/null http://127.0.0.1:7860/; then break; fi
+            sleep 2
+          done
+          curl -sf -o /dev/null -w 'GET / -> %{http_code}\n' http://127.0.0.1:7860/
+          test "$(docker exec ra-ci id -u)" = "1000"
+          docker stop ra-ci
+
   secrets:
     runs-on: ubuntu-latest
     steps:

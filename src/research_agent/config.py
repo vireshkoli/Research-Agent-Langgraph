@@ -72,6 +72,15 @@ class Settings(BaseSettings):
     # would make repeated runs non-independent and invalidate pass^k.
     search_cache_enabled: bool = False
 
+    # Public demo. concurrency_limit bounds simultaneous calls, not total spend, so
+    # a public URL needs an actual dollar ceiling. Visitors who supply their own key
+    # bypass it, since the cap exists to protect this project's key.
+    daily_cap_usd: float = 0.25
+    max_question_chars: int = 500
+    demo_db: Path = Path("data/demo.sqlite3")
+    concurrency_limit: int = 2
+    queue_max_size: int = 20
+
 
 @lru_cache
 def settings() -> Settings:

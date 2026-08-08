@@ -19,6 +19,7 @@ state, because a tracker in state would be serialised into every checkpoint.
 """
 
 import time
+from collections.abc import Iterator
 from pathlib import Path
 from typing import Any
 
@@ -96,6 +97,52 @@ def run(
     if trace_path:
         write_trace(trace, trace_path)
     return trace
+
+
+def stream(
+    question: str,
+    variant: Variant = "full",
+    cfg: Settings | None = None,
+) -> Iterator[tuple[str, Any]]:
+    """Yield ("progress", update) per node, then exactly one ("done", RunTrace).
+
+    Same guarantees as `run()`: a breach or a crash still ends in a ("done", trace)
+    with an answer in it, so a UI consuming this never needs to catch an exception
+    to stay honest about what happened.
+
+    `stream_mode="updates"` gives the delta each node returned, which is what a
+    progress view wants. The canonical trace is still built once at the end from
+    final state rather than reassembled from these events — trace.py explains why
+    those are deliberately two different things.
+    """
+    cfg = cfg or settings()
+    tracker = CostTracker(budget_usd=cfg.max_run_cost_usd, reserve_usd=cfg.finalize_reserve_usd)
+    state = initial_state(question, variant)
+    thread = {
+        "configurable": {"thread_id": state["run_id"]},
+        "recursion_limit": recursion_limit(cfg),
+    }
+    graph = build_agent(tracker, cfg)
+
+    started = time.perf_counter()
+    final: ResearchState = state
+    error: str | None = None
+
+    try:
+        for chunk in graph.stream(state, thread, stream_mode="updates"):
+            for node, update in chunk.items():
+                yield "progress", {"node": node, "update": update}
+        snapshot = graph.get_state(thread)
+        if snapshot and snapshot.values:
+            final = dict(snapshot.values)  # type: ignore[assignment]
+    except GraphRecursionError:
+        final = _recover(graph, thread, state, "recursion_limit")
+        error = "GraphRecursionError: the graph exceeded its recursion limit"
+    except Exception as exc:  # noqa: BLE001 — nothing escapes, same as run()
+        final = _recover(graph, thread, state, "internal_error")
+        error = f"{type(exc).__name__}: {exc}"
+
+    yield "done", build_trace(final, cfg, (time.perf_counter() - started) * 1000, error=error)
 
 
 def _recover(
