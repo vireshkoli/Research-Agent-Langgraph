@@ -27,6 +27,21 @@ jobs:
       - name: Unit tests (LLM calls are faked; no API key needed)
         run: uv run pytest -q
 
+      - name: Eval dataset validates and dry-run spends nothing
+        run: uv run python -m evals.run --dry-run
+
+      - name: REPORT.md is a pure function of the committed results
+        # The point of this job: it proves mechanically that every number in the
+        # report — and so every number quoted in the README — comes from a
+        # committed artifact rather than from something typed once by hand.
+        run: |
+          if [ -f evals/results/full.json ]; then
+            uv run python -m evals.report
+            git diff --exit-code evals/REPORT.md
+          else
+            echo "no results committed yet; skipping"
+          fi
+
   docker:
     runs-on: ubuntu-latest
     steps:

@@ -41,10 +41,13 @@ select = ["E", "F", "I", "W", "UP", "B"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
+# evals/ is a top-level package rather than part of the installed wheel: it is the
+# harness that measures the wheel, not part of what ships.
+pythonpath = ["."]
 
 [tool.mypy]
 python_version = "3.12"
-files = ["src/research_agent"]
+files = ["src/research_agent", "evals"]
 ignore_missing_imports = true
 disallow_untyped_defs = true
 # LangGraph nodes return *partial* state updates, so node returns are dict[str, Any].
