@@ -293,6 +293,16 @@ def test_every_tool_exposes_a_strict_openai_schema() -> None:
         assert set(parameters["required"]) == set(parameters["properties"])
 
 
+def test_an_empty_name_list_selects_no_tools_rather_than_all_of_them() -> None:
+    # Regression: `names or list(REGISTRY)` treated an empty list as falsy and
+    # returned every tool. That fires exactly when every tool has hit its per-run
+    # cap, silently undoing the budget it was meant to enforce.
+    assert openai_schemas([]) == []
+    assert len(openai_schemas(None)) == len(REGISTRY)
+    assert len(openai_schemas()) == len(REGISTRY)
+    assert [s["function"]["name"] for s in openai_schemas(["calculator"])] == ["calculator"]
+
+
 def test_dispatch_reports_an_unknown_tool_by_name() -> None:
     result = dispatch("nonexistent", {})
     assert not result.ok

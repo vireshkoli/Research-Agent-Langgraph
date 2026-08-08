@@ -114,17 +114,25 @@ def route_after_reflect(
     return FINALIZE
 
 
-def build_graph(nodes: dict[str, NodeFn], checkpointer: Any = None) -> Any:
+def build_graph(
+    nodes: dict[str, NodeFn], cfg: Settings | None = None, checkpointer: Any = None
+) -> Any:
     """Wire the graph from a mapping of node name to implementation.
 
     Taking the implementations as an argument is what lets the routing be tested
     exhaustively with stubs and zero API calls — the topology under test is the
     same object the real agent runs.
+
+    `cfg` is bound into the routers here for the same reason the nodes are bound
+    to a tracker: LangGraph invokes a conditional edge with state alone, so a
+    router that reached for the global `settings()` would silently ignore any
+    per-run override. That made `--max-steps 1` run two steps.
     """
     missing = {PLAN, ACT, OBSERVE, COMPACT, REFLECT, FINALIZE} - set(nodes)
     if missing:
         raise ValueError(f"build_graph is missing node(s): {sorted(missing)}")
 
+    cfg = cfg or settings()
     builder = StateGraph(ResearchState)
     for name, fn in nodes.items():
         # add_node's overloads are written against LangGraph's own _Node protocols
@@ -139,13 +147,13 @@ def build_graph(nodes: dict[str, NodeFn], checkpointer: Any = None) -> Any:
     builder.add_edge(ACT, OBSERVE)
     builder.add_conditional_edges(
         OBSERVE,
-        route_after_observe,
+        lambda state: route_after_observe(state, cfg),
         {COMPACT: COMPACT, REFLECT: REFLECT, FINALIZE: FINALIZE},
     )
     builder.add_edge(COMPACT, REFLECT)
     builder.add_conditional_edges(
         REFLECT,
-        route_after_reflect,
+        lambda state: route_after_reflect(state, cfg),
         {ACT: ACT, PLAN: PLAN, FINALIZE: FINALIZE},
     )
     builder.add_edge(FINALIZE, END)

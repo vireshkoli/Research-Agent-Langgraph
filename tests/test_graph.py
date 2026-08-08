@@ -64,8 +64,13 @@ def config(**overrides: object) -> Settings:
     return Settings(**base)  # type: ignore[arg-type]
 
 
-def run(recorder: Recorder, state: ResearchState | None = None, limit: int = 44) -> ResearchState:
-    graph = build_graph(recorder.nodes())
+def run(
+    recorder: Recorder,
+    state: ResearchState | None = None,
+    limit: int = 44,
+    cfg: Settings | None = None,
+) -> ResearchState:
+    graph = build_graph(recorder.nodes(), cfg=cfg)
     return graph.invoke(state or initial_state("q"), {"recursion_limit": limit})
 
 
@@ -185,6 +190,22 @@ def test_every_run_ends_at_finalize() -> None:
         recorder = Recorder(**updates)
         run(recorder)
         assert recorder.visits[-1] == FINALIZE, updates
+
+
+def test_a_per_run_config_override_is_honoured_by_the_routers() -> None:
+    # Regression: LangGraph invokes a conditional edge with state alone, so routers
+    # registered as bare functions reached for the global settings() and ignored
+    # any override. `--max-steps 1` ran two steps before this was bound at build
+    # time. Every budget-breach eval case would have run on default budgets.
+    def reflect(_state: ResearchState, _n: int) -> dict[str, Any]:
+        return {"reflect_decision": "continue"}  # never voluntarily stops
+
+    recorder = Recorder(**{ACT: {"step": 1}, REFLECT: reflect})
+    result = run(recorder, cfg=config(max_steps=1))
+
+    assert result["step"] == 1, "the run must stop after exactly one step"
+    assert recorder.visits.count(ACT) == 1
+    assert recorder.visits == [PLAN, ACT, OBSERVE, FINALIZE]
 
 
 def test_budgets_trip_before_langgraph_recursion_limit() -> None:

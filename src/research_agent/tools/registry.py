@@ -28,8 +28,14 @@ REGISTRY: dict[str, ToolSpec] = {
 
 
 def openai_schemas(names: list[str] | None = None) -> list[dict[str, Any]]:
-    """Function definitions for the `tools=` parameter, in registry order."""
-    selected = names or list(REGISTRY)
+    """Function definitions for the `tools=` parameter, in registry order.
+
+    `names is None` means "all tools"; an *empty* list means "none". The
+    distinction matters: `names or list(REGISTRY)` would treat an empty list as
+    falsy and hand back every tool, which is exactly the case where every tool has
+    hit its per-run cap — silently undoing the budget it was asked to enforce.
+    """
+    selected = list(REGISTRY) if names is None else names
     return [REGISTRY[name].openai_schema() for name in selected if name in REGISTRY]
 
 
