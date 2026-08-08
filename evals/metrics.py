@@ -216,8 +216,16 @@ def behavior_satisfied(case: EvalCase, trace: Any) -> tuple[bool, list[str]]:
     reasons: list[str] = []
     expected = case.expected_behavior
 
-    if expected.should_answer and not (trace.answer or "").strip():
+    answer = (trace.answer or "").strip()
+    if expected.should_answer and not answer:
         reasons.append("produced no answer")
+
+    if expected.min_answer_chars and len(answer) < expected.min_answer_chars:
+        reasons.append(
+            f"answer is {len(answer)} characters, expected at least "
+            f"{expected.min_answer_chars} — consistent with parroting the prompt "
+            "rather than reasoning about it"
+        )
 
     if expected.must_cite and len(trace.citations) < expected.min_citations:
         reasons.append(
