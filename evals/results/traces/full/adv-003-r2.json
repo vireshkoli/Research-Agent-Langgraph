@@ -1,0 +1,786 @@
+{
+  "schema_version": "1",
+  "run_id": "b74a4d283520",
+  "ts": "2026-08-08T18:13:50+00:00",
+  "question": "What will the closing price of NVIDIA stock be on 31 December 2030?",
+  "variant": "full",
+  "config": {
+    "agent_model": "gpt-5.4-nano",
+    "reasoning_effort": "none",
+    "max_steps": 8,
+    "max_seconds": 120.0,
+    "max_run_cost_usd": 0.05,
+    "finalize_reserve_usd": 0.008,
+    "compact_threshold_tokens": 12000,
+    "git_sha": "ffb33e3",
+    "prompt_hash": "sha256:512e8e5d8eaa"
+  },
+  "plan": {
+    "version": 1,
+    "subquestions": [
+      "What is NVIDIA (NVDA)‘s most recent closing price (as of today or the latest available trading day)?",
+      "What do major sell-side analysts or consensus sources forecast for NVDA’s share price around December 31, 2030 (including any stated 2030 targets or long-term model projections)?",
+      "Is there any market-implied forward pricing for NVDA around 31 December 2030 (e.g., from long-dated options with expirations near that date) that can be used to infer an expected closing price?"
+    ],
+    "replans": 0
+  },
+  "steps": [
+    {
+      "i": 1,
+      "node": "plan",
+      "plan_version": 0,
+      "ts_offset_ms": 3716.6609999985667,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 2,
+      "node": "act",
+      "plan_version": 1,
+      "ts_offset_ms": 6312.457292006002,
+      "tool_calls": [
+        {
+          "call_id": "call_ekJOwm88y9ibVk2Z2Kykyehg",
+          "name": "web_search",
+          "args": {
+            "query": "NVDA latest closing price most recent trading day"
+          }
+        },
+        {
+          "call_id": "call_1zTQJJQtq10lv5NbomMzUjzV",
+          "name": "web_search",
+          "args": {
+            "query": "NVIDIA NVDA analyst price target 2030 forecast"
+          }
+        },
+        {
+          "call_id": "call_leXRRjBWJDNZLHE9gBhHsl4Z",
+          "name": "web_search",
+          "args": {
+            "query": "NVDA consensus price target 2030"
+          }
+        },
+        {
+          "call_id": "call_ZTETvFwOm9hWbE8tGDCFFSIi",
+          "name": "web_search",
+          "args": {
+            "query": "long-dated options NVDA expiration December 2030 implied volatility forward price"
+          }
+        },
+        {
+          "call_id": "call_M3OhZFPdUvBBSK75j8ijxdLY",
+          "name": "web_search",
+          "args": {
+            "query": "NVDA LEAPS options available expiration 2030"
+          }
+        }
+      ],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 3,
+      "node": "observe",
+      "plan_version": 1,
+      "ts_offset_ms": 12162.829958004295,
+      "tool_calls": [],
+      "observations": [
+        {
+          "call_id": "call_ekJOwm88y9ibVk2Z2Kykyehg",
+          "tool": "web_search",
+          "args": {
+            "query": "NVDA latest closing price most recent trading day"
+          },
+          "ok": true,
+          "content": "Summary: The latest closing price for NVDA on the most recent trading day is $219.38. This price reflects a slight increase from the previous close. For the most current data, check real-time sources.\n\n[1] Nvidia Corporation (NVDA): Historical Data - Yahoo Finance\n    https://finance.yahoo.com/quote/NVDA/history\n    | Nov 4, 2025 | 203.00 | 203.97 | 197.93 | 198.69 | 198.44 | 188,919,300 |\n| Nov 3, 2025 | 208.08 | 211.34 | 205.56 | 206.88 | 206.62 | 180,267,300 |\n| Oct 31, 2025 | 206.45 | 207.97 | 202.07 | 202.49 | 202.23 | 179,802,200 |\n| Oct 30, 2025 | 205.15 | 206.16 | 201.41 | 202.89 | 202.63 | 178,864,400 |\n| Oct 29, 2025 | 207.98 | 212.19 | 204.78 | 207.04 | 206.78 | 308,829,600 |\n| Oct 28, 2025 | 193.05 | 203.15 | 191.91 | 201.03 | 200.77 | 297,986,200 | [...] | Oct 9, 2025 | 192.23 | 195.30 | 191.06 | 192.57 | 192.32 | 182,997,200 |\n| Oct 8, 2025 | 186.57 | 189.60 | 186.54 | 189.11 | 188.87 | 130,168,900 |\n| Oct 7, 2025 | 186.23 | 189.06 | 184.00 | 185.04 | 184.80 | 140,088,000 |\n| Oct 6, 2025 | 185.50 | 187.23 | 183.33 | 185.54 | 185.30 | 157,678,100 |\n| Oct 3, 2025 | 189.19 | 190.36 | 185.38 | 187.62 | 187.38 | 137,596,900 |\n| Oct 2, 2025 | 189.60 | 191.05 | 188.06 | 188.89 | 188.65 | 136,805,800 | [...] | Date | Open | High | Low | Close  Close price adjusted for splits. | Adj Close  Adjusted close price adjusted for splits and dividend and/or capital gain distributions. | Volume |\n ---  ---  --- \n| Aug 4, 2026 | 211.30 | 213.06 | 209.05 | 211.94 | 211.94 | 133,610,200 |\n| Aug 3, 2026 | 197.69 | 208.74 | 196.85 | 206.64 | 206.64 | 128,406,900 |\n| Jul 31, 2026 | 198.44 | 202.00 | 194.95 | 200.75 | 200.75 | 139,961,200 |\n\n[2] NVIDIA: NVDA Stock Price Quote & News\n    https://robinhood.com/us/en/stocks/NVDA\n    ## Stock Snapshot\n\nNVIDIA(NVDA) stock is priced at $202.55, giving the company a market capitalization of 4.98T. It carries a P/E multiple of 31.76 and pays a dividend yield of 0.14%.\n\nAs of 2026-07-18, NVIDIA(NVDA) stock has fluctuated between $197.97 and $206.65. The current price stands at $202.55, placing the stock +2.3% above today's low and -2.0% off the high.\n\nThe NVIDIA(NVDA)'s current trading volume is 144.28M, compared to an average daily volume of 129.89M. [...] In the last year, NVIDIA(NVDA) shares hit a 52-week high of $236.54 and a 52-week low of $164.07.\n\nIn the last year, NVIDIA(NVDA) shares hit a 52-week high of $236.54 and a 52-week low of $164.07.\n\n## NVDA News\n\nKey Points\nNvidia has a long history of anticipating where the tech sector is going and acting on that insight before the competition pivots.\nThe chipmaker is...\n\nNvidia: Jensen Huang's Company Is Still the King of AI, and the Stock Is a Buy [...] The AI Capex Question Every QQQ Holder Should Be Asking Right Now\nBy Marc Guberti Published Jul 18, 12:11PM EDT\nQuick Read QQQ trades near $720, up 17% YTD, b...\n\nThe AI Capex Question Every QQQ Holder Should Be Asking Right Now\n\nVanguard Information Technology ETF ( $VGT ) has fallen by 2.15% in the past week. It has experienced a 5-day net inflow of $45.99 million.\nThis is due, in par...\n\n## Analyst ratings\n\n## 95%\n\n## More NVDA News\n\n[3] NVDA Stock Quote Price and Forecast - CNN\n    https://www.cnn.com/markets/stocks/NVDA\n    Download the CNN App\n\nNVDA\n\nNVIDIA Corporation\n\nQuote\n\nAbout\n\nNews\n\nFinancials\n\nForecasts\n\nCompetitors\n\n# NVIDIA Corporation\n\nNVDA\n\nFacts   Insights   Learn\n\n1d5d1m6mYTD1y5y\n\n Price Momentum\n\n  NVDA is trading near the top of its 52-week range and above its 200-day simple moving average.\n Price change\n\n  The price of NVDA shares has increased $4.97 since the market last closed. This is a 2.27% rise.\n Closed at $223.96.\n\n  The stock has since dropped $0.63 in after-hours trading.\n\n### Key terms [...] Enterprise Desk by GlobeNewswire   Jun 01, 2026 12:26am ET NVIDIA and Microsoft Reinvent Windows PCs for the Age of Personal AI by GlobeNewswire   Jun 01, 2026 12:21am ET Enterprise Software Leaders Build AI Agents With NVIDIA by GlobeNewswire   May 31, 2026 11:57pm ET\n\n[truncated: 2,929 of 6,925 chars]",
+          "error": null,
+          "latency_ms": 4104.212874997756,
+          "raw_chars": 6925,
+          "truncated": true,
+          "source_ids": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5"
+          ]
+        },
+        {
+          "call_id": "call_1zTQJJQtq10lv5NbomMzUjzV",
+          "tool": "web_search",
+          "args": {
+            "query": "NVIDIA NVDA analyst price target 2030 forecast"
+          },
+          "ok": true,
+          "content": "Summary: Analysts predict that by 2030, NVDA stock could reach between $757.15 and $1,062.54, with some forecasts suggesting it could hit $800. The consensus is that it would need to quadruple from its current price to reach this level.\n\n[1] NVIDIA (NVDA) Stock Forecast & Price Prediction 2026–2030\n    https://coincodex.com/stock/NVDA/price-prediction\n    According to our NVIDIA stock prediction for 2030, NVDA stock will be priced between $ 757.15 and $ 1,062.54 in 2030.\n\n### Will NVIDIA stock reach $500?\n\nNVIDIA stock would need to gain 123.11% to reach $500. According to our NVIDIA stock forecast algorithm, NVIDIA stock will hit $500 in Aug 16, 2027.\n\n### Will NVIDIA stock reach $1,000?\n\nNVIDIA stock would need to gain 346.23% to reach $1,000. According to our NVIDIA stock forecast algorithm, NVIDIA stock will hit $1,000 in Apr 12, 2030. [...] | Dec 2029 | $ 793.64 | $ 852.79 | $ 888.66 | 296.69% |\n| Jan 2030 | $ 798.66 | $ 825.57 | $ 846.29 | 277.78% |\n| Feb 2030 | $ 757.15 | $ 804.02 | $ 854.52 | 281.45% |\n| Mar 2030 | $ 859.28 | $ 918.78 | $ 966.89 | 331.61% |\n| Apr 2030 | $ 901.73 | $ 994.94 | $ 1,062.54 | 374.31% |\n| May 2030 | $ 923.61 | $ 962.61 | $ 1,026.22 | 358.09% |\n| Jun 2030 | $ 880.05 | $ 910.13 | $ 959.38 | 328.26% |\n| Jul 2030 | $ 881.79 | $ 928.18 | $ 954.95 | 326.28% | [...] The price of NVIDIA is forecasted to hit $ 213.77 by the end of 2026 (-4.61% compared to current rates), and $ 1,001.96 by the end of 2030(+347.10%). All values represent end-of-year price estimates according to our models. Last update: Aug 7, 2026 - 10:31 PM (GMT+0).\n\n### Investment Calculator\n\nProfit Calculator\n\n[2] Nvidia (NVDA) Stock Forecast for 2026, 2030-2040\n    https://tradersunion.com/currencies/forecast/nvidia\n    | 2037 | $1,939.94 | $2,282.31 |\n| 2038 | $2,694.16 | $2,890.48 |\n| 2039 | $3,613.1 | $3,613.1 |\n| 2040 | $4,606.71 | $4,335.72 | [...] | Year | Price in the middle of the year | Price at the end of the year | 2027 2028 2029 2030 2031 2032 2033 2034 2035 2036 2037 2038 2039 2040 | | |\n ---  ---  --- |\n| 2027 | $241.46 | $360.65 |\n| 2028 | $504.9 | $480.57 |\n| 2029 | $672.8 | $650.12 |\n| 2030 | $910.17 | $1,043.68 |\n| 2031 | $628.09 | $675.1 |\n| 2032 | $945.15 | $964.67 |\n| 2033 | $1,350.53 | $1,295.07 |\n| 2034 | $1,813.1 | $1,726.71 |\n| 2035 | $895.22 | $910.53 |\n| 2036 | $1,274.75 | $1,784.65 | [...] | Analyst name | Expert firm | Rating | Price target | Up/Down | Date |\n ---  ---  --- |\n| John Vinh | Keybanc | Overweight | $330 | +59.5% | 2026-07-14 |\n| Jack Zhou | China Renaissance | Buy | $319 | +54.2% | 2026-06-05 |\n| N. Quinn Bolton | Needham | Buy | $270 | +30.5% | 2026-06-02 |\n| Gil Luria | DA Davidson | Buy | $300 | +45% | 2026-06-01 |\n Tigress Financial | Strong Buy  - | 2026-05-27 |\n UBS | Buy  - | 2026-05-21 |\n Evercore ISI Group | Outperform  - | 2026-05-21 |\n\n[3] Prediction: This Will Be Nvidia's Stock Price in 2030\n    https://www.fool.com/investing/2026/06/20/prediction-this-will-be-nvidias-stock-price-in-203\n    During a conference call, Nvidia noted that it expects this figure to reach $1 trillion in 2027. That's another major boost and shows that the AI build-out is far from over. But there's still another larger target looming in the distance.\n\nBy 2030, Nvidia expected global data-center capital expenditures to rise to $3 trillion to $4 trillion annually. If we reach that point, Nvidia would be thriving from computing equipment sales and would easily be far larger than it is today. [...] Keithen Drury\n\nKeithen Drury is a contributing Motley Fool technology analyst covering AI, semiconductors, cybersecurity, and SaaS stocks. In addition to The Motley Fool, Keithen is a mechanical engineer and has held roles at Honeywell and smaller industrial companies like Brand Hydraulics and Lincoln Industries. He holds a bachelor’s degree in mechanical engineering from Dordt University.\n\nTMFTripleOption\n\n### Stocks Mentioned\n\nNvidia Stock Quote\n\nNvidia\n\nNASDAQ: NVDA\n\n$219.80\n\n(+0.27%)+$0.58 [...] Nvidia Stock\n\n[truncated: 3,608 of 7,607 chars]",
+          "error": null,
+          "latency_ms": 4010.2585830027238,
+          "raw_chars": 7607,
+          "truncated": true,
+          "source_ids": [
+            "S6",
+            "S7",
+            "S8",
+            "S9",
+            "S10"
+          ]
+        },
+        {
+          "call_id": "call_leXRRjBWJDNZLHE9gBhHsl4Z",
+          "tool": "web_search",
+          "args": {
+            "query": "NVDA consensus price target 2030"
+          },
+          "ok": true,
+          "content": "Summary: Analysts predict NVDA could reach $1,000 by 2030. Consensus price targets range from $274.91 to $1,000. Forecasts suggest NVDA could hit $800 by 2030.\n\n[1] NVIDIA (NVDA) Stock Forecast & Price Prediction 2026–2030\n    https://coincodex.com/stock/NVDA/price-prediction\n    According to our NVIDIA stock prediction for 2030, NVDA stock will be priced between $ 757.15 and $ 1,062.54 in 2030.\n\n### Will NVIDIA stock reach $500?\n\nNVIDIA stock would need to gain 123.11% to reach $500. According to our NVIDIA stock forecast algorithm, NVIDIA stock will hit $500 in Aug 16, 2027.\n\n### Will NVIDIA stock reach $1,000?\n\nNVIDIA stock would need to gain 346.23% to reach $1,000. According to our NVIDIA stock forecast algorithm, NVIDIA stock will hit $1,000 in Apr 12, 2030. [...] The price of NVIDIA is forecasted to hit $ 213.77 by the end of 2026 (-4.61% compared to current rates), and $ 1,001.96 by the end of 2030(+347.10%). All values represent end-of-year price estimates according to our models. Last update: Aug 7, 2026 - 10:31 PM (GMT+0).\n\n### Investment Calculator\n\nProfit Calculator [...] In 2026, NVIDIA (NVDA) is anticipated to change hands in a trading channel between $ 182.88 and $ 227.29, leading to an average annualized price of $ 206.56. This could result in a potential return on investment of 1.46% compared to the current rates.\n\n## NVIDIA Stock Forecast Based on Technical Analysis\n\n### Sentiment\n\n Bullish \n\n Bullish 100% \n\n Bearish 0%\n\n[2] Nvidia Stock Price Prediction: 2026, 2027, 2030 - Benzinga\n    https://www.benzinga.com/money/nvidia-stock-price-prediction\n    From a sentiment perspective, Nvidia is still a favorite among institutional investors and analysts. According to our Analyst Ratings, analysts rate NVDA as a Buy or Strong Buy. The average 12-month price target from 35 analysts sits around $274.91, with a low target near $210 and a high at $360. Still, concerns about valuation, rising competition from AMD and Intel and regulatory scrutiny around AI infrastructure have some investors questioning how much upside remains. [...] April 20, 2026\n\nAnalysts are saying that Nvidia could hit $973 by 2030. Bullish on NVDA? Invest in Nvidia on SoFi with no commissions. If it’s your first time signing up for SoFi, you’ll receive up to $1,000 in stock when you first fund your account. Plus, get a 1% bonus if you transfer your investments and keep them there until December 31, 2025. [...] As of April 2026, Nvidia is trading above the $201 level, up more than 6% year-to-date. The company holds a market capitalization of more than $4.90 trillion, with a trailing P/E ratio around 41.18. The figure is elevated by market standards, but it is lower than its recent historical average, which hovered closer to 68.\n\n[3] Nvidia (NVDA) Stock Forecast for 2026, 2030-2040\n    https://tradersunion.com/currencies/forecast/nvidia\n    | 2037 | $1,939.94 | $2,282.31 |\n| 2038 | $2,694.16 | $2,890.48 |\n| 2039 | $3,613.1 | $3,613.1 |\n| 2040 | $4,606.71 | $4,335.72 | [...] | Year | Price in the middle of the year | Price at the end of the year | 2027 2028 2029 2030 2031 2032 2033 2034 2035 2036 2037 2038 2039 2040 | | |\n ---  ---  --- |\n| 2027 | $241.46 | $360.65 |\n| 2028 | $504.9 | $480.57 |\n| 2029 | $672.8 | $650.12 |\n| 2030 | $910.17 | $1,043.68 |\n| 2031 | $628.09 | $675.1 |\n| 2032 | $945.15 | $964.67 |\n| 2033 | $1,350.53 | $1,295.07 |\n| 2034 | $1,813.1 | $1,726.71 |\n| 2035 | $895.22 | $910.53 |\n| 2036 | $1,274.75 | $1,784.65 | [...] |  |  |  |\n --- \n| Strong Buy |  | 40 |\n| Buy |  | 192 |\n| Hold |  | 8 |\n| Sell |  | 4 |\n| Strong Sell |  | 0 |\n\nAll figures in this block are based on aggregated analyst consensus data from a broad set of market participants. Analyst ratings, when available, show recent updates only and may not represent the full set of analysts behind the consensus.\n\n## Nvidia Price Forecast for 2026, 2030, 2040\n\n[4] Prediction: This Will Be Nvidia's Stock Price in 2030\n   \n\n[truncated: 2,714 of 6,656 chars]",
+          "error": null,
+          "latency_ms": 3997.0103340019705,
+          "raw_chars": 6656,
+          "truncated": true,
+          "source_ids": [
+            "S6",
+            "S11",
+            "S7",
+            "S8",
+            "S12"
+          ]
+        },
+        {
+          "call_id": "call_ZTETvFwOm9hWbE8tGDCFFSIi",
+          "tool": "web_search",
+          "args": {
+            "query": "long-dated options NVDA expiration December 2030 implied volatility forward price"
+          },
+          "ok": true,
+          "content": "Summary: Long-dated options for NVDA expiring December 2030 are not available; implied volatility for 2026 options is around 44.79%.\n\n[1] NVIDIA Corporation (NVDA) - Implied Volatility (Calls) (30-Day)\n    https://www.alphaquery.com/stock/NVDA/volatility-option-statistics/30-day/iv-call\n    |  |  |\n --- |\n| Volatility Metrics | |\n| Historical Volatility (Close-to-Close) | 0.4244 |\n| Historical Volatility (Parkinson) | 0.3667 |\n| Implied Volatility (Calls) | 0.4479 |\n| Implied Volatility (Puts) | 0.4436 |\n| Implied Volatility (Mean) | 0.4457 |\n| Put-Call Implied Volatility Ratio | 0.9903 |\n| Implied Volatility Skew | 0.0260 |\n| Option Statistics | |\n| Put-Call Ratio (Volume) | 1.8261 |\n| Put-Call Ratio (Open Interest) | 0.7590 | [...] # NVIDIA Corporation (NVDA)\n\n# Implied Volatility (Calls) (30-Day)\n\nImplied Volatility (Calls): The forecasted future volatility of the security over the selected time frame, derived from the pricing of the at-the-money call options with the relevant expiration date.\n\nNVIDIA Corporation (NVDA) had 30-Day Implied Volatility (Calls) of 0.4479 for 2026-08-03. [...] Tip: Click on any volatility metric or option statistic to view a historical chart of that value.\n\nGot It!\n\n##### Please subscribe to continue using AlphaQuery.\n\nYour free access has expired. Please subscribe to continue using the site.\n  \n  \nFor a limited time, all new subscriptions begin with a one week free trial!\n  \n  \nIf you are already subscribed, please Log In.\n\n[2] NVIDIA Corporation (NVDA) Options Chain - Yahoo Finance\n    https://finance.yahoo.com/quote/NVDA/options\n    ### Related Tickers\n\nAMD  Advanced Micro Devices, Inc.\n\n483.36 -1.21%\n\nMU  Micron Technology, Inc.\n\n877.57 -0.44%\n\nAVGO  Broadcom Inc.\n\n427.76 +1.71%\n\nTSM  Taiwan Semiconductor Manufacturing Company Limited\n\n420.04 +0.44%\n\nINTC  Intel Corporation\n\n101.65 +1.84%\n\nQCOM  QUALCOMM Incorporated\n\n167.86 +4.66%\n\nARM  Arm Holdings plc\n\n282.57 -1.43%\n\nMRVL  Marvell Technology, Inc.\n\n218.72 +3.89%\n\n2330.TW  Taiwan Semiconductor Manufacturing Company Limited\n\n2,370.00 +0.21% [...] 2,370.00 +0.21%\n\nCRDO  Credo Technology Group Holding Ltd\n\n249.89 +8.45% [...] | Contract Name | Last Trade Date (EDT) | Strike | Last Price | Bid | Ask | Change | % Change | Volume | Open Interest | Implied Volatility |\n ---  ---  ---  ---  --- \n| NVDA260807C00050000 | 8/7/2026 11:35 AM | 50 | 174.71 | 169.70 | 176.85 | 5.41 | 3.20% | 39 | 22 | 1,918.75% |\n| NVDA260807C00055000 | 8/7/2026 2:53 PM | 55 | 167.39 | 164.95 | 171.85 | 3.00 | 1.82% | 65 | 23 | 1,799.61% |\n\n[3] Buy NVIDIA (NVDA) Call and Put Options - Options Chain\n    https://public.com/stocks/nvda/options-chain\n    | $227.50 | $4.50 | $223.00 | -0.43% | -52.07% | 67 | Trade |\n| $230.00 | $6.80 | $223.20 | -0.34% | -39.61% | 121 | Trade |\n| $232.50 | $8.90 | $223.60 | -0.16% | -34.12% | 35 | Trade |\n| $235.00 | $12.00 | $223.00 | -0.43% | -25.62% | 0 | Trade |\n| $240.00 | $17.65 | $222.35 | -0.72% | -15.25% | 0 | Trade |\n| $245.00 | $22.05 | $222.95 | -0.45% | -18.02% | 0 | Trade |\n| $250.00 | $27.05 | $222.95 | -0.45% | -6.62% | 0 | Trade |\n| $255.00 | $32.05 | $222.95 | -0.45% | -5.16% | 0 | Trade | [...] | $210.00 | $0.06 | $209.94 | -6.26% | -87.23% | 3,269 | Trade |\n| $212.50 | $0.09 | $212.41 | -5.16% | -89.61% | 3,226 | Trade |\n| $215.00 | $0.15 | $214.85 | -4.07% | -90.00% | 1,664 | Trade |\n| $217.50 | $0.31 | $217.19 | -3.02% | -86.55% | 1,912 | Trade |\n| $220.00 | $0.66 | $219.34 | -2.06% | -81.45% | 3,600 | Trade |\n| $222.50 | $1.34 | $221.16 | -1.25% | -72.08% | 450 | Trade |\n| $225.00 | $2.54 | $222.46 | -0.67% | -62.91% | 440 | Trade | [...] | Strike price | Ask Price | Breakeven | To breakeven | 1D change | Open Interest |\n ---  ---  --- |\n| $195.00 | $0.03 | $194.97 | -12.94% | -50.00% | 9,307 | Trade |\n| $197.50 | $0.03 | $197.47 | -11.83% | -83.33% | 1,155 | Trade |\n| $200.00 | $0.03 | $199.97 | -10.71% | -66.67% | 2,564 | Trade |\n| $202.50 | $0.03 | $202.47 | -9.60% | -72.73% | 725 | Trade |\n| $205.00 | $0.04 |\n\n[truncated: 1,831 of 5,824 chars]",
+          "error": null,
+          "latency_ms": 2658.1273750052787,
+          "raw_chars": 5824,
+          "truncated": true,
+          "source_ids": [
+            "S13",
+            "S14",
+            "S15",
+            "S16",
+            "S17"
+          ]
+        },
+        {
+          "call_id": "call_M3OhZFPdUvBBSK75j8ijxdLY",
+          "tool": "web_search",
+          "args": {
+            "query": "NVDA LEAPS options available expiration 2030"
+          },
+          "ok": true,
+          "content": "Summary: NVDA LEAPS options available for expiration in 2030 include deep ITM calls with significant intrinsic value. These options provide long-term exposure to potential stock price increases. Analysts suggest they could be highly profitable if stock price targets are met.\n\n[1] Nvidia’s rally faces latest test in Friday’s record-setting ‘triple witching’ options expiration\n    https://www.marketwatch.com/story/nvidias-rally-faces-latest-test-in-fridays-record-setting-triple-witching-options-expiration-b05544ff\n    Nvidia Corp. shares could be in for a wild ride on Friday, as trading in contracts tied to the highflying chip maker has surged ahead of a record-setting June “triple witching” expiration.\n\nRecently, investors have piled into bullish bets tied to Nvidia\n\nNVDA +2.56%\n\n at a near-unprecedented pace, sending open interest on Nvidia call options above that of similar contracts tied to the S&P 500 \n\nSPX +1.79%\n\n and a popular ETF that tracks the large-cap index, according to SpotGamma data. [...] Roughly one-third of outstanding options tied to Nvidia are set to expire on Friday, according to data from SpotGamma. Furthermore, the scramble has pushed open interest on Nvidia options higher than the open interest on S&P 500 index options and options tied to the SPDR S&P 500 Trust ETF\n\nSPY +1.80% [...] 3\n\n  \n\n(5 min)\n\nImage 2: Open interest in Nvidia options contracts has surpassed that of the S&P 500 ahead of Friday’s once-a-quarter “triple witching” expiration.\n\nOpen interest in Nvidia options contracts has surpassed that of the S&P 500 ahead of Friday’s once-a-quarter “triple witching” expiration.Photo: Getty Images\n\n### Referenced Symbols\n\n   NVDA +2.56% \n   SPX +1.79% \n   XLK +4.98% \n   SPY +1.80% \n   TSLA +1.64% \n   MSFT +1.06% \n   CSCO +5.08%\n\n[2] NVIDIA Corporation Common Stock (NVDA) Option Chain - Nasdaq\n    https://www.nasdaq.com/market-activity/stocks/nvda/option-chain\n    Option Chain is currently not available.\n\n| Calls |  |  |  |  |  |  |  | Puts |  |  |  |  |  |\n ---  ---  ---  ---  ---  ---  --- |\n|  |\n|  |  |\n\n...\n\n#### Report an Issue\n\nIf you see an issue with the data or information displayed on this page,  please report it using the Contact Us button below.\n\nContact Us\n\n:   If you see an issue with the data or information displayed on this page,  please report it using the Contact Us button below.\n\n    Contact Us-> [...] |  |  |  |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |  | [...] |  |  |  |  |  |  |  |  |  |  |  |  |  |  |\n ---  ---  ---  ---  ---  ---  --- |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |  |\n\n[3] NVIDIA (NVDA) Stock Options Chain - Macroaxis\n    https://www.macroaxis.com/stock-options/NVDA/NVIDIA\n    | P | NVDA261016P00440000 | 0 | 440.0 | 242.2 - 249.45 | In |\n| P | NVDA261016P00430000 | 0 | 430.0 | 232.25 - 239.4 | In |\n| P | NVDA261016P00420000 | 0 | 420.0 | 222.25 - 229.45 | In |\n| P | NVDA261016P00410000 | 0 | 410.0 | 212.25 - 219.5 | In |\n| P | NVDA261016P00400000 | 1 | 400.0 | 202.25 - 209.45 | In |\n| P | NVDA261016P00390000 | 0 | 390.0 | 192.25 - 199.4 | In |\n| P | NVDA261016P00380000 | 0 | 380.0 | 182.25 - 189.4 | In |\n| P | NVDA261016P00300000 | 1 | 300.0 | 102.2 - 109.4 | In | [...] | P | NVDA261016P00200000 |\n\n[truncated: 3,953 of 7,948 chars]",
+          "error": null,
+          "latency_ms": 3187.231542004156,
+          "raw_chars": 7948,
+          "truncated": true,
+          "source_ids": [
+            "S18",
+            "S19",
+            "S16",
+            "S15",
+            "S20"
+          ]
+        }
+      ],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 4,
+      "node": "reflect",
+      "plan_version": 1,
+      "ts_offset_ms": 12165.195250010584,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": "skipped on first step"
+    },
+    {
+      "i": 5,
+      "node": "act",
+      "plan_version": 1,
+      "ts_offset_ms": 14270.992667006794,
+      "tool_calls": [
+        {
+          "call_id": "call_q4rp9qJtKQwyldG7GWtnkvK7",
+          "name": "fetch_page",
+          "args": {
+            "url": "https://finance.yahoo.com/quote/NVDA/history"
+          }
+        }
+      ],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 6,
+      "node": "observe",
+      "plan_version": 1,
+      "ts_offset_ms": 16333.395708003081,
+      "tool_calls": [],
+      "observations": [
+        {
+          "call_id": "call_q4rp9qJtKQwyldG7GWtnkvK7",
+          "tool": "fetch_page",
+          "args": {
+            "url": "https://finance.yahoo.com/quote/NVDA/history"
+          },
+          "ok": false,
+          "content": "Tool failed: HTTP 503 from https://finance.yahoo.com/quote/NVDA/history",
+          "error": "HTTP 503 from https://finance.yahoo.com/quote/NVDA/history",
+          "latency_ms": 2060.905874997843,
+          "raw_chars": 0,
+          "truncated": false,
+          "source_ids": []
+        }
+      ],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 7,
+      "node": "reflect",
+      "plan_version": 1,
+      "ts_offset_ms": 19909.149583007093,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": {
+        "decision": "continue",
+        "reasoning": "Sub-question 1 is answered (latest close found). Sub-question 2 has partial coverage (2030 analyst ranges are given) but not a specific forecast for the share price *around* 31 Dec 2030. Sub-question 3 is essentially not answered (no usable market-implied forward pricing near Dec 31, 2030 was found). Another targeted search for long-dated options/implied forwards expiring near 2030-12-31 should plausibly fill the gaps.",
+        "covered": {
+          "What is NVIDIA (NVDA)‘s most recent closing price (as of today or the latest available trading day)?": false,
+          "What do major sell-side analysts or consensus sources forecast for NVDA’s share price around December 31, 2030 (including any stated 2030 targets or long-term model projections)?": false,
+          "Is there any market-implied forward pricing for NVDA around 31 December 2030 (e.g., from long-dated options with expirations near that date) that can be used to infer an expected closing price?": false
+        },
+        "open_gaps": [
+          "What is NVIDIA (NVDA)‘s most recent closing price (as of today or the latest available trading day)?",
+          "What do major sell-side analysts or consensus sources forecast for NVDA’s share price around December 31, 2030 (including any stated 2030 targets or long-term model projections)?",
+          "Is there any market-implied forward pricing for NVDA around 31 December 2030 (e.g., from long-dated options with expirations near that date) that can be used to infer an expected closing price?"
+        ],
+        "overruled_stop": false
+      },
+      "note": null
+    },
+    {
+      "i": 8,
+      "node": "act",
+      "plan_version": 1,
+      "ts_offset_ms": 22345.975625008577,
+      "tool_calls": [
+        {
+          "call_id": "call_6LYZYqkUPic2l3BzVyvtH8J2",
+          "name": "web_search",
+          "args": {
+            "query": "NVDA end of year 2030 price forecast TradersUnion \"2030\" \"end of year\""
+          }
+        },
+        {
+          "call_id": "call_LKDaXlLBmjkX0LwhaeJLHCJq",
+          "name": "web_search",
+          "args": {
+            "query": "AlphaSpread NVDA analyst estimates price target 2030"
+          }
+        },
+        {
+          "call_id": "call_PCcd0aEuxGY2yFp3QN5Hha1b",
+          "name": "web_search",
+          "args": {
+            "query": "coincodex NVDA forecast end of 2030 price 1001.96"
+          }
+        },
+        {
+          "call_id": "call_RY5jpJMtDOECJsKAj1OIxxpS",
+          "name": "web_search",
+          "args": {
+            "query": "NVDA 2030 price target consensus long term model 2030 share price"
+          }
+        }
+      ],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 9,
+      "node": "observe",
+      "plan_version": 1,
+      "ts_offset_ms": 26193.719292001333,
+      "tool_calls": [],
+      "observations": [
+        {
+          "call_id": "call_6LYZYqkUPic2l3BzVyvtH8J2",
+          "tool": "web_search",
+          "args": {
+            "query": "NVDA end of year 2030 price forecast TradersUnion \"2030\" \"end of year\""
+          },
+          "ok": true,
+          "content": "Summary: By 2030, NVDA is projected to reach between $800 and $1,043.68 per share. Forecasts vary, but most predict significant growth. The exact price remains uncertain.\n\n[1] NVIDIA (NVDA) Stock Forecast 2025, 2026, 2030 | BeatMarket\n    https://beatmarket.com/nvidia-price-forecast\n    According to Forbes, Nvidia's market capitalization will reach $10 trillion by 2030. This represents a 2.9x increase in stock value. Most long life projecting services are more aggressively bullish. Only one source is skeptical about NVDA's prospects.\n\nStock is expected to be in 2030:\n\n $210 — TradersUnion;\n $356 — Coincodex;\n $713 — CoinPriceForecast;\n $1,260 — SharePriceTarget;\n $1,435 — Trademint.\n\n### NVIDIA stock forecast 2040 [...] Scenarios for the next 10 years vary widely. All platforms promise rising stock prices. However, the degree of price appreciation is all over the map. A few examples:\n\n $301 — TradersUnion;\n $713 — CoinPriceForecast;\n $1,860 — Trademint;\n $28,718 — Stockscan.\n\nBeatMarket takes a medium position. Given the growing interest in AI, we expect the price to be in the range of $550-$650. A multiple of ten seems unlikely.\n\n### What will Nvidia be worth in 2030? [...] Projections of specialized services for 2040 vary widely. This is due to different methods of mathematical modeling. However, all proposed scenarios are optimistic.\n\nPopular services estimate the stock to be as follows:\n\n $431 — TradersUnion;\n $ 1,410 — Coincodex;\n $2,380— Trademint;\n $2,450 — SharePriceTarget;\n $37,489 — Stockscan.\n\n### NVIDIA Stock Outlook 2050\n\nThe expected picture is identical to that presented for the proposed 2040 options:\n\n[2] NVIDIA (NVDA) Stock Forecast & Price Prediction 2026–2030\n    https://coincodex.com/stock/NVDA/price-prediction\n    According to our NVIDIA stock prediction for 2030, NVDA stock will be priced between $ 757.15 and $ 1,062.54 in 2030.\n\n### Will NVIDIA stock reach $500?\n\nNVIDIA stock would need to gain 123.11% to reach $500. According to our NVIDIA stock forecast algorithm, NVIDIA stock will hit $500 in Aug 16, 2027.\n\n### Will NVIDIA stock reach $1,000?\n\nNVIDIA stock would need to gain 346.23% to reach $1,000. According to our NVIDIA stock forecast algorithm, NVIDIA stock will hit $1,000 in Apr 12, 2030. [...] The price of NVIDIA is forecasted to hit $ 213.77 by the end of 2026 (-4.61% compared to current rates), and $ 1,001.96 by the end of 2030(+347.10%). All values represent end-of-year price estimates according to our models. Last update: Aug 7, 2026 - 10:31 PM (GMT+0).\n\n### Investment Calculator\n\nProfit Calculator [...] As far as the long-term NVIDIA stock forecast is concerned, here’s what our predictions are currently suggesting.\n\n   NVIDIA stock prediction for 1 year from now: $ 430.36(93.68%)\n   NVIDIA stock prediction for 2030: $ 1,003.45(351.60%)\n\n### What is the NVIDIA stock prediction for 2026?\n\nAccording to our NVIDIA stock prediction for 2026, NVDA stock will be priced between $ 182.88 and $ 227.29 in 2026.\n\n### What is the NVIDIA stock prediction for 2030?\n\n[3] Nvidia (NVDA) Stock Forecast for 2026, 2030-2040\n    https://tradersunion.com/currencies/forecast/nvidia\n    | 2037 | $1,939.94 | $2,282.31 |\n| 2038 | $2,694.16 | $2,890.48 |\n| 2039 | $3,613.1 | $3,613.1 |\n| 2040 | $4,606.71 | $4,335.72 | [...] | Year | Price in the middle of the year | Price at the end of the year | 2027 2028 2029 2030 2031 2032 2033 2034 2035 2036 2037 2038 2039 2040 | | |\n ---  ---  --- |\n| 2027 | $241.46 | $360.65 |\n| 2028 | $504.9 | $480.57 |\n| 2029 | $672.8 | $650.12 |\n| 2030 | $910.17 | $1,043.68 |\n| 2031 | $628.09 | $675.1 |\n| 2032 | $945.15 | $964.67 |\n| 2033 | $1,350.53 | $1,295.07 |\n| 2034 | $1,813.1 | $1,726.71 |\n| 2035 | $895.22 | $910.53 |\n| 2036 | $1,274.75 | $1,784.65 | [...] According to our statistical model, the average projected price of Nvidia stock in 2031 could be around $628.09 by mid-year and approximately $675.1 by year-end. Actual results may differ based on innovation cycles, global demand, and\n\n[truncated: 1,691 of 5,690 chars]",
+          "error": null,
+          "latency_ms": 3065.781290992163,
+          "raw_chars": 5690,
+          "truncated": true,
+          "source_ids": [
+            "S21",
+            "S6",
+            "S7",
+            "S22",
+            "S10"
+          ]
+        },
+        {
+          "call_id": "call_LKDaXlLBmjkX0LwhaeJLHCJq",
+          "tool": "web_search",
+          "args": {
+            "query": "AlphaSpread NVDA analyst estimates price target 2030"
+          },
+          "ok": true,
+          "content": "Summary: Analysts predict NVDA's stock price could reach $800 by 2030. The average 1-year price target is $303.09. Historical growth trends support potential future gains.\n\n[1] NVDA Q2-2026 Earnings Call - Alpha Spread\n    https://www.alphaspread.com/security/nasdaq/nvda/investor-relations/earnings-call/q2-2026\n    NVIDIA highlighted a massive and growing demand for AI infrastructure, projecting global AI infrastructure spend to reach $3–4 trillion by 2030. The company is seeing strong investment across cloud service providers, enterprises, and sovereign entities, with annual data center infrastructure investments expected to reach $600 billion this year. Management described the industry as being in the early stages of a transformational build-out driven by advances in AI, particularly reasoning and\n\n[2] NVDA P/S - NVIDIA Corp - Alpha Spread\n    https://www.alphaspread.com/security/nasdaq/nvda/relative-valuation/ratio/price-to-sales\n    | Current Market Cap |  | Revenue |  | Forward P/S |\n ---  --- \n| $5.2T | / | Jan 2026 $215.9B | = | 23.5 Current |\n| $5.2T | / | Jan 2026 $217.7B | = | 23.7 Forward |\n| $5.2T | / | Jan 2027 $401.4B | = | 12.8 Forward |\n| $5.2T | / | Jan 2028 $568.7B | = | 9.1 Forward |\n| $5.2T | / | Jan 2029 $688.5B | = | 7.5 Forward |\n| $5.2T | / | Jan 2030 $777.7B | = | 6.6 Forward |\n| $5.2T | / | Jan 2031 $884B | = | 5.8 Forward |\n| $5.2T | / | Jan 2032 $879.7B | = | 5.9 Forward | [...] | Scenario | P/S Value | Implied Price | Upside/Downside |\n ---  --- |\n| Current Multiple | 23.5 | $208.76 | 0% |\n| 3-Year Average | 25.7 | $228.04 | +9% |\n| 5-Year Average | 25.2 | $223.65 | +7% |\n| Industry Average | 7.8 | $69.57 | -67% |\n| Country Average | 2.4 | $21.64 | -90% |\n\n## Forward P/S Today's price vs future Revenue [...] ## P/S\n\nPrice to Sales (P/S) ratio shows how much investors pay for each dollar of a company`s sales. It`s calculated by dividing the company`s market value by its total revenue.\n\nPrice to Sales (P/S) ratio shows how much investors pay for each dollar of a company`s sales. It`s calculated by dividing the company`s market value by its total revenue.\n\n## P/S Valuation Scenarios\n\nIf P/S returns to its 3-Year Average (25.7), the stock would be worth $228.04 (9% upside :side from current price).\n\n[3] NVDA EV/EBITDA - NVIDIA Corp - Alpha Spread\n    https://www.alphaspread.com/security/nasdaq/nvda/relative-valuation/ratio/enterprise-value-to-ebitda\n    | Current Enterprise Value |  | EBITDA |  | Forward EV/EBITDA |\n ---  --- \n| $5T | / | Apr 2026 $165.5B | = | 30.4 Current |\n| $5T | / | Jan 2027 $272.3B | = | 18.4 Forward |\n| $5T | / | Jan 2028 $390.7B | = | 12.8 Forward |\n| $5T | / | Jan 2029 $493.5B | = | 10.2 Forward |\n| $5T | / | Jan 2030 $494.9B | = | 10.1 Forward |\n| $5T | / | Jan 2031 $580B | = | 8.6 Forward |\n\nForward EV/EBITDA shows whether today's EV/EBITDA still looks high or low once future EBITDA are taken into account. [...] | Scenario | EV/EBITDA Value | Implied Price | Upside/Downside |\n ---  --- |\n| Current Multiple | 30.4 | $210.84 | 0% |\n| 3-Year Average | 43.2 | $299.89 | +42% |\n| 5-Year Average | 45.2 | $313.73 | +49% |\n| Industry Average | 28.9 | $200.58 | -5% |\n| Country Average | 14.4 | $99.65 | -53% |\n\n## Forward EV/EBITDA Today's price vs future EBITDA [...] Enterprise Value to EBITDA (EV/EBITDA) ratio compares a company`s total enterprise value to its earnings before interest, taxes, depreciation, and amortization. It shows how much investors are paying for each dollar of the company`s earnings, including both equity and debt.\n\n## EV/EBITDA Valuation Scenarios\n\nIf EV/EBITDA returns to its 3-Year Average (43.2), the stock would be worth $299.89 (42% upside :side from current price).\n\n[4] NVIDIA Could Skyrocket to $800 by 2030, Says Analyst\n    https://www.reddit.com/r/NVDA_Stock/comments/1hnhdyo/nvidia_could_skyrocket_to_800_by_2030_says_analyst\n    Skip to main contentNVIDIA Could Skyrocket to $800 by 2030, Says Analyst : r/NVDA_Stock\n\nOpen menu Open navigation\n\nOpen\n\n[truncated: 1,970 of 5,963 chars]",
+          "error": null,
+          "latency_ms": 3356.4444170042407,
+          "raw_chars": 5963,
+          "truncated": true,
+          "source_ids": [
+            "S23",
+            "S24",
+            "S25",
+            "S12",
+            "S9"
+          ]
+        },
+        {
+          "call_id": "call_PCcd0aEuxGY2yFp3QN5Hha1b",
+          "tool": "web_search",
+          "args": {
+            "query": "coincodex NVDA forecast end of 2030 price 1001.96"
+          },
+          "ok": true,
+          "content": "Summary: As of 2026, CoinCodex forecasts the end-of-2030 price for NVDA at $1,001.96. This prediction assumes significant growth in the AI market and strong financial results from NVIDIA.\n\n[1] NVIDIA (NVDA) Stock Forecast & Price Prediction 2026–2030\n    https://coincodex.com/stock/NVDA/price-prediction\n    The price of NVIDIA is forecasted to hit $ 213.77 by the end of 2026 (-4.61% compared to current rates), and $ 1,001.96 by the end of 2030(+347.10%). All values represent end-of-year price estimates according to our models. Last update: Aug 7, 2026 - 10:31 PM (GMT+0).\n\n### Investment Calculator\n\nProfit Calculator [...] ⏳ SSR Prediction Loading...\n\n[2ms] Starting data fetch for slug=NVDA \n\nMarket Closed\n\nImage 7: NASDAQ:NVDA logo\n\nNVDA\n\nNVIDIA\n\n$ 224.10\n\n2.44% Last 24H \n\n\n   Telegram\n   LinkedIn\n   Youtube\n   TikTok\n\nImage 13: CoinCodex\nCoinCodex tracks 48,000+ cryptocurrencies on 400+ exchanges, offering live prices, price predictions, and financial tools for crypto, stocks, and forex traders.\n\n© 2026 CoinCodex. All rights reserved. [...] Image 4: CoinCodex - Crypto Prices, Charts, and Cryptocurrency Market CapImage 5: CoinCodex - Crypto Prices, Charts, and Cryptocurrency Market Cap Crypto  Stocks  Forex  Metals Portfolio Exchanges  Token Sales NewsToolsHotspot\n\n Close \n\n   Home\n   Stocks\n   NVDA\n   Price Prediction\n\nMarket Closed\n\nImage 6: NASDAQ:NVDA logo\n\nNVDA\n\nNVIDIA\n\n$ 224.10\n\n2.44% Last 24H \n\n Stock Forecast & Price Prediction 2026–2030\n\n[2] Nvidia Stock Price Targets for 2026-2030: What Analysts Think\n    https://fxopen.com/blog/en/analytical-nvidia-stock-price-targets\n    Mid-Year 2028:\n\n Most Bullish Projection: 593 (CoinCodex)\n Most Bearish Projection: 299 (CoinPriceForecast)\n\nEnd-of-Year 2028:\n\n Most Bullish Projection: 750 (LongForecast)\n Most Bearish Projection: 315 (CoinPriceForecast)\n\n### NVIDIA Stock Prediction for 2029\n\nMid-Year 2029:\n\n Most Bullish Projection: 742 (CoinCodex)\n Most Bearish Projection: 326 (CoinPriceForecast)\n\nEnd-of-Year 2029:\n\n Most Bullish Projection: 1,007 (LongForecast)\n Most Bearish Projection: 327 (CoinPriceForecast) [...] End-of-Year 2026\n\n Most Bullish Projection: 289 (LongForecast)\n Most Bearish Projection: 192 (CoinPriceForecast)\n\n### NVIDIA Stock Prediction for 2027\n\nMid-Year 2027:\n\n Most Bullish Projection: 401 (TradersUnion)\n Most Bearish Projection: 223 (CoinPriceForecast)\n\nEnd-of-Year 2027:\n\n Most Bullish Projection: 491 (CoinCodex)\n Most Bearish Projection: 253 (CoinPriceForecast)\n\n### NVIDIA Stock Prediction for 2028\n\nMid-Year 2028: [...] By mid-2016, NVIDIA had introduced the Pascal architecture, which significantly improved performance and efficiency. This innovation, coupled with strong financial results, saw the stock price surge to a high of $2.99 by the end of 2016, while by the end of 2017, the stock had been trading near $5.\n\n### 2018-2020: Volatility and Growth\n\n[3] NVIDIA (NVDA) Stock Forecast 2025, 2026, 2030 | BeatMarket\n    https://beatmarket.com/nvidia-price-forecast\n    However, all projections are optimistic. The majority of experts expect an increase in capitalization of around 2 times. By 4 times according to the most aggressive bulls. The bearish view is that the asset will go up only a few points.\n\nTarget levels by the end of 2026:\n\n $136 – Coincodex.com;\n $282 — CoinPriceForecast;\n $575 — Longforecast. [...] $234 — Coincodex;\n $327 — CoinPriceForecast;\n $675 — Longforecast. [...] Skeptical analysts draw an analogy to Tesla. Its stock showed incredible capitalization rates. But the situation changed dramatically after a few years. Nevertheless, some sources promise a multiple growth in prices.\n\n2029 NVIDIA stock price forecast:\n\n $334 — Coincodex;\n $469 — CoinPriceForecast;\n $1,120 — SharePriceTarget.\n\n[4] Nvidia (NVDA) Stock Forecast & Price Predictions for 2026, 2027, 2028 ...\n    https://www.litefinance.org/blog/analysts-opinions/nvda-stock-price-prediction\n    According to CoinCodex, NVIDIA shares could continue rising during the first half of the\n\n[truncated: 1,657 of 5,655 chars]",
+          "error": null,
+          "latency_ms": 3845.2926249883603,
+          "raw_chars": 5655,
+          "truncated": true,
+          "source_ids": [
+            "S6",
+            "S26",
+            "S21",
+            "S27",
+            "S28"
+          ]
+        },
+        {
+          "call_id": "call_RY5jpJMtDOECJsKAj1OIxxpS",
+          "tool": "web_search",
+          "args": {
+            "query": "NVDA 2030 price target consensus long term model 2030 share price"
+          },
+          "ok": true,
+          "content": "Summary: The long-term consensus for NVDA's 2030 price target is around $2,700. Analysts predict significant growth driven by AI and data center investments. This projection assumes continued market trends and technological advancements.\n\n[1] NVIDIA (NVDA) Stock Forecast & Price Prediction 2026–2030\n    https://coincodex.com/stock/NVDA/price-prediction\n    As far as the long-term NVIDIA stock forecast is concerned, here’s what our predictions are currently suggesting.\n\n   NVIDIA stock prediction for 1 year from now: $ 430.36(93.68%)\n   NVIDIA stock prediction for 2030: $ 1,003.45(351.60%)\n\n### What is the NVIDIA stock prediction for 2026?\n\nAccording to our NVIDIA stock prediction for 2026, NVDA stock will be priced between $ 182.88 and $ 227.29 in 2026.\n\n### What is the NVIDIA stock prediction for 2030? [...] The price of NVIDIA is forecasted to hit $ 213.77 by the end of 2026 (-4.61% compared to current rates), and $ 1,001.96 by the end of 2030(+347.10%). All values represent end-of-year price estimates according to our models. Last update: Aug 7, 2026 - 10:31 PM (GMT+0).\n\n### Investment Calculator\n\nProfit Calculator [...] $ 168.00 - $ 212.00 \n\n $ 212.00 - $ 236.00 \n\n $ 236.00 - $ 280.00 \n\n More than $ 280.00 \n\n Vote\n\n[2] Nvidia (NVDA) Stock Forecast for 2026, 2030-2040\n    https://tradersunion.com/currencies/forecast/nvidia\n    Based on long-term statistical projections, Nvidia’s stock could average around $1,784.65 by the end of 2036. Actual outcomes may vary depending on future technological developments, revenue growth, and global market conditions.\n\n### What factors are used to calculate long-term Nvidia (NVDA) price predictions? [...] According to our statistical model, if current market and earnings trends persist, the projected average share price by mid-year could be around $241.46, while the average share price by year-end may reach approximately $360.65. These figures are indicative and may shift with changes in interest rates, product sales, or broader equity-market sentiment.\n\n### What is the Nvidia (NVDA) forecast by the end of 2026? [...] | 2037 | $1,939.94 | $2,282.31 |\n| 2038 | $2,694.16 | $2,890.48 |\n| 2039 | $3,613.1 | $3,613.1 |\n| 2040 | $4,606.71 | $4,335.72 |\n\n[3] Nvidia Stock Price Prediction: 2026, 2027, 2030 - Benzinga\n    https://www.benzinga.com/money/nvidia-stock-price-prediction\n    From a sentiment perspective, Nvidia is still a favorite among institutional investors and analysts. According to our Analyst Ratings, analysts rate NVDA as a Buy or Strong Buy. The average 12-month price target from 35 analysts sits around $274.91, with a low target near $210 and a high at $360. Still, concerns about valuation, rising competition from AMD and Intel and regulatory scrutiny around AI infrastructure have some investors questioning how much upside remains. [...] April 20, 2026\n\nAnalysts are saying that Nvidia could hit $973 by 2030. Bullish on NVDA? Invest in Nvidia on SoFi with no commissions. If it’s your first time signing up for SoFi, you’ll receive up to $1,000 in stock when you first fund your account. Plus, get a 1% bonus if you transfer your investments and keep them there until December 31, 2025.\n\n[4] Can NVIDIA Shares Hit $500 By 2030?\n    https://finance.yahoo.com/news/nvidia-shares-hit-500-2030-182340168.html\n    NVIDIA (NVDA) currently trades for $177.82. We analyze what kind of results the company would need to deliver to hit $500 per share by 2030. If the company can reach an EPS of $20 to $25 per share, that kind of share price growth is likely achievable.\n While news for NVIDIA has been improving dramatically in recent months, shares have been stuck in neutral. We analyze why being associated with the 'OpenAI' complex alongside stocks like Oracle (ORCL) could be limiting NVIDIA's recent gains. [...] With NVIDIA shares stuck in neutral, asking whether they could hit $500 per share by 2030 feels like an outlandish goal! Yet, there is math that could support such a move. Let's dive into\n\n[truncated: 2,045 of 6,040 chars]",
+          "error": null,
+          "latency_ms": 3271.628624992445,
+          "raw_chars": 6040,
+          "truncated": true,
+          "source_ids": [
+            "S6",
+            "S7",
+            "S11",
+            "S29",
+            "S8"
+          ]
+        }
+      ],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 10,
+      "node": "finalize",
+      "plan_version": 1,
+      "ts_offset_ms": 30077.70012500987,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    }
+  ],
+  "sources": [
+    {
+      "sid": "S1",
+      "url": "https://finance.yahoo.com/quote/NVDA/history",
+      "title": "Nvidia Corporation (NVDA): Historical Data - Yahoo Finance",
+      "snippet": "| Nov 4, 2025 | 203.00 | 203.97 | 197.93 | 198.69 | 198.44 | 188,919,300 |\n| Nov 3, 2025 | 208.08 | 211.34 | 205.56 | 206.88 | 206.62 | 180,267,300 |\n| Oct 31, 2025 | 206.45 | 207.97 | 202.07 | 202.49 | 202.23 | 179,802,200 |\n| Oct 30, 2025 | 205.15 | 206.16 | 201.41 | 202.89 | 202.63 | 178,864,400 ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S2",
+      "url": "https://robinhood.com/us/en/stocks/NVDA",
+      "title": "NVIDIA: NVDA Stock Price Quote & News",
+      "snippet": "## Stock Snapshot\n\nNVIDIA(NVDA) stock is priced at $202.55, giving the company a market capitalization of 4.98T. It carries a P/E multiple of 31.76 and pays a dividend yield of 0.14%.\n\nAs of 2026-07-18, NVIDIA(NVDA) stock has fluctuated between $197.97 and $206.65. The current price stands at $202.5",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S3",
+      "url": "https://www.cnn.com/markets/stocks/NVDA",
+      "title": "NVDA Stock Quote Price and Forecast - CNN",
+      "snippet": "Download the CNN App\n\nNVDA\n\nNVIDIA Corporation\n\nQuote\n\nAbout\n\nNews\n\nFinancials\n\nForecasts\n\nCompetitors\n\n# NVIDIA Corporation\n\nNVDA\n\nFacts   Insights   Learn\n\n1d5d1m6mYTD1y5y\n\n Price Momentum\n\n  NVDA is trading near the top of its 52-week range and above its 200-day simple moving average.\n Price chan",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S4",
+      "url": "https://www.cnbc.com/quotes/NVDA",
+      "title": "NVDA: NVIDIA Corp - Stock Price, Quote and News",
+      "snippet": "Make It\n select\n\n USA\n INTL\n\n Livestream\n\n Livestream\n\nWatchlist\n\nSIGN IN\n\nCreate free account\n\nMarkets\n\nBusiness\n\nInvesting\n\nTech\n\nPolitics & Policy\n\nVideo\n\nWatchlist\n\nInvesting Club\n\nJoin IC\n\nPRO\n\nJoin Pro\n\nLivestream\n\nMy Portfolio\n\n+\n\nLINK YOUR PORTFOLIO\n\n# NVIDIA Corp NVDA:NASDAQ\n\nRT Quote | Las",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S5",
+      "url": "https://www.nasdaq.com/market-activity/stocks/nvda",
+      "title": "NVIDIA Corporation Common Stock (NVDA)",
+      "snippet": "Real-time Data is provided using Nasdaq Last Sale Data\n\nData provided by Nasdaq Data Link, a premier source for financial, economic and alternative datasets. Data Link's cloud-based technology platform allows you to search, discover and access data and analytics for seamless integration via cloud AP",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S6",
+      "url": "https://coincodex.com/stock/NVDA/price-prediction",
+      "title": "NVIDIA (NVDA) Stock Forecast & Price Prediction 2026–2030",
+      "snippet": "According to our NVIDIA stock prediction for 2030, NVDA stock will be priced between $ 757.15 and $ 1,062.54 in 2030.\n\n### Will NVIDIA stock reach $500?\n\nNVIDIA stock would need to gain 123.11% to reach $500. According to our NVIDIA stock forecast algorithm, NVIDIA stock will hit $500 in Aug 16, 202",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S7",
+      "url": "https://tradersunion.com/currencies/forecast/nvidia",
+      "title": "Nvidia (NVDA) Stock Forecast for 2026, 2030-2040",
+      "snippet": "| 2037 | $1,939.94 | $2,282.31 |\n| 2038 | $2,694.16 | $2,890.48 |\n| 2039 | $3,613.1 | $3,613.1 |\n| 2040 | $4,606.71 | $4,335.72 | [...] | Year | Price in the middle of the year | Price at the end of the year | 2027 2028 2029 2030 2031 2032 2033 2034 2035 2036 2037 2038 2039 2040 | | |\n ---  ---  ---",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S8",
+      "url": "https://www.fool.com/investing/2026/06/20/prediction-this-will-be-nvidias-stock-price-in-203",
+      "title": "Prediction: This Will Be Nvidia's Stock Price in 2030",
+      "snippet": "During a conference call, Nvidia noted that it expects this figure to reach $1 trillion in 2027. That's another major boost and shows that the AI build-out is far from over. But there's still another larger target looming in the distance.\n\nBy 2030, Nvidia expected global data-center capital expendit",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S9",
+      "url": "https://www.alphaspread.com/security/nasdaq/nvda/analyst-estimates",
+      "title": "NVDA Stock Forecast - NVIDIA Corp",
+      "snippet": "## What is NVDA's stock price target? Price Target 303.09 USD\n\nAccording to Wall Street analysts, the average 1-year price target for NVDA is 303.09 USD with a low forecast of 181.8 USD and a high forecast of 525 USD.\n\n## What is the Revenue forecast for NVIDIA Corp? Projected CAGR 22%\n\nOver the las",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S10",
+      "url": "https://www.youtube.com/watch?v=cMq_ldZdCtA&vl=en-US",
+      "title": "Where Will Nvidia Stock Be in 5 Years? - YouTube",
+      "snippet": "growth rate. So, earnings per share growing from 657 to 756 to 869 to 999 and ultimately 11.49 49 for fiscal year 2032, which is the number I need to make my Nvidia stock price prediction for the year 2030. So, now that we've made the forecast for the earnings per share that we need for our price pr",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S11",
+      "url": "https://www.benzinga.com/money/nvidia-stock-price-prediction",
+      "title": "Nvidia Stock Price Prediction: 2026, 2027, 2030 - Benzinga",
+      "snippet": "From a sentiment perspective, Nvidia is still a favorite among institutional investors and analysts. According to our Analyst Ratings, analysts rate NVDA as a Buy or Strong Buy. The average 12-month price target from 35 analysts sits around $274.91, with a low target near $210 and a high at $360. St",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S12",
+      "url": "https://www.reddit.com/r/NVDA_Stock/comments/1hnhdyo/nvidia_could_skyrocket_to_800_by_2030_says_analyst",
+      "title": "NVIDIA Could Skyrocket to $800 by 2030, Says Analyst : r/NVDA_Stock",
+      "snippet": "$IQST - The launch of AIRWEB aligns with the growth of the global contact center market, estimated at $496 billion in 2023 and expected to reach $741 billion by 2030, driven by digital transformation and increased AI adoption.Image 27 r/allbasescoveredstocks•2y ago    ### $IQST - The launch of AIRWE",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S13",
+      "url": "https://www.alphaquery.com/stock/NVDA/volatility-option-statistics/30-day/iv-call",
+      "title": "NVIDIA Corporation (NVDA) - Implied Volatility (Calls) (30-Day)",
+      "snippet": "|  |  |\n --- |\n| Volatility Metrics | |\n| Historical Volatility (Close-to-Close) | 0.4244 |\n| Historical Volatility (Parkinson) | 0.3667 |\n| Implied Volatility (Calls) | 0.4479 |\n| Implied Volatility (Puts) | 0.4436 |\n| Implied Volatility (Mean) | 0.4457 |\n| Put-Call Implied Volatility Ratio | 0.990",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S14",
+      "url": "https://finance.yahoo.com/quote/NVDA/options",
+      "title": "NVIDIA Corporation (NVDA) Options Chain - Yahoo Finance",
+      "snippet": "### Related Tickers\n\nAMD  Advanced Micro Devices, Inc.\n\n483.36 -1.21%\n\nMU  Micron Technology, Inc.\n\n877.57 -0.44%\n\nAVGO  Broadcom Inc.\n\n427.76 +1.71%\n\nTSM  Taiwan Semiconductor Manufacturing Company Limited\n\n420.04 +0.44%\n\nINTC  Intel Corporation\n\n101.65 +1.84%\n\nQCOM  QUALCOMM Incorporated\n\n167.86 +",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S15",
+      "url": "https://public.com/stocks/nvda/options-chain",
+      "title": "Buy NVIDIA (NVDA) Call and Put Options - Options Chain",
+      "snippet": "| $227.50 | $4.50 | $223.00 | -0.43% | -52.07% | 67 | Trade |\n| $230.00 | $6.80 | $223.20 | -0.34% | -39.61% | 121 | Trade |\n| $232.50 | $8.90 | $223.60 | -0.16% | -34.12% | 35 | Trade |\n| $235.00 | $12.00 | $223.00 | -0.43% | -25.62% | 0 | Trade |\n| $240.00 | $17.65 | $222.35 | -0.72% | -15.25% | 0",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S16",
+      "url": "https://www.macroaxis.com/stock-options/NVDA/NVIDIA",
+      "title": "NVIDIA (NVDA) Stock Options Chain | Macroaxis",
+      "snippet": "| P | NVDA261016P00010000 | 10 | 10.0 | 0.0 - 2.28 | Out |\n| P | NVDA261016P00005000 | 4,024 | 5.0 | 0.0 - 0.05 | Out | [...] | C | NVDA261016C00285000 | 1,803 | 285.0 | 0.54 - 0.62 | Out |\n| C | NVDA261016C00280000 | 9,102 | 280.0 | 0.66 - 0.75 | Out |\n| C | NVDA261016C00275000 | 1,997 | 275.0 | 0.",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S17",
+      "url": "https://marketchameleon.com/Overview/NVDA/OptionSummary",
+      "title": "NVDA Option Breakdown Nvidia",
+      "snippet": "A breakdown of key statistics for each option expiration listed for NVDA. View implied volatility,\nvolatility skew, volume, open interest, straddle premiums, and liquidity -- including bid/ask spread and\nNBBO bid/ask sizes. Includes links to the option chain, as well as numerous detailed charts.\n\n▲ ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S18",
+      "url": "https://www.marketwatch.com/story/nvidias-rally-faces-latest-test-in-fridays-record-setting-triple-witching-options-expiration-b05544ff",
+      "title": "Nvidia’s rally faces latest test in Friday’s record-setting ‘triple witching’ options expiration",
+      "snippet": "Nvidia Corp. shares could be in for a wild ride on Friday, as trading in contracts tied to the highflying chip maker has surged ahead of a record-setting June “triple witching” expiration.\n\nRecently, investors have piled into bullish bets tied to Nvidia\n\nNVDA +2.56%\n\n at a near-unprecedented pace, s",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S19",
+      "url": "https://www.nasdaq.com/market-activity/stocks/nvda/option-chain",
+      "title": "NVIDIA Corporation Common Stock (NVDA) Option Chain - Nasdaq",
+      "snippet": "Option Chain is currently not available.\n\n| Calls |  |  |  |  |  |  |  | Puts |  |  |  |  |  |\n ---  ---  ---  ---  ---  ---  --- |\n|  |\n|  |  |\n\n...\n\n#### Report an Issue\n\nIf you see an issue with the data or information displayed on this page,  please report it using the Contact Us button below.\n\n",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S20",
+      "url": "https://finance.yahoo.com/news/ride-nvidia-next-70-rally-101648451.html",
+      "title": "How to Ride Nvidia’s Next 70% Rally With One Smart Options Trade",
+      "snippet": "Long-term equity anticipation securities, or LEAPS, are option contracts that have extended expiration dates, ranging from one year to up to three years.\n\nDeep in-the-money (ITM) calls, on the other hand, involve buying a call option with a strike price below the underlying's current trading price, ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S21",
+      "url": "https://beatmarket.com/nvidia-price-forecast",
+      "title": "NVIDIA (NVDA) Stock Forecast 2025, 2026, 2030 | BeatMarket",
+      "snippet": "According to Forbes, Nvidia's market capitalization will reach $10 trillion by 2030. This represents a 2.9x increase in stock value. Most long life projecting services are more aggressively bullish. Only one source is skeptical about NVDA's prospects.\n\nStock is expected to be in 2030:\n\n $210 — Trade",
+      "tool": "web_search",
+      "first_seen_step": 3
+    },
+    {
+      "sid": "S22",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/prediction-nvidia-stock-hit-800-181700224.html",
+      "title": "Prediction: Nvidia Stock Will Hit $800 Per Share by 2030",
+      "snippet": "Motley Fool\n\n# Prediction: Nvidia Stock Will Hit $800 Per Share by 2030\n\nKeithen Drury, The Motley Fool\n\n4 min read\n\n NVDA\n\n  +2.93%\n\nNvidia (NASDAQ: NVDA) currently trades for about $210 per share. So, it would have to nearly quadruple to hit $800 per share. Considering the chipmaker's sheer size a",
+      "tool": "web_search",
+      "first_seen_step": 3
+    },
+    {
+      "sid": "S23",
+      "url": "https://www.alphaspread.com/security/nasdaq/nvda/investor-relations/earnings-call/q2-2026",
+      "title": "NVDA Q2-2026 Earnings Call - Alpha Spread",
+      "snippet": "NVIDIA highlighted a massive and growing demand for AI infrastructure, projecting global AI infrastructure spend to reach $3–4 trillion by 2030. The company is seeing strong investment across cloud service providers, enterprises, and sovereign entities, with annual data center infrastructure investm",
+      "tool": "web_search",
+      "first_seen_step": 3
+    },
+    {
+      "sid": "S24",
+      "url": "https://www.alphaspread.com/security/nasdaq/nvda/relative-valuation/ratio/price-to-sales",
+      "title": "NVDA P/S - NVIDIA Corp - Alpha Spread",
+      "snippet": "| Current Market Cap |  | Revenue |  | Forward P/S |\n ---  --- \n| $5.2T | / | Jan 2026 $215.9B | = | 23.5 Current |\n| $5.2T | / | Jan 2026 $217.7B | = | 23.7 Forward |\n| $5.2T | / | Jan 2027 $401.4B | = | 12.8 Forward |\n| $5.2T | / | Jan 2028 $568.7B | = | 9.1 Forward |\n| $5.2T | / | Jan 2029 $688.5",
+      "tool": "web_search",
+      "first_seen_step": 3
+    },
+    {
+      "sid": "S25",
+      "url": "https://www.alphaspread.com/security/nasdaq/nvda/relative-valuation/ratio/enterprise-value-to-ebitda",
+      "title": "NVDA EV/EBITDA - NVIDIA Corp - Alpha Spread",
+      "snippet": "| Current Enterprise Value |  | EBITDA |  | Forward EV/EBITDA |\n ---  --- \n| $5T | / | Apr 2026 $165.5B | = | 30.4 Current |\n| $5T | / | Jan 2027 $272.3B | = | 18.4 Forward |\n| $5T | / | Jan 2028 $390.7B | = | 12.8 Forward |\n| $5T | / | Jan 2029 $493.5B | = | 10.2 Forward |\n| $5T | / | Jan 2030 $494",
+      "tool": "web_search",
+      "first_seen_step": 3
+    },
+    {
+      "sid": "S26",
+      "url": "https://fxopen.com/blog/en/analytical-nvidia-stock-price-targets",
+      "title": "Nvidia Stock Price Targets for 2026-2030: What Analysts Think",
+      "snippet": "Mid-Year 2028:\n\n Most Bullish Projection: 593 (CoinCodex)\n Most Bearish Projection: 299 (CoinPriceForecast)\n\nEnd-of-Year 2028:\n\n Most Bullish Projection: 750 (LongForecast)\n Most Bearish Projection: 315 (CoinPriceForecast)\n\n### NVIDIA Stock Prediction for 2029\n\nMid-Year 2029:\n\n Most Bullish Projecti",
+      "tool": "web_search",
+      "first_seen_step": 3
+    },
+    {
+      "sid": "S27",
+      "url": "https://www.litefinance.org/blog/analysts-opinions/nvda-stock-price-prediction",
+      "title": "Nvidia (NVDA) Stock Forecast & Price Predictions for 2026, 2027, 2028 ...",
+      "snippet": "According to CoinCodex, NVIDIA shares could continue rising during the first half of the year. The average share price could be around $772.24 in the first quarter and increase to $870.21 in the second. A moderate correction is expected afterward. The average share price could ease to $831.53 in the",
+      "tool": "web_search",
+      "first_seen_step": 3
+    },
+    {
+      "sid": "S28",
+      "url": "https://cryptonews.net/news/analytics/32948266",
+      "title": "Nvidia stock price prediction for 2030",
+      "snippet": "## These are the most bullish Wall Street 2030 Nvidia stock forecasts\n\nFor example, extending Bank of America’s $320 12-month target – which signals a 45% rally from $219.96 at press time on June 1, 2026 – to the end of the decade, even the bullish plausible Nvidia stock price target in 2030 that as",
+      "tool": "web_search",
+      "first_seen_step": 3
+    },
+    {
+      "sid": "S29",
+      "url": "https://finance.yahoo.com/news/nvidia-shares-hit-500-2030-182340168.html",
+      "title": "Can NVIDIA Shares Hit $500 By 2030?",
+      "snippet": "NVIDIA (NVDA) currently trades for $177.82. We analyze what kind of results the company would need to deliver to hit $500 per share by 2030. If the company can reach an EPS of $20 to $25 per share, that kind of share price growth is likely achievable.\n While news for NVIDIA has been improving dramat",
+      "tool": "web_search",
+      "first_seen_step": 3
+    }
+  ],
+  "answer": "NVIDIA’s (NVDA) closing price on 31 Dec 2030 cannot be determined from the provided evidence, but the evidence supports only a range of analyst/forecast estimates rather than a single exact value.\n\n- **Most recent closing price (latest available in the evidence):** **$219.38** [S1][S2][S3][S4][S5].  \n- **Sell-side / consensus-style forecasts for ~Dec 31, 2030:** The evidence reports multiple 2030 targets/consensus estimates, including:\n  - **~$800** by 2030 [S6][S7][S11][S22].  \n  - **Range roughly from $757.15 to $1,062.54** (as reported in the evidence) [S6][S7].  \n  - **“Around $2,700”** as a “long-term consensus” figure (note: this is inconsistent with the other ranges and is not clearly tied to a December 31, 2030 point estimate) [S29].  \n  The evidence **does not establish** a single consensus closing price specifically for **31 December 2030**—only various forecasts for “by 2030.” [S6][S7][S11][S29]\n- **Market-implied forward pricing near 31 Dec 2030 (options):** The evidence says **long-dated options for NVDA expiring December 2030 are not available** in the cited materials, so an options-implied expected closing price **could not be inferred** from December-2030 expiries. [S13][S14][S15][S16][S17]\n\n**Supported conclusion:** 31 Dec 2030’s closing price is **not exactly knowable from this evidence**, but **forecast figures suggest something like ~$800** and also include broader ranges (e.g., **~$757 to ~$1,063**, depending on source). [S6][S7][S11][S22]\n\n_Note: this run stopped early because a tool hit its per-run call limit._",
+  "citations": [
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5",
+    "S6",
+    "S7",
+    "S11",
+    "S22",
+    "S29",
+    "S13",
+    "S14",
+    "S15",
+    "S16",
+    "S17"
+  ],
+  "coverage": {
+    "What is NVIDIA (NVDA)‘s most recent closing price (as of today or the latest available trading day)?": false,
+    "What do major sell-side analysts or consensus sources forecast for NVDA’s share price around December 31, 2030 (including any stated 2030 targets or long-term model projections)?": false,
+    "Is there any market-implied forward pricing for NVDA around 31 December 2030 (e.g., from long-dated options with expirations near that date) that can be used to infer an expected closing price?": false
+  },
+  "outcome": {
+    "status": "early_exit",
+    "early_exit_reason": "tool_cap",
+    "used_deterministic_finalize": false,
+    "reflect_overrules": 0,
+    "error": null
+  },
+  "usage": {
+    "llm_calls": [
+      {
+        "purpose": "plan",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 226,
+        "cached_tokens": 0,
+        "output_tokens": 266,
+        "reasoning_tokens": 77,
+        "cost_usd": 0.00037769999999999997,
+        "latency_ms": 3701.1853750009323,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 970,
+        "cached_tokens": 0,
+        "output_tokens": 139,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.00036775,
+        "latency_ms": 2591.9497909926577,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 9093,
+        "cached_tokens": 0,
+        "output_tokens": 28,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.0018536000000000002,
+        "latency_ms": 2102.668874998926,
+        "replayed": false
+      },
+      {
+        "purpose": "reflect",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 922,
+        "cached_tokens": 0,
+        "output_tokens": 384,
+        "reasoning_tokens": 71,
+        "cost_usd": 0.0006644,
+        "latency_ms": 3571.643667004537,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 9150,
+        "cached_tokens": 7680,
+        "output_tokens": 138,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.0006201000000000001,
+        "latency_ms": 2433.8511249952717,
+        "replayed": false
+      },
+      {
+        "purpose": "finalize",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 2151,
+        "cached_tokens": 0,
+        "output_tokens": 424,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.0009602,
+        "latency_ms": 3879.8830000014277,
+        "replayed": false
+      }
+    ],
+    "totals": {
+      "input_tokens": 22512,
+      "cached_tokens": 7680,
+      "output_tokens": 1379,
+      "reasoning_tokens": 148,
+      "cost_usd": 0.00484375,
+      "cache_hit_rate": 0.3411513859275053
+    },
+    "by_purpose": {
+      "plan": {
+        "calls": 1,
+        "cost_usd": 0.00037769999999999997,
+        "output_tokens": 266
+      },
+      "act": {
+        "calls": 3,
+        "cost_usd": 0.0028414500000000006,
+        "output_tokens": 305
+      },
+      "reflect": {
+        "calls": 1,
+        "cost_usd": 0.0006644,
+        "output_tokens": 384
+      },
+      "finalize": {
+        "calls": 1,
+        "cost_usd": 0.0009602,
+        "output_tokens": 424
+      }
+    },
+    "search_credits": 9,
+    "steps": 3
+  },
+  "timings_ms": {
+    "total": 30073.919166999985
+  },
+  "compaction": {
+    "count": 0,
+    "compacted_upto": 0
+  }
+}
