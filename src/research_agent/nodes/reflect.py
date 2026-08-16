@@ -15,7 +15,7 @@ Kept cheap and gated so it earns its cost:
 - `reflect_overrules` counts the times it turned a proposed stop into another
   round. That number, measured over the eval, is what justifies the node. If it
   comes out zero, the node gets cut and the README says so — which is why the
-  `no_reflect` variant exists.
+  `no_overrule` variant exists.
 """
 
 from pydantic import BaseModel, Field

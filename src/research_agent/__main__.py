@@ -22,7 +22,7 @@ from research_agent.trace import RunTrace
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(prog="research_agent", description=__doc__)
     parser.add_argument("question", help="The research question to answer.")
-    parser.add_argument("--variant", choices=["full", "baseline", "no_reflect"], default="full")
+    parser.add_argument("--variant", choices=["full", "baseline", "no_overrule"], default="full")
     parser.add_argument("--json", type=Path, metavar="PATH", help="Write the full trace here.")
     parser.add_argument("--max-steps", type=int, help="Override the step budget.")
     parser.add_argument("--max-usd", type=float, help="Override the cost budget.")

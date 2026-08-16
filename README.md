@@ -32,13 +32,40 @@ number below can be traced back to the run that produced it.
 
 Full breakdown, per-tier results and failure modes: **[evals/REPORT.md](evals/REPORT.md)**.
 
-**Honest readout.** The headline is not the interesting number. Tool recall is 100% and precision is
-40.4%: the agent finds everything it needs and then keeps going, making **3.3× more calls than the
-cases expect**, with 11 of 90 runs hitting a per-tool call cap rather than deciding they were
-finished. The `reflect` node exists to catch premature *stopping*, and this agent has the opposite
-problem — it overruled a proposed stop 35 times across 90 runs, which on this evidence is often
-pushing it to search when it could already answer. A single pass-rate would have hidden all of that.
-Reporting precision and recall side by side is what makes it visible.
+### The headline finding is negative: the loop loses to one round of search
+
+The point of an evaluation is to be able to be wrong, so here is the result that matters. A
+**baseline** variant — plan once, issue every search in a single parallel round, answer — beats the
+full iterative agent on **every tier**:
+
+| Tier | Full agent | Baseline (single round) |
+|---|---|---|
+| easy | 100.0% | 100.0% |
+| multi-hop | 78.8% | **84.8%** |
+| adversarial | 81.0% | **100.0%** |
+| **overall pass@1** | **87.8%** | **94.4%** |
+| mean steps | 2.5 | 1.0 |
+| mean cost | $0.0023 | $0.0008 |
+
+The baseline is **3× cheaper, 2.5× shorter, and more accurate.** For this task distribution and this
+model, iterative refinement is not just failing to pay for itself — it is actively destructive.
+
+**Why.** Tool recall is already 100% at the first round: the agent finds everything it needs
+immediately, largely because a single `act` step emits four to six parallel searches. Everything
+after that is re-litigating evidence it already had. Precision is 40.4%, the agent makes **3.3× more
+calls than the cases require**, and 11 of 90 runs hit a per-tool call cap rather than deciding they
+were finished. On the adversarial tier the effect is starkest — those cases reward recognising that
+you should stop, and a variant that cannot help but stop scores 100% against the loop's 81%.
+
+**The `reflect` node is implicated.** It exists to catch premature *stopping*, and it fired: 35
+overrules across 90 runs. But an ablation that makes act's stop decision final —
+`no_overrule` — scores **93.1% against the full agent's 90.3%** on the 70 runs both completed, with
+fewer steps. On this evidence reflect is mostly overruling correct decisions to stop.
+
+**Caveats, stated rather than buried.** At 11 multi-hop and 7 adversarial cases the per-tier
+intervals are very wide, and the multi-hop difference (78.8% vs 84.8%) is well inside noise. The
+adversarial gap and the overall direction are more robust, but this is 30 cases, not 300. The honest
+claim is *"on this benchmark the loop did not earn its cost"*, not *"agent loops don't work"*.
 
 `pass^3` is 76.7% against a pass@1 of 87.8%, and the gap between `pass^3` and `(pass@1)^3` is
 **+0.090**. Because x^k is convex, that quantity is non-negative whenever per-case rates differ at
@@ -182,9 +209,14 @@ uv run python -m research_agent.tools --demo   # exercise every tool once
 
 Written before anyone asks.
 
-- **The agent over-searches.** 40.4% tool precision against 100% recall; 3.3× more calls than
-  expected; 11 of 90 runs hit a tool cap instead of stopping. This is the clearest thing to fix next,
-  and the most likely culprit is `reflect` being biased toward "continue".
+- **The loop does not earn its cost on this benchmark.** A single round of parallel search beats it
+  on every tier, 3× cheaper. See the headline finding above. The agent over-searches: 40.4% tool
+  precision against 100% recall, 3.3× more calls than expected, 11 of 90 runs hitting a tool cap
+  instead of stopping.
+- **One ablation is incomplete.** 20 of the 90 `no_overrule` runs were lost when the API key was
+  rotated mid-run; they failed authentication instantly and were discarded rather than scored, so
+  that comparison covers 70 runs and excludes the adversarial tier. `REPORT.md` states this inline
+  rather than quietly averaging over a smaller sample.
 - **The judge is not yet validated against a human.** Until `evals/human_labels.json` is populated
   and Cohen's κ is reported, every judge-derived number above should be read as unvalidated —
   `REPORT.md` says so in place of the agreement section.
@@ -212,8 +244,10 @@ Written before anyone asks.
 
 ## What I'd do next
 
-1. **Fix the over-searching.** Feed `reflect` the marginal value of the last search — if two
-   consecutive steps added no new sources, bias hard toward finishing.
+1. **Make the loop earn its place, or remove it.** The evidence says a single parallel round wins.
+   The loop's only defensible advantage is adaptive follow-up, so it should be gated on evidence that
+   follow-up is needed — if a round adds no new sources, finish. Right now `reflect` is biased the
+   other way and overrules correct stops.
 2. **Validate the judge**, then re-run with κ reported and the agreement caveat removed.
 3. **A cross-family judge** (Claude or Gemini) to bound self-preference rather than disclaiming it.
 4. **Grow the dataset to ~100 cases.** The interval width at n=30 is the binding constraint on saying

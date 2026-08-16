@@ -69,7 +69,26 @@ _No human labels committed yet, so judge-vs-human agreement is not reported. Unt
 
 ## Against a baseline
 
-_Ablations not run yet._
+### Against a single round of search
+
+Compared on the **90 runs both variants completed** (adversarial, easy, multi_hop).
+
+| Variant | pass@1 | Mean steps | Mean cost |
+|---|---|---|---|
+| baseline (one round of parallel search, then answer) | 94.4% | 1.0 | $0.00077 |
+| **full agent** | **87.8%** | 2.5 | $0.00230 |
+
+### Does letting reflect overrule a stop earn its cost?
+
+> 20 runs of this variant were discarded: The OpenAI key was rotated while this variant was running. These runs failed authentication instantly (0 steps, $0.00, sub-second) and are transport failures, not agent behaviour. They are removed rather than scored. Affected cases: adv-001, adv-002, adv-003, adv-004, adv-005, adv-006, adv-007. The comparison below is therefore restricted to the runs that survived, and does not cover the adversarial tier.
+
+Compared on the **70 runs both variants completed** (adversarial, easy, multi_hop).
+
+| Variant | pass@1 | Mean steps | Mean cost |
+|---|---|---|---|
+| no_overrule (act's decision to stop is final) | 93.1% | 2.1 | $0.00199 |
+| **full agent** | **90.3%** | 2.4 | $0.00213 |
+
 
 ## Reading these numbers honestly
 

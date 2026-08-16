@@ -1,0 +1,412 @@
+{
+  "schema_version": "1",
+  "run_id": "588279b5fd8c",
+  "ts": "2026-08-08T19:06:44+00:00",
+  "question": "Compare the context window sizes of Claude 3.5 Sonnet and GPT-4 Turbo. Which is larger and by how many tokens?",
+  "variant": "baseline",
+  "config": {
+    "agent_model": "gpt-5.4-nano",
+    "reasoning_effort": "none",
+    "max_steps": 8,
+    "max_seconds": 120.0,
+    "max_run_cost_usd": 0.05,
+    "finalize_reserve_usd": 0.008,
+    "compact_threshold_tokens": 12000,
+    "git_sha": "a4216f3",
+    "prompt_hash": "sha256:512e8e5d8eaa"
+  },
+  "plan": {
+    "version": 1,
+    "subquestions": [
+      "What is the official context window size (maximum input+output tokens) for Claude 3.5 Sonnet?",
+      "What is the official context window size (maximum input+output tokens) for GPT-4 Turbo?"
+    ],
+    "replans": 0
+  },
+  "steps": [
+    {
+      "i": 1,
+      "node": "plan",
+      "plan_version": 0,
+      "ts_offset_ms": 2350.0921670056414,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 2,
+      "node": "act",
+      "plan_version": 1,
+      "ts_offset_ms": 4493.740667006932,
+      "tool_calls": [
+        {
+          "call_id": "call_DUS1bupzElnzb0Bq2EwjO5Rx",
+          "name": "web_search",
+          "args": {
+            "query": "Claude 3.5 Sonnet context window maximum tokens input output"
+          }
+        },
+        {
+          "call_id": "call_eUAqrkzdnDtM1hGsa4LhRelo",
+          "name": "web_search",
+          "args": {
+            "query": "GPT-4 Turbo context window maximum tokens input output"
+          }
+        },
+        {
+          "call_id": "call_BzU9AnifFJE6Kg4PX98wWBYM",
+          "name": "web_search",
+          "args": {
+            "query": "Anthropic Claude 3.5 Sonnet context length 200k tokens official documentation"
+          }
+        },
+        {
+          "call_id": "call_XacPxVthLQ0T5orHgz2n0nW9",
+          "name": "web_search",
+          "args": {
+            "query": "OpenAI GPT-4 Turbo context length 128k tokens documentation"
+          }
+        }
+      ],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 3,
+      "node": "observe",
+      "plan_version": 1,
+      "ts_offset_ms": 7562.656042005983,
+      "tool_calls": [],
+      "observations": [
+        {
+          "call_id": "call_DUS1bupzElnzb0Bq2EwjO5Rx",
+          "tool": "web_search",
+          "args": {
+            "query": "Claude 3.5 Sonnet context window maximum tokens input output"
+          },
+          "ok": true,
+          "content": "Summary: Claude 3.5 Sonnet has a maximum output of 4,096 tokens, but can be increased to 8,192 tokens with a specific header. The context window is 200,000 tokens. These limits apply to most interactions.\n\n[1] Claude 3.5 Sonnet vs GPT-4o: Context Window and Token Limit\n    https://prompt.16x.engineer/blog/claude-sonnet-gpt4-context-window-token-limit\n    For output token limits, Claude 3.5 Sonnet has a maximum output of 4,096 tokens. This means the model can generate responses up to this token limit in one interaction. It works for most standard tasks but may need breaking down very long outputs into multiple responses. [...] Claude 3.5 Sonnet has a large context window of 200,000 tokens. This big context window allows the model to process and consider a lot of information when generating responses. It's a big advantage for tasks that need to analyze large codebases and documents, or keep conversations coherent over long periods. [...] > Claude 3.5 Sonnet output token limit is 8192 in beta and requires the header `anthropic-beta: max-tokens-3-5-sonnet-2024-07-15`. If the header is not specified, the limit is 4096 tokens.\n\n GPT-4o metrics via ChatGPT metrics based on empirical evidence.\n Claude 3.5 Sonnet metrics via Anthropic's models documentation.\n GPT-4o metrics via API based on OpenAI's model documentation and post on OpenAI forum.\n\nToken and API Cost Calculator Tool\n\n[2] Issue with Bedrock- Claude Sonnet 3.5\n    https://repost.aws/questions/QUh5t0kGHIRdajNCDm1UHZxA/issue-with-bedrock-claude-sonnet-3-5\n    0\n\nInput context window is 200,000 tokens but as you are generating tokens to answer your question you are most likely hitting output token limits which are 4096 tokens see Anthropic user guide for more details.\n\nYou should ensure the model is giving you the most concise answer possible e.g. use prompt engineering to minimize preamble. [...] -1\n\nIn AI models, a token is a chunk of text that the model reads at a time. For Claude Sonnet 3.5, the context window is 200,000 tokens, which is equivalent to approximately 150,000 words or 300 pages of text. If your input exceeds this limit, the model might return incomplete answers or errors indicating that the max token limit has been reached.\n\nEXPERT\n\nGiovanni Lauria\n\nanswered 2 years ago\n\n## Relevant content\n\n[3] Claude AI Context Window, Token Limits, and Memory: operational boundaries and long-context behavior\n    https://www.datastudios.org/post/claude-ai-context-window-token-limits-and-memory-operational-boundaries-and-long-context-behavior\n    ·····\n\n.....\n\n## How Claude’s context windows are structured.\n\nThe context window defines the total number of tokens—input plus output—that Claude can process in a single exchange. For most users, the standard limit is 200,000 tokens, implemented across the Claude 3.5 and Claude 3.7 Sonnet models. This window is large enough to handle full-length reports, codebases, or document sets within one interaction. [...] |  |  |  |  |\n ---  --- |\n| Parameter | Limit or Behavior | Applicable Model or Platform | Notes |\n| Context window (standard) | 200,000 tokens | Claude 3.5 / 3.7 Sonnet | Default limit for most users |\n| Context window (extended) | 1,000,000 tokens | Sonnet 4 / 4.5 | Tier 4 and custom enterprise; long-context throttles apply |\n| Message size limit | 32 MB | Messages / Token Counting APIs | Hard cap per request |\n| Batch request size | 256 MB | Batch API | Used for multi-job processing | [...] Message size limit: Each Messages API or Token Counting API request can carry up to 32 MB of data. Submissions above this size are automatically rejected with a “413 – request too large” error.\n Batch API limit: For asynchronous or multi-job processing, batch requests can reach up to 256 MB.\n File uploads: Files can be uploaded through the Files API with a maximum size of 500 MB per file, allowing large datasets to be referenced via file IDs without exceeding message size restrictions.\n\n[4] Claude 3.5 Sonnet is limited to 4096 tokens\n\n[truncated: 1,897 of 5,895 chars]",
+          "error": null,
+          "latency_ms": 2947.553499994683,
+          "raw_chars": 5895,
+          "truncated": true,
+          "source_ids": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5"
+          ]
+        },
+        {
+          "call_id": "call_eUAqrkzdnDtM1hGsa4LhRelo",
+          "tool": "web_search",
+          "args": {
+            "query": "GPT-4 Turbo context window maximum tokens input output"
+          },
+          "ok": true,
+          "content": "Summary: The GPT-4 Turbo model has a maximum context window of up to 128,000 tokens for input, allowing for extensive text processing, while its maximum output tokens are capped at 4,096. This model supports longer interactions and more detailed responses compared to earlier versions.\n\n[1] Testing the NEW context window of GPT-4-Turbo (inside ...\n    https://www.youtube.com/watch?v=IlqlzjZR_TE\n    new model so I'm going to test it out okay here we are in chat GPT and the GPT 4 model is chosen let's start by first asking it what is your context window let's see if it gives us a correct answer so I'm going to ask what is your context window okay according to chat GPT itself it's saying that the context window of this version is approximately 8,000 tokens they say that's equivalent to 3,000 to 4,000 words at a time let's see if that's right so I'm going to delete this chat and I'm going to [...] in the open AI Dev day keynote speech Sam Alman talked about the newest context length or context window for gp4 now called gp4 turbo and it's one of the biggest updates that he had to share during the conference he said previously the model's context window was 8K so that's 8,000 tokens and in some cases it could go up to 32,000 tokens but for some developer use cases that still isn't enough but this newer model can support up to 128,000 tokens and he goes on to say that that is the equivalent [...] the actual context window is 32,000 like Sam timman said but what we learned today is just crazy I'm so excited for the possibilities we know it's somewhere over 22,000 tokens and I did a test here and I want to show you what I did I grabbed this 10,810 tokens and let's scroll down and I paste it into the input box and it doesn't give you an error anymore it actually looks at what you wrote and starts responding to it look at how many tokens this is the input box would fail at like 3,000 in the\n\n[2] What is the maximum context window for OpenAI's models?\n    https://zilliz.com/ai-faq/what-is-the-maximum-context-window-for-openais-models\n    OpenAI’s models, particularly the latest versions like GPT-4, have a maximum context window of 8,192 tokens. This means that the model can process inputs of up to 8,192 tokens at a time, which includes both the prompt you provide and the generated response. To put that into perspective, a token can be as short as one character or as long as one word, depending on the language and context. On average, you can consider a token to represent about four characters of English text. Therefore, 8,192\n\n[3] Mastering The GPT-4o Context Window: Your Practical (and Slightly ...\n    https://www.zemith.com/en/blogs/gpt-4-o-context-window\n    ### Working with GPT-4o’s Input and Output Limits\n\nZemith gives you access to multiple models so you can pick the right tool for the job, but it helps to know their quirks. GPT-4o has that massive 128,000 token context window—a huge 4x jump from older models. But here’s the catch: it’s currently limited to generating about 4,096 tokens in its response. [...] So, GPT-4o's 128,000 token context window sounds like a dream come true, right? The fantasy is to dump a whole novel into the prompt and ask about some obscure detail in the middle. But as anyone who has actually tried this knows, there’s a catch. A big memory comes with its own unique and frustrating problems. [...] A small context window is like talking to a goldfish. You can't have a very deep conversation. But with a huge 128,000-token context window, like GPT-4o has, it’s like talking to someone who remembers the entire book you’ve been discussing from cover to cover. This is a massive leap from older models that would often forget the beginning of a conversation by the time you got to the middle. Annoying, right?\n\n### So, What the Heck is a Token?\n\n[4] What is the maximum response length (output tokens) for each GPT model? - API - OpenAI Developer Community\n   \n\n[truncated: 2,808 of 6,745 chars]",
+          "error": null,
+          "latency_ms": 2557.4634169897763,
+          "raw_chars": 6745,
+          "truncated": true,
+          "source_ids": [
+            "S6",
+            "S7",
+            "S8",
+            "S9",
+            "S10"
+          ]
+        },
+        {
+          "call_id": "call_BzU9AnifFJE6Kg4PX98wWBYM",
+          "tool": "web_search",
+          "args": {
+            "query": "Anthropic Claude 3.5 Sonnet context length 200k tokens official documentation"
+          },
+          "ok": true,
+          "content": "Summary: Anthropic's Claude 3.5 Sonnet has a 200k token context window and 8192 token output limit. It's built by Amazon's AI team.\n\n[1] Claude 3.5 Sonnet vs GPT-4o: Context Window and Token Limit\n    https://prompt.16x.engineer/blog/claude-sonnet-gpt4-context-window-token-limit\n    Claude 3.5 Sonnet has a large context window of 200,000 tokens. This big context window allows the model to process and consider a lot of information when generating responses. It's a big advantage for tasks that need to analyze large codebases and documents, or keep conversations coherent over long periods. [...] In this post, we'll compare the latest models from OpenAI and Anthropic in terms of their context window and token limits.\n\n## Key Metrics\n\n| Model | Context Window | Max Output |\n --- \n| GPT-4o via ChatGPT | 4,096 tokens to 8,192 tokens (empirical) | 4,096 tokens to 8,192 tokens (empirical) |\n| GPT-4o via API | 128k tokens | 4096 tokens |\n| Claude 3.5 Sonnet | 200k tokens | 8192 tokens \\ | [...] > Claude 3.5 Sonnet output token limit is 8192 in beta and requires the header `anthropic-beta: max-tokens-3-5-sonnet-2024-07-15`. If the header is not specified, the limit is 4096 tokens.\n\n GPT-4o metrics via ChatGPT metrics based on empirical evidence.\n Claude 3.5 Sonnet metrics via Anthropic's models documentation.\n GPT-4o metrics via API based on OpenAI's model documentation and post on OpenAI forum.\n\nToken and API Cost Calculator Tool\n\n[2] Issue with Bedrock- Claude Sonnet 3.5\n    https://repost.aws/questions/QUh5t0kGHIRdajNCDm1UHZxA/issue-with-bedrock-claude-sonnet-3-5\n    0\n\nInput context window is 200,000 tokens but as you are generating tokens to answer your question you are most likely hitting output token limits which are 4096 tokens see Anthropic user guide for more details.\n\nYou should ensure the model is giving you the most concise answer possible e.g. use prompt engineering to minimize preamble. [...] -1\n\nIn AI models, a token is a chunk of text that the model reads at a time. For Claude Sonnet 3.5, the context window is 200,000 tokens, which is equivalent to approximately 150,000 words or 300 pages of text. If your input exceeds this limit, the model might return incomplete answers or errors indicating that the max token limit has been reached.\n\nEXPERT\n\nGiovanni Lauria\n\nanswered 2 years ago\n\n## Relevant content [...] You would need to give more context on why you are being throttled. For Claude 3.5 Sonnet on Bedrock if you are using on-demand provisioning you have both a requests per minute and tokens per minute limit you need to remain under. More details on Bedrock quota limits available in Quotas for Bedrock documentation.\n\n[3] Anthropic's Claude Sonnet 4 in Amazon Bedrock ...\n    https://aws.amazon.com/about-aws/whats-new/2025/08/anthropic-claude-sonnet-bedrock-expanded-context-window\n    Anthropic’s Claude Sonnet 4 in Amazon Bedrock is launching today with a significantly expanded context window in public preview. The context window has been increased from 200,000 to 1 million tokens, representing a 5x expansion. This enhancement allows Claude to process and reason over much larger amounts of text in a single request, opening up new possibilities for comprehensive analysis and generation tasks. [...] The expanded context window for Claude Sonnet 4 is now available in public preview in Amazon Bedrock in US West (Oregon), US East (N. Virginia), and US East (Ohio) AWS regions. Prompts over 200,000 tokens will incur approximately twice the token price for input and 1.5 times for output. To get started with the expanded context window for Claude Sonnet 4, visit the Amazon Bedrock console. [...] large datasets, or technical specifications in a single API call, analyzing relationships across hundreds of documents while maintaining full context. Additionally, this expansion allows for the creation of more sophisticated context-aware agents that can maintain coherence across hundreds of tool calls and multi-step workflows, including\n\n[truncated: 2,628 of 6,626 chars]",
+          "error": null,
+          "latency_ms": 3064.974833992892,
+          "raw_chars": 6626,
+          "truncated": true,
+          "source_ids": [
+            "S1",
+            "S2",
+            "S11",
+            "S12",
+            "S13"
+          ]
+        },
+        {
+          "call_id": "call_XacPxVthLQ0T5orHgz2n0nW9",
+          "tool": "web_search",
+          "args": {
+            "query": "OpenAI GPT-4 Turbo context length 128k tokens documentation"
+          },
+          "ok": true,
+          "content": "Summary: GPT-4 Turbo has a context window of 128,000 tokens. It can process and maintain context over extensive text. This model significantly enhances AI's ability to handle large volumes of information.\n\n[1] What is the context window of gpt 4 - OpenAI Developer Community\n    https://community.openai.com/t/what-is-the-context-window-of-gpt-4/701256\n    :point_down:\n\nGPT-4 Turbo has a context window of 128k and a maximum response size of 4096 tokens.\n\nSource: \n\nNinja’d!\n\nYou can check this information in the OpenAI documentation. GPT-4 also known as GPT-4-0613 (GPT 4 Points GPT-4-0613), has a context window of 8,192 tokens, while GPT-4 turbo (Points GPT-4-0125-preview) has a context window of 128,000 tokens [...] # What is the context window of gpt 4\n\nWhat is the context window of GPT 4 turbo. In the below image what will be context window of first gpt. Any official source  \n\ngpt\n\ngpt906×318 12.2 KB\n\ngpt\n\nYou can check this information in the OpenAI documentation. GPT-4 also known as GPT-4-0613 (GPT 4 Points GPT-4-0613), has a context window of 8,192 tokens, while GPT-4 turbo (Points GPT-4-0125-preview) has a context window of 128,000 tokens.\n\nQuick Link :point_down:  \n\n:point_down:\n\n[2] GPT-4 Turbo Preview: Exploring the 128k Context Window - Povio\n    https://povio.com/blog/gpt-4-turbo-preview-exploring-the-128k-context-window\n    The GPT-4 Turbo Preview is not just an incremental update, but a substantial leap in the capabilities of AI language models. With a context window of 128k tokens, it stands head and shoulders above the existing GPT-4 models, which are limited to 8k and 32k tokens. This expansion isn't just about numbers; it represents a fundamental shift in how AI can process and interpret large volumes of data. [...] GPT-4 Turbo's enhanced context window significantly outperforms the standard GPT-4 in terms of context utilization. The comparison is striking: GPT-4 Turbo is found to be:\n\n 1.9 times more efficient with an 8k context window,\n 3.5 times with a 16k window,\n 2.4 times with a 32k window.\n\nThis improvement in performance is a testament to the advancements made in the model's ability to process and recall large amounts of information. [...] One of the most impressive aspects of GPT-4 Turbo is its ability to maintain high-quality performance even as the context window expands. Remarkably, the model's performance only degrades to the level of the standard GPT-4 when it reaches a 64k context window. This means that even at double the maximum context length of the standard GPT-4, Turbo maintains equivalent performance levels.\n\n## Current Limitations and Future Prospects\n\n### The Preview Phase\n\n[3] Test new 128k window on gpt-4-1106-preview - API - OpenAI Developer Community\n    https://community.openai.com/t/test-new-128k-window-on-gpt-4-1106-preview/478424\n    The 128K context length capability of GPT-4 Turbo is a game-changer. It means that the model can fit the equivalent of more than 300 pages of text in a single prompt. This opens up possibilities for applications that were previously unthinkable. For instance, one could potentially turn an outline and character development sheets into an entire movie script in one go. Or, one could ask the model to answer 40 questions about all the knowledge OpenAI has ever blogged about in a single request. The [...] Introduction:\n\nIn a technological tour de force, OpenAI has shattered previous limitations with the release of GPT-4 Turbo, boasting an unprecedented 128K context window. This advancement is not merely an incremental step; it’s a giant leap that propels AI capabilities into a new realm of potential. The implications of this expanded context length are vast and varied, requiring a deep dive into what it means for developers, users, and the AI community at large. [...] The leap from a 16K to a 128K context window is akin to expanding one’s short-term memory by an order of magnitude. The practical upshot is that GPT-4 Turbo can now consider the equivalent of\n\n[truncated: 2,856 of 6,855 chars]",
+          "error": null,
+          "latency_ms": 2556.607291000546,
+          "raw_chars": 6855,
+          "truncated": true,
+          "source_ids": [
+            "S14",
+            "S15",
+            "S16",
+            "S17",
+            "S18"
+          ]
+        }
+      ],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 4,
+      "node": "finalize",
+      "plan_version": 1,
+      "ts_offset_ms": 9701.673667004798,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    }
+  ],
+  "sources": [
+    {
+      "sid": "S1",
+      "url": "https://prompt.16x.engineer/blog/claude-sonnet-gpt4-context-window-token-limit",
+      "title": "Claude 3.5 Sonnet vs GPT-4o: Context Window and Token Limit",
+      "snippet": "For output token limits, Claude 3.5 Sonnet has a maximum output of 4,096 tokens. This means the model can generate responses up to this token limit in one interaction. It works for most standard tasks but may need breaking down very long outputs into multiple responses. [...] Claude 3.5 Sonnet has a",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S2",
+      "url": "https://repost.aws/questions/QUh5t0kGHIRdajNCDm1UHZxA/issue-with-bedrock-claude-sonnet-3-5",
+      "title": "Issue with Bedrock- Claude Sonnet 3.5",
+      "snippet": "0\n\nInput context window is 200,000 tokens but as you are generating tokens to answer your question you are most likely hitting output token limits which are 4096 tokens see Anthropic user guide for more details.\n\nYou should ensure the model is giving you the most concise answer possible e.g. use pro",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S3",
+      "url": "https://www.datastudios.org/post/claude-ai-context-window-token-limits-and-memory-operational-boundaries-and-long-context-behavior",
+      "title": "Claude AI Context Window, Token Limits, and Memory: operational boundaries and long-context behavior",
+      "snippet": "·····\n\n.....\n\n## How Claude’s context windows are structured.\n\nThe context window defines the total number of tokens—input plus output—that Claude can process in a single exchange. For most users, the standard limit is 200,000 tokens, implemented across the Claude 3.5 and Claude 3.7 Sonnet models. T",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S4",
+      "url": "https://github.com/boto/boto3/issues/4279",
+      "title": "Claude 3.5 Sonnet is limited to 4096 tokens - should be 8192 · Issue #4279 · boto/boto3 · GitHub",
+      "snippet": "limit of 4096. Try again with a maximum tokens value that is lower than 4096. [...] ### Possible Solution\n\nNo response\n\n### Additional Information/Context\n\nNo response\n\n### SDK version used\n\n1.35.2\n\n### Environment details (OS name and version, etc.)\n\nLinux and MacOs.\n\nReactions are currently unavai",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S5",
+      "url": "https://discuss.ai.google.dev/t/what-are-the-input-output-token-limits-for-claude-sonnet-via-the-vertex-model-garden/33610",
+      "title": "What are the input/output token limits for Claude Sonnet via the Vertex Model Garden? - Gemini API - Google AI Developers Forum",
+      "snippet": "## Expected Behavior\nAllow max output tokens of 8192 when making calls to cla…ude-sonnet-3.5 using AnthropicVertex SDK (Python)\n## Actual Behavior\nOnly 4196 output tokens allows.\n## Steps to Reproduce the Problem\nFrom: \n> Max output | 8192 tokens1\n> 8192 output tokens is in beta and requires the hea",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S6",
+      "url": "https://www.youtube.com/watch?v=IlqlzjZR_TE",
+      "title": "Testing the NEW context window of GPT-4-Turbo (inside ...",
+      "snippet": "new model so I'm going to test it out okay here we are in chat GPT and the GPT 4 model is chosen let's start by first asking it what is your context window let's see if it gives us a correct answer so I'm going to ask what is your context window okay according to chat GPT itself it's saying that the",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S7",
+      "url": "https://zilliz.com/ai-faq/what-is-the-maximum-context-window-for-openais-models",
+      "title": "What is the maximum context window for OpenAI's models?",
+      "snippet": "OpenAI’s models, particularly the latest versions like GPT-4, have a maximum context window of 8,192 tokens. This means that the model can process inputs of up to 8,192 tokens at a time, which includes both the prompt you provide and the generated response. To put that into perspective, a token can ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S8",
+      "url": "https://www.zemith.com/en/blogs/gpt-4-o-context-window",
+      "title": "Mastering The GPT-4o Context Window: Your Practical (and Slightly ...",
+      "snippet": "### Working with GPT-4o’s Input and Output Limits\n\nZemith gives you access to multiple models so you can pick the right tool for the job, but it helps to know their quirks. GPT-4o has that massive 128,000 token context window—a huge 4x jump from older models. But here’s the catch: it’s currently lim",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S9",
+      "url": "https://community.openai.com/t/what-is-the-maximum-response-length-output-tokens-for-each-gpt-model/524066",
+      "title": "What is the maximum response length (output tokens) for each GPT model? - API - OpenAI Developer Community",
+      "snippet": "the date now is in October 2024 and the specifications that can be found would be those of GPT4o for my curiosity.  \nModels - OpenAI API\n\nThe language there is “context window” = 128K and “max output tokens” = 16386\n\nI mention that because it seems to have changed, and particularly from the outdated",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S10",
+      "url": "https://www.datastudios.org/post/chatgpt-context-window-token-limits-and-memory-how-session-recall-and-long-input-handling-work",
+      "title": "ChatGPT — Context Window, Token Limits, and Memory: how session recall and long input handling work",
+      "snippet": "|  |  |  |  |\n ---  --- |\n| Model | Context window | Approx. word capacity | Notes |\n| GPT-3.5 Turbo (Free) | ~16,000 tokens | ≈12,000 words | Default for free-tier users |\n| GPT-4o (Plus / Team / Enterprise) | 128,000 tokens | ≈96,000 words | Handles long docs and complex reasoning |\n| GPT-4o-mini ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S11",
+      "url": "https://aws.amazon.com/about-aws/whats-new/2025/08/anthropic-claude-sonnet-bedrock-expanded-context-window",
+      "title": "Anthropic's Claude Sonnet 4 in Amazon Bedrock ...",
+      "snippet": "Anthropic’s Claude Sonnet 4 in Amazon Bedrock is launching today with a significantly expanded context window in public preview. The context window has been increased from 200,000 to 1 million tokens, representing a 5x expansion. This enhancement allows Claude to process and reason over much larger ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S12",
+      "url": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "title": "Models overview - Claude Platform Docs",
+      "snippet": "| Extended thinking (`thinking.type: \"enabled\"`) | No | No | No | Yes |\n| Adaptive thinking | Yes (always on) | Yes | Yes | No |\n| Comparative latency | Slower | Moderate | Fast | Fastest |\n| Context window | 1M tokens | 1M tokens | 1M tokens | 200k tokens |\n| Max output | 128k tokens | 128k tokens ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S13",
+      "url": "https://www.anthropic.com/news/claude-3-5-sonnet",
+      "title": "Introducing Claude 3.5 Sonnet",
+      "snippet": "Overview\n   Developer docs\n   Pricing\n   Ecosystem\n   Marketplace\n   Regional compliance\n   Claude on AWS\n   Google Cloud\n   Microsoft Foundry\n   Console login\n\n### Resources\n\n   Blog\n   Claude partner network\n   Community\n   Connectors\n   Courses\n   Customer stories\n   Engineering at Anthropic\n   E",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S14",
+      "url": "https://community.openai.com/t/what-is-the-context-window-of-gpt-4/701256",
+      "title": "What is the context window of gpt 4 - OpenAI Developer Community",
+      "snippet": ":point_down:\n\nGPT-4 Turbo has a context window of 128k and a maximum response size of 4096 tokens.\n\nSource: \n\nNinja’d!\n\nYou can check this information in the OpenAI documentation. GPT-4 also known as GPT-4-0613 (GPT 4 Points GPT-4-0613), has a context window of 8,192 tokens, while GPT-4 turbo (Point",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S15",
+      "url": "https://povio.com/blog/gpt-4-turbo-preview-exploring-the-128k-context-window",
+      "title": "GPT-4 Turbo Preview: Exploring the 128k Context Window - Povio",
+      "snippet": "The GPT-4 Turbo Preview is not just an incremental update, but a substantial leap in the capabilities of AI language models. With a context window of 128k tokens, it stands head and shoulders above the existing GPT-4 models, which are limited to 8k and 32k tokens. This expansion isn't just about num",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S16",
+      "url": "https://community.openai.com/t/test-new-128k-window-on-gpt-4-1106-preview/478424",
+      "title": "Test new 128k window on gpt-4-1106-preview - API - OpenAI Developer Community",
+      "snippet": "The 128K context length capability of GPT-4 Turbo is a game-changer. It means that the model can fit the equivalent of more than 300 pages of text in a single prompt. This opens up possibilities for applications that were previously unthinkable. For instance, one could potentially turn an outline an",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S17",
+      "url": "https://community.openai.com/t/how-to-use-the-128k-context-using-api/933145",
+      "title": "How to use the 128k context using api - API - OpenAI Developer Community",
+      "snippet": "| Model | Description | Context window | Max output tokens | Training data |\n ---  --- \n| gpt-4-turbo | The latest GPT-4 Turbo model with vision capabilities. Vision requests can now use JSON mode and function calling. Currently points to `gpt-4-turbo-2024-04-09`. | 128,000 tokens | 4,096 tokens | U",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S18",
+      "url": "https://dev.to/maximsaplin/gpt-4-128k-context-it-is-not-big-enough-1h02",
+      "title": "GPT-4, 128K context - it is not big enough - DEV Community",
+      "snippet": "Skip to content\n\nDEV Community \n\nLog in    Create account\n\n## DEV Community\n\nCover image for GPT-4, 128K context - it is not big enough \n\nMaxim Saplin\n\nMaxim Saplin\n\nPosted on\n\n# GPT-4, 128K context - it is not big enough\n\n#openai #gpt4 #chatgpt #llm\n\nOpenAI has recently introduced the GPT-4 Turbo m",
+      "tool": "web_search",
+      "first_seen_step": 1
+    }
+  ],
+  "answer": "Claude 3.5 Sonnet has the larger context window: **200,000 tokens** vs **128,000 tokens** for GPT-4 Turbo, so Claude 3.5 Sonnet is larger by **72,000 tokens** [S1][S14][S15].  \n\n- **Claude 3.5 Sonnet (max input+output):** **200,000 tokens** [S1]  \n- **GPT-4 Turbo (max input+output):** **128,000 tokens** [S14]",
+  "citations": [
+    "S1",
+    "S14",
+    "S15"
+  ],
+  "coverage": {
+    "What is the official context window size (maximum input+output tokens) for Claude 3.5 Sonnet?": false,
+    "What is the official context window size (maximum input+output tokens) for GPT-4 Turbo?": false
+  },
+  "outcome": {
+    "status": "completed",
+    "early_exit_reason": null,
+    "used_deterministic_finalize": false,
+    "reflect_overrules": 0,
+    "error": null
+  },
+  "usage": {
+    "llm_calls": [
+      {
+        "purpose": "plan",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 237,
+        "cached_tokens": 0,
+        "output_tokens": 158,
+        "reasoning_tokens": 69,
+        "cost_usd": 0.0002449,
+        "latency_ms": 2334.274707987788,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 861,
+        "cached_tokens": 0,
+        "output_tokens": 126,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.00032970000000000005,
+        "latency_ms": 2139.7724589915015,
+        "replayed": false
+      },
+      {
+        "purpose": "finalize",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 1381,
+        "cached_tokens": 0,
+        "output_tokens": 114,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.0004187,
+        "latency_ms": 2135.21608299925,
+        "replayed": false
+      }
+    ],
+    "totals": {
+      "input_tokens": 2479,
+      "cached_tokens": 0,
+      "output_tokens": 398,
+      "reasoning_tokens": 69,
+      "cost_usd": 0.0009933,
+      "cache_hit_rate": 0.0
+    },
+    "by_purpose": {
+      "plan": {
+        "calls": 1,
+        "cost_usd": 0.0002449,
+        "output_tokens": 158
+      },
+      "act": {
+        "calls": 1,
+        "cost_usd": 0.00032970000000000005,
+        "output_tokens": 126
+      },
+      "finalize": {
+        "calls": 1,
+        "cost_usd": 0.0004187,
+        "output_tokens": 114
+      }
+    },
+    "search_credits": 4,
+    "steps": 1
+  },
+  "timings_ms": {
+    "total": 9698.685625000508
+  },
+  "compaction": {
+    "count": 0,
+    "compacted_upto": 0
+  }
+}

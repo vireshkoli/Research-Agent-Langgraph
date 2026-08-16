@@ -1,0 +1,519 @@
+{
+  "schema_version": "1",
+  "run_id": "e91b215699d1",
+  "ts": "2026-08-09T10:56:35+00:00",
+  "question": "In which year was Python first released, and how many years before Rust's 1.0 release was that?",
+  "variant": "no_overrule",
+  "config": {
+    "agent_model": "gpt-5.4-nano",
+    "reasoning_effort": "none",
+    "max_steps": 8,
+    "max_seconds": 120.0,
+    "max_run_cost_usd": 0.05,
+    "finalize_reserve_usd": 0.008,
+    "compact_threshold_tokens": 12000,
+    "git_sha": "a4216f3",
+    "prompt_hash": "sha256:512e8e5d8eaa"
+  },
+  "plan": {
+    "version": 1,
+    "subquestions": [
+      "In what year was Python first released?",
+      "In what year was Rust 1.0 released?"
+    ],
+    "replans": 0
+  },
+  "steps": [
+    {
+      "i": 1,
+      "node": "plan",
+      "plan_version": 0,
+      "ts_offset_ms": 1778.9050839928677,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 2,
+      "node": "act",
+      "plan_version": 1,
+      "ts_offset_ms": 3948.1004169938387,
+      "tool_calls": [
+        {
+          "call_id": "call_OcjHgWdRkDYdlJMcIFPj3TcB",
+          "name": "web_search",
+          "args": {
+            "query": "Python first released year 1991 official release date"
+          }
+        },
+        {
+          "call_id": "call_MRIsqAB2r8nNsjbh8J2kVNgs",
+          "name": "web_search",
+          "args": {
+            "query": "Rust 1.0 release date year 2015 May 15 1.0"
+          }
+        },
+        {
+          "call_id": "call_s6sXYIvoURsnxSbmEBYuEuLS",
+          "name": "web_search",
+          "args": {
+            "query": "Python 0.9.0 1991 release first version date"
+          }
+        },
+        {
+          "call_id": "call_fcEVKkkDDKHduiIJhmC7S3TU",
+          "name": "web_search",
+          "args": {
+            "query": "The Rust Programming Language 1.0.0 release announcement date 2015"
+          }
+        }
+      ],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 3,
+      "node": "observe",
+      "plan_version": 1,
+      "ts_offset_ms": 6886.743666997063,
+      "tool_calls": [],
+      "observations": [
+        {
+          "call_id": "call_OcjHgWdRkDYdlJMcIFPj3TcB",
+          "tool": "web_search",
+          "args": {
+            "query": "Python first released year 1991 official release date"
+          },
+          "ok": true,
+          "content": "Summary: Python was first released in 1991 by Guido van Rossum. It quickly gained popularity and became widely used in various fields. The language's name is inspired by Monty Python's Flying Circus.\n\n[1] About Python\n    https://pythoninstitute.org/about-python\n    ## Who\n\nPython was created by Guido van Rossum and first released on February 20, 1991. While the word \"python\" might bring to mind a large snake, the language\u2019s name actually comes from the classic BBC comedy series Monty Python\u2019s Flying Circus.\n\nWhat makes Python unique is that it began as the vision and work of a single person. Unlike most languages born in big tech companies, Python was created by Guido \u2013 driven by a simple goal: to make programming more intuitive and enjoyable.\n\n[2] Python (programming language)\n    https://en.wikipedia.org/wiki/Python_(programming_language)\n    | Paradigm | Multi-paradigm: object-oriented, procedural (imperative), functional, structured, reflective |\n| Designed by | Guido van Rossum |\n| Developer | Python Software Foundation |\n| First appeared | 20 February 1991; 35 years ago (1991-02-20) |\n| Stable release | 3.14.7 Edit this on Wikidata / 5 August 2026; 3 days ago (5 August 2026) |\n|  |\n| Typing discipline | Duck, dynamic, strong; optional type annotations | [...] in the Netherlands. It was designed as a successor to the ABC \"ABC (programming language)\") programming language, which was inspired by SETL, capable of exception handling and interfacing with the Amoeba \"Amoeba (operating system)\") operating system. Python implementation began in December 1989. Van Rossum first released it in 1991 as Python 0.9.0. Van Rossum assumed sole responsibility for the project, as the lead developer, until 12 July 2018, when he announced his \"permanent vacation\" from [...] Python 3.0 was released on 3 December 2008, and was a major revision and not completely backward-compatible with earlier versions, with some new semantics and changed syntax. Python 2.7.18, released in 2020, was the last release of Python 2. Several releases in the Python 3.x series have added new syntax to the language, and made a few (considered very minor) backward-incompatible changes.\n\n[3] History of Python\n    https://en.wikipedia.org/wiki/History_of_Python\n    Van Rossum first published the code (for Python version 0.9.1) to alt.sources in February 1991. Several features of the language were already present at this stage, among them classes with inheritance \"Inheritance (object-oriented programming)\"), exception handling, functions, and various core datatypes such as `list`, `dict`, and `str`. The initial release also contained a module system borrowed from Modula-3; Van Rossum describes the module as \"one of Python's major programming units\". [...] | Version | Latest  micro version | Release date | End of full support | End of security fixes |\n ---  --- \n| Unsupported: 0.9 | 0.9.9 | 1991-02-20 | 1993-07-29 |\n| Unsupported: 1.0 | 1.0.4 | 1994-01-26 | 1994-07-14 |\n| Unsupported: 1.1 | 1.1.1 | 1994-10-11 | 1994-11-10 |\n| Unsupported: 1.2 | 1995-04-13 | Unsupported |\n| Unsupported: 1.3 | 1995-10-13 | Unsupported |\n| Unsupported: 1.4 | 1996-10-25 | Unsupported |\n| Unsupported: 1.5 | 1.5.2 | 1998-01-03 | 1999-04-13 | [...] As of June 2026( Python 3.14.6 is the latest stable release. This version currently receives full bug-fix and security updates, while Python 3.13\u2014released in October 2024\u2014will continue to receive bug-fixes until October 2026, and after that will only receive security fixes until its end-of-life in 2029. Python 3.10 is the oldest supported branch of Python (albeit in the 'security support' phase).\n\n## Early history\n\n[edit]\n\n[4] Happy 35th anniversary to Python! Python 0.9.0, the first ...\n    https://www.facebook.com/MITCSAIL/posts/happy-35th-anniversary-to-pythonpython-090-the-first-public-version-of-the-popul/1335852538577254\n    ## CSAIL - MIT's post\n\n### CSAIL - MIT\n\n20 February  \u00b7\n\nHappy 35th anniversary to Python!\n\nPython 0.9.0, the first\n\n[truncated: 2,395 of 6,388 chars]",
+          "error": null,
+          "latency_ms": 2936.288166005397,
+          "raw_chars": 6388,
+          "truncated": true,
+          "source_ids": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5"
+          ]
+        },
+        {
+          "call_id": "call_MRIsqAB2r8nNsjbh8J2kVNgs",
+          "tool": "web_search",
+          "args": {
+            "query": "Rust 1.0 release date year 2015 May 15 1.0"
+          },
+          "ok": true,
+          "content": "Summary: Rust 1.0 was released on May 15, 2015. It marked the first stable version of the language. Rust has since grown in popularity and adoption.\n\n[1] Rust Celebrates 10 Years Since Version 1.0 - I Programmer\n    https://www.i-programmer.info/news/98-languages/18041-rust-celebrates-10-years-since-stability.html\n    | Rust reached the milestone of Version 1.0 becoming generally available on May 15, 2015. Version 1.87 has just been released on the 10th anniversary with a celebratory event in Utrecht during Rust week, its annual developer conference.  You may regard Rust as a language still in its infancy - but in fact it had been under development for some years before we ever got to hear about it. It originated in 2006 as a personal project by Graydon Hoare, a Mozilla employee.  Hoare's motivation for the [...] joining a few weeks later.  I Programmer's first report on Rust came with the release of Version 0.4 in November 2012 which was notable for the full integration of borrowed pointers. We covered two more pre-stable releases before the arrival of Version 1.0. initially as an alpha in January 2015 when we reported that:  Rust is backed by Mozilla and is described on its website as: \u201ca systems programming language that runs blazingly fast, prevents almost all crashes, and eliminates data races\". [...] | Last Updated ( Tuesday, 20 May 2025 ) |\n\n[2] Rust (programming language) - Wikipedia\n    https://en.wikipedia.org/wiki/Rust_(programming_language)\n    Six years after Mozilla's sponsorship, Rust 1.0 was published and became the first stable release on May 15, 2015. A year later, the Rust compiler had accumulated over 1,400 contributors, and there were over 5,000 third-party libraries published on the Rust package management website Crates.io.:\u200a43:15\n\n### 2015\u20132020: Servo and early adoption\n\n[edit&action=edit&section=5 \"Edit section: 2015\u20132020: Servo and early adoption\")] [...] Software developer Graydon Hoare created Rust in 2006 while working at Mozilla, which officially sponsored the project in 2009. The first stable release, Rust 1.0, was published in May 2015. The project has been sponsored by the Rust Foundation since February 2021.\n\nRust has been adopted by many software projects, especially web services and system software. It has been studied academically and has a growing community of developers.\n\n## History [...] During this time period, work had shifted from the initial OCaml compiler to a self-hosting compiler (i.e., written in Rust) targeting LLVM. The ownership system was in place by 2010. The Rust logo was developed in 2011 based on a bicycle chainring.\n\nRust 0.1 became the first public release on January 20, 2012 for Windows, Linux, and MacOS. The early 2010s witnessed increasing involvement from full-time engineers at Mozilla and open source volunteers outside Mozilla.\n\n### 2012\u20132015: Evolution\n\n[3] 10 years of Rust: code, community, industry standards | SoftwareMill\n    https://softwaremill.com/10-years-of-rust-code-community-industry-standards\n    Let's celebrate the 1.0 milestone reached on May 15, 2015. Why is celebrating this release important? When version 1.0 was announced 10 years ago, the Rust team promised something significant, which holds true to this day: that the Rust compiler would be kept stable and would not be broken with the upcoming releases. I believe this was crucial for the adoption of the language and was a major selling point for companies and developers across the world. [...] We are very close to the 10-year anniversary of Rust 1.0's release, and that was some kind of a journey. While Rust, as a project, is actually a bit older, it dates back to 2006, when Graydon Hoare started working on it, the last ten years since the stable 1.0 release have transformed this project from an experimental Mozilla project to a valuable industry-proven tool.\n\n## Rust origins [...] At this point, after 10 years since the release 1.0, we can clearly see that Rust is no longer a personal project for\n\n[truncated: 2,970 of 6,969 chars]",
+          "error": null,
+          "latency_ms": 2917.64245799277,
+          "raw_chars": 6969,
+          "truncated": true,
+          "source_ids": [
+            "S6",
+            "S7",
+            "S8",
+            "S9",
+            "S10"
+          ]
+        },
+        {
+          "call_id": "call_s6sXYIvoURsnxSbmEBYuEuLS",
+          "tool": "web_search",
+          "args": {
+            "query": "Python 0.9.0 1991 release first version date"
+          },
+          "ok": true,
+          "content": "Summary: Python 0.9.0 was released on February 20, 1991, marking the first public version of the language. It introduced core features like exception handling and modules. This release laid the foundation for Python's future growth.\n\n[1] Python Programming/Version history - Wikibooks\n    https://en.wikibooks.org/wiki/Python_Programming/Version_history\n    Python 0.0 - xx Dec 1989 (Implementation started)\n Python 0.x.x - 1990 (Internal releases at CWI)\n Python 0.9.0 - 20 Feb 1991 (released to alt.sources)\n Python 0.9.1 - xx Feb 1991\n Python 0.9.2 - Autumn 1991\n Python 0.9.4 - 24 Dec 1991\n Python 0.9.5 - 02 Jan 1992 (Macintosh only)\n Python 0.9.6 - 06 Apr 1992\n Python 0.9.7beta - 1992\n Python 0.9.8 - 09 Jan 1993\n Python 0.9.9 - 29 July 1993\n\nEarly \u201cmicro\u201d version release dates: [...] Python 1.0.2 - 15 Feb 1994\n Python 1.0.3 - 04 May 1994\n Python 1.0.4 - 14 July 1994\n Python 1.1.1 - 10 Nov 1994\n Python 1.5.1 - 31 Oct 1998\n Python 1.5.2 - 13 April 1999\n Python 1.6.1 - 25 Feb 2001\n Python 2.0.1 - 22 Jun 2001\n\nThe rest: [...] Python 1.0 - 26 Jan 1994\n Python 1.1 - 11 October 1994\n Python 1.2 - 13 April 1995\n Python 1.3 - 13 October 1995\n Python 1.4 - 25 October 1996\n Python 1.5 - 31 Dec 1997 (03 Jan 1998) - ... - What's new\n Python 1.6 - 05 Sep 2000 - release page\n Python 2.0 - 16 Oct 2000 - ... - What's new\n Python 2.1 - 17 Apr 2001 - ... - What's new\n Python 2.2 - 21 Dec 2001 - ... - What's new\n Python 2.3 - 29 Jul 2003 - release notes - What's new\n Python 2.4 - 30 Nov 2004 - release notes - What's new\n\n[2] A Brief History of Python\n    https://learnpython.com/blog/history-of-python\n    ### 02.1991 Python 0.9.0\n\nFebruary 1991 was a historic date. Guido van Rossum published the source code of the Python interpreter to alt.source, a Usenet group for open-source code. Thus began the dynamic story of Python, and open-sourcing helped Python succeed. [...] The first version, Python 0.9.0, was inspired by the ABC language van Rossum was implementing at CWI at that time. Its main goal was to take the best from ABC and fix the rest. This first Python release had the following important features:\n\n### 01.1994 Python 1.0\n\nAnother milestone in the history of Python came with the release of its second version in January 1994. A separate Usenet group was created for this purpose.\n\nAdditional functionalities were implemented with this version:\n\n[3] The first version of python was released and implemented in\n    https://brainly.in/question/59994018\n    sandipnagpure1985   sandipnagpure1985\n\n Computer Science\n Secondary School\n\n# The first version of python was released and implemented in\n\nmadhurauh   madhurauh\n\nThe first version of Python was released and implemented in 1991 by Guido van Rossum. Guido van Rossum began working on Python in the late 1980s, and the first version, Python 0.9.0, was released in February 1991. Since then, Python has evolved into one of the most popular and widely used programming languages in the world.\n\n###\n\n### [...] ###\n\n###\n\nsukhvirsingh69168   sukhvirsingh69168\n\nAnswer:\n\n\ufeff1991\n\nExplanation:\n\n###\n\n###\n\n### New questions in Computer Science\n\n[4] Python Version History\n    https://www.tutorialsteacher.com/python/python-version-history\n    | Version | Release Date | Important Features |\n --- \n| Python 0.9.0 | February 1991 |  Classes with inheritance exception handling  Functions  Modules |\n| Python 1.0 | January 1994 |  Functional programming tools (lambda, map, filter and reduce).  Support for complex numbers.  Functions with keyword arguments |\n| Python 2.0 | October 2000 |  List comprehension.  Cycle-detecting garbage collector.  Support for Unicode. Unification of data types and classes |\n\n[5] Python Version History\n    https://www.geeksforgeeks.org/python/python-version-history\n    Python's journey began with version 0.9.0, released by Guido van Rossum in 1991. This initial release included core features such as exception handling, functions, and the core data types: list, dict, str, and others. It also\n\n[truncated: 983 of 4,974 chars]",
+          "error": null,
+          "latency_ms": 2188.191082997946,
+          "raw_chars": 4974,
+          "truncated": true,
+          "source_ids": [
+            "S11",
+            "S12",
+            "S13",
+            "S14",
+            "S15"
+          ]
+        },
+        {
+          "call_id": "call_fcEVKkkDDKHduiIJhmC7S3TU",
+          "tool": "web_search",
+          "args": {
+            "query": "The Rust Programming Language 1.0.0 release announcement date 2015"
+          },
+          "ok": true,
+          "content": "Summary: Rust 1.0 was officially released on May 15, 2015, marking the first stable version of the language. The release was significant for ensuring compiler stability and safety. By 2016, Rust had over 1,400 contributors and 5,000 third-party libraries.\n\n[1] Rust\uff08computer programming language\uff09_Baiduwiki\n    https://baike.baidu.com/en/item/Rust/1528099\n    Version History\n\nMozilla announced the release of version 0.12 of the Rust compiler and tools in October 2014.\n\nVersion 0.12 included over 1,900 changes and bug fixes, which mainly involved: rewriting the introductory documentation (now called The Rust Guide); and further improving the package manager Cargo, among others.\n\nIn January 2015, Rust-1.0.0-alpha was released.\n\nOn May 15, 2015, the Rust programming language core team officially announced the release of Rust version 1.0. [...] \"Rust\" was initially a personal project by Graydon Hoare of Mozilla. In 2009, Mozilla began sponsoring the project, with several Mozilla employees participating in the design and development of the Rust language. In August 2013, Graydon Hoare stepped down from his role as technical lead for Rust, and Brian Anderson took over. On May 15, 2015, the Rust 1.0 version was officially released. In September 2017, Brian Anderson left Mozilla, and the project's core team was taken over and co-led by [...] the first compiler with a version number was released in January 2012. The 1.0 stable version was officially released on May 15, 2015, version 1.90.0 was released on September 18, 2025, and the current version is 1.91.0. In August 2013, Graydon Hoare stepped down from the technical lead position, succeeded by Brian Anderson; after September 2017, the core team was co-led by Aaron Turon and Niko Matsakis.\n\n[2] 10 years of Rust: code, community, industry standards | SoftwareMill\n    https://softwaremill.com/10-years-of-rust-code-community-industry-standards\n    Let's celebrate the 1.0 milestone reached on May 15, 2015. Why is celebrating this release important? When version 1.0 was announced 10 years ago, the Rust team promised something significant, which holds true to this day: that the Rust compiler would be kept stable and would not be broken with the upcoming releases. I believe this was crucial for the adoption of the language and was a major selling point for companies and developers across the world. [...] We are very close to the 10-year anniversary of Rust 1.0's release, and that was some kind of a journey. While Rust, as a project, is actually a bit older, it dates back to 2006, when Graydon Hoare started working on it, the last ten years since the stable 1.0 release have transformed this project from an experimental Mozilla project to a valuable industry-proven tool.\n\n## Rust origins [...] At this point, after 10 years since the release 1.0, we can clearly see that Rust is no longer a personal project for someone angry at the elevator situation ;) The history of the language is fascinating, but what's even more interesting, is how big will it grow in the near future and what areas will it shine at except for systems development. What makes Rust special isn't just its technical merits, it's the vision of a world where performance doesn't require sacrificing safety, where systems\n\n[3] The History of Rust\n    https://www.youtube.com/watch?v=79PSagCD_AY\n    which is the release year so we put out rest one point out . out alpha on Friday\ngenuine I've 2015 and the first beta on februari 16 we sort of said we don't\nknow how many betas we're going to have to eventually finish up and one point\nout actually ended up happening on a 15 2015 and so from that time period until\nshortly after the release you know it was like there's been eight\nyears of rust being developed by changing every day and I like the [...] but eventually it's going to be in the language doesn't matter you can go read\nthe post if you're interested in the details but uh you know they pretty much\nlike they actually put into\n\n[truncated: 3,017 of 7,007 chars]",
+          "error": null,
+          "latency_ms": 2208.7076250027167,
+          "raw_chars": 7007,
+          "truncated": true,
+          "source_ids": [
+            "S16",
+            "S8",
+            "S17",
+            "S18",
+            "S19"
+          ]
+        }
+      ],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 4,
+      "node": "reflect",
+      "plan_version": 1,
+      "ts_offset_ms": 6888.021791994106,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": "skipped on first step"
+    },
+    {
+      "i": 5,
+      "node": "act",
+      "plan_version": 1,
+      "ts_offset_ms": 9066.972458997043,
+      "tool_calls": [
+        {
+          "call_id": "call_G4TgLAiUi1IpXIY3Cm26CnF9",
+          "name": "calculator",
+          "args": {
+            "expression": "2015-1991"
+          }
+        }
+      ],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 6,
+      "node": "observe",
+      "plan_version": 1,
+      "ts_offset_ms": 9068.51333398663,
+      "tool_calls": [],
+      "observations": [
+        {
+          "call_id": "call_G4TgLAiUi1IpXIY3Cm26CnF9",
+          "tool": "calculator",
+          "args": {
+            "expression": "2015-1991"
+          },
+          "ok": true,
+          "content": "2015-1991 = 24",
+          "error": null,
+          "latency_ms": 0.1584590063430369,
+          "raw_chars": 0,
+          "truncated": false,
+          "source_ids": []
+        }
+      ],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 7,
+      "node": "reflect",
+      "plan_version": 1,
+      "ts_offset_ms": 10812.275042000692,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": {
+        "decision": "finalize",
+        "reasoning": "The observations provide the required release years for both Python (1991) and Rust 1.0 (May 15, 2015), and the computed difference (2015 \u2212 1991 = 24) answers the time gap question.",
+        "covered": {
+          "In what year was Python first released?": true,
+          "In what year was Rust 1.0 released?": true
+        },
+        "open_gaps": [],
+        "overruled_stop": false
+      },
+      "note": null
+    },
+    {
+      "i": 8,
+      "node": "finalize",
+      "plan_version": 1,
+      "ts_offset_ms": 12317.776708994643,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    }
+  ],
+  "sources": [
+    {
+      "sid": "S1",
+      "url": "https://pythoninstitute.org/about-python",
+      "title": "About Python",
+      "snippet": "## Who\n\nPython was created by Guido van Rossum and first released on February 20, 1991. While the word \"python\" might bring to mind a large snake, the language\u2019s name actually comes from the classic BBC comedy series Monty Python\u2019s Flying Circus.\n\nWhat makes Python unique is that it began as the vis",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S2",
+      "url": "https://en.wikipedia.org/wiki/Python_(programming_language)",
+      "title": "Python (programming language)",
+      "snippet": "| Paradigm | Multi-paradigm: object-oriented, procedural (imperative), functional, structured, reflective |\n| Designed by | Guido van Rossum |\n| Developer | Python Software Foundation |\n| First appeared | 20 February 1991; 35 years ago (1991-02-20) |\n| Stable release | 3.14.7 Edit this on Wikidata /",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S3",
+      "url": "https://en.wikipedia.org/wiki/History_of_Python",
+      "title": "History of Python",
+      "snippet": "Van Rossum first published the code (for Python version 0.9.1) to alt.sources in February 1991. Several features of the language were already present at this stage, among them classes with inheritance \"Inheritance (object-oriented programming)\"), exception handling, functions, and various core datat",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S4",
+      "url": "https://www.facebook.com/MITCSAIL/posts/happy-35th-anniversary-to-pythonpython-090-the-first-public-version-of-the-popul/1335852538577254",
+      "title": "Happy 35th anniversary to Python! Python 0.9.0, the first ...",
+      "snippet": "## CSAIL - MIT's post\n\n### CSAIL - MIT\n\n20 February  \u00b7\n\nHappy 35th anniversary to Python!\n\nPython 0.9.0, the first public version of the popular programming language, released #otd in 1991.\n\nNo photo description available. [...] offset='1' stop-color='%23E11731' stop-opacity='.1'/%3E%3C/radialGradie",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S5",
+      "url": "https://news.ycombinator.com/item?id=46985607",
+      "title": "Python was first released in 1991. It rumbled along for about 20 years until exp... | Hacker News",
+      "snippet": "| |  |  | kitd 5 months ago  | parent | context | favorite | on: D Programming Language   Python was first released in 1991. It rumbled along for about 20 years until exploding in popularity with ML and the rise of data science. |     |  |  |  --- | | |  |  | querez 5 months ago  | next (javascript:",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S6",
+      "url": "https://www.i-programmer.info/news/98-languages/18041-rust-celebrates-10-years-since-stability.html",
+      "title": "Rust Celebrates 10 Years Since Version 1.0 - I Programmer",
+      "snippet": "| Rust reached the milestone of Version 1.0 becoming generally available on May 15, 2015. Version 1.87 has just been released on the 10th anniversary with a celebratory event in Utrecht during Rust week, its annual developer conference.  You may regard Rust as a language still in its infancy - but i",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S7",
+      "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+      "title": "Rust (programming language) - Wikipedia",
+      "snippet": "Six years after Mozilla's sponsorship, Rust 1.0 was published and became the first stable release on May 15, 2015. A year later, the Rust compiler had accumulated over 1,400 contributors, and there were over 5,000 third-party libraries published on the Rust package management website Crates.io.:\u200a43:",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S8",
+      "url": "https://softwaremill.com/10-years-of-rust-code-community-industry-standards",
+      "title": "10 years of Rust: code, community, industry standards | SoftwareMill",
+      "snippet": "Let's celebrate the 1.0 milestone reached on May 15, 2015. Why is celebrating this release important? When version 1.0 was announced 10 years ago, the Rust team promised something significant, which holds true to this day: that the Rust compiler would be kept stable and would not be broken with the ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S9",
+      "url": "https://www.threads.com/@codeforreal/post/DJt7-8ZsBva/10-years-ago-on-may-15-2015-rust-10-was-released?hl=en",
+      "title": "10 years ago, on May 15 2015, Rust 1.0 was released.",
+      "snippet": "Join Threads to share thoughts, find out what's going on, follow your people and more.\n\nContinue with Instagram [...] [](\n\n[](\n\n[](\n\n# Thread 1.1K views\n\nImage 1: codeforreal's profile picture\n\ncodeforreal\n\n05/16/25\n\n10 years ago, on May 15 2015, Rust 1.0 was released.\n\nImage 2\n\n3\n\nRelated threads\n\n",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S10",
+      "url": "https://news.ycombinator.com/item?id=9551937",
+      "title": "Announcing Rust 1.0",
+      "snippet": "|  |  | kibwen on May 15, 2015  | next (javascript:void(0))   I would like to take this opportunity to formally apologize to the HN community for that time back in early 2012 when I predicted that Rust 1.0 would be released \"in about six months or so\", and later proceeded to proudly proclaim that 0.",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S11",
+      "url": "https://en.wikibooks.org/wiki/Python_Programming/Version_history",
+      "title": "Python Programming/Version history - Wikibooks",
+      "snippet": "Python 0.0 - xx Dec 1989 (Implementation started)\n Python 0.x.x - 1990 (Internal releases at CWI)\n Python 0.9.0 - 20 Feb 1991 (released to alt.sources)\n Python 0.9.1 - xx Feb 1991\n Python 0.9.2 - Autumn 1991\n Python 0.9.4 - 24 Dec 1991\n Python 0.9.5 - 02 Jan 1992 (Macintosh only)\n Python 0.9.6 - 06 ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S12",
+      "url": "https://learnpython.com/blog/history-of-python",
+      "title": "A Brief History of Python",
+      "snippet": "### 02.1991 Python 0.9.0\n\nFebruary 1991 was a historic date. Guido van Rossum published the source code of the Python interpreter to alt.source, a Usenet group for open-source code. Thus began the dynamic story of Python, and open-sourcing helped Python succeed. [...] The first version, Python 0.9.0",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S13",
+      "url": "https://brainly.in/question/59994018",
+      "title": "The first version of python was released and implemented in",
+      "snippet": "sandipnagpure1985   sandipnagpure1985\n\n Computer Science\n Secondary School\n\n# The first version of python was released and implemented in\n\nmadhurauh   madhurauh\n\nThe first version of Python was released and implemented in 1991 by Guido van Rossum. Guido van Rossum began working on Python in the late",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S14",
+      "url": "https://www.tutorialsteacher.com/python/python-version-history",
+      "title": "Python Version History",
+      "snippet": "| Version | Release Date | Important Features |\n --- \n| Python 0.9.0 | February 1991 |  Classes with inheritance exception handling  Functions  Modules |\n| Python 1.0 | January 1994 |  Functional programming tools (lambda, map, filter and reduce).  Support for complex numbers.  Functions with keywor",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S15",
+      "url": "https://www.geeksforgeeks.org/python/python-version-history",
+      "title": "Python Version History",
+      "snippet": "Python's journey began with version 0.9.0, released by Guido van Rossum in 1991. This initial release included core features such as exception handling, functions, and the core data types: list, dict, str, and others. It also introduced the module system, allowing the organization of code into reusa",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S16",
+      "url": "https://baike.baidu.com/en/item/Rust/1528099",
+      "title": "Rust\uff08computer programming language\uff09_Baiduwiki",
+      "snippet": "Version History\n\nMozilla announced the release of version 0.12 of the Rust compiler and tools in October 2014.\n\nVersion 0.12 included over 1,900 changes and bug fixes, which mainly involved: rewriting the introductory documentation (now called The Rust Guide); and further improving the package manag",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S17",
+      "url": "https://www.youtube.com/watch?v=79PSagCD_AY",
+      "title": "The History of Rust",
+      "snippet": "which is the release year so we put out rest one point out . out alpha on Friday\ngenuine I've 2015 and the first beta on februari 16 we sort of said we don't\nknow how many betas we're going to have to eventually finish up and one point\nout actually ended up happening on a 15 2015 and so from that ti",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S18",
+      "url": "https://users.rust-lang.org/t/serde-and-serde-json-1-0-0-released/10466",
+      "title": "Serde and serde_json 1.0.0 released - announcements - The Rust Programming Language Forum",
+      "snippet": "### Related topics\n\n| Topic |  | Replies | Views | Activity |\n ---  --- \n| Serde and serde\\_json 0.9.0 released  announcements | 0 | 1351 | January 25, 2017 |\n| Blog post: Making Slow Rust Code Fast  tutorials | 23 | 10792 | October 24, 2021 |\n| Rust MessagePack and Serde 1.0  announcements | 1 | 62",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S19",
+      "url": "https://discourse.julialang.org/t/please-be-mindful-of-version-bounds-and-semantic-versioning-when-tagging-your-packages/30708?page=3",
+      "title": "Please be mindful of version bounds and semantic versioning when tagging your packages - Page 3 - Community - Julia Programming Language",
+      "snippet": "`- Feature Name: not applicable\n- Start Date: 2015-05-04\n- RFC PR: rust-lang/rfcs#1105\n- Rust Issue: N/A\n# Summary\nThis RFC proposes a comprehensive set of guidelines for which changes to\nstable APIs are considered breaking from a semver perspective, and which are\nnot. These guidelines are intended ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    }
+  ],
+  "answer": "Python was first released in **1991** [S1][S2], and that was **24 years before Rust 1.0** (Rust 1.0 released in **2015**) [S6].",
+  "citations": [
+    "S1",
+    "S2",
+    "S6"
+  ],
+  "coverage": {
+    "In what year was Python first released?": true,
+    "In what year was Rust 1.0 released?": true
+  },
+  "outcome": {
+    "status": "completed",
+    "early_exit_reason": null,
+    "used_deterministic_finalize": false,
+    "reflect_overrules": 0,
+    "error": null
+  },
+  "usage": {
+    "llm_calls": [
+      {
+        "purpose": "plan",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 232,
+        "cached_tokens": 0,
+        "output_tokens": 101,
+        "reasoning_tokens": 25,
+        "cost_usd": 0.00017265,
+        "latency_ms": 1763.8687500002561,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 803,
+        "cached_tokens": 0,
+        "output_tokens": 130,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.00032310000000000005,
+        "latency_ms": 2165.869082993595,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 5857,
+        "cached_tokens": 0,
+        "output_tokens": 22,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.0011989000000000001,
+        "latency_ms": 2175.263957993593,
+        "replayed": false
+      },
+      {
+        "purpose": "reflect",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 753,
+        "cached_tokens": 0,
+        "output_tokens": 126,
+        "reasoning_tokens": 29,
+        "cost_usd": 0.0003081,
+        "latency_ms": 1740.619374992093,
+        "replayed": false
+      },
+      {
+        "purpose": "finalize",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 1205,
+        "cached_tokens": 0,
+        "output_tokens": 49,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.00030225,
+        "latency_ms": 1495.9837079950375,
+        "replayed": false
+      }
+    ],
+    "totals": {
+      "input_tokens": 8850,
+      "cached_tokens": 0,
+      "output_tokens": 428,
+      "reasoning_tokens": 54,
+      "cost_usd": 0.002305,
+      "cache_hit_rate": 0.0
+    },
+    "by_purpose": {
+      "plan": {
+        "calls": 1,
+        "cost_usd": 0.00017265,
+        "output_tokens": 101
+      },
+      "act": {
+        "calls": 2,
+        "cost_usd": 0.0015220000000000001,
+        "output_tokens": 152
+      },
+      "reflect": {
+        "calls": 1,
+        "cost_usd": 0.0003081,
+        "output_tokens": 126
+      },
+      "finalize": {
+        "calls": 1,
+        "cost_usd": 0.00030225,
+        "output_tokens": 49
+      }
+    },
+    "search_credits": 4,
+    "steps": 2
+  },
+  "timings_ms": {
+    "total": 12313.699791004183
+  },
+  "compaction": {
+    "count": 0,
+    "compacted_upto": 0
+  }
+}

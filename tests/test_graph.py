@@ -231,10 +231,23 @@ def test_baseline_variant_is_a_single_pass() -> None:
     assert recorder.visits == [PLAN, ACT, OBSERVE, FINALIZE]
 
 
-def test_no_reflect_variant_never_visits_reflect_after_a_stop() -> None:
+def test_no_overrule_variant_makes_acts_stop_final() -> None:
+    # When act proposes stopping, the run ends — reflect never gets the chance to
+    # send it back for more evidence. This is the whole of what the variant ablates.
     recorder = Recorder(**{ACT: {"step": 1, "act_requested_stop": True}})
-    run(recorder, initial_state("q", variant="no_reflect"))
+    run(recorder, initial_state("q", variant="no_overrule"))
     assert REFLECT not in recorder.visits
+
+
+def test_no_overrule_variant_still_reflects_while_act_wants_to_continue() -> None:
+    # The variant is named for what it removes. It does NOT remove the node: reflect
+    # still runs for guidance whenever act has not proposed a stop, which is why the
+    # eval labels it "act's stop is final" rather than "reflect removed".
+    recorder = Recorder(
+        **{ACT: {"step": 1}, REFLECT: lambda s, n: {"reflect_decision": "finalize"}}
+    )
+    run(recorder, initial_state("q", variant="no_overrule"))
+    assert REFLECT in recorder.visits
 
 
 # --- reducers -------------------------------------------------------------------

@@ -76,10 +76,16 @@ def route_after_observe(
     if budget_verdict(state, cfg) is not None:
         return FINALIZE
 
-    # baseline answers from one pass; no_reflect skips the coverage check entirely.
+    # baseline answers after a single round of tool use — plan, one act (which may
+    # emit several parallel calls), observe, answer. No iteration.
+    #
+    # no_overrule keeps reflect for guidance but makes act's decision to stop final.
+    # It is named for what it removes: reflect's ability to overrule a proposed stop,
+    # which is the specific behaviour the evaluation set out to test. Reflect still
+    # runs when act wants to continue.
     if state.get("variant") == "baseline":
         return FINALIZE
-    if state.get("variant") == "no_reflect":
+    if state.get("variant") == "no_overrule":
         return FINALIZE if state.get("act_requested_stop") else REFLECT
 
     if (

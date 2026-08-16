@@ -234,31 +234,70 @@ def agreement_section(results: list[CaseResult]) -> list[str]:
     ]
 
 
+def _matched(
+    main: list[CaseResult], other: list[CaseResult]
+) -> tuple[list[CaseResult], list[CaseResult]]:
+    """Restrict both variants to the (case, run) pairs present in each.
+
+    A variant that is missing runs — because a key rotation killed part of it, say —
+    cannot be compared against a complete one on headline rates: whichever tiers it
+    is missing decide the difference. Comparing only where both have data keeps the
+    contrast about the ablation rather than about which cases survived.
+    """
+    keys = {(r.case_id, r.run) for r in main} & {(r.case_id, r.run) for r in other}
+    return (
+        [r for r in main if (r.case_id, r.run) in keys],
+        [r for r in other if (r.case_id, r.run) in keys],
+    )
+
+
+def _variant_rows(label: str, main: list[CaseResult], other: list[CaseResult]) -> list[str]:
+    left, right = _matched(main, other)
+    if not left:
+        return [f"_No runs shared with `{label}` to compare against._", ""]
+
+    tiers = ", ".join(sorted({r.tier for r in left}))
+    return [
+        f"Compared on the **{len(left)} runs both variants completed** ({tiers}).",
+        "",
+        "| Variant | pass@1 | Mean steps | Mean cost |",
+        "|---|---|---|---|",
+        f"| {label} | {_pct(pass_at_1(right))} | "
+        f"{mean([float(r.steps) for r in right]):.1f} | "
+        f"{_usd(mean([r.cost_usd for r in right]))} |",
+        f"| **full agent** | **{_pct(pass_at_1(left))}** | "
+        f"{mean([float(r.steps) for r in left]):.1f} | "
+        f"{_usd(mean([r.cost_usd for r in left]))} |",
+        "",
+    ]
+
+
 def comparison_section(main: list[CaseResult], k: int) -> list[str]:
     lines: list[str] = []
 
-    baseline = load_variant("baseline")
-    if baseline:
-        base_results = to_results(baseline)
-        lines += [
-            "| Variant | pass@1 | Mean steps | Mean cost |",
-            "|---|---|---|---|",
-            f"| baseline (one search, one answer) | {_pct(pass_at_1(base_results))} | "
-            f"{mean([float(r.steps) for r in base_results]):.1f} | "
-            f"{_usd(mean([r.cost_usd for r in base_results]))} |",
-            f"| **full agent** | **{_pct(pass_at_1(main))}** | "
-            f"{mean([float(r.steps) for r in main]):.1f} | "
-            f"{_usd(mean([r.cost_usd for r in main]))} |",
-            "",
-        ]
+    if baseline := load_variant("baseline"):
+        lines += ["### Against a single round of search", ""]
+        lines += _variant_rows(
+            "baseline (one round of parallel search, then answer)",
+            main,
+            to_results(baseline),
+        )
 
-    no_reflect = load_variant("no_reflect")
-    if no_reflect:
-        ablated = to_results(no_reflect)
-        lines += [
-            f"Without the reflect node: pass@1 {_pct(pass_at_1(ablated))} against "
-            f"{_pct(pass_at_1(main))} with it.",
-        ]
+    if no_overrule := load_variant("no_overrule"):
+        lines += ["### Does letting reflect overrule a stop earn its cost?", ""]
+        if excluded := no_overrule.get("excluded_runs"):
+            cases = ", ".join(no_overrule.get("excluded_cases", []))
+            lines += [
+                f"> {excluded} runs of this variant were discarded: "
+                f"{no_overrule['excluded_reason']} Affected cases: {cases}. The "
+                "comparison below is therefore restricted to the runs that survived, "
+                "and does not cover the adversarial tier.",
+                "",
+            ]
+        lines += _variant_rows(
+            "no_overrule (act's decision to stop is final)", main, to_results(no_overrule)
+        )
+
     return lines or ["_Ablations not run yet._"]
 
 

@@ -1,0 +1,517 @@
+{
+  "schema_version": "1",
+  "run_id": "a6e4e1523246",
+  "ts": "2026-08-09T11:02:33+00:00",
+  "question": "Which of these is older: the Python programming language or the Linux kernel? Give the release year of each.",
+  "variant": "no_overrule",
+  "config": {
+    "agent_model": "gpt-5.4-nano",
+    "reasoning_effort": "none",
+    "max_steps": 8,
+    "max_seconds": 120.0,
+    "max_run_cost_usd": 0.05,
+    "finalize_reserve_usd": 0.008,
+    "compact_threshold_tokens": 12000,
+    "git_sha": "a4216f3",
+    "prompt_hash": "sha256:512e8e5d8eaa"
+  },
+  "plan": {
+    "version": 1,
+    "subquestions": [
+      "What year was the first release of the Python programming language (Python 1.0)?",
+      "What year was the first public release of the Linux kernel?"
+    ],
+    "replans": 0
+  },
+  "steps": [
+    {
+      "i": 1,
+      "node": "plan",
+      "plan_version": 0,
+      "ts_offset_ms": 1718.5800829902291,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 2,
+      "node": "act",
+      "plan_version": 1,
+      "ts_offset_ms": 3622.4751659901813,
+      "tool_calls": [
+        {
+          "call_id": "call_n7IcqdumqPT547RXxCtUeJYR",
+          "name": "web_search",
+          "args": {
+            "query": "Python 1.0 release year first release 1991"
+          }
+        },
+        {
+          "call_id": "call_cCL71RDr4yBXbjn7SHsicfh6",
+          "name": "web_search",
+          "args": {
+            "query": "first public release of the Linux kernel year 1991"
+          }
+        },
+        {
+          "call_id": "call_MKfcXMMCgu1cTHSls3QDnQwX",
+          "name": "web_search",
+          "args": {
+            "query": "Linux kernel first release announcement September 1991"
+          }
+        },
+        {
+          "call_id": "call_3rVEF4m0lglW8a4NsZP6smcY",
+          "name": "web_search",
+          "args": {
+            "query": "Python programming language history Python 1.0 January 1991"
+          }
+        }
+      ],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 3,
+      "node": "observe",
+      "plan_version": 1,
+      "ts_offset_ms": 7033.645666000666,
+      "tool_calls": [],
+      "observations": [
+        {
+          "call_id": "call_n7IcqdumqPT547RXxCtUeJYR",
+          "tool": "web_search",
+          "args": {
+            "query": "Python 1.0 release year first release 1991"
+          },
+          "ok": true,
+          "content": "Summary: Python was first released in February 1991, and its first official version, Python 1.0, was introduced in January 1994. The language was created by Guido van Rossum.\n\n[1] [FREE] In what year was the Python programming language formally released? - brainly.com\n    https://brainly.com/question/35271257\n    Since its release, Python has grown significantly in popularity and is used in a wide range of fields, including web development, data science, artificial intelligence, scientific computing, and more. Its first official version, Python 1.0, was formally introduced in 1991, and it has seen regular updates and improvements since then.\n\nAnswered by \u202281.8K answers\u20223.8M people helped\n\n0.0\n\n(0 votes)\n\n## Textbook & Expert-Verified\u2b08(opens in a new tab)\n\nfor a more relevant answer [...] Python was created by Guido van Rossum, a Dutch programmer, who aimed to design a language that was easy to read and write. This emphasis on readability allows both beginners and experienced programmers to easily understand and use Python's syntax. Python's first official version, 0.9.0, was released in February 1991, followed by version 1.0 in January 1994. [...] 3M\n\n0.0\n\n0\n\nfor a more relevant answer\n\nThe Python programming language was formally released in 1991.\n\nPython was created by Guido van Rossum, a Dutch programmer, who began working on it in the late 1980s. It was intended to be a successor to the ABC language, aiming to address some of the limitations he encountered with ABC. The goal was to create a language that was simple and easy to understand yet powerful enough to be used for significant projects.\n\n[2] Python Version History\n    https://www.geeksforgeeks.org/python/python-version-history\n    Python's journey began with version 0.9.0, released by Guido van Rossum in 1991. This initial release included core features such as exception handling, functions, and the core data types: list, dict, str, and others. It also introduced the module system, allowing the organization of code into reusable libraries.\n\n## 2. Early Versions and Growth\n\n### Python 1.0 (1994)\n\nPython 1.0 marked the official public release, bringing in significant features such as: [...] Python has evolved significantly since its initial release, with each version introducing new features, performance improvements, and enhanced capabilities. Understanding Python's version history helps developers appreciate its growth and choose the right version for modern application development.\n\n## 1. The Birth of Python\n\n### Python 0.9.0 (1991)\n\n[3] About Python\n    https://pythoninstitute.org/about-python\n    ## Who\n\nPython was created by Guido van Rossum and first released on February 20, 1991. While the word \"python\" might bring to mind a large snake, the language\u2019s name actually comes from the classic BBC comedy series Monty Python\u2019s Flying Circus.\n\nWhat makes Python unique is that it began as the vision and work of a single person. Unlike most languages born in big tech companies, Python was created by Guido \u2013 driven by a simple goal: to make programming more intuitive and enjoyable.\n\n[4] History of Python\n    https://en.wikipedia.org/wiki/History_of_Python\n    Van Rossum first published the code (for Python version 0.9.1) to alt.sources in February 1991. Several features of the language were already present at this stage, among them classes with inheritance \"Inheritance (object-oriented programming)\"), exception handling, functions, and various core datatypes such as `list`, `dict`, and `str`. The initial release also contained a module system borrowed from Modula-3; Van Rossum describes the module as \"one of Python's major programming units\". [...] | Version | Latest  micro version | Release date | End of full support | End of security fixes |\n ---  --- \n| Unsupported: 0.9 | 0.9.9 | 1991-02-20 | 1993-07-29 |\n| Unsupported: 1.0 | 1.0.4 | 1994-01-26 | 1994-07-14 |\n| Unsupported: 1.1 | 1.1.1 | 1994-10-11 | 1994-11-10 |\n| Unsupported: 1.2 | 1995-04-13 | Unsupported |\n|\n\n[truncated: 1,511 of 5,506 chars]",
+          "error": null,
+          "latency_ms": 2226.950708005461,
+          "raw_chars": 5506,
+          "truncated": true,
+          "source_ids": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5"
+          ]
+        },
+        {
+          "call_id": "call_cCL71RDr4yBXbjn7SHsicfh6",
+          "tool": "web_search",
+          "args": {
+            "query": "first public release of the Linux kernel year 1991"
+          },
+          "ok": true,
+          "content": "Summary: The first public release of the Linux kernel was on September 17, 1991. It was version 0.01 and released by Linus Torvalds. This marked the beginning of a collaborative open-source project.\n\n[1] Linux Kernel: History, Applications, and Major Distributions\n    https://storware.eu/blog/linux-kernel-history-applications-and-major-distributions\n    In September 1991, Linus released the first version of the Linux kernel on the File Transfer Protocol (FTP) server of the Finnish University and Research Network (FUNET). This version was called version 0.01 and contained 10,239 lines of code. About a month later, on the 5th of October, 1991, Linus announced the Linux Kernel version 0.02. Even though version 0.02 still depended on MINIX to run efficiently, the number of contributors interested in the project was on the rise. [...] A few weeks later, in December 1991, Linus released the Linux kernel 0.11. The Linux kernel 0.11 was the first Linux kernel version that could be compiled by a computer operating on the same kernel version. To be independent of MINIX and achieve its free software aims, Linux adopted the GNU General Public License in February 1992 following the release of the Linux kernel 0.12 [...] ## Brief History of Linux Kernel\n\nThe Linux kernel is a Unix-like operating systems kernel that Linus Torvalds originally established in 1991 for personal computers that were i386 based. However, the Linux kernel was later adopted as the kernel for GNU (GNU\u2019s-Not-Unix) operating system, which was programmed to be a free substitute for Unix. Bell Labs\u2019 prototypical operating systems influenced the architecture of Unix-like computer operating systems; hence, it imitated its characteristics.\n\n[2] Linus Torvalds Confirms the Date of the First Linux Release\n    http://www.linux-magazine.com/Online/News/Linus-Torvalds-Confirms-the-Date-of-the-First-Linux-Release\n    Linus Torvalds, the creator of the Linux kernel, has finally discovered the date of its first release: September 17, 1991. Twenty-five years later, to the day, Torvalds posted this message on his Google+ page:\n\nToday is the 25th anniversary of the Linux-0.01 release, I do believe. [...] Linus Torvalds has announced the first Release Candidate of the next kernel version 2.6.27 on the Linux Kernel Mailing List (LKML); this signals the end of the merge window.\n\n  more \u00bb\n Biggest Kernel Release Ever\n\n  Linux 4.9 is the biggest release in terms of number of commits.\n\n  more \u00bb\n 17 Years Now: Linus Torvalds Introduces Linux\n\n  Exactly 17 years ago, on October 5, 1991, Linus Torvalds sent an email to the comp.os.minix newsgroup. [...] Since then, he said, he lost all those email communications, so he didn\u2019t remember exactly when the first version of Linux was released. The only way to find out, he said, was to look at the timestamp on the first release. That\u2019s exactly what he seems to have done: The makefile of the first release is stamped September 17, 1991.\n\n[3] Linux kernel\n    https://en.wikipedia.org/wiki/Linux_kernel\n    On 17 September 1991, Torvalds prepared version 0.01 of Linux and put on the \"ftp.funet.fi\" \u2013 FTP server of the Finnish University and Research Network (FUNET). It was not even executable since its code still needed Minix to compile and test it.\n\nOn 5 October 1991, Torvalds announced the first \"official\" version of Linux, version 0.02. [...] At the time, the GNU Project had completed many components for its free UNIX replacement, GNU, but its kernel, the GNU Hurd, was incomplete. The project adopted the Linux kernel for its OS.\n\nTorvalds labeled the kernel with major version 0 to indicate that it was not yet intended for general use. Version 0.11, released in December 1991, was the first version to be self-hosted \"Self-hosting (compilers)\"); compiled on a computer running the Linux kernel. [...] | Tux Tux \"Tux (mascot)\"), mascot of Linux, created by Larry Ewing |\n| Linux kernel 6.1.0 kernel booting, under Debian Bookworm |\n| Original author | Linus\n\n[truncated: 2,757 of 6,752 chars]",
+          "error": null,
+          "latency_ms": 3408.239209005842,
+          "raw_chars": 6752,
+          "truncated": true,
+          "source_ids": [
+            "S6",
+            "S7",
+            "S8",
+            "S9",
+            "S10"
+          ]
+        },
+        {
+          "call_id": "call_MKfcXMMCgu1cTHSls3QDnQwX",
+          "tool": "web_search",
+          "args": {
+            "query": "Linux kernel first release announcement September 1991"
+          },
+          "ok": true,
+          "content": "Summary: The first Linux kernel was released on September 17, 1991, by Linus Torvalds. It was initially not executable on its own and depended on MINIX. The first official version, 0.02, was announced on October 5, 1991.\n\n[1] Linux Kernel: History, Applications, and Major Distributions\n    https://storware.eu/blog/linux-kernel-history-applications-and-major-distributions\n    In September 1991, Linus released the first version of the Linux kernel on the File Transfer Protocol (FTP) server of the Finnish University and Research Network (FUNET). This version was called version 0.01 and contained 10,239 lines of code. About a month later, on the 5th of October, 1991, Linus announced the Linux Kernel version 0.02. Even though version 0.02 still depended on MINIX to run efficiently, the number of contributors interested in the project was on the rise. [...] A few weeks later, in December 1991, Linus released the Linux kernel 0.11. The Linux kernel 0.11 was the first Linux kernel version that could be compiled by a computer operating on the same kernel version. To be independent of MINIX and achieve its free software aims, Linux adopted the GNU General Public License in February 1992 following the release of the Linux kernel 0.12 [...] ## Brief History of Linux Kernel\n\nThe Linux kernel is a Unix-like operating systems kernel that Linus Torvalds originally established in 1991 for personal computers that were i386 based. However, the Linux kernel was later adopted as the kernel for GNU (GNU\u2019s-Not-Unix) operating system, which was programmed to be a free substitute for Unix. Bell Labs\u2019 prototypical operating systems influenced the architecture of Unix-like computer operating systems; hence, it imitated its characteristics.\n\n[2] Linux kernel\n    https://en.wikipedia.org/wiki/Linux_kernel\n    On 17 September 1991, Torvalds prepared version 0.01 of Linux and put on the \"ftp.funet.fi\" \u2013 FTP server of the Finnish University and Research Network (FUNET). It was not even executable since its code still needed Minix to compile and test it.\n\nOn 5 October 1991, Torvalds announced the first \"official\" version of Linux, version 0.02. [...] At the time, the GNU Project had completed many components for its free UNIX replacement, GNU, but its kernel, the GNU Hurd, was incomplete. The project adopted the Linux kernel for its OS.\n\nTorvalds labeled the kernel with major version 0 to indicate that it was not yet intended for general use. Version 0.11, released in December 1991, was the first version to be self-hosted \"Self-hosting (compilers)\"); compiled on a computer running the Linux kernel. [...] | Tux Tux \"Tux (mascot)\"), mascot of Linux, created by Larry Ewing |\n| Linux kernel 6.1.0 kernel booting, under Debian Bookworm |\n| Original author | Linus Torvalds |\n| Developers | Community contributors   Linus Torvalds |\n| Release | 0.02 (5 October 1991; 34 years ago (1991-10-05)) |\n| Stable release | Regular: 7.1.6 / 3 August 2026 Edit this on Wikidata LTS: / |\n| Preview release | 7.2-rc6 Edit this on Wikidata / 2 August 2026 |\n|  |\n\n[3] Linus Torvalds Confirms the Date of the First Linux Release\n    http://www.linux-magazine.com/Online/News/Linus-Torvalds-Confirms-the-Date-of-the-First-Linux-Release\n    Linus Torvalds, the creator of the Linux kernel, has finally discovered the date of its first release: September 17, 1991. Twenty-five years later, to the day, Torvalds posted this message on his Google+ page:\n\nToday is the 25th anniversary of the Linux-0.01 release, I do believe. [...] Since then, he said, he lost all those email communications, so he didn\u2019t remember exactly when the first version of Linux was released. The only way to find out, he said, was to look at the timestamp on the first release. That\u2019s exactly what he seems to have done: The makefile of the first release is stamped September 17, 1991. [...] Linus Torvalds has announced the first Release Candidate of the next kernel version 2.6.27 on the Linux Kernel Mailing List (LKML); this\n\n[truncated: 2,146 of 6,142 chars]",
+          "error": null,
+          "latency_ms": 2132.769083007588,
+          "raw_chars": 6142,
+          "truncated": true,
+          "source_ids": [
+            "S6",
+            "S8",
+            "S7",
+            "S11",
+            "S10"
+          ]
+        },
+        {
+          "call_id": "call_3rVEF4m0lglW8a4NsZP6smcY",
+          "tool": "web_search",
+          "args": {
+            "query": "Python programming language history Python 1.0 January 1991"
+          },
+          "ok": true,
+          "content": "Summary: Python was created by Guido van Rossum and first released in February 1991. Version 1.0 was released in January 1994, adding functional programming tools and complex number support. Python's name is inspired by the Monty Python comedy series.\n\n[1] History and Versions of Python | PDF | Python (Programming Language) | Programming Paradigms\n    https://www.scribd.com/document/456974674/Python-History\n    Python was created in the late 1980s by Guido Van Rossum in the Netherlands. It was first released in 1991 as version 0.9 and version 1.0 was released in 1994 adding features like lambda functions. Major versions since then have added new features and functionality while rectifying flaws. Python is influenced by earlier languages like ABC and Modula-3.\n\n# History and Versions of Python\n\nHistory and Versions of Python\n\n## Uploaded by\n\nAI-enhanced title and description\n\n## Share this document\n\n[2] Python - History and Versions\n    https://www.tutorialspoint.com/python/python_history.htm\n    ### Python 0.9.0\n\nPython's first published version is 0.9. It was released in February 1991. It consisted of features such as classes with inheritance, exception handling, and core data types like lists and dictionaries..\n\n### Python 1.0\n\nIn January 1994, version 1.0 was released, armed with functional programming tools, features like support for complex numbers etc and module system which allows a better code organization and reuse.\n\n### Python 2.0 [...] Python was invented by a Dutch Programmer Guido Van Rossum in the late 1980s. He began working on Python in December 1989 as a hobby project while working at the Centrum Wiskunde & Informatica (CWI) in the Netherlands. Python's first version (0.9.0) was released in 1991.\n\n## Evolution of Python The Major Python Versions\n\nFollowing are the important stages in the history of Python \u2212\n\n### Python 0.9.0 [...] Python is also increasingly becoming the first programming language taught in schools and universities worldwide, solidifying its place in the tech landscape.\n\n## Frequently Asked Questions About Python History\n\n### 1. Who created Python?\n\nPython created by Guido Van Rossum, a Dutch Programmer.\n\n### 2. Why Python is called Python?\n\nPython does not have any relation to Snake. The name of the Python programming language was inspired by a British Comedy Group Monty Python.\n\n[3] Python Programming: A Brief History | by Natalie Marquez - Medium\n    https://medium.com/@nmarquez2/python-programming-a-brief-history-a499254fd3f8\n    ## Conclusion\n\nThe history of Python shows how much thoughtful design, simplicity, and community can transform a simple idea into a worldwide standard. From its first release in 1991 to its current role as a foundational programming language, Python has changed the way we build software, teach programming, and solve real world problems. [...] In the late 1980\u2019s, Dutch programmer Guido Van Rossum created Python. He had been working at a computer science research center in the Netherlands where they used C as the primary programming language. Guido realized that the programming language they had been using was very time consuming so on his free time he began working on a new language that would save time. This eventually became the programming language that we know as Python. Its blend of C and the ABC programming language, without [...] language, without their limitations, is a major part of its appeal. The first version, Python 0.9. was released in 1991 which already included fundamental features such as exception handling, functions, and core data types.\n\n[4] A Brief History of Python\n    https://learnpython.com/blog/history-of-python\n    ### 02.1991 Python 0.9.0\n\nFebruary 1991 was a historic date. Guido van Rossum published the source code of the Python interpreter to alt.source, a Usenet group for open-source code. Thus began the dynamic story of Python, and open-sourcing helped Python succeed. [...] The first version, Python 0.9.0, was inspired by the ABC\n\n[truncated: 1,503 of 5,498 chars]",
+          "error": null,
+          "latency_ms": 3407.8462080069585,
+          "raw_chars": 5498,
+          "truncated": true,
+          "source_ids": [
+            "S12",
+            "S13",
+            "S5",
+            "S14",
+            "S15"
+          ]
+        }
+      ],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 4,
+      "node": "reflect",
+      "plan_version": 1,
+      "ts_offset_ms": 7035.3594579937635,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": "skipped on first step"
+    },
+    {
+      "i": 5,
+      "node": "act",
+      "plan_version": 1,
+      "ts_offset_ms": 8844.064124990837,
+      "tool_calls": [
+        {
+          "call_id": "call_HJn7hVNdob50ZnwuAUQYjfFC",
+          "name": "fetch_page",
+          "args": {
+            "url": "https://en.wikipedia.org/wiki/History_of_Python"
+          }
+        },
+        {
+          "call_id": "call_ZrCae8cRoC4hzcMWyrluSkEZ",
+          "name": "fetch_page",
+          "args": {
+            "url": "https://en.wikipedia.org/wiki/Linux_kernel"
+          }
+        }
+      ],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 6,
+      "node": "observe",
+      "plan_version": 1,
+      "ts_offset_ms": 10420.82654099795,
+      "tool_calls": [],
+      "observations": [
+        {
+          "call_id": "call_HJn7hVNdob50ZnwuAUQYjfFC",
+          "tool": "fetch_page",
+          "args": {
+            "url": "https://en.wikipedia.org/wiki/History_of_Python"
+          },
+          "ok": true,
+          "content": "History of Python - Wikipedia\nhttps://en.wikipedia.org/wiki/History_of_Python\n\nHistory of Python - Wikipedia\n\nJump to content\n\nFrom Wikipedia, the free encyclopedia\n\nHistory of the Python programming language\n\nOld Python logo, 1990s\u20132006\nNew Python logo, 2006\u2013present\nGuido van Rossum in 2014\n\nThe programming language Python was conceived in the late 1980s, [ 1 ] and its implementation was started in December 1989 [ 2 ] by Guido van Rossum at CWI in the Netherlands as a successor to ABC capable of exception handling and interfacing with the Amoeba operating system . [ 3 ] Van Rossum was Python's principal author and had a central role in deciding the direction of Python (as reflected in the title given to him by the Python community, Benevolent Dictator for Life (BDFL) [ 4 ] [ 5 ] ) until stepping down as leader on July 12, 2018. [ 6 ] Python was named after the BBC TV show Monty Python's Flying Circus . [ 7 ]\n\nPython 2.0 was released on October 16, 2000, with many major new features, such as list comprehensions , cycle-detecting garbage collector , reference counting , memory management and support for Unicode , along with a change to the development process itself, with a shift to a more transparent and community-backed process. [ 8 ]\n\nPython 3.0, a major, backwards-incompatible release, was released on December 3, 2008 [ 9 ] after a long period of testing. Many of its major features were also backported to the backwards-compatible Python versions 2.6 and 2.7 [ 10 ] until support for Python 2 finally ceased at the beginning of 2020. Releases of Python \u00a0 3 up through 3.12 include the 2to3 utility, which automates the translation of Python \u00a0 2 code to Python \u00a0 3. [ 11 ]\n\nAs of June 2026 [ update ] , Python 3.14.6 is the latest stable release. This version currently receives full bug-fix and security updates, while Python 3.13\u2014released in October 2024\u2014will continue to receive bug-fixes until October 2026, and after that will only receive security fixes until its end-of-life in 2029. Python 3.10 is the oldest supported branch of Python (albeit in the 'security support' phase). [ 12 ] [ 13 ]\n\nEarly history\n[ edit ]\n\nVan Rossum first published the code (for Python version 0.9.1) to alt.sources in February 1991. [ 14 ] [ 15 ] Several features of the language were already present at this stage, among them classes with inheritance , exception handling, functions, and various core datatypes such as list , dict , and str . The initial release also contained a module system borrowed from Modula-3 ; Van Rossum describes the module as \"one of Python's major programming units\". [ 1 ] Python's exception model also resembled Modula-3's, with the addition of an else clause. [ 3 ] In 1994 comp.lang.python , the primary discussion forum for Python, was formed. [ 1 ]\n\nVersion 1\n[ edit ]\n\nPython reached version 1.0 in January 1994. The major new features included in this release were the functional programming tools lambda , map , filter and reduce . Van Rossum stated that \"Python acquired lambda, reduce(), filter() and map(), courtesy of a Lisp hacker who missed them and submitted working patches \". [ 16 ]\n\nThe last version released while Van Rossum was at CWI was Python 1.2. In 1995, Van Rossum continued his work on Python at the Corporation for National Research Initiatives (CNRI) in Reston, Virginia from where he released several versions.\n\nBy version 1.4, Python had acquired several new features. Notable among these are the Modula-3 inspired keyword arguments (which are also similar to Common Lisp 's keyword arguments) and built-in support for complex numbers . Also included is a basic form of data hiding by name mangling , though this is easily bypassed. [ 17 ]\n\nDuring Van Rossum's stay at CNRI, he launched the Computer Programming for Everybody (CP4E) initiative, intending to make programming more accessible to more people, with a basic \"literacy\" in programming languages, similar to the basic English literacy and mathematics skills required by most employers. Python served a central role in this: because of its focus on clean syntax, it was already suitable, and CP4E's goals bore similarities to its predecessor, ABC. The project was funded by DARPA . [ 18 ] As of 2007 [ update ] , the CP4E project is inactive, and while Python attempts to be easily learnable and not too arcane in its syntax and semantics, outreach to non-programmers is not an active concern. [ 19 ]\n\nBeOpen\n[ edit ]\n\nIn 2000, the Python core development team moved to BeOpen.com [ 20 ] to form the BeOpen PythonLabs team. [ 21 ] [ 22 ] CNRI requested that a version 1.6 be released, summarizing Python's development up to the point at which the development team left CNRI. Consequently, the release schedules for 1.6 and 2.0 had a significant amount of overlap. [ 8 ] Python 2.0 was the only release from BeOpen.com. After Python 2.0 was released by BeOpen.com, Guido van Rossum and the other PythonLabs developers joined Digital Creations .\n\nThe Python 1.6 release included a new CNRI license that was substantially longer than the CWI license that had been used for earlier releases. The new license included a clause stating that the license was governed by the laws of the State of Virginia . The Free Software Foundation argued that the choice-of-law clause was incompatible with the GNU General Public License . BeOpen, CNRI and the FSF negotiated a change to Python's free-software license that would make it GPL-compatible. Python 1.6.1 is essentially the same as Python 1.6, with a few minor bug fixes, and with the new GPL-compatible license. [ 23 ]\n\nVersion 2\n[ edit ]\n\nPython 2.0, released October 2000, [ 8 ] introduced list comprehensions , a feature borrowed from the functional programming languages SETL and Haskell . Python's syntax for this construct is very similar to Haskell's, apart from Haskell's preference for punctuation characters and Python's preference for alphabetic keywords. Python 2.0 also introduced a garbage collector able to collect reference cycles. [ 8 ]\n\nPython 2.1 was close to Python 1.6.1, as well\n\n[truncated: 37,825 of 43,823 chars]",
+          "error": null,
+          "latency_ms": 1244.59829099942,
+          "raw_chars": 43823,
+          "truncated": true,
+          "source_ids": [
+            "S4"
+          ]
+        },
+        {
+          "call_id": "call_ZrCae8cRoC4hzcMWyrluSkEZ",
+          "tool": "fetch_page",
+          "args": {
+            "url": "https://en.wikipedia.org/wiki/Linux_kernel"
+          },
+          "ok": true,
+          "content": "Linux kernel - Wikipedia\nhttps://en.wikipedia.org/wiki/Linux_kernel\n\nLinux kernel - Wikipedia\n\nJump to content\n\nFrom Wikipedia, the free encyclopedia\n\nFree Unix-like operating system kernel\n\n{{cite web |date=2008 |title=Linux Logos and Mascots |url=https://www.linux.org/info/logos.html |url-status=dead |archive-url=https://web.archive.org/web/20100815085106/http://www.linux.org/info/logos.html |archive-date=15 August 2010 |access-date=19 September 2024 |publisher=Linux Online}}</ref>\"},\"screenshot\":{\"wt\":\"File:Linux 6.1.0-27 kernel (running on Debian Bookworm).png\"},\"caption\":{\"wt\":\"Linux kernel 6.1.0 kernel booting, under [[Debian Bookworm]]\"},\"developer\":{\"wt\":\"Community contributors <br /> [[Linus Torvalds]]\"},\"programming language\":{\"wt\":\"[[C (programming language)|C]],{{efn|with [[GNU Compiler Collection|GNU extensions]]<!-- also working with clang -->;<ref>{{Cite book |last=Russell |first=Paul Rusty |author-link=Rusty Russell |url=https://people.netfilter.org/rusty/unreliable-guides/kernel-hacking/lk-hacking-guide.html |title=Unreliable Guide To Hacking The Linux Kernel |chapter=GNU Extensions |access-date=4 August 2025 |chapter-url=https://people.netfilter.org/rusty/unreliable-guides/kernel-hacking/conventions-gnu-extns.html}}</ref> [[C11 (C standard revision)|C11]] (gnu11) since 5.18,<ref>{{Cite web |last=MaskRay |date=12 May 2024 |title=Exploring GNU extensions in the Linux kernel |url=https://maskray.me/blog/2024-05-12-exploring-gnu-extensions-in-linux-kernel |access-date=4 August 2025 |website=MaskRay |archive-date=29 July 2025 |archive-url=https://web.archive.org/web/20250729112739/https://maskray.me/blog/2024-05-12-exploring-gnu-extensions-in-linux-kernel |url-status=live }}</ref> [[C89 (C version)|C89]] (gnu89) before<ref>{{cite mailing list |last=Bergmann |first=Arnd |title=Kbuild: move to -std=gnu11 |mailing-list=Linux kernel mailing list |date=3 March 2022 |url=https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e8c07082a810f |access-date=19 October 2025 |archive-url=https://web.archive.org/web/20230716094848/https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e8c07082a810f |archive-date=16 July 2023}}</ref>}} [[Assembly language|assembly]], [[Rust (programming language)|Rust]]{{efn|see [[Rust for Linux]]<ref name=\\\"heise-stable\\\">{{cite news |last1=Leemhuis |first1=Thorsten |title=Linux Kernel: Rust Support Officially Approved |url=https://www.heise.de/en/news/Linux-Kernel-Rust-Support-Officially-Approved-11109808.html |access-date=12 December 2025 |work=[[heise.de]] |date=Dec 10, 2025}}</ref>}} and others<ref>{{cite web |title=torvalds/linux: Linux kernel source tree |url=https://github.com/torvalds/linux |website=GitHub |access-date=2026-05-06 |archive-date=4 June 2018 |archive-url=https://web.archive.org/web/20180604121742/https://github.com/torvalds/linux |url-status=live }}</ref>\"},\"released\":{\"wt\":\"0.02 <small>({{Start date and age|1991|10|5|df=yes}})</small><!--note that 0.01 was not released to public-->\"},\"latest release version\":{\"wt\":\"'''Regular''': {{wikidata|qualifier|preferred|single|Q14579|P348|P548=Q2804309|P1638}} {{wikidata|property|preferred|Q14579|P348|P548=Q2804309}} / {{wikidata|qualifier|preferred|reference|edit|single|Q14579|P348|P548=Q2804309|P577}}<br />'''LTS''': {{wikidata|qualifier|preferred|single|references|edit|Q14579|P348|P548=Q15726348|P1638}} {{wikidata|property|preferred|Q14579|P348|P548=Q15726348}} / {{wikidata|qualifier|preferred|reference|edit|single|Q14579|P348|P548=Q15726348|P577}}\"},\"latest release date\":{\"wt\":\"\"},\"latest preview version\":{\"wt\":\"{{wikidata|property|preferred|references|edit|Q14579|P348|P548=Q1072356}}\"},\"latest preview date\":{\"wt\":\"{{wikidata|qualifier|preferred|single|Q14579|P348|P548=Q1072356|P577}}\"},\"language\":{\"wt\":\"English\"},\"license\":{\"wt\":\"[[GNU General Public License|GPL-2.0-only]] with Linux-syscall-note<ref name=\\\"COPYING_File\\\" /><ref name=\\\"spdx.org GPL-2.0-only\\\">{{cite web |title=GNU General Public License v2.0 only |url=https://spdx.org/licenses/GPL-2.0-only.html |url-status=live |archive-url=https://web.archive.org/web/20220716191925/https://spdx.org/licenses/GPL-2.0-only.html |archive-date=16 July 2022 |access-date=2 September 2021 |website=spdx.org}}</ref><ref name=\\\"spdx.org Linux-syscall-note\\\">{{cite web |title=Linux Syscall Note |url=https://spdx.org/licenses/Linux-syscall-note.html |url-status=live |archive-url=https://web.archive.org/web/20230130173521/https://spdx.org/licenses/Linux-syscall-note.html |archive-date=30 January 2023 |access-date=2 September 2021 |website=spdx.org}}</ref>{{efn|As a whole, Linux source is provided under the terms of the [[GNU General Public License|GPL-2.0-only]] license with an explicit syscall exception.<ref name=\\\"kernel.org GPL-2.0\\\">{{cite web |title=GPL-2.0 |url=https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/LICENSES/preferred/GPL-2.0 |url-status=live |archive-url=https://web.archive.org/web/20230716101410/https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/LICENSES/preferred/GPL-2.0 |archive-date=16 July 2023 |access-date=2 September 2021 |website=git.kernel.org}}</ref><ref name=\\\"kernel.org Linux-syscall-note\\\">{{cite web |title=Linux-syscall-note |url=https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/LICENSES/exceptions/Linux-syscall-note |url-status=live |archive-url=https://web.archive.org/web/20230118185814/https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/LICENSES/exceptions/Linux-syscall-note |archive-date=18 January 2023 |access-date=2 September 2021 |website=git.kernel.org}}</ref> Aside from that, individual files can be provided under a different license that is required to be compatible with the GPL-2.0-only license (i.e., the GNU General Public License version 2) or a dual license, with one of the choices being the GPL version 2 or a GPLv2 compatible license.<ref name=\\\"Linux_Licensing\\\">{{cite web |title=Linux kernel licensing rules\n\n[truncated: 149,286 of 155,250 chars]",
+          "error": null,
+          "latency_ms": 1574.20283400279,
+          "raw_chars": 155250,
+          "truncated": true,
+          "source_ids": [
+            "S8"
+          ]
+        }
+      ],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 7,
+      "node": "reflect",
+      "plan_version": 1,
+      "ts_offset_ms": 15426.671124994755,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": {
+        "decision": "finalize",
+        "reasoning": "Both sub-questions have direct year answers in the collected summaries (Python 1.0 in January 1994; Linux first public release on September 17, 1991). Additional searching is unlikely to change these release years.",
+        "covered": {
+          "What year was the first release of the Python programming language (Python 1.0)?": false,
+          "What year was the first public release of the Linux kernel?": false
+        },
+        "open_gaps": [
+          "What year was the first release of the Python programming language (Python 1.0)?",
+          "What year was the first public release of the Linux kernel?"
+        ],
+        "overruled_stop": false
+      },
+      "note": null
+    },
+    {
+      "i": 8,
+      "node": "finalize",
+      "plan_version": 1,
+      "ts_offset_ms": 17073.68604099611,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    }
+  ],
+  "sources": [
+    {
+      "sid": "S1",
+      "url": "https://brainly.com/question/35271257",
+      "title": "[FREE] In what year was the Python programming language formally released? - brainly.com",
+      "snippet": "Since its release, Python has grown significantly in popularity and is used in a wide range of fields, including web development, data science, artificial intelligence, scientific computing, and more. Its first official version, Python 1.0, was formally introduced in 1991, and it has seen regular up",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S2",
+      "url": "https://www.geeksforgeeks.org/python/python-version-history",
+      "title": "Python Version History",
+      "snippet": "Python's journey began with version 0.9.0, released by Guido van Rossum in 1991. This initial release included core features such as exception handling, functions, and the core data types: list, dict, str, and others. It also introduced the module system, allowing the organization of code into reusa",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S3",
+      "url": "https://pythoninstitute.org/about-python",
+      "title": "About Python",
+      "snippet": "## Who\n\nPython was created by Guido van Rossum and first released on February 20, 1991. While the word \"python\" might bring to mind a large snake, the language\u2019s name actually comes from the classic BBC comedy series Monty Python\u2019s Flying Circus.\n\nWhat makes Python unique is that it began as the vis",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S4",
+      "url": "https://en.wikipedia.org/wiki/History_of_Python",
+      "title": "History of Python",
+      "snippet": "Van Rossum first published the code (for Python version 0.9.1) to alt.sources in February 1991. Several features of the language were already present at this stage, among them classes with inheritance \"Inheritance (object-oriented programming)\"), exception handling, functions, and various core datat",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S5",
+      "url": "https://medium.com/@nmarquez2/python-programming-a-brief-history-a499254fd3f8",
+      "title": "Medium",
+      "snippet": "## Conclusion\n\nThe history of Python shows how much thoughtful design, simplicity, and community can transform a simple idea into a worldwide standard. From its first release in 1991 to its current role as a foundational programming language, Python has changed the way we build software, teach progr",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S6",
+      "url": "https://storware.eu/blog/linux-kernel-history-applications-and-major-distributions",
+      "title": "Linux Kernel: History, Applications, and Major Distributions",
+      "snippet": "In September 1991, Linus released the first version of the Linux kernel on the File Transfer Protocol (FTP) server of the Finnish University and Research Network (FUNET). This version was called version 0.01 and contained 10,239 lines of code. About a month later, on the 5th of October, 1991, Linus ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S7",
+      "url": "http://www.linux-magazine.com/Online/News/Linus-Torvalds-Confirms-the-Date-of-the-First-Linux-Release",
+      "title": "Linus Torvalds Confirms the Date of the First Linux Release",
+      "snippet": "Linus Torvalds, the creator of the Linux kernel, has finally discovered the date of its first release: September 17, 1991. Twenty-five years later, to the day, Torvalds posted this message on his Google+ page:\n\nToday is the 25th anniversary of the Linux-0.01 release, I do believe. [...] Linus Torval",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S8",
+      "url": "https://en.wikipedia.org/wiki/Linux_kernel",
+      "title": "Linux kernel",
+      "snippet": "On 17 September 1991, Torvalds prepared version 0.01 of Linux and put on the \"ftp.funet.fi\" \u2013 FTP server of the Finnish University and Research Network (FUNET). It was not even executable since its code still needed Minix to compile and test it.\n\nOn 5 October 1991, Torvalds announced the first \"offi",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S9",
+      "url": "https://www.linuxfoundation.org/blog/blog/anniversary-of-first-linux-kernel-release-a-look-at-collaborative-value",
+      "title": "Anniversary of First Linux Kernel Release: A Look at ...",
+      "snippet": "Linus-Torvalds-LinuxCon-Europe-2014 copy copyThe Linux community often recognizes two anniversaries for Linux: August 25th is the day Linus Torvalds first posted that he was working on Linux and said \u201cHello, everybody out there\u2026\u201d and October 5th is the day he released the first kernel.\n\nLinus-Torval",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S10",
+      "url": "https://www.stackscale.com/blog/linux",
+      "title": "Linux: from a hobby to a collaborative tech revolution",
+      "snippet": "Skip to content\n\nStackscale Grupo Aire logo\n\nStackscale Grupo Aire logo\n\n# Linux: from a hobby to a collaborative tech revolution\n\n Systems\n Linux\n\n30th anniversary of the first Linux release\n\nSeptember 17th, 2022 was Linux\u2019s 31st anniversary. Linux was first released as a free operating system kern",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S11",
+      "url": "https://www.facebook.com/itsfoss/posts/first-linux-kernel-001-was-released-on-17th-september-1991-i-know-a-few-of-our-r/1465661203574642",
+      "title": "It's FOSS - First Linux kernel 0.01 was released on 17th...",
+      "snippet": "## It's FOSS's Post\n\n### It's FOSS\n\nSeptember 17, 2019  \u00b7\n\nFirst Linux kernel 0.01 was released on 17th September 1991.\n\nI know a few of our readers here would have used it \ud83d\ude00\ud83d\udc27\u2764\ufe0f\n\nNo photo description available.",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S12",
+      "url": "https://www.scribd.com/document/456974674/Python-History",
+      "title": "History and Versions of Python | PDF | Python (Programming Language) | Programming Paradigms",
+      "snippet": "Python was created in the late 1980s by Guido Van Rossum in the Netherlands. It was first released in 1991 as version 0.9 and version 1.0 was released in 1994 adding features like lambda functions. Major versions since then have added new features and functionality while rectifying flaws. Python is ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S13",
+      "url": "https://www.tutorialspoint.com/python/python_history.htm",
+      "title": "Python - History and Versions",
+      "snippet": "### Python 0.9.0\n\nPython's first published version is 0.9. It was released in February 1991. It consisted of features such as classes with inheritance, exception handling, and core data types like lists and dictionaries..\n\n### Python 1.0\n\nIn January 1994, version 1.0 was released, armed with functio",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S14",
+      "url": "https://learnpython.com/blog/history-of-python",
+      "title": "A Brief History of Python",
+      "snippet": "### 02.1991 Python 0.9.0\n\nFebruary 1991 was a historic date. Guido van Rossum published the source code of the Python interpreter to alt.source, a Usenet group for open-source code. Thus began the dynamic story of Python, and open-sourcing helped Python succeed. [...] The first version, Python 0.9.0",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S15",
+      "url": "https://cvw.cac.cornell.edu/python-intro/intro/history",
+      "title": "Introduction to Python Programming - Overview - History",
+      "snippet": "Python was originally developed by Guido van Rossum as a productivity-boosting alternative to traditional programming languages. Development began in December 1989, and the first full release of Python (1.0) was made in 1994. The language grew rapidly in popularity and user base. The 2.0 release of ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    }
+  ],
+  "answer": "The Linux kernel is older.\n\n- **Python programming language (Python 1.0):** **1994** (Python 1.0 introduced in January 1994) [S1][S12][S4]  \n- **Linux kernel (first public release):** **1991** (first public release on September 17, 1991) [S8][S9]",
+  "citations": [
+    "S1",
+    "S12",
+    "S4",
+    "S8",
+    "S9"
+  ],
+  "coverage": {
+    "What year was the first release of the Python programming language (Python 1.0)?": false,
+    "What year was the first public release of the Linux kernel?": false
+  },
+  "outcome": {
+    "status": "completed",
+    "early_exit_reason": null,
+    "used_deterministic_finalize": false,
+    "reflect_overrules": 0,
+    "error": null
+  },
+  "usage": {
+    "llm_calls": [
+      {
+        "purpose": "plan",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 231,
+        "cached_tokens": 0,
+        "output_tokens": 100,
+        "reasoning_tokens": 21,
+        "cost_usd": 0.0001712,
+        "latency_ms": 1702.7123749867314,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 823,
+        "cached_tokens": 0,
+        "output_tokens": 118,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.0003121,
+        "latency_ms": 1899.974582993309,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 5365,
+        "cached_tokens": 0,
+        "output_tokens": 65,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.00115425,
+        "latency_ms": 1805.402292011422,
+        "replayed": false
+      },
+      {
+        "purpose": "reflect",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 856,
+        "cached_tokens": 0,
+        "output_tokens": 192,
+        "reasoning_tokens": 73,
+        "cost_usd": 0.0004112,
+        "latency_ms": 5002.57216700993,
+        "replayed": false
+      },
+      {
+        "purpose": "finalize",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 1110,
+        "cached_tokens": 0,
+        "output_tokens": 85,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.00032825,
+        "latency_ms": 1642.781834001653,
+        "replayed": false
+      }
+    ],
+    "totals": {
+      "input_tokens": 8385,
+      "cached_tokens": 0,
+      "output_tokens": 560,
+      "reasoning_tokens": 94,
+      "cost_usd": 0.0023769999999999998,
+      "cache_hit_rate": 0.0
+    },
+    "by_purpose": {
+      "plan": {
+        "calls": 1,
+        "cost_usd": 0.0001712,
+        "output_tokens": 100
+      },
+      "act": {
+        "calls": 2,
+        "cost_usd": 0.00146635,
+        "output_tokens": 183
+      },
+      "reflect": {
+        "calls": 1,
+        "cost_usd": 0.0004112,
+        "output_tokens": 192
+      },
+      "finalize": {
+        "calls": 1,
+        "cost_usd": 0.00032825,
+        "output_tokens": 85
+      }
+    },
+    "search_credits": 4,
+    "steps": 2
+  },
+  "timings_ms": {
+    "total": 17069.880707989796
+  },
+  "compaction": {
+    "count": 0,
+    "compacted_upto": 0
+  }
+}

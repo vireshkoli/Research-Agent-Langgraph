@@ -167,10 +167,10 @@ def test_baseline_variant_answers_after_one_pass() -> None:
     assert route_after_observe(state(variant="baseline", step=1), config()) == "finalize"
 
 
-def test_no_reflect_variant_skips_the_coverage_check() -> None:
-    running = state(variant="no_reflect", step=1)
+def test_no_overrule_variant_skips_the_coverage_check() -> None:
+    running = state(variant="no_overrule", step=1)
     assert route_after_observe(running, config()) == "reflect"
-    stopped = state(variant="no_reflect", step=1, act_requested_stop=True)
+    stopped = state(variant="no_overrule", step=1, act_requested_stop=True)
     assert route_after_observe(stopped, config()) == "finalize"
 
 

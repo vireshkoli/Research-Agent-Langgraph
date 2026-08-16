@@ -36,7 +36,7 @@ EarlyExitReason = Literal[
     "internal_error",
 ]
 
-Variant = Literal["full", "baseline", "no_reflect"]
+Variant = Literal["full", "baseline", "no_overrule"]
 
 # What reflect decided to do next. "replan" is capped by max_replans.
 ReflectDecision = Literal["continue", "replan", "finalize"]
