@@ -201,6 +201,65 @@ def test_the_ui_refuses_without_starting_a_run(monkeypatch: pytest.MonkeyPatch) 
     assert "budget for today" in frames[0][0]
 
 
+def test_the_view_redraws_while_a_node_is_still_running(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # The reason the generator drives a worker thread rather than iterating
+    # stream() directly: a node that takes 20s used to freeze the display for the
+    # whole of it, which reads as a hang. Here one slow node must still produce
+    # several frames.
+    import time as _time
+
+    def slow_stream(question: str, **kwargs: Any) -> Iterator[tuple[str, Any]]:
+        _time.sleep(0.5)
+        yield "done", fake_trace()
+
+    monkeypatch.setattr(ui, "stream", slow_stream)
+    frames = list(ui.answer("q", "", "full"))
+
+    assert len(frames) > 3, "a slow node should still tick the UI"
+    assert frames[-1][0] == "The answer [S1]."
+
+
+def test_a_failure_on_the_worker_thread_is_re_raised(monkeypatch: pytest.MonkeyPatch) -> None:
+    # An exception inside the thread must not be swallowed into a run that appears
+    # to hang forever.
+    def broken_stream(question: str, **kwargs: Any) -> Iterator[tuple[str, Any]]:
+        raise RuntimeError("worker exploded")
+        yield  # pragma: no cover
+
+    monkeypatch.setattr(ui, "stream", broken_stream)
+    with pytest.raises(RuntimeError, match="worker exploded"):
+        list(ui.answer("q", "", "full"))
+
+
+def test_the_pipeline_preview_shows_what_is_coming_next() -> None:
+    # A viewer who can see the shape of the run reads a pause as progress rather
+    # than as a hang.
+    waiting = ui._progress_markdown([], None, done=[], elapsed=1.2, frame=0)
+    assert "Planning" in waiting
+    assert "1.2s elapsed" in waiting
+
+    mid = ui._progress_markdown(["- done"], None, done=["plan", "act"], elapsed=5.0, frame=3)
+    assert "Running tools" in mid, "observe follows act"
+
+
+def test_the_preview_does_not_advertise_stages_already_completed() -> None:
+    # The graph loops, so a naive "everything after this" list would keep offering
+    # stages the run has already been through twice.
+    text = ui._progress_markdown(
+        [], None, done=["plan", "act", "observe", "reflect"], elapsed=9.0, frame=1
+    )
+    assert "Choosing tools" in text, "reflect routes back to act"
+    assert "Planning" not in text
+
+
+def test_no_spinner_once_the_run_has_finished() -> None:
+    finished = ui._progress_markdown([], None, done=["finalize"], elapsed=12.0, frame=0)
+    assert "elapsed" not in finished
+    assert not any(char in finished for char in ui.SPINNER)
+
+
 def test_an_early_exit_is_explained_in_the_trace_pane(monkeypatch: pytest.MonkeyPatch) -> None:
     trace = fake_trace()
     trace.outcome = Outcome(status="early_exit", early_exit_reason="max_steps")

@@ -23,6 +23,9 @@ Progress is streamed with a plain generator: Gradio sends only the diff of each
 yield, so streaming a long trace costs almost nothing.
 """
 
+import queue
+import threading
+import time
 from collections.abc import Iterator
 from typing import Any
 
@@ -59,6 +62,19 @@ NODE_LABELS = {
     "finalize": "Writing the answer",
 }
 
+# What the agent is about to do, shown greyed out ahead of time. A viewer who can
+# see the shape of the pipeline reads a pause as "it is working through step 3 of 5"
+# rather than "it has hung".
+PIPELINE = ["plan", "act", "observe", "reflect", "finalize"]
+
+# Braille spinner: renders in a proportional font without shifting the line width,
+# which a text spinner like |/-\ does not.
+SPINNER = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"
+
+# How often the UI redraws while waiting on a node. Gradio ships only the diff of
+# each yield, so a redraw costs a few bytes.
+TICK_SECONDS = 0.12
+
 INTRO = """\
 # Tool-Using Research Agent
 
@@ -71,9 +87,53 @@ a partial answer with what it did establish, never an error.
 """
 
 
-def _progress_markdown(events: list[str], trace: RunTrace | None) -> str:
+def _next_stage(done: list[str]) -> str | None:
+    """The node most likely running right now, given what has finished.
+
+    A guess, not a fact — the graph branches, and `observe` can loop back to `act`.
+    It is only ever used to label a spinner, so being wrong costs a slightly
+    inaccurate caption for a second or two, and being *silent* costs the viewer
+    any sense that progress is happening at all.
+    """
+    if not done:
+        return "plan"
+    last = done[-1]
+    if last == "finalize":
+        return None
+    if last in ("reflect", "compact"):
+        return "act"
+    index = PIPELINE.index(last) if last in PIPELINE else -1
+    return PIPELINE[index + 1] if 0 <= index < len(PIPELINE) - 1 else "act"
+
+
+def _pipeline_markdown(done: list[str], elapsed: float, frame: int) -> list[str]:
+    """The live view: finished stages, the one in flight, and what is still coming."""
+    active = _next_stage(done)
+    if active is None:
+        return []
+
+    spinner = SPINNER[frame % len(SPINNER)]
+    lines = [f"- {spinner} **{NODE_LABELS.get(active, active)}**…"]
+
+    # Only stages that have not run yet, so a looping agent does not show a stale
+    # "up next" list of things it has already done twice.
+    upcoming = [n for n in PIPELINE[PIPELINE.index(active) + 1 :] if n not in done]
+    lines += [f"- <sub>{NODE_LABELS[n]}</sub>" for n in upcoming]
+    lines += ["", f"<sub>{elapsed:.1f}s elapsed</sub>"]
+    return lines
+
+
+def _progress_markdown(
+    events: list[str],
+    trace: RunTrace | None,
+    done: list[str] | None = None,
+    elapsed: float = 0.0,
+    frame: int = 0,
+) -> str:
     lines = ["### Trace", ""]
-    lines += events or ["_waiting…_"]
+    lines += events
+    if trace is None:
+        lines += _pipeline_markdown(done or [], elapsed, frame)
     if trace:
         totals = trace.usage["totals"]
         lines += [
@@ -150,24 +210,67 @@ def _describe(node: str, update: dict[str, Any]) -> str:
 
 
 def answer(question: str, own_key: str, variant: str) -> Iterator[tuple[str, str, str]]:
-    """Generator driving the three output panes: answer, trace, sources."""
+    """Generator driving the three output panes: answer, trace, sources.
+
+    The agent runs on a worker thread and this generator drains a queue with a
+    short timeout, so the view redraws on a timer rather than only when a node
+    finishes. Driving it straight off `stream()` meant the display froze for the
+    whole of each node — twenty seconds of a motionless "waiting…" during
+    `observe` — which reads as a hang rather than as work.
+    """
     refusal = demo_guard.check(question, own_key)
     if refusal:
         yield refusal, "", ""
         return
 
     events: list[str] = []
-    yield "", _progress_markdown(events, None), ""
-
+    done: list[str] = []
     trace: RunTrace | None = None
+    failure: BaseException | None = None
+    inbox: queue.Queue[tuple[str, Any]] = queue.Queue()
+
+    def worker() -> None:
+        try:
+            for item in stream(question.strip(), variant=variant):  # type: ignore[arg-type]
+                inbox.put(item)
+        except BaseException as exc:  # noqa: BLE001 — re-raised on the main thread
+            inbox.put(("failed", exc))
+        finally:
+            inbox.put(("closed", None))
+
+    started = time.perf_counter()
+    frame = 0
+    yield "", _progress_markdown(events, None, done, 0.0, frame), ""
+
     with demo_guard.borrowed_key(own_key):
-        for kind, payload in stream(question.strip(), variant=variant):  # type: ignore[arg-type]
+        thread = threading.Thread(target=worker, daemon=True)
+        thread.start()
+
+        while True:
+            try:
+                kind, payload = inbox.get(timeout=TICK_SECONDS)
+            except queue.Empty:
+                frame += 1
+                elapsed = time.perf_counter() - started
+                yield "", _progress_markdown(events, None, done, elapsed, frame), ""
+                continue
+
+            if kind == "closed":
+                break
+            if kind == "failed":
+                failure = payload
+                continue
             if kind == "progress":
-                events.append(_describe(payload["node"], payload["update"]))
-                yield "", _progress_markdown(events, None), ""
+                node = payload["node"]
+                done.append(node)
+                events.append(_describe(node, payload["update"]))
+                elapsed = time.perf_counter() - started
+                yield "", _progress_markdown(events, None, done, elapsed, frame), ""
             else:
                 trace = payload
 
+    if failure is not None:
+        raise failure
     assert trace is not None  # stream always ends with a done event
     if not own_key:
         demo_guard.record(trace.usage["totals"]["cost_usd"])
@@ -226,6 +329,12 @@ def build() -> gr.Blocks:
                 answer,
                 inputs=[question, own_key, variant],
                 outputs=[answer_pane, trace_pane, sources_pane],
+                # Gradio's default orange "generating" bar is turned off because the
+                # trace pane already shows a spinner, the stage in flight, what is
+                # coming next, and an elapsed timer. Two progress indicators competing
+                # for the same attention is worse than one that actually says
+                # something, and the orange bar says only "something is happening".
+                show_progress="hidden",
                 # Bounds simultaneous LLM calls. Not a budget — see demo_guard.
                 concurrency_limit=config.concurrency_limit,
             ).then(demo_guard.status_line, outputs=budget_note)

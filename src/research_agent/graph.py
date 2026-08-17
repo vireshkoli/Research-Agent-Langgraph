@@ -168,18 +168,38 @@ def build_graph(
 
 
 def mermaid() -> str:
-    """The diagram in the README, generated from the same constants as the graph."""
+    """The diagram in the README, generated from the same constants as the graph.
+
+    Every node is declared with its label *before* any edge is drawn. Defining
+    labels inline on first use is the more compact form, but it meant `finalize`
+    and `reflect` were first referenced as bare ids by an earlier edge and only
+    given labels further down — and GitHub's mermaid renderer failed the whole
+    diagram with "Could not find a suitable point for the given distance", a
+    layout error rather than a syntax one. Declaring first is the boring, robust
+    form; a diagram that does not render is worth nothing.
+    """
     return f"""flowchart TD
-    S([START]) --> {PLAN}["{PLAN} · decompose into sub-questions"]
-    {PLAN} --> {ACT}["{ACT} · LLM emits tool calls"]
-    {ACT} --> {OBSERVE}["{OBSERVE} · run tools · mint source ids"]
-    {OBSERVE} --> r1{{route_after_observe}}
+    S([START])
+    {PLAN}["{PLAN} · decompose into sub-questions"]
+    {ACT}["{ACT} · LLM emits tool calls"]
+    {OBSERVE}["{OBSERVE} · run tools · mint source ids"]
+    {COMPACT}["{COMPACT} · summarise old steps"]
+    {REFLECT}["{REFLECT} · coverage check"]
+    {FINALIZE}["{FINALIZE} · cited synthesis"]
+    E([END])
+    r1{{route_after_observe}}
+    r2{{route_after_reflect}}
+
+    S --> {PLAN}
+    {PLAN} --> {ACT}
+    {ACT} --> {OBSERVE}
+    {OBSERVE} --> r1
     r1 -->|budget verdict| {FINALIZE}
-    r1 -->|prompt over threshold| {COMPACT}["{COMPACT} · summarise old steps"]
+    r1 -->|prompt over threshold| {COMPACT}
     r1 -->|otherwise| {REFLECT}
-    {COMPACT} --> {REFLECT}["{REFLECT} · coverage check"]
-    {REFLECT} --> r2{{route_after_reflect}}
+    {COMPACT} --> {REFLECT}
+    {REFLECT} --> r2
     r2 -->|gaps remain| {ACT}
     r2 -->|plan is wrong| {PLAN}
-    r2 -->|covered or budget| {FINALIZE}["{FINALIZE} · cited synthesis"]
-    {FINALIZE} --> E([END])"""
+    r2 -->|covered or budget| {FINALIZE}
+    {FINALIZE} --> E"""
