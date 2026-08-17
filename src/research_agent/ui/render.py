@@ -33,11 +33,20 @@ from research_agent.agent import stream
 from research_agent.config import settings
 from research_agent.trace import RunTrace
 
+# Every example is a case from evals/dataset.json with a verified reference answer.
+# An earlier list included "the largest publicly disclosed Mistral model", which was
+# never in the dataset and was therefore never checked — the agent answered Mixtral
+# 8x7B (46.7B) when Mixtral 8x22B is 141B. A demo must not showcase a question the
+# evaluation has not confirmed the agent can answer.
 EXAMPLES = [
+    # easy-001, passes 3/3
     "Who won the 2024 Nobel Prize in Physics, and what contribution was cited?",
-    "Which has more parameters: the largest Llama 3 model or the largest publicly "
-    "disclosed Mistral model? Give both counts and the difference.",
-    "What is 847 * 293?",
+    # multi-001, passes 3/3 — two hops plus arithmetic
+    "Which is larger: the number of parameters in the largest Llama 3.1 model, or in "
+    "GPT-3? Give both figures and the difference in billions.",
+    # adv-002 — relevance detection: web_search is the wrong tool here
+    "What is 847 multiplied by 293?",
+    # adv-001 — unbounded scope; the agent should decline rather than fabricate
     "List every peer-reviewed paper published in 2025 that cites 'Attention Is All You Need'.",
 ]
 
