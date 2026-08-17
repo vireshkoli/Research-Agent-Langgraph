@@ -6,7 +6,10 @@ run away.
 
 **[Live demo →](https://research-agent-u0ty.onrender.com)** · first load takes ~60s, free-tier cold start
 
-<!-- DEMO GIF GOES HERE -->
+![The agent planning, searching, checking coverage and returning a cited answer](docs/demo.gif)
+
+*Two sub-questions, four parallel searches, a coverage check, the calculator for the arithmetic,
+then a cited answer — 405B − 175B = 230B. Real run, unedited apart from being sped up 1.8×.*
 
 Budgets are the feature, not a safety net bolted on afterwards. When one trips, the run returns a
 partial answer with whatever it did establish — never an error, never nothing.
