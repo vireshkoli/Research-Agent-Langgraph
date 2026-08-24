@@ -17,7 +17,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from evals.agreement import compare, deflation
+from evals.agreement import Agreement, compare, deflation, verbosity_correlation
 from evals.metrics import (
     CaseResult,
     ToolMetrics,
@@ -208,6 +208,9 @@ def agreement_section(results: list[CaseResult]) -> list[str]:
         return ["_No overlapping labels and verdicts to compare._"]
 
     low, high = result.kappa_ci
+    asymmetry = _asymmetry_note(result)
+    verbosity = _verbosity_note(results, labels)
+
     return [
         f"Hand-labelled **{result.n}** judgements before looking at any judge output.",
         "",
@@ -230,7 +233,69 @@ def agreement_section(results: list[CaseResult]) -> list[str]:
         f"Raw agreement overstates κ by {deflation(result):.0f} points here. That gap is "
         "why raw agreement alone is not reported: it counts the agreement you would get "
         "by chance, which on skewed data is most of it. Gwet's AC1 is shown alongside "
-        "because κ is unstable when one label dominates the marginals.",
+        "because κ is unstable when one label dominates the marginals. (The literature "
+        "this design follows measures 33-41 points of deflation on MT-Bench; the gap "
+        "here is smaller because raw agreement is unusually high, not because the "
+        "correction stopped mattering.)",
+        "",
+        *asymmetry,
+        "",
+        *verbosity,
+    ]
+
+
+def _asymmetry_note(result: Agreement) -> list[str]:
+    """Which *direction* the judge errs in — the thing that decides whether a
+    reported pass rate can be trusted."""
+    inflated = result.confusion["judge_correct_human_incorrect"]
+    deflated = result.confusion["judge_incorrect_human_correct"]
+
+    if inflated == 0 and deflated > 0:
+        return [
+            f"**The judge never inflates a score.** It said CORRECT where the human said "
+            f"INCORRECT **{inflated} times**; all {deflated} disagreements run the other "
+            "way, with the judge stricter than the human. That is the direction an "
+            "evaluation wants to fail in: every pass rate in this report is a floor, not "
+            "a flattering estimate. A judge that erred the other way would quietly "
+            "inflate the agent and nothing else here would catch it.",
+        ]
+    if inflated:
+        return [
+            f"**The judge passed {inflated} run(s) the human failed**, against {deflated} "
+            "in the other direction. Pass rates here may therefore be slightly optimistic.",
+        ]
+    return ["Judge and human agreed on every item; there is no error direction to report."]
+
+
+def _verbosity_note(results: list[CaseResult], labels: dict[tuple[str, int], int]) -> list[str]:
+    """Cheap bias probe: does the judge reward length?"""
+    scores: list[int] = []
+    lengths: list[int] = []
+    by_key = {(r.case_id, r.run): r for r in results}
+
+    for key in sorted(labels):
+        result = by_key.get(key)
+        if result is None or result.judge_verdict not in ("CORRECT", "INCORRECT"):
+            continue
+        trace_path = RESULTS_DIR / "traces" / "full" / f"{key[0]}-r{key[1]}.json"
+        if not trace_path.is_file():
+            continue
+        scores.append(1 if result.judge_verdict == "CORRECT" else 0)
+        lengths.append(len(json.loads(trace_path.read_text()).get("answer") or ""))
+
+    if len(scores) < 2:
+        return []
+
+    r = verbosity_correlation(scores, lengths)
+    direction = "shorter" if r < 0 else "longer"
+    return [
+        f"**Verbosity probe:** correlation between verdict and answer length is "
+        f"**r = {r:+.3f}** — the judge scored {direction} answers higher. Folk wisdom says "
+        "LLM judges reward length, and the 2026 study behind this design measured that "
+        "bias below 0.011, so a value this size is worth naming rather than filing away. "
+        "It is also confounded: this agent writes longest when it is hedging on a "
+        "question it could not settle, so length here tracks difficulty as much as style. "
+        "Treat it as a flag for a larger sample, not as evidence the judge prefers brevity.",
     ]
 
 

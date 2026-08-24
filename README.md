@@ -65,6 +65,13 @@ overrules across 90 runs. But an ablation that makes act's stop decision final �
 `no_overrule` — scores **93.1% against the full agent's 90.3%** on the 70 runs both completed, with
 fewer steps. On this evidence reflect is mostly overruling correct decisions to stop.
 
+**Is the judge trustworthy?** This finding rests on judge verdicts, so the judge was checked
+against 90 hand labels made before any verdict was visible: **Cohen's κ = 0.824** (raw agreement
+96.7%, Gwet's AC1 0.959). More usefully than the headline number, the errors are one-directional —
+the judge said CORRECT where the human said INCORRECT **zero times**, and all three disagreements
+are it being *stricter* than the human. Every pass rate here is therefore a floor rather than a
+flattering estimate, which is the direction an evaluation should fail in.
+
 **Caveats, stated rather than buried.** At 11 multi-hop and 7 adversarial cases the per-tier
 intervals are very wide, and the multi-hop difference (78.8% vs 84.8%) is well inside noise. The
 adversarial gap and the overall direction are more robust, but this is 30 cases, not 300. The honest
@@ -231,9 +238,10 @@ Written before anyone asks.
   rotated mid-run; they failed authentication instantly and were discarded rather than scored, so
   that comparison covers 70 runs and excludes the adversarial tier. `REPORT.md` states this inline
   rather than quietly averaging over a smaller sample.
-- **The judge is not yet validated against a human.** Until `evals/human_labels.json` is populated
-  and Cohen's κ is reported, every judge-derived number above should be read as unvalidated —
-  `REPORT.md` says so in place of the agreement section.
+- **The judge's κ interval is wide.** Cohen's κ is 0.824 against 90 hand labels, but the bootstrap
+  95% CI runs [0.580, 1.000] — "almost perfect" at the point estimate, only "moderate" at the lower
+  bound. κ is unstable when one label dominates the marginals, which is why Gwet's AC1 (0.959) is
+  reported beside it.
 - **Self-preference is not controlled.** Judge and agent are both OpenAI models. They are different
   *generations*, not different *families*; ruling this out needs a judge from another provider.
 - **n=30 is small.** Every interval above is wide. Differences under ~15 points are not
@@ -262,7 +270,8 @@ Written before anyone asks.
    The loop's only defensible advantage is adaptive follow-up, so it should be gated on evidence that
    follow-up is needed — if a round adds no new sources, finish. Right now `reflect` is biased the
    other way and overrules correct stops.
-2. **Validate the judge**, then re-run with κ reported and the agreement caveat removed.
+2. **A larger labelled sample.** 90 items puts κ's lower bound at 0.580; a few hundred would
+   tighten it enough to distinguish "almost perfect" from "moderate".
 3. **A cross-family judge** (Claude or Gemini) to bound self-preference rather than disclaiming it.
 4. **Grow the dataset to ~100 cases.** The interval width at n=30 is the binding constraint on saying
    anything is better than anything else.

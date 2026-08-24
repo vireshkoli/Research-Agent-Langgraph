@@ -65,7 +65,27 @@ Of 11 failed runs:
 
 ## Is the judge any good?
 
-_No human labels committed yet, so judge-vs-human agreement is not reported. Until it is, treat every judge-derived number above as unvalidated._
+Hand-labelled **90** judgements before looking at any judge output.
+
+| Statistic | Value |
+|---|---|
+| Raw agreement | 96.7% |
+| **Cohen's κ** | **0.824** (almost perfect) |
+| κ 95% CI (bootstrap, seeded) | [0.580, 1.000] |
+| Gwet's AC1 | 0.959 |
+| Deflation, raw − κ | 14.3 pts |
+| Coverage | 100.0% (0 excluded) |
+
+| | Human CORRECT | Human INCORRECT |
+|---|---|---|
+| **Judge CORRECT** | 79 | 0 |
+| **Judge INCORRECT** | 3 | 8 |
+
+Raw agreement overstates κ by 14 points here. That gap is why raw agreement alone is not reported: it counts the agreement you would get by chance, which on skewed data is most of it. Gwet's AC1 is shown alongside because κ is unstable when one label dominates the marginals. (The literature this design follows measures 33-41 points of deflation on MT-Bench; the gap here is smaller because raw agreement is unusually high, not because the correction stopped mattering.)
+
+**The judge never inflates a score.** It said CORRECT where the human said INCORRECT **0 times**; all 3 disagreements run the other way, with the judge stricter than the human. That is the direction an evaluation wants to fail in: every pass rate in this report is a floor, not a flattering estimate. A judge that erred the other way would quietly inflate the agent and nothing else here would catch it.
+
+**Verbosity probe:** correlation between verdict and answer length is **r = -0.380** — the judge scored shorter answers higher. Folk wisdom says LLM judges reward length, and the 2026 study behind this design measured that bias below 0.011, so a value this size is worth naming rather than filing away. It is also confounded: this agent writes longest when it is hedging on a question it could not settle, so length here tracks difficulty as much as style. Treat it as a flag for a larger sample, not as evidence the judge prefers brevity.
 
 ## Against a baseline
 
