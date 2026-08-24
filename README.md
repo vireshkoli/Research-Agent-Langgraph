@@ -30,8 +30,8 @@ number below can be traced back to the run that produced it.
 | Tool precision | **40.4%** | — |
 | Citation resolution (cited ids that exist) | 97.7% | — |
 | Invented-URL rate | 0.0% | — |
-| Cost per run | $0.0024 | p95 $0.0060 |
-| Latency | 16.6s p50 | 79.7s p95 |
+| Cost per run | $0.0023 | p95 $0.0059 |
+| Latency | 15.4s p50 | 79.7s p95 |
 
 Full breakdown, per-tier results and failure modes: **[evals/REPORT.md](evals/REPORT.md)**.
 
@@ -203,7 +203,8 @@ cd Research-Agent-Langgraph
 
 uv sync --dev
 cp .env.example .env          # add OPENAI_API_KEY; TAVILY_API_KEY is optional
-make check                    # ruff + mypy + 263 tests, no API key needed
+uv run pre-commit install     # optional: ruff + gitleaks before each commit
+make check                    # ruff + mypy + 272 tests, no API key needed
 
 uv run python -m research_agent "Who won the 2024 Nobel Prize in Physics, and why?"
 ```
@@ -211,7 +212,8 @@ uv run python -m research_agent "Who won the 2024 Nobel Prize in Physics, and wh
 Watch a budget trip and still get an answer:
 
 ```bash
-uv run python -m research_agent --max-steps 1 "Compare the largest Llama 3 and Mistral models"
+uv run python -m research_agent --max-steps 1 \
+  "Which is larger: the largest Llama 3.1 model or GPT-3? Give both figures and the difference."
 # → partial cited answer, early_exit_reason: max_steps, exit code 0
 ```
 
@@ -298,7 +300,7 @@ evals/
   judge.py       binary rubric with worked examples
   agreement.py   Cohen's κ, Gwet's AC1, bootstrap CI, confusion matrix
   results/       committed traces and results — the audit trail behind every number
-tests/           263 tests, no API key required
+tests/           272 tests, no API key required
 ```
 
 ## Licence

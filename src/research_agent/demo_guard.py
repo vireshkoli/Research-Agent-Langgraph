@@ -8,10 +8,13 @@ Three controls, in order of how much they actually protect you:
 
 1. **A daily dollar cap**, counted in a SQLite file that survives restarts. Once
    today's spend crosses it the demo declines politely instead of billing you.
-2. **Bring-your-own-key.** A visitor supplying their own key is not counted against
-   the cap at all, because they are paying. The key is used for that request and
-   never stored.
-3. **An input length cap**, so a pasted novel cannot turn into a large prompt.
+2. **A per-session cap.** The daily cap alone is a shared pot, so one visitor can
+   drain it in a few minutes and every later visitor sees a spent budget. A
+   per-session ceiling keeps one person from denying the demo to everyone else.
+3. **Bring-your-own-key.** A visitor supplying their own key is not counted against
+   either cap, because they are paying. The key is used for that request and never
+   stored.
+4. **An input length cap**, so a pasted novel cannot turn into a large prompt.
 
 None of these is the real backstop. That is a monthly budget limit set on a
 project-scoped key at the provider, which is the only control that cannot be
@@ -35,7 +38,14 @@ CREATE TABLE IF NOT EXISTS daily_spend (
     day   TEXT PRIMARY KEY,
     usd   REAL NOT NULL DEFAULT 0,
     runs  INTEGER NOT NULL DEFAULT 0
-)
+);
+CREATE TABLE IF NOT EXISTS session_spend (
+    day     TEXT NOT NULL,
+    session TEXT NOT NULL,
+    usd     REAL NOT NULL DEFAULT 0,
+    runs    INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (day, session)
+);
 """
 
 
@@ -47,7 +57,7 @@ def _connect() -> sqlite3.Connection:
     path = _db_path()
     path.parent.mkdir(parents=True, exist_ok=True)
     connection = sqlite3.connect(path)
-    connection.execute(SCHEMA)
+    connection.executescript(SCHEMA)
     return connection
 
 
@@ -64,16 +74,35 @@ def spent_today() -> tuple[float, int]:
     return (row[0], row[1]) if row else (0.0, 0)
 
 
-def record(usd: float) -> None:
+def spent_this_session(session: str) -> tuple[float, int]:
+    """(usd, runs) recorded for one visitor today."""
+    if not session:
+        return 0.0, 0
+    with _lock, _connect() as connection:
+        row = connection.execute(
+            "SELECT usd, runs FROM session_spend WHERE day = ? AND session = ?",
+            (_today(), session),
+        ).fetchone()
+    return (row[0], row[1]) if row else (0.0, 0)
+
+
+def record(usd: float, session: str = "") -> None:
     with _lock, _connect() as connection:
         connection.execute(
             "INSERT INTO daily_spend (day, usd, runs) VALUES (?, ?, 1) "
             "ON CONFLICT(day) DO UPDATE SET usd = usd + excluded.usd, runs = runs + 1",
             (_today(), usd),
         )
+        if session:
+            connection.execute(
+                "INSERT INTO session_spend (day, session, usd, runs) VALUES (?, ?, ?, 1) "
+                "ON CONFLICT(day, session) DO UPDATE SET "
+                "usd = usd + excluded.usd, runs = runs + 1",
+                (_today(), session, usd),
+            )
 
 
-def check(question: str, own_key: str | None) -> str | None:
+def check(question: str, own_key: str | None, session: str = "") -> str | None:
     """Why this request must be refused, or None to proceed.
 
     A visitor with their own key bypasses the cap entirely — the cap exists to
@@ -95,6 +124,17 @@ def check(question: str, own_key: str | None) -> str | None:
 
     if config.daily_cap_usd <= 0:
         return None
+
+    session_usd, session_runs = spent_this_session(session)
+    if config.session_cap_usd > 0 and session_usd >= config.session_cap_usd:
+        return (
+            f"You have used this session's share of the demo budget "
+            f"(${config.session_cap_usd:.2f} across {session_runs} runs). The cap is "
+            "per visitor so that one person cannot spend the whole day's budget.\n\n"
+            "Paste your own OpenAI API key below to keep going — it is used for your "
+            "request only and never stored — or run the project locally; the README "
+            "has a one-command quickstart."
+        )
 
     usd, runs = spent_today()
     if usd >= config.daily_cap_usd:

@@ -209,7 +209,12 @@ def _describe(node: str, update: dict[str, Any]) -> str:
     return f"- **{label}**"
 
 
-def answer(question: str, own_key: str, variant: str) -> Iterator[tuple[str, str, str]]:
+def answer(
+    question: str,
+    own_key: str,
+    variant: str,
+    request: gr.Request | None = None,
+) -> Iterator[tuple[str, str, str]]:
     """Generator driving the three output panes: answer, trace, sources.
 
     The agent runs on a worker thread and this generator drains a queue with a
@@ -218,7 +223,12 @@ def answer(question: str, own_key: str, variant: str) -> Iterator[tuple[str, str
     whole of each node — twenty seconds of a motionless "waiting…" during
     `observe` — which reads as a hang rather than as work.
     """
-    refusal = demo_guard.check(question, own_key)
+    # Gradio mints a session hash per browser session and passes it when the
+    # handler declares a `gr.Request` parameter. It is the only visitor identity
+    # available without asking anyone to sign in, and it is enough to stop one
+    # person draining the shared daily budget.
+    session = getattr(request, "session_hash", "") or ""
+    refusal = demo_guard.check(question, own_key, session)
     if refusal:
         yield refusal, "", ""
         return
@@ -273,7 +283,7 @@ def answer(question: str, own_key: str, variant: str) -> Iterator[tuple[str, str
         raise failure
     assert trace is not None  # stream always ends with a done event
     if not own_key:
-        demo_guard.record(trace.usage["totals"]["cost_usd"])
+        demo_guard.record(trace.usage["totals"]["cost_usd"], session)
 
     yield trace.answer, _progress_markdown(events, trace), _sources_markdown(trace)
 

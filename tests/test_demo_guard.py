@@ -22,6 +22,7 @@ from research_agent.ui import render as ui
 def isolated_demo_db(tmp_path: Any, monkeypatch: pytest.MonkeyPatch) -> Iterator[None]:
     monkeypatch.setenv("RA_DEMO_DB", str(tmp_path / "demo.sqlite3"))
     monkeypatch.setenv("RA_DAILY_CAP_USD", "0.25")
+    monkeypatch.setenv("RA_SESSION_CAP_USD", "0.05")
     monkeypatch.setenv("RA_MAX_QUESTION_CHARS", "500")
     settings.cache_clear()
     yield
@@ -82,6 +83,35 @@ def test_spend_accumulates_and_then_refuses() -> None:
     assert refusal is not None
     assert "budget for today" in refusal
     assert "your own OpenAI API key" in refusal, "the refusal must offer a way forward"
+
+
+def test_one_visitor_cannot_drain_the_whole_daily_budget() -> None:
+    # The daily cap alone is a shared pot: without a per-visitor share, one person
+    # spends it in a few minutes and every later visitor is refused.
+    demo_guard.record(0.06, session="greedy")
+
+    refused = demo_guard.check("more please", None, "greedy")
+    assert refused is not None
+    assert "per visitor" in refused
+
+    # A different visitor is unaffected — the daily pot still has room.
+    assert demo_guard.check("my turn", None, "someone-else") is None
+
+
+def test_session_spend_is_tracked_separately_from_the_daily_total() -> None:
+    demo_guard.record(0.02, session="a")
+    demo_guard.record(0.03, session="b")
+
+    assert demo_guard.spent_today()[0] == pytest.approx(0.05)
+    assert demo_guard.spent_this_session("a")[0] == pytest.approx(0.02)
+    assert demo_guard.spent_this_session("b")[0] == pytest.approx(0.03)
+    assert demo_guard.spent_this_session("never-seen")[0] == 0.0
+
+
+def test_a_visitor_with_their_own_key_bypasses_both_caps() -> None:
+    demo_guard.record(99.0, session="greedy")
+    assert demo_guard.check("anything", None, "greedy") is not None
+    assert demo_guard.check("anything", "sk-visitor-key", "greedy") is None
 
 
 def test_a_visitor_with_their_own_key_bypasses_the_cap() -> None:

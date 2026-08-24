@@ -1,0 +1,73 @@
+# The real evaluation. Manual trigger only — it spends money and takes ~40 minutes,
+# so it must never fire on push. ci.yml runs `--dry-run` on every commit instead,
+# which validates every case and spends nothing.
+name: Evaluation
+
+on:
+  workflow_dispatch:
+    inputs:
+      variant:
+        description: "Which variant to run"
+        type: choice
+        options: [full, baseline, no_overrule]
+        default: full
+      runs:
+        description: "Independent runs per case (k). 3 gives pass^3."
+        default: "3"
+      limit:
+        description: "Only the first N cases. Leave blank for all 30."
+        default: ""
+      judge:
+        description: "Run the LLM judge (off = deterministic metrics only)"
+        type: boolean
+        default: true
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    # A stuck run must not burn an hour of Actions time on top of the API spend.
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v9.0.0
+        with:
+          python-version: "3.12"
+
+      - run: uv sync --dev
+
+      - name: Validate the dataset and print the cost estimate
+        # Fails the job before a penny is spent if a case is malformed.
+        run: uv run python -m evals.run --dry-run --variant ${{ inputs.variant }}
+
+      - name: Run the evaluation
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+          # The project-wide ledger is a development guard and does not survive a
+          # fresh runner anyway; the per-run cap is what bounds this.
+          RA_MAX_PROJECT_COST_USD: "0"
+          RA_MAX_PROCESS_COST_USD: "2.00"
+        run: |
+          uv run python -m evals.run \
+            --variant ${{ inputs.variant }} \
+            --runs ${{ inputs.runs }} \
+            ${{ inputs.limit && format('--limit {0}', inputs.limit) || '' }} \
+            ${{ inputs.judge && '--batch' || '--no-judge' }} \
+            --no-cache
+
+      - name: Regenerate the report
+        run: uv run python -m evals.report || true
+
+      # Results are not committed from CI: they are the audit trail behind the
+      # README, and they should land through a reviewed commit rather than a bot
+      # push. Download, inspect, then commit locally.
+      - name: Upload results and traces
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-${{ inputs.variant }}-${{ github.run_number }}
+          path: |
+            evals/results/
+            evals/REPORT.md
+          retention-days: 30
