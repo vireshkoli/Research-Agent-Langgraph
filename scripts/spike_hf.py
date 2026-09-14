@@ -15,7 +15,11 @@ So the "free ZeroGPU Space that never calls @spaces.GPU" route does not exist â€
 gate is on creation, before any GPU code would run. An existing Docker Space on this
 account predates the change and is grandfathered; that is not a route for new work.
 
-The ladder therefore resolves to: HF PRO ($9/mo) or Render free tier.
+That was measured on a ~2-week-old account. Re-tested six weeks later, the
+ZeroGPU create call returned HTTP 200: the '30 days' clause in the error was the
+real gate, not PRO. ZeroGPU then refused to *start* with "No @spaces.GPU function
+detected", so app.py declares a never-called placeholder. The Space runs free on
+the CPU side. Render was used in between and has been retired.
 
 Read-only by default. Pass --create to attempt a Space and see the current error.
 
@@ -74,11 +78,10 @@ def main() -> int:
         print("    PRO account -> CPU-basic Gradio Space available. Use it; an IO-bound")
         print("    agent has no use for a GPU.")
     else:
-        print("    Free account -> BOTH free routes are closed (measured, see module docstring):")
-        print("      cpu-basic Gradio/Docker : requires PRO")
-        print("      ZeroGPU                 : requires PRO")
-        print("    Deploy target is HF PRO ($9/mo) or Render free tier (750 hrs/mo,")
-        print("    15-min spin-down, ~60s cold start).")
+        print("    Free account -> cpu-basic Gradio/Docker Spaces need PRO (HTTP 402).")
+        print("    ZeroGPU is the free route once the account is ~30 days old; before")
+        print("    that the API says so. The Space must declare a @spaces.GPU function")
+        print("    or it refuses to start â€” app.py has a never-called placeholder.")
 
     if token_role != "write":
         print(f"\n  NOTE: token role is {token_role!r}; creating a Space needs 'write'.")

@@ -4,7 +4,7 @@ A ReAct agent on an explicit LangGraph state graph: it decomposes a question, ca
 and returns a **cited** answer — with hard budgets on steps, wall clock and dollars, so it can never
 run away.
 
-**[Live demo →](https://research-agent-u0ty.onrender.com)** · first load takes ~60s, free-tier cold start
+**[Live demo →](https://vireshk-research-agent.hf.space)** · Hugging Face Space, alongside [production-rag-platform](https://huggingface.co/spaces/vireshk/production-rag-platform) · first load after 48h idle takes ~40s
 
 ![The agent planning, searching, checking coverage and returning a cited answer](docs/demo.gif)
 
@@ -143,6 +143,7 @@ wired from, so it cannot drift out of sync with the code. A test asserts every n
 | Losing citations to compaction | Sources live in state, not in message text | Compaction rewrites the scratchpad; the citation registry is a different key. No summariser mistake can reach it. A test proves this by feeding in a summary that names no sources at all. |
 | Message format | Raw OpenAI dicts with `operator.add`, not `add_messages` | `llm.py` speaks the wire format directly, so `add_messages` would coerce dicts into objects that every call converts back. Its one real feature — ID-based dedup — is unused here. |
 | Parallel tool calls | A thread pool *inside* `observe` | Parallel graph branches writing the same reducer-less key in one super-step raise `InvalidUpdateError`, and each branch burns a super-step against the recursion limit. |
+| Hosting | A free ZeroGPU Space that never uses the GPU | Hugging Face gates cpu-basic Spaces behind PRO; ZeroGPU is the free route once an account is ~30 days old. ZeroGPU refuses to start without a `@spaces.GPU` function, so `app.py` declares one that is never called — the GPU is allocated on *call*, not on decoration, so nothing is reserved. Measured, not read from docs: the first attempt failed with exactly that error. |
 | API surface | Responses, not Chat Completions | Measured, not assumed: Chat Completions returns a 400 for `tools` + `reasoning_effort` on both `gpt-5.4-nano` and `-mini`. Responses handles it. |
 
 ---
@@ -222,7 +223,8 @@ Other entry points:
 ```bash
 make eval-dry                 # validates all 30 eval cases, spends $0
 make report                   # regenerates evals/REPORT.md from committed results
-docker compose up demo        # the deployed container, on localhost:7860
+docker compose up demo        # the same app in the local container, on localhost:7860
+make deploy-hf                # push to the Hugging Face Space (needs HF_TOKEN)
 uv run python -m research_agent.tools --demo   # exercise every tool once
 ```
 
@@ -263,6 +265,7 @@ Written before anyone asks.
   released, marking the agent wrong for answering 1993 (CERN's public-domain release) against a
   reference asserting 1991 — both defensible. That case was rewritten and re-run rather than having
   its rubric loosened after the fact; the substitution is recorded in `evals/results/full.json`.
+- **The Space depends on a ZeroGPU quirk.** It runs free only because ZeroGPU accepts a declared-but-never-called `@spaces.GPU` function. If Hugging Face tightens that check the demo goes dark; the Dockerfile and `docker compose up demo` are the fallback, and the GIF above is the proof-of-life that survives either way.
 - **Re-running produces different numbers.** The agent is non-deterministic and the web moves under
   it. The committed traces are the evidence, not a reproducibility promise.
 

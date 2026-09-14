@@ -40,9 +40,15 @@ eval:
 report:
 	uv run python -m evals.report
 
-# Hugging Face Gradio Spaces install from requirements.txt, not pyproject.toml.
+# Hugging Face Gradio Spaces install from requirements.txt (direct deps only; see
+# scripts/requirements.py for why it is not a lock export).
 requirements:
-	uv export --no-hashes --no-dev --format requirements-txt -o requirements.txt
+	uv run python scripts/requirements.py
+
+# Deploy to a Hugging Face Docker Space, the same way production-rag-platform is.
+# Needs HF_TOKEN (write) and a PRO subscription; the script explains the 402 if not.
+deploy-hf:
+	./scripts/deploy_hf.sh vireshk research-agent
 
 clean:
 	rm -rf .pytest_cache .ruff_cache .mypy_cache dist
