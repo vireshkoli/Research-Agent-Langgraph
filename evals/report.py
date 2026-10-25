@@ -469,7 +469,9 @@ def _live_labels(variant: str = "full") -> tuple[dict[tuple[str, int], int], int
             discarded += 1
             continue
         answer = json.loads(path.read_text()).get("answer")
-        if label.answer_sha256 and answer_fingerprint(answer) != label.answer_sha256:
+        # An empty hash is unproven, not exempt: a label that does not say which
+        # answer it graded cannot be shown to grade this one.
+        if answer_fingerprint(answer) != label.answer_sha256:
             discarded += 1
             continue
         live[(label.case_id, label.run)] = label.label

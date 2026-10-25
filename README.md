@@ -29,7 +29,7 @@ number below can be traced back to the run that produced it.
 | Tool recall | 100.0% | — |
 | Tool precision | 36.8% | see the caveat below |
 | Citation resolution (cited ids that exist) | 97.7% | — |
-| Invented-URL rate | 0.0% | — |
+| Invented-URL rate | n/a | no answer contained a URL to check |
 | Cost per run | $0.0024 | p95 $0.0042 |
 | Latency | 11.4s p50 | 25.7s p95 |
 
@@ -234,9 +234,11 @@ cases are where harnesses quietly return flattering numbers:
 **Ordering** is scored by longest common subsequence rather than Kendall tau, so an agent that got
 the spine right and inserted an extra hop gets partial credit; Kendall penalises every inversion
 equally and cannot tell those apart. **Forbidden-tool calls are reported separately from F1** — waste
-and safety are not capability. **Citation resolution and invented-URL rate** are the cheapest
-hallucination checks here and the only ones that catch a confident answer citing a source that does
-not exist.
+and safety are not capability. **Citation resolution** is the cheapest hallucination check here and
+the only one that catches a confident answer citing a source that does not exist. **Invented-URL
+rate** exists for the same reason but has had almost nothing to measure: the agent cites source ids
+rather than pasting URLs, and across 180 committed runs exactly one answer contained a URL. It is
+reported as n/a rather than as a 0% it never earned.
 
 **The judge** is binary with an anchored rubric and four worked examples, and every committed
 evaluation ran it at one sample per trajectory. It is validated against hand labels rather than

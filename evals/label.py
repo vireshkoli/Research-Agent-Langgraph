@@ -22,7 +22,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from evals.schema import HUMAN_LABELS, EvalCase, load_cases
+from evals.schema import HUMAN_LABELS, EvalCase, answer_fingerprint, load_cases
 from research_agent.trace import load_trace
 
 TRACES = Path(__file__).parent / "results" / "traces" / "full"
@@ -95,17 +95,45 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     if args.stats:
-        ones = sum(1 for item in labels.values() if item["label"] == 1)
-        print(f"labelled {len(labels)}/{len(items)}")
-        if labels:
-            print(f"  correct   {ones} ({ones / len(labels):.0%})")
-            print(f"  incorrect {len(labels) - ones} ({1 - ones / len(labels):.0%})")
+        live = {
+            f"{c}#{r}": labels[f"{c}#{r}"]
+            for c, r, path in items
+            if f"{c}#{r}" in labels
+            and labels[f"{c}#{r}"].get("answer_sha256")
+            == answer_fingerprint(load_trace(path).answer)
+        }
+        ones = sum(1 for item in live.values() if item["label"] == 1)
+        print(f"labelled {len(live)}/{len(items)} of the answers committed now")
+        if stale := len(labels) - len(live):
+            print(f"  {stale} older labels grade answers that have since been re-run")
+        if live:
+            print(f"  correct   {ones} ({ones / len(live):.0%})")
+            print(f"  incorrect {len(live) - ones} ({1 - ones / len(live):.0%})")
         return 0
+
+    def current(case_id: str, run: int, path: Path) -> bool:
+        """A label only counts as done if it graded the answer committed now.
+
+        Keys are reused by every re-run, so "a label exists for (case, run)" says
+        nothing about whether a human ever read *this* answer. Without this check a
+        re-run leaves every label stale and this tool reports all of them done.
+        """
+        label = labels.get(f"{case_id}#{run}")
+        if label is None:
+            return False
+        return label.get("answer_sha256") == answer_fingerprint(load_trace(path).answer)
+
+    stale = sum(1 for c, r, path in items if f"{c}#{r}" in labels and not current(c, r, path))
+    if stale:
+        print(
+            f"{stale} existing labels grade answers that have since been re-run; "
+            "they are queued for re-labelling."
+        )
 
     todo = [
         (case_id, run, path)
         for case_id, run, path in items
-        if args.review or f"{case_id}#{run}" not in labels
+        if args.review or not current(case_id, run, path)
     ]
     if not todo:
         print(f"all {len(items)} runs already labelled. `--review` to go through them again.")
@@ -133,6 +161,7 @@ def main(argv: list[str] | None = None) -> int:
             "run": run,
             "label": int(choice),
             "note": "",
+            "answer_sha256": answer_fingerprint(trace.answer),
         }
         save(labels)
 
