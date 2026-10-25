@@ -41,6 +41,7 @@ import sys
 import tempfile
 from pathlib import Path
 
+from research_agent.config import settings
 from research_agent.tools import containment
 from research_agent.tools.base import ToolResult, ToolSpec, truncate
 
@@ -246,7 +247,7 @@ sys.path.pop(0)
 paths = sysconfig.get_paths()
 read_paths = sorted({paths["stdlib"], paths["platstdlib"], here, *config["extra_read_paths"]})
 try:
-    isolation = _containment.contain(read_paths)
+    isolation = _containment.contain(read_paths, config["require_landlock"])
 except Exception as exc:
     sys.stderr.write("containment could not be established: %s\n" % exc)
     sys.stderr.flush()
@@ -403,6 +404,7 @@ def execute(code: str) -> ToolResult:
                     "extra_read_paths": list(EXTRA_READ_PATHS),
                     "failed_exit": CONTAINMENT_FAILED_EXIT,
                     "marker": ISOLATION_MARKER,
+                    "require_landlock": settings().code_exec_require_landlock,
                 }
             )
         )

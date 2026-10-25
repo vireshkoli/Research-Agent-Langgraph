@@ -208,8 +208,8 @@ def test_a_complete_escape_is_still_contained_by_the_kernel(tmp_path: Path) -> N
         assert results[forbidden] == "denied", f"{forbidden}: {results}"
     assert results["read an allowed file"] == "allowed", "containment must not break reading"
     assert victim.read_text() == "leave me"
-    if report["landlock"]:
-        assert results["read a file outside the allowed paths"] == "denied"
+    assert report["landlock"] is True, "Landlock is required by default"
+    assert results["read a file outside the allowed paths"] == "denied"
 
 
 @pytest.mark.skipif(not LINUX, reason="seccomp is a Linux kernel feature")
