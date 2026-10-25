@@ -444,10 +444,16 @@ def _paired_stats(label: str, left: list[CaseResult], right: list[CaseResult]) -
         f"only the full agent succeeded, {only_other} where only `{short}` did — gives "
         f"p = {mcnemar_exact(only_full, only_other):.3f}.",
         "",
-        f"**Unique wins.** The full agent reliably solves **{wins_full}** cases that "
-        f"`{short}` does not; `{short}` reliably solves **{wins_other}** that the full "
-        "agent does not. A variant that costs more and wins nothing outright is not "
-        "trading accuracy for cost — it is paying for nothing.",
+        f"**Unique wins.** The full agent reliably solves **{wins_full}** "
+        f"{'case' if wins_full == 1 else 'cases'} that `{short}` does not; `{short}` "
+        f"reliably solves **{wins_other}** that the full agent does not."
+        + (
+            " A variant that costs more and wins nothing outright is not trading "
+            "accuracy for cost — it is paying for nothing."
+            if wins_full == 0
+            else " The richer variant does win ground of its own here, so the extra "
+            "cost buys something — the question is whether it buys enough."
+        ),
         "",
     ]
 
@@ -472,6 +478,13 @@ def comparison_section(main: list[CaseResult], k: int) -> list[str]:
                 f"{no_overrule['excluded_reason']} Affected cases: {cases}. The "
                 "comparison below is therefore restricted to the runs that survived, "
                 "and does not cover the adversarial tier.",
+                "",
+            ]
+        elif repaired := no_overrule.get("repaired_runs"):
+            cases = ", ".join(no_overrule.get("repaired_cases", []))
+            lines += [
+                f"> {repaired} runs of this variant were re-run rather than left "
+                f"missing ({cases}). {no_overrule['repaired_reason']}",
                 "",
             ]
         lines += _variant_rows(

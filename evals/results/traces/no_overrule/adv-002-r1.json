@@ -1,0 +1,215 @@
+{
+  "schema_version": "1",
+  "run_id": "1ae8370bd6b8",
+  "ts": "2026-10-25T07:47:28+00:00",
+  "question": "What is 847 multiplied by 293?",
+  "variant": "no_overrule",
+  "config": {
+    "agent_model": "gpt-5.4-nano",
+    "reasoning_effort": "none",
+    "max_steps": 8,
+    "max_seconds": 120.0,
+    "max_run_cost_usd": 0.05,
+    "finalize_reserve_usd": 0.008,
+    "compact_threshold_tokens": 12000,
+    "git_sha": "5c480bc",
+    "prompt_hash": "sha256:512e8e5d8eaa"
+  },
+  "plan": {
+    "version": 1,
+    "subquestions": [
+      "What is 847 × 293?"
+    ],
+    "replans": 0
+  },
+  "steps": [
+    {
+      "i": 1,
+      "node": "plan",
+      "plan_version": 0,
+      "ts_offset_ms": 1442.63408300003,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 2,
+      "node": "act",
+      "plan_version": 1,
+      "ts_offset_ms": 2419.697166000333,
+      "tool_calls": [
+        {
+          "call_id": "call_jWpSNMEjBBzD1AQ0ln0uem8r",
+          "name": "calculator",
+          "args": {
+            "expression": "847*293"
+          }
+        }
+      ],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 3,
+      "node": "observe",
+      "plan_version": 1,
+      "ts_offset_ms": 2420.982166000158,
+      "tool_calls": [],
+      "observations": [
+        {
+          "call_id": "call_jWpSNMEjBBzD1AQ0ln0uem8r",
+          "tool": "calculator",
+          "args": {
+            "expression": "847*293"
+          },
+          "ok": true,
+          "content": "847*293 = 248171",
+          "error": null,
+          "latency_ms": 0.14458300029218663,
+          "raw_chars": 0,
+          "truncated": false,
+          "source_ids": []
+        }
+      ],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 4,
+      "node": "reflect",
+      "plan_version": 1,
+      "ts_offset_ms": 2421.826166000301,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": "skipped on first step"
+    },
+    {
+      "i": 5,
+      "node": "act",
+      "plan_version": 1,
+      "ts_offset_ms": 3465.0915000001987,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": "847 × 293 = **248,171**."
+    },
+    {
+      "i": 6,
+      "node": "observe",
+      "plan_version": 1,
+      "ts_offset_ms": 3466.261999999915,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": "no tool calls"
+    },
+    {
+      "i": 7,
+      "node": "finalize",
+      "plan_version": 1,
+      "ts_offset_ms": 4494.100040999911,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    }
+  ],
+  "sources": [],
+  "answer": "847 multiplied by 293 equals **248,171**.",
+  "citations": [],
+  "coverage": {
+    "What is 847 × 293?": false
+  },
+  "outcome": {
+    "status": "completed",
+    "early_exit_reason": null,
+    "used_deterministic_finalize": false,
+    "reflect_overrules": 0,
+    "error": null
+  },
+  "usage": {
+    "llm_calls": [
+      {
+        "purpose": "plan",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 218,
+        "cached_tokens": 0,
+        "output_tokens": 61,
+        "reasoning_tokens": 14,
+        "cost_usd": 0.00011985,
+        "latency_ms": 1433.1721250000555,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 750,
+        "cached_tokens": 0,
+        "output_tokens": 20,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.000175,
+        "latency_ms": 974.2034999999305,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 788,
+        "cached_tokens": 0,
+        "output_tokens": 15,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.00017635000000000003,
+        "latency_ms": 1040.9457499999917,
+        "replayed": false
+      },
+      {
+        "purpose": "finalize",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 189,
+        "cached_tokens": 0,
+        "output_tokens": 16,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.0000578,
+        "latency_ms": 1025.4810420001377,
+        "replayed": false
+      }
+    ],
+    "totals": {
+      "input_tokens": 1945,
+      "cached_tokens": 0,
+      "output_tokens": 112,
+      "reasoning_tokens": 14,
+      "cost_usd": 0.0005290000000000001,
+      "cache_hit_rate": 0.0
+    },
+    "by_purpose": {
+      "plan": {
+        "calls": 1,
+        "cost_usd": 0.00011985,
+        "output_tokens": 61
+      },
+      "act": {
+        "calls": 2,
+        "cost_usd": 0.00035135000000000006,
+        "output_tokens": 35
+      },
+      "finalize": {
+        "calls": 1,
+        "cost_usd": 0.0000578,
+        "output_tokens": 16
+      }
+    },
+    "search_credits": 0,
+    "steps": 2
+  },
+  "timings_ms": {
+    "total": 4491.761124999812
+  },
+  "compaction": {
+    "count": 0,
+    "compacted_upto": 0
+  }
+}
