@@ -180,6 +180,83 @@ def failure_table(results: list[CaseResult]) -> list[str]:
     return lines
 
 
+def case_failure_table(results: list[CaseResult], k: int) -> list[str]:
+    """*Which* cases fail, not merely how often.
+
+    The independence gap already says failures are concentrated in a fixed set of
+    cases rather than scattered across runs. Reporting that and then not naming the
+    cases leaves the reader with a statistic they cannot act on, so this table names
+    them and separates the two kinds of failure that a pass rate blurs together:
+
+    - a case that fails on **every** run is a capability gap, and the thing to go and
+      fix
+    - a case that fails on **one** run is variance, and averages away with more runs
+
+    `internal_error` is counted apart from both. A transport failure is not the agent
+    being wrong, and folding it into a capability claim would overstate the problem
+    in the same way the key rotation would have overstated the no_overrule ablation.
+    """
+    by_case = _by_case(results)
+    failing = {case: [r for r in runs if not r.success] for case, runs in by_case.items()}
+    failing = {case: runs for case, runs in failing.items() if runs}
+
+    if not failing:
+        return ["No case failed on any run."]
+
+    always = [case for case, runs in failing.items() if len(runs) == len(by_case[case])]
+    transport = sum(
+        1 for runs in failing.values() for r in runs if r.early_exit_reason == "internal_error"
+    )
+
+    lines = [
+        f"**{len(failing)} of {len(by_case)} cases account for every failed run.** "
+        f"{len(always)} {'fails' if len(always) == 1 else 'fail'} on all {k} runs — a "
+        "capability gap rather than variance, and the place to start. The rest are flaky "
+        "and would partly average away with more runs.",
+        "",
+        "| Case | Tier | Failed | Pattern | Judge failure modes | Early exits |",
+        "|---|---|---|---|---|---|",
+    ]
+    for case in sorted(failing, key=lambda c: (-len(failing[c]), c)):
+        runs = failing[case]
+        total = len(by_case[case])
+        pattern = (
+            "every run" if len(runs) == total else ("one run" if len(runs) == 1 else "most runs")
+        )
+        modes = (
+            ", ".join(sorted({r.judge_failure_mode for r in runs if r.judge_failure_mode})) or "—"
+        )
+        exits = ", ".join(sorted({r.early_exit_reason for r in runs if r.early_exit_reason})) or "—"
+        tier = by_case[case][0].tier
+        lines.append(f"| `{case}` | {tier} | {len(runs)}/{total} | {pattern} | {modes} | {exits} |")
+
+    if transport:
+        subject = "It is" if transport == 1 else "They are"
+        lines += [
+            "",
+            f"{transport} of those failed runs exited with `internal_error` — a transport "
+            f"failure rather than the agent being wrong. {subject} left in the table "
+            "rather than quietly dropped, but not treated as evidence about capability.",
+        ]
+
+    capped = sorted(
+        {
+            case
+            for case, runs in failing.items()
+            if any(r.early_exit_reason == "tool_cap" for r in runs)
+        }
+    )
+    if capped:
+        lines += [
+            "",
+            f"{len(capped)} of the failing cases hit a per-tool call cap rather than "
+            f"deciding they were finished ({', '.join(f'`{c}`' for c in capped)}). That is the "
+            "over-searching this report measures elsewhere, showing up as a failure rather "
+            "than merely as wasted spend.",
+        ]
+    return lines
+
+
 def budget_table(results: list[CaseResult]) -> list[str]:
     reasons: dict[str, int] = {}
     for result in results:
@@ -456,6 +533,8 @@ def main() -> int:
         "## Where it fails",
         "",
         *failure_table(results),
+        "",
+        *case_failure_table(results, k),
         "",
         "## Is the judge any good?",
         "",

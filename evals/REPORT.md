@@ -63,6 +63,22 @@ Of 11 failed runs:
 | wrong_value | 8 |
 | other | 3 |
 
+**7 of 30 cases account for every failed run.** 1 fails on all 3 runs — a capability gap rather than variance, and the place to start. The rest are flaky and would partly average away with more runs.
+
+| Case | Tier | Failed | Pattern | Judge failure modes | Early exits |
+|---|---|---|---|---|---|
+| `multi-011` | multi_hop | 3/3 | every run | other, wrong_value | — |
+| `adv-007` | adversarial | 2/3 | most runs | wrong_value | tool_cap |
+| `multi-002` | multi_hop | 2/3 | most runs | wrong_value | — |
+| `adv-003` | adversarial | 1/3 | one run | other | tool_cap |
+| `adv-006` | adversarial | 1/3 | one run | other | internal_error |
+| `multi-006` | multi_hop | 1/3 | one run | wrong_value | tool_cap |
+| `multi-007` | multi_hop | 1/3 | one run | wrong_value | — |
+
+1 of those failed runs exited with `internal_error` — a transport failure rather than the agent being wrong. It is left in the table rather than quietly dropped, but not treated as evidence about capability.
+
+3 of the failing cases hit a per-tool call cap rather than deciding they were finished (`adv-003`, `adv-007`, `multi-006`). That is the over-searching this report measures elsewhere, showing up as a failure rather than merely as wasted spend.
+
 ## Is the judge any good?
 
 Hand-labelled **90** judgements before looking at any judge output.
