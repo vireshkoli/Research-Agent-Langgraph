@@ -52,13 +52,24 @@ def test_child_env_is_an_explicit_allowlist_not_a_filtered_copy() -> None:
     }
 
 
-def test_env_scrub_holds_when_the_static_screen_is_bypassed(
+def _grant_os(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Simulate an attacker who has already defeated both import layers.
+
+    Reaching `os` used to need only the static screen switched off. The runtime
+    importer now refuses it as well, so a test of what holds *after* an escape has
+    to grant it explicitly — which is the honest way to write such a test anyway.
+    """
+    monkeypatch.setattr(code_exec, "_screen", lambda source: None)
+    monkeypatch.setattr(code_exec, "ALLOWED_MODULES", code_exec.ALLOWED_MODULES | {"os"})
+
+
+def test_env_scrub_holds_after_both_import_layers_are_defeated(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    # Defence in depth, stated as a test: disable the import allowlist entirely and
-    # confirm the child still cannot read a key out of the real environment.
+    # Defence in depth, stated as a test: hand the child `os` outright and confirm it
+    # still cannot read a key out of the real environment.
     monkeypatch.setenv("OPENAI_API_KEY", "sk-must-not-leak")
-    monkeypatch.setattr(code_exec, "_screen", lambda source: None)
+    _grant_os(monkeypatch)
 
     result = execute(
         "import os\nprint('OPENAI_API_KEY' in os.environ, os.environ.get('OPENAI_API_KEY'))\n"
@@ -72,7 +83,7 @@ def test_env_scrub_holds_when_the_static_screen_is_bypassed(
 def test_the_child_cannot_see_the_parents_working_directory(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    monkeypatch.setattr(code_exec, "_screen", lambda source: None)
+    _grant_os(monkeypatch)
     result = execute("import os\nprint(os.getcwd())")
     assert result.ok, result.content
     assert "ra-sandbox-" in result.content
