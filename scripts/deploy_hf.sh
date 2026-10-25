@@ -129,10 +129,16 @@ for key in ("OPENAI_API_KEY", "TAVILY_API_KEY"):
         print("  set secret:", key)
     else:
         print("  skipped (not in .env):", key)
-# Demo-only settings. The project ledger is a dev guard and would brick the
-# demo once cumulative spend crossed it, so it is disabled here.
+# Demo-only settings. Two guards accumulate for the lifetime of the store they
+# live in and never reset: the project ledger (on disk) and the process guard (in
+# memory). Both are dev guards against a runaway script, and on a server that
+# runs for days both would trip once cumulative spend across all visitors crossed
+# them — after which every request fails until a restart. The process guard was
+# missed the first time: its 0.50 default bricked the demo at roughly 208 runs.
+# The daily cap is the demo's real control, persisted and reset each day.
 for key, value in {"RA_DAILY_CAP_USD": "0.25", "RA_SESSION_CAP_USD": "0.05",
-                   "RA_MAX_PROJECT_COST_USD": "0", "RA_MAX_RUN_COST_USD": "0.05"}.items():
+                   "RA_MAX_PROJECT_COST_USD": "0", "RA_MAX_PROCESS_COST_USD": "0",
+                   "RA_MAX_RUN_COST_USD": "0.05"}.items():
     api.add_space_variable(repo_id, key, value)
     print("  set variable:", key, "=", value)
 PY

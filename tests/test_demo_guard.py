@@ -381,3 +381,25 @@ def test_an_early_exit_is_explained_in_the_trace_pane(monkeypatch: pytest.Monkey
 
     assert "Stopped early" in final[1]
     assert "max_steps" in final[1]
+
+
+# --- the deployed configuration --------------------------------------------------
+
+
+def test_the_demo_disables_every_guard_that_never_resets() -> None:
+    # A guard that accumulates for the life of its store is a runaway-script guard.
+    # On a server that runs for days it trips once total spend across all visitors
+    # crosses it, and then every request fails. The process guard's 0.50 default did
+    # exactly that, at roughly 208 runs, because the deploy only disabled the ledger.
+    import ast
+    import re
+    from pathlib import Path
+
+    script = (Path(__file__).parents[1] / "scripts" / "deploy_hf.sh").read_text()
+    literal = re.search(r"for key, value in (\{.*?\})\.items\(\):", script, re.S)
+    assert literal, "could not find the Space variable block in deploy_hf.sh"
+    variables = ast.literal_eval(literal.group(1))
+
+    assert variables.get("RA_MAX_PROCESS_COST_USD") == "0"
+    assert variables.get("RA_MAX_PROJECT_COST_USD") == "0"
+    assert float(variables["RA_DAILY_CAP_USD"]) > 0, "the daily cap is the demo's real control"
