@@ -102,6 +102,8 @@ def refusal(url: str) -> str | None:
     host = parsed.hostname
     if not host:
         return f"not a valid URL: {url!r}"
+    if any(host == d or host.endswith("." + d) for d in settings().search_exclude_domains):
+        return f"{host!r} is excluded for this run"
     if settings().allow_private_fetch:
         return None
     try:

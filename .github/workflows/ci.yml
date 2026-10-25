@@ -37,7 +37,7 @@ jobs:
         run: |
           if [ -f evals/results/full.json ]; then
             uv run python -m evals.report
-            git diff --exit-code evals/REPORT.md
+            git diff --exit-code evals/REPORT.md evals/FRAMES.md
           else
             echo "no results committed yet; skipping"
           fi

@@ -19,6 +19,7 @@ from pathlib import Path
 from typing import Any
 
 from evals.agreement import Agreement, compare, deflation, verbosity_correlation
+from evals.benchmarks import frames
 from evals.metrics import (
     CaseResult,
     ToolMetrics,
@@ -622,7 +623,7 @@ def _matched(
     )
 
 
-def search_mix(results: list[CaseResult], variant: str) -> dict[str, int]:
+def search_mix(results: list[CaseResult], variant: str, root: Path = RESULTS_DIR) -> dict[str, int]:
     """How many of a variant's searches each engine served, read off its traces.
 
     Traces written before `search_backends` existed are read from what they do
@@ -631,7 +632,7 @@ def search_mix(results: list[CaseResult], variant: str) -> dict[str, int]:
     """
     mix: dict[str, int] = {}
     for case, run in sorted({(r.case_id, r.run) for r in results}):
-        path = RESULTS_DIR / "traces" / variant / f"{case}-r{run}.json"
+        path = root / "traces" / variant / f"{case}-r{run}.json"
         if not path.is_file():
             continue
         trace = json.loads(path.read_text())
@@ -803,6 +804,157 @@ def _by_case(results: list[CaseResult]) -> dict[str, list[CaseResult]]:
     return grouped
 
 
+FRAMES_REPORT = Path(__file__).parent / "FRAMES.md"
+ANSWER_KEY_HOSTS = (
+    "huggingface.co",
+    "hf.co",
+    "github.com",
+    "githubusercontent.com",
+    "kaggle.com",
+    "paperswithcode.com",
+)
+
+
+def frames_report() -> list[str]:
+    """The pre-registered FRAMES comparison, analysed exactly as registered.
+
+    Written and committed before any FRAMES run, alongside evals/prereg/frames.md,
+    so the statistics cannot be chosen after the data is seen. Every rule below is
+    the registration's: one primary test, the stated exclusion and nothing else, and
+    a decision that reads the same whichever way the result falls.
+    """
+    root = RESULTS_DIR / "frames"
+    header = [
+        "# FRAMES: does the loop beat one round of search?",
+        "",
+        "Pre-registered in [`prereg/frames.md`](prereg/frames.md) before any run. "
+        "Regenerate with `make report`.",
+        "",
+    ]
+    payloads = {
+        arm: json.loads((root / f"{arm}.json").read_text())
+        for arm in ("full", "baseline")
+        if (root / f"{arm}.json").is_file()
+    }
+    if len(payloads) < 2:
+        return header + ["_Not run yet. Both arms must complete before anything is reported._"]
+
+    full = {r.case_id: r for r in to_results(payloads["full"])}
+    base = {r.case_id: r for r in to_results(payloads["baseline"])}
+
+    # The one registered exclusion: a transport failure in either arm drops the
+    # question from both. Nothing is dropped for being hard or inconvenient.
+    excluded = sorted(
+        case
+        for case in set(full) | set(base)
+        if case not in full
+        or case not in base
+        or "internal_error" in (full[case].early_exit_reason, base[case].early_exit_reason)
+    )
+    shared = sorted(set(full) & set(base) - set(excluded))
+    left, right = [full[c] for c in shared], [base[c] for c in shared]
+    n = len(shared)
+
+    full_rate, base_rate = pass_at_1(left), pass_at_1(right)
+    only_full, only_base = discordant_counts(left, right)
+    p_value = mcnemar_exact(only_full, only_base)
+    lo, hi, _ = paired_bootstrap_ci(per_case_rates(left), per_case_rates(right))
+    gap = (full_rate - base_rate) * 100
+    leader = "full agent" if gap >= 0 else "baseline"
+
+    if p_value < 0.05:
+        decision = (
+            f"**Significant.** The {leader} scores higher by {abs(gap):.1f} points "
+            f"(McNemar p = {p_value:.4f}, 95% interval on full − baseline "
+            f"[{lo * 100:+.1f}, {hi * 100:+.1f}] points). By the registered rule this is "
+            "a detected difference, in the direction shown."
+        )
+    else:
+        decision = (
+            f"**No difference detected** (McNemar p = {p_value:.3f}). By the registered "
+            f"rule this does not mean the arms are equal: it means any real difference "
+            f"in full − baseline lies within [{lo * 100:+.1f}, {hi * 100:+.1f}] points, "
+            "at 95% confidence."
+        )
+
+    def wilson(rate: float) -> str:
+        low, high = wilson_interval(round(rate * n), n)
+        return f"[{low * 100:.0f}–{high * 100:.0f}%]"
+
+    mix_full = search_mix(left, "full", root)
+    mix_base = search_mix(right, "baseline", root)
+    engines = {
+        arm: ", ".join(f"{k} {v}" for k, v in sorted(mix.items())) or "none recorded"
+        for arm, mix in (("full", mix_full), ("baseline", mix_base))
+    }
+    contamination = _answer_key_hits(shared)
+
+    def recall(results: list[CaseResult]) -> str:
+        values = [r.gold_source_recall for r in results if r.gold_source_recall is not None]
+        return f"{mean(values) * 100:.1f}%" if values else "—"
+
+    lines = header + [
+        decision,
+        "",
+        "| Arm | pass@1 | 95% CI | gold sources found | cost / question | p50 latency |",
+        "|---|---|---|---|---|---|",
+        f"| full agent | **{full_rate * 100:.1f}%** | {wilson(full_rate)} | {recall(left)} | "
+        f"{_usd(mean([r.cost_usd for r in left]))} | "
+        f"{percentile([r.latency_ms / 1000 for r in left], 50):.1f}s |",
+        f"| baseline | **{base_rate * 100:.1f}%** | {wilson(base_rate)} | {recall(right)} | "
+        f"{_usd(mean([r.cost_usd for r in right]))} | "
+        f"{percentile([r.latency_ms / 1000 for r in right], 50):.1f}s |",
+        "",
+        f"**{n} questions**, paired. The arms disagree on {only_full + only_base} of them: "
+        f"{only_full} only the full agent got right, {only_base} only the baseline did.",
+        "",
+        f"**Excluded:** {len(excluded)}"
+        + (
+            f" ({', '.join(excluded)}) — a transport failure in at least one arm."
+            if excluded
+            else "."
+        ),
+        "",
+        f"**Search engines:** full — {engines['full']}; baseline — {engines['baseline']}.",
+        "",
+        f"**Answer-key contamination:** {contamination} source(s) from a host that "
+        "publishes FRAMES' answers. The registered target is zero.",
+        "",
+        "### By reasoning type (descriptive only — strata too small to test)",
+        "",
+        "| Reasoning type | n | full | baseline |",
+        "|---|---|---|---|",
+    ]
+    cases = {case.id: case for case in frames.load()} if frames.SAMPLE.is_file() else {}
+    by_type: dict[str, list[str]] = {}
+    for case_id in shared:
+        kind = cases[case_id].tags[0] if case_id in cases and cases[case_id].tags else "unknown"
+        by_type.setdefault(kind, []).append(case_id)
+    for kind, ids in sorted(by_type.items(), key=lambda item: -len(item[1])):
+        f_rate = mean([float(full[c].success) for c in ids]) * 100
+        b_rate = mean([float(base[c].success) for c in ids]) * 100
+        lines.append(f"| {kind} | {len(ids)} | {f_rate:.0f}% | {b_rate:.0f}% |")
+    return lines
+
+
+def _answer_key_hits(case_ids: list[str]) -> int:
+    """Sources from a host that publishes FRAMES' answers, across both arms' traces."""
+    hits = 0
+    for arm in ("full", "baseline"):
+        for case_id in case_ids:
+            path = RESULTS_DIR / "frames" / "traces" / arm / f"{case_id}-r1.json"
+            if not path.is_file():
+                continue
+            for source in json.loads(path.read_text()).get("sources") or []:
+                url = str(source.get("url", "")).lower()
+                host = url.split("//", 1)[-1].split("/", 1)[0]
+                if any(host == d or host.endswith("." + d) for d in ANSWER_KEY_HOSTS):
+                    hits += 1
+                elif "frames-benchmark" in url:
+                    hits += 1
+    return hits
+
+
 def main() -> int:
     payload = load_variant("full")
     if payload is None:
@@ -882,6 +1034,7 @@ def main() -> int:
     ]
 
     REPORT.write_text("\n".join(lines) + "\n")
+    FRAMES_REPORT.write_text("\n".join(frames_report()) + "\n")
     print(f"wrote {REPORT}")
     return 0
 

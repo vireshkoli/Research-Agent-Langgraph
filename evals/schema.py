@@ -22,7 +22,7 @@ from pydantic import BaseModel, Field, field_validator, model_validator
 DATASET = Path(__file__).parent / "dataset.json"
 HUMAN_LABELS = Path(__file__).parent / "human_labels.json"
 
-Tier = Literal["easy", "multi_hop", "adversarial"]
+Tier = Literal["easy", "multi_hop", "adversarial", "frames"]
 MatcherName = Literal[
     "exact", "contains_any", "contains_all", "regex", "numeric_close", "lte", "gte", "any"
 ]
@@ -78,13 +78,20 @@ class EvalCase(BaseModel):
     expected_behavior: ExpectedBehavior = Field(default_factory=ExpectedBehavior)
     judge_rubric_notes: str = ""
     tags: list[str] = Field(default_factory=list)
+    # The pages a benchmark says the answer depends on. Lets a run be scored on
+    # whether it found the right evidence at all, separately from whether it reasoned
+    # from it correctly.
+    gold_links: list[str] = Field(default_factory=list)
 
     @field_validator("must_include")
     @classmethod
     def _needs_an_anchor(cls, value: list[str], info: Any) -> list[str]:
-        # Adversarial cases are the one exception: "refuses to fabricate a list" has
-        # no string that must appear, so they are pinned by must_not_include instead.
-        if not value and info.data.get("tier") != "adversarial":
+        # Two exceptions. Adversarial cases: "refuses to fabricate a list" has no string
+        # that must appear, so they are pinned by must_not_include instead. FRAMES cases:
+        # gold answers are routinely paraphrased ("37th", "thirty-seventh"), so a
+        # substring anchor would fail correct answers; they are graded by the judge, as
+        # the FRAMES paper grades them.
+        if not value and info.data.get("tier") not in ("adversarial", "frames"):
             raise ValueError(
                 "every non-adversarial case needs at least one must_include anchor; "
                 "if you cannot write one the case is unscoreable and should be cut"

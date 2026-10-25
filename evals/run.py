@@ -27,6 +27,7 @@ from dataclasses import asdict
 from pathlib import Path
 from typing import Any
 
+from evals.benchmarks import frames
 from evals.judge import judge
 from evals.metrics import (
     CaseResult,
@@ -54,6 +55,12 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(prog="evals.run", description=__doc__)
     parser.add_argument("--variant", choices=["full", "baseline", "no_overrule"], default="full")
     parser.add_argument(
+        "--dataset",
+        choices=["home", "frames"],
+        default="home",
+        help="home: the 30 hand-written cases. frames: the pre-registered FRAMES sample.",
+    )
+    parser.add_argument(
         "--search-backend",
         choices=["tavily", "ddgs"],
         help="Pin the search engine. Required for a real run: see main().",
@@ -73,6 +80,18 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         "--resume", action="store_true", help="Skip runs already in the checkpoint."
     )
     return parser.parse_args(argv)
+
+
+# Where FRAMES' questions and gold answers are published. A benchmark run that can
+# read these is measuring lookup, not research.
+ANSWER_KEY_HOSTS = (
+    "huggingface.co",
+    "hf.co",
+    "github.com",
+    "githubusercontent.com",
+    "kaggle.com",
+    "paperswithcode.com",
+)
 
 
 def tavily_quota_problem() -> str | None:
@@ -102,11 +121,17 @@ def tavily_quota_problem() -> str | None:
     return None
 
 
-def checkpoint_path(variant: str) -> Path:
-    return RESULTS_DIR / f".{variant}.partial.jsonl"
+def results_root(dataset: str) -> Path:
+    """Each dataset keeps its own results, traces and checkpoints, so a benchmark run
+    can never overwrite the hand-written set's committed evidence."""
+    return RESULTS_DIR if dataset == "home" else RESULTS_DIR / dataset
 
 
-def load_checkpoint(variant: str) -> list[dict[str, Any]]:
+def checkpoint_path(variant: str, dataset: str = "home") -> Path:
+    return results_root(dataset) / f".{variant}.partial.jsonl"
+
+
+def load_checkpoint(variant: str, dataset: str = "home") -> list[dict[str, Any]]:
     """Scored runs recovered from an interrupted invocation.
 
     One line per run, appended and flushed as it completes, so a crash costs at most
@@ -114,7 +139,7 @@ def load_checkpoint(variant: str) -> list[dict[str, Any]]:
     once discarded four completed runs and twenty minutes of work: a 90-run job that
     cannot resume is a bet on the network staying up for half an hour.
     """
-    path = checkpoint_path(variant)
+    path = checkpoint_path(variant, dataset)
     if not path.is_file():
         return []
     rows: list[dict[str, Any]] = []
@@ -190,6 +215,7 @@ def score(
         latency_ms=trace.timings_ms["total"],
         early_exit_reason=trace.outcome.early_exit_reason,
         reasons=reasons,
+        gold_source_recall=frames.gold_source_recall(case, trace.sources),
     )
 
 
@@ -199,7 +225,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.model:
         cfg = cfg.model_copy(update={"agent_model": args.model})
 
-    cases = select(load_cases(), args)
+    cases = select(frames.load() if args.dataset == "frames" else load_cases(), args)
     if not cases:
         print("no cases selected")
         return 1
@@ -238,27 +264,38 @@ def main(argv: list[str] | None = None) -> int:
         print(f"refusing to run: {reason}", file=sys.stderr)
         return 2
     print(f"search engine: {args.search_backend} (pinned, no fallback)")
+    if args.dataset == "frames":
+        # The benchmark's own questions and answers are published on these hosts.
+        os.environ["RA_SEARCH_EXCLUDE_DOMAINS"] = json.dumps(list(ANSWER_KEY_HOSTS))
+        settings.cache_clear()
+        cfg = (
+            settings()
+            if not args.model
+            else settings().model_copy(update={"agent_model": args.model})
+        )
+        print(f"excluded hosts: {', '.join(ANSWER_KEY_HOSTS)}")
 
     if args.no_cache:
         os.environ["RA_LLM_CACHE"] = "off"
         print("cassettes: OFF (runs must be independent for pass^k to mean anything)")
 
-    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
-    traces_dir = RESULTS_DIR / "traces" / args.variant
+    root = results_root(args.dataset)
+    root.mkdir(parents=True, exist_ok=True)
+    traces_dir = root / "traces" / args.variant
     traces_dir.mkdir(parents=True, exist_ok=True)
 
     judge_tracker = CostTracker(budget_usd=10.0)
     started = time.perf_counter()
 
-    recovered = load_checkpoint(args.variant) if args.resume else []
+    recovered = load_checkpoint(args.variant, args.dataset) if args.resume else []
     done = {(row["case_id"], row["run"]) for row in recovered}
     if recovered:
         print(f"resuming: {len(recovered)} runs recovered from the checkpoint")
     else:
-        checkpoint_path(args.variant).unlink(missing_ok=True)
+        checkpoint_path(args.variant, args.dataset).unlink(missing_ok=True)
 
     serialised: list[dict[str, Any]] = list(recovered)
-    checkpoint = checkpoint_path(args.variant).open("a", encoding="utf-8")
+    checkpoint = checkpoint_path(args.variant, args.dataset).open("a", encoding="utf-8")
 
     try:
         for index, case in enumerate(cases, start=1):
@@ -298,13 +335,14 @@ def main(argv: list[str] | None = None) -> int:
         "judge_samples": 0 if args.no_judge else args.judge_samples,
         "cache": "off" if args.no_cache else "default",
         "search_backend": args.search_backend,
+        "dataset": args.dataset,
         "elapsed_s": round(time.perf_counter() - started, 1),
         "agent_cost_usd": round(sum(r.cost_usd for r in results), 6),
         "judge_cost_usd": round(judge_tracker.total_cost_usd, 6),
         "results": serialised,
     }
 
-    out = args.out or RESULTS_DIR / f"{args.variant}.json"
+    out = args.out or results_root(args.dataset) / f"{args.variant}.json"
     out.write_text(json.dumps(payload, indent=2) + "\n")
 
     print(f"\n{len(results)} runs in {payload['elapsed_s']}s")

@@ -64,6 +64,8 @@ class CaseResult:
     latency_ms: float
     early_exit_reason: str | None
     reasons: list[str] = field(default_factory=list)
+    # Benchmarks that name their gold sources only; None everywhere else.
+    gold_source_recall: float | None = None
 
 
 # --- tool-call accuracy -----------------------------------------------------------

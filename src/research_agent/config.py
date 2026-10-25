@@ -76,6 +76,9 @@ class Settings(BaseSettings):
     # and is for the live demo; an evaluation must pin one, so every variant it
     # compares searched the same web the same way.
     search_backend: Literal["auto", "tavily", "ddgs"] = "auto"
+    # Hosts a run may not read from. Empty for the demo; a benchmark run fills it with
+    # the sites that publish the benchmark's own answers.
+    search_exclude_domains: list[str] = []
     # Refuse to run model-written code on a Linux host without Landlock, rather than
     # run it with reads unconfined. See tools/containment.py for why.
     code_exec_require_landlock: bool = True

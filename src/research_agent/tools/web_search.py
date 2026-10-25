@@ -98,10 +98,28 @@ def _search_ddgs(query: str, max_results: int) -> dict[str, Any]:
     }
 
 
+def excluded(url: str) -> bool:
+    """Whether `url` is on a host this run must not read from."""
+    from urllib.parse import urlparse
+
+    host = (urlparse(url).hostname or "").lower()
+    return any(host == d or host.endswith("." + d) for d in settings().search_exclude_domains)
+
+
 def _render(query: str, payload: dict[str, Any], backend: str) -> ToolResult:
     results = payload.get("results") or []
+    # A benchmark's questions and gold answers are published on the open web. An agent
+    # that finds the answer key is measuring lookup, not research, so benchmark runs
+    # drop those hosts — and the search engine's own summary, which could be built
+    # from them and cannot be attributed.
+    dropped = 0
+    if settings().search_exclude_domains:
+        kept = [result for result in results if not excluded(str(result.get("url", "")))]
+        dropped = len(results) - len(kept)
+        results = kept
+        payload = {**payload, "answer": None}
     if not results:
-        return ToolResult.failure(f"no results for {query!r}", backend=backend)
+        return ToolResult.failure(f"no results for {query!r}", backend=backend, excluded=dropped)
 
     sources = [
         Source(
@@ -132,7 +150,11 @@ def _render(query: str, payload: dict[str, Any], backend: str) -> ToolResult:
         truncated=was_truncated,
         # credits is what the run-level search budget counts against Tavily's
         # 1000/month free tier.
-        meta={"backend": backend, "credits": 1 if backend == "tavily" else 0},
+        meta={
+            "backend": backend,
+            "credits": 1 if backend == "tavily" else 0,
+            **({"excluded": dropped} if dropped else {}),
+        },
     )
 
 
