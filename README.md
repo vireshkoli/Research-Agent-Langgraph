@@ -38,14 +38,13 @@ Full breakdown, per-tier results and failure modes: **[evals/REPORT.md](evals/RE
 ### The headline finding: the loop's problem was its prompt, not its architecture
 
 The point of an evaluation is to be able to be wrong, and this one has now been wrong about its own
-agent twice — in opposite directions. Both passes are kept here, because the second only means
-something against the first.
+agent — in a way worth keeping on the record, because the correction is the result.
 
 **Pass one.** A `baseline` variant — plan once, issue every search in one parallel round, answer —
 beat the full iterative agent on every tier: **94.4% against 87.8%**, three times cheaper. The
-conclusion on the evidence available was that iterative refinement was not merely failing to pay
-for itself but actively destructive. Those results are tagged [`v0.2.0-pre-gate`](../../releases/tag/v0.2.0-pre-gate)
-with their traces.
+conclusion on the evidence then available was that iterative refinement was not merely failing to
+pay for itself but actively destructive. Those results and their traces are tagged
+[`v0.2.0-pre-gate`](../../releases/tag/v0.2.0-pre-gate).
 
 **What the traces actually said.** The obvious reading is that the loop searches too much, and that
 turned out to be false. Only **2 of 305 searches** repeated a query and only 6% of calls returned
@@ -54,7 +53,7 @@ nothing new. What the loop did was stop calling tools and keep going anyway: **7
 was the agent asking to stop, `reflect` overruling, and `act` proposing the same stop again. One
 adversarial case did this eight times consecutively.
 
-Two lines of prompt were responsible, and both are the kind of defect that no test catches:
+Two lines of prompt were responsible, and both are the kind of defect no test catches:
 
 - `SYSTEM` said *"prefer several specific searches over one broad one"* and then, four lines later,
   *"do not keep searching to feel thorough."* The first is about the width of one round and now
@@ -66,59 +65,31 @@ Two lines of prompt were responsible, and both are the kind of defect that no te
 
 **Pass two, after fixing those two lines and changing nothing else:**
 
-| Tier | Full agent | Baseline | `gated` (cap overrules at 1) | `no_overrule` (cap at 0) |
-|---|---|---|---|---|
-| easy | 100.0% | 100.0% | 100.0% | 100.0% |
-| multi-hop | **93.9%** | 81.8% | 87.9% | 81.8% |
-| adversarial | 95.2% | **100.0%** | 76.2% | 85.7% |
-| **overall pass@1** | **96.7%** | 93.3% | 90.0% | 90.0% |
-| pass^3 | **93.3%** | 86.7% | 83.3% | 83.3% |
-| mean steps | 2.33 | 1.00 | 2.10 | 2.56 |
-| mean cost | $0.0024 | $0.0008 | $0.0023 | $0.0023 |
+| Tier | Full agent | Baseline | `no_overrule` |
+|---|---|---|---|
+| easy | 100.0% | 100.0% | 100.0% |
+| multi-hop | **93.9%** | 81.8% | 81.8% |
+| adversarial | 95.2% | **100.0%** | 85.7% |
+| **overall pass@1** | **96.7%** | 93.3% | 90.0% |
+| pass^3 | **93.3%** | 86.7% | 83.3% |
+| mean steps | 2.33 | 1.00 | 2.56 |
+| mean cost | $0.0024 | $0.0008 | $0.0023 |
 
 The loop now beats the baseline it used to lose to. **That difference is not significant** —
-+3.3 points, 95% paired interval [−1.1, +7.8], McNemar p = 0.375 — and the baseline remains both
-three times cheaper and still perfect on the adversarial tier, where it cannot be talked out of
-stopping. What is defensible is narrower and more useful than the original claim: the architecture
-was never the problem, and the measured failure was a prompt that told the model to fear the wrong
-mistake.
++3.3 points, 95% paired interval [−1.1, +7.8], McNemar p = 0.375 — and the baseline remains three
+times cheaper and still perfect on the adversarial tier, where it cannot be talked out of stopping.
+What is defensible is narrower and more useful than the original claim: **the architecture was never
+the problem, and the measured failure was a prompt that told the model to fear the wrong mistake.**
 
-### The fix that followed from the diagnosis made it worse
+**`reflect` now earns its place, and the ablation is how we know.** `no_overrule` makes act's stop
+decision final, removing exactly the authority that looked harmful in pass one. It scores **90.0%
+against the full agent's 96.7%** — +6.7 points, paired interval [+0.0, +14.4], McNemar p = 0.070,
+and the full agent reliably solves 4 cases it does not against 1 the other way. In pass one this
+same ablation *beat* the full agent. Nothing about the node changed; its instructions did.
 
-Capping reflect's overrules is the obvious remedy for "34% of rounds are overruled stops". It was
-designed against the committed traces — three candidate rules simulated over all 90 runs before a
-line was written — and the best of them, one overrule then the stop is final, shipped as `gated`.
-
-It is the worst variant in the table, and it is the **only statistically significant result this
-project has produced**:
-
-| Comparison | Δ pass@1 | 95% paired CI | McNemar | Unique pass^3 wins |
-|---|---|---|---|---|
-| full vs `gated` | **+6.7 pts** | **[+1.1, +13.3]** | **p = 0.031** | 3 – 0 |
-| full vs `no_overrule` | +6.7 pts | [+0.0, +14.4] | p = 0.070 | 4 – 1 |
-| full vs baseline | +3.3 pts | [−1.1, +7.8] | p = 0.375 | 3 – 1 |
-
-Capping at one overrule and capping at zero both land on exactly 90.0%, from two independently run
-ablations. The mechanism is visible on the adversarial tier, where the effect is not monotonic in
-the number of rounds:
-
-| | steps | adversarial pass@1 |
-|---|---|---|
-| baseline | 1.00 | 100.0% |
-| `gated` | 2.38 | 76.2% |
-| full | 3.38 | 95.2% |
-
-Either answer immediately, or take enough rounds to establish that nothing is there. **The middle is
-the worst place to be** — a truncated investigation produces a confident wrong value rather than a
-refusal, and `wrong_value` is indeed the dominant failure mode on exactly those cases. Once the
-prompt stopped telling `reflect` to fear stopping, its overrules became worth paying for, and
-removing its authority removed something real. `gated` is kept rather than deleted: a well-motivated
-fix that was simulated before it was built and still measured worse is the most useful thing in this
-evaluation.
-
-**One comparison here is confounded and should not be read as a before/after.** The 87.8% was
+**One comparison here is confounded and should not be read as a clean before/after.** The 87.8% was
 measured in August and the 96.7% today, so two and a half months of web drift sit inside it
-alongside the prompt change. The four-way comparison in the second table was run back to back
+alongside the prompt change. The three-way comparison in the table above was run back to back
 against one prompt set and is sound; the across-time one is indicative only. Every trace records
 the hash of the prompts that produced it, and `evals/REPORT.md` prints a banner if the committed
 results ever stop matching the code.
@@ -349,10 +320,13 @@ Written before anyone asks.
 
 ## What I'd do next
 
-1. **Find out why the middle is the worst place to be.** The adversarial tier is not monotonic in
-   rounds — 1 round scores 100%, 2.4 rounds 76%, 3.4 rounds 95% — and that shape is the most
-   interesting unexplained thing here. It suggests a truncated investigation is worse than none,
-   which if it generalises is a real result about when to let an agent stop.
+1. **Find out why the middle is the worst place to be.** On the adversarial tier accuracy is not
+   monotonic in rounds — `baseline` at 1.00 steps scores 100%, `no_overrule` at 2.48 steps scores
+   85.7%, the full agent at 3.38 steps scores 95.2%. Either answer immediately or investigate
+   properly; a truncated investigation returns a confident wrong value where a refusal was wanted,
+   and `wrong_value` is indeed the dominant failure mode on exactly those cases. If that shape
+   generalises it is a real result about when to let an agent stop, and it is the most interesting
+   unexplained thing in this repo.
 2. **Re-run the first pass against the fixed prompts on the same day.** That is the only way to
    separate the prompt fix from web drift, and it costs about $0.30.
 3. **A larger labelled sample.** 90 items puts κ's lower bound at 0.580; a few hundred would

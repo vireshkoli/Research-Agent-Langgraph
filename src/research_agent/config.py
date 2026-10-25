@@ -31,13 +31,6 @@ class Settings(BaseSettings):
     max_run_cost_usd: float = 0.05
     # Unbounded replanning is a loop generator, so one corrective replan only.
     max_replans: int = 1
-    # How often `reflect` may overrule a proposed stop before the stop becomes final.
-    # Only the `gated` variant enforces it. Measured on the committed traces, 34% of
-    # all rounds are `act` emitting no tool calls — the agent saying it can answer —
-    # and being sent back by `reflect` to say it again. One overrule leaves the node
-    # its stated purpose, catching a genuinely premature stop, without letting it
-    # argue with the same decision indefinitely.
-    max_reflect_overrules: int = 1
     # Circuit breaker: three failures in a row means the tool is down or the model
     # is stuck calling it wrong. Either way, more attempts will not help.
     max_tool_failures: int = 3

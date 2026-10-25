@@ -21,9 +21,9 @@ fires; what the traces then showed is that firing is not the same as being right
 A third of all rounds call no tools at all, because `act` said it could answer and
 reflect sent it back to say so again, and one adversarial case repeats that eight
 times. The node was keeping a stop decision in play long after the run had stopped
-producing evidence. The `gated` variant caps the overrules at
-`max_reflect_overrules` for that reason: reflect gets its chance to catch a
-premature stop, but not to argue with the same one indefinitely.
+producing evidence. Both of those lines were in the prompt, not the graph: with
+them corrected the node's overrules are worth paying for, and the `no_overrule`
+ablation — which removes them — now scores 90.0% against the full agent's 96.7%.
 """
 
 from pydantic import BaseModel, Field

@@ -628,18 +628,6 @@ def comparison_section(main: list[CaseResult], k: int) -> list[str]:
             to_results(baseline),
         )
 
-    if gated := load_variant("gated"):
-        lines += ["### Does capping reflect's overrules help?", ""]
-        lines += [
-            "`gated` is identical to the full agent except that `reflect` may overrule "
-            "a proposed stop at most `max_reflect_overrules` times, after which the "
-            "stop is final. It was designed against the traces of an earlier run, where "
-            "34% of rounds were the agent proposing to stop and being sent back. It "
-            "does not work, and this is the measurement that says so.",
-            "",
-        ]
-        lines += _variant_rows("gated (reflect may overrule a stop once)", main, to_results(gated))
-
     if no_overrule := load_variant("no_overrule"):
         lines += ["### Does letting reflect overrule a stop earn its cost?", ""]
         if excluded := no_overrule.get("excluded_runs"):

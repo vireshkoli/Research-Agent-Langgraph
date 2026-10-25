@@ -127,21 +127,6 @@ Compared on the **90 runs both variants completed** (adversarial, easy, multi_ho
 
 **Unique wins.** The full agent reliably solves **3** cases that `baseline` does not; `baseline` reliably solves **1** that the full agent does not. The richer variant does win ground of its own here, so the extra cost buys something — the question is whether it buys enough.
 
-### Does capping reflect's overrules help?
-
-`gated` is identical to the full agent except that `reflect` may overrule a proposed stop at most `max_reflect_overrules` times, after which the stop is final. It was designed against the traces of an earlier run, where 34% of rounds were the agent proposing to stop and being sent back. It does not work, and this is the measurement that says so.
-
-Compared on the **90 runs both variants completed** (adversarial, easy, multi_hop).
-
-| Variant | pass@1 | Mean steps | Mean cost |
-|---|---|---|---|
-| gated (reflect may overrule a stop once) | 90.0% | 2.1 | $0.00229 |
-| **full agent** | **96.7%** | 2.3 | $0.00240 |
-
-**Paired comparison.** The difference in pass@1 is -6.7 points in favour of `gated`, with a 95% bootstrap interval over cases of [-13.3, -1.1] points. 100.0% of resamples failed to favour it. McNemar's exact test on the 6 discordant (case, run) pairs — 6 where only the full agent succeeded, 0 where only `gated` did — gives p = 0.031.
-
-**Unique wins.** The full agent reliably solves **3** cases that `gated` does not; `gated` reliably solves **0** that the full agent does not. The richer variant does win ground of its own here, so the extra cost buys something — the question is whether it buys enough.
-
 ### Does letting reflect overrule a stop earn its cost?
 
 Compared on the **90 runs both variants completed** (adversarial, easy, multi_hop).

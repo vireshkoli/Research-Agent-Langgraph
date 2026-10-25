@@ -250,61 +250,6 @@ def test_no_overrule_variant_still_reflects_while_act_wants_to_continue() -> Non
     assert REFLECT in recorder.visits
 
 
-def test_gated_variant_lets_reflect_overrule_a_stop_once() -> None:
-    # The first overrule is the node doing its job: act proposed a stop, reflect
-    # disagreed, and the run goes back for another round. Capping at zero would just
-    # be no_overrule under a different name.
-    recorder = Recorder(
-        **{
-            ACT: {"step": 1, "act_requested_stop": True},
-            REFLECT: lambda s, n: {"reflect_decision": "continue", "reflect_overrules": 1},
-        }
-    )
-    run(recorder, initial_state("q", variant="gated"), limit=40)
-    assert recorder.visits.count(ACT) >= 2, "the first overrule must send the run back to act"
-
-
-def test_gated_variant_stops_arguing_with_the_same_decision() -> None:
-    # The measured failure: act says it can answer, reflect overrules, act says it
-    # again, and nothing notices the loop is a fixed point. After the cap the stop
-    # is honoured however reflect votes.
-    recorder = Recorder(
-        **{
-            ACT: {"step": 1, "act_requested_stop": True},
-            REFLECT: lambda s, n: {"reflect_decision": "continue", "reflect_overrules": 1},
-        }
-    )
-    result = run(recorder, initial_state("q", variant="gated"), limit=40)
-    assert recorder.visits[-1] == FINALIZE
-    assert result["reflect_overrules"] <= Settings().max_reflect_overrules + 1
-    assert recorder.visits.count(ACT) <= 3, "the run must not keep re-proposing the same stop"
-
-
-def test_gated_variant_is_unaffected_while_reflect_never_overrules() -> None:
-    # A run where act keeps finding work is none of the gate's business: the cap
-    # counts overruled stops, not rounds.
-    recorder = Recorder(
-        **{ACT: {"step": 1}, REFLECT: lambda s, n: {"reflect_decision": "finalize"}}
-    )
-    run(recorder, initial_state("q", variant="gated"))
-    assert recorder.visits == [PLAN, ACT, OBSERVE, REFLECT, FINALIZE]
-
-
-def test_the_cap_applies_only_to_the_gated_variant() -> None:
-    # full must keep the behaviour the committed results describe, or the before/after
-    # comparison in REPORT.md compares two different agents.
-    recorder = Recorder(
-        **{
-            ACT: {"step": 1, "act_requested_stop": True},
-            REFLECT: lambda s, n: {"reflect_decision": "continue", "reflect_overrules": 1},
-        }
-    )
-    result = run(recorder, initial_state("q", variant="full"), limit=60)
-    assert result["reflect_overrules"] > Settings().max_reflect_overrules + 1, (
-        "full is expected to go on overruling — that is the behaviour gated fixes"
-    )
-
-
 # --- reducers -------------------------------------------------------------------
 
 
