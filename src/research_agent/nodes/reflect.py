@@ -13,9 +13,17 @@ Kept cheap and gated so it earns its cost:
 - It is skipped on the first iteration; no research question worth asking is
   finished in one hop.
 - `reflect_overrules` counts the times it turned a proposed stop into another
-  round. That number, measured over the eval, is what justifies the node. If it
-  comes out zero, the node gets cut and the README says so — which is why the
-  `no_overrule` variant exists.
+  round. That number, measured over the eval, is what justifies the node — which is
+  why the `no_overrule` variant exists.
+
+**It did not justify itself.** The count came out at 35 over 90 runs, so the node
+fires; what the traces then showed is that firing is not the same as being right.
+A third of all rounds call no tools at all, because `act` said it could answer and
+reflect sent it back to say so again, and one adversarial case repeats that eight
+times. The node was keeping a stop decision in play long after the run had stopped
+producing evidence. The `gated` variant caps the overrules at
+`max_reflect_overrules` for that reason: reflect gets its chance to catch a
+premature stop, but not to argue with the same one indefinitely.
 """
 
 from pydantic import BaseModel, Field
@@ -45,8 +53,11 @@ def reflect_node(
     plan = state.get("plan") or []
     proposed_stop = bool(state.get("act_requested_stop"))
 
-    # Skipped on the first round: one hop is never enough for a research question,
-    # and paying for a coverage check that can only say "keep going" is waste.
+    # Skipped on the first round when act wants to continue: reflect could only agree,
+    # and paying for a coverage check that cannot change the outcome is waste. Note
+    # this is *not* a claim that one hop is never enough — the baseline variant answers
+    # in one hop and outscores this agent. A proposed stop on round one is still
+    # checked, which is why the condition is conjunctive.
     if state.get("step", 0) <= 1 and not proposed_stop:
         return {
             "reflect_decision": "continue",

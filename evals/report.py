@@ -35,6 +35,7 @@ from evals.metrics import (
     wilson_interval,
 )
 from evals.schema import load_human_labels
+from research_agent.prompts import prompt_hash
 
 RESULTS_DIR = Path(__file__).parent / "results"
 REPORT = Path(__file__).parent / "REPORT.md"
@@ -69,6 +70,38 @@ def to_results(payload: dict[str, Any]) -> list[CaseResult]:
         data["tools"] = ToolMetrics(**item["tools"])
         results.append(CaseResult(**data))
     return results
+
+
+def staleness_banner(results: list[CaseResult], variant: str = "full") -> list[str]:
+    """Say so when these results describe prompts the code no longer has.
+
+    Every trace records the hash of the prompt set that produced it, which is the
+    only reason this check is possible at all. Without it a prompt edit would
+    silently invalidate every number in this file and nothing would notice — the
+    results would still regenerate, still be internally consistent, and still be
+    describing an agent that no longer exists.
+    """
+    recorded = {
+        json.loads(path.read_text()).get("config", {}).get("prompt_hash")
+        for case, run in sorted({(r.case_id, r.run) for r in results})
+        if (path := RESULTS_DIR / "traces" / variant / f"{case}-r{run}.json").is_file()
+    }
+    recorded.discard(None)
+    current = prompt_hash()
+    if not recorded or recorded == {current}:
+        return []
+
+    was = ", ".join(sorted(recorded))
+    return [
+        f"> **These results predate the current prompts.** They were produced with "
+        f"`{was}`; the code now ships `{current}`. The prompt set was changed after "
+        "this evaluation ran, to remove an instruction that told the agent to prefer "
+        "several searches and a reflection rubric that ranked stopping early as the "
+        "more common failure — the opposite of what these very runs measured. Every "
+        "number below therefore describes the agent as it was when measured, not as "
+        "it is now, and the comparison that matters is the re-run against this hash.",
+        "",
+    ]
 
 
 def headline(results: list[CaseResult], k: int) -> list[str]:
@@ -651,6 +684,7 @@ def main() -> int:
         "",
         "## Headline",
         "",
+        *staleness_banner(results),
         *headline(results, k),
         "",
         "## By tier",

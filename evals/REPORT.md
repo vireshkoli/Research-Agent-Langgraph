@@ -6,6 +6,8 @@ Every per-run trace is committed under `evals/results/traces/`, so each number b
 
 ## Headline
 
+> **These results predate the current prompts.** They were produced with `sha256:512e8e5d8eaa`; the code now ships `sha256:e2655640140a`. The prompt set was changed after this evaluation ran, to remove an instruction that told the agent to prefer several searches and a reflection rubric that ranked stopping early as the more common failure — the opposite of what these very runs measured. Every number below therefore describes the agent as it was when measured, not as it is now, and the comparison that matters is the re-run against this hash.
+
 | Metric | Value | 95% CI | What it means |
 |---|---|---|---|
 | **pass@1** | **87.8%** | [70–95%] | a single attempt succeeds |

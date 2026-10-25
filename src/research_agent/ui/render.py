@@ -307,7 +307,7 @@ def build() -> gr.Blocks:
 
         with gr.Accordion("Options", open=False):
             variant = gr.Radio(
-                choices=["full", "baseline", "no_overrule"],
+                choices=["full", "baseline", "no_overrule", "gated"],
                 value="full",
                 label="Variant",
                 info="baseline is one search and one answer, with no loop — the "

@@ -51,7 +51,9 @@ JUDGE_TOKENS = (900, 250)
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(prog="evals.run", description=__doc__)
-    parser.add_argument("--variant", choices=["full", "baseline", "no_overrule"], default="full")
+    parser.add_argument(
+        "--variant", choices=["full", "baseline", "no_overrule", "gated"], default="full"
+    )
     parser.add_argument("--runs", type=int, default=3, help="Independent runs per case (k).")
     parser.add_argument("--limit", type=int, help="Only the first N cases.")
     parser.add_argument("--case", action="append", help="Run specific case ids.")

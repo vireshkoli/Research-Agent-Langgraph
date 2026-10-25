@@ -110,6 +110,17 @@ def route_after_reflect(
     if budget_verdict(state, cfg) is not None:
         return FINALIZE
 
+    # gated: reflect may catch a premature stop, but not the same one twice. `act`
+    # sets act_requested_stop when it emits no tool calls, so a run that keeps coming
+    # back here with nothing to do is a fixed point, and nothing else in the graph
+    # notices. Capping the overrules is what the measured failure actually calls for —
+    # not fewer searches, since only 2 of 305 searches ever repeat a query.
+    if (
+        state.get("variant") == "gated"
+        and state.get("reflect_overrules", 0) > cfg.max_reflect_overrules
+    ):
+        return FINALIZE
+
     decision = state.get("reflect_decision")
     if decision == "replan":
         # max_replans is enforced by budget_verdict above, so an over-budget
