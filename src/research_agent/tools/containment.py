@@ -356,12 +356,16 @@ def _seccomp(arch: str) -> None:
     _prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, ctypes.cast(ctypes.pointer(prog), ctypes.c_void_p))
 
 
-def contain(read_paths: list[str]) -> dict[str, object]:
+def contain(read_paths: list[str], require_landlock: bool = True) -> dict[str, object]:
     """Apply every layer this platform supports, strongest first. Call once, in the
     child, before untrusted code runs.
 
-    Raises on Linux if seccomp cannot be installed — running model-written code
-    with neither the network nor exec closed is not a mode this agent offers.
+    Raises on Linux if seccomp cannot be installed, and — unless told otherwise — if
+    Landlock cannot either. Seccomp alone closes the network, so a secret cannot be
+    sent anywhere; but without Landlock the child can still *read* another process's
+    environment and print a key back through stdout in an encoding redaction does
+    not anticipate. On a public endpoint that is not a gap worth accepting, so the
+    default is to refuse to run rather than run half-contained.
     """
     if not sys.platform.startswith("linux"):
         return {"seccomp": False, "landlock": False, "platform": sys.platform}
@@ -372,5 +376,7 @@ def contain(read_paths: list[str]) -> dict[str, object]:
         landlocked = _landlock(read_paths)
     except OSError:
         landlocked = False
+    if require_landlock and not landlocked:
+        raise OSError("Landlock is unavailable on this kernel, and it is required")
     _seccomp(arch)  # raises; deliberately not caught
     return {"seccomp": True, "landlock": landlocked, "platform": f"linux/{arch}"}

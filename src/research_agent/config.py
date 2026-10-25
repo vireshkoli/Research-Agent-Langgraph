@@ -71,6 +71,9 @@ class Settings(BaseSettings):
     # Off everywhere real. Lets fetch_page reach loopback and private addresses, which
     # only a local test fixture server ever needs.
     allow_private_fetch: bool = False
+    # Refuse to run model-written code on a Linux host without Landlock, rather than
+    # run it with reads unconfined. See tools/containment.py for why.
+    code_exec_require_landlock: bool = True
     # Per model call. Two retries at 30s bounds a single call near 90s, inside the
     # 120s run budget, where the SDK default of 600s and two retries did not.
     llm_timeout_seconds: float = 30.0
