@@ -253,7 +253,7 @@ def main(argv: list[str] | None = None) -> int:
     }
 
     out = args.out or RESULTS_DIR / f"{args.variant}.json"
-    out.write_text(json.dumps(payload, indent=2))
+    out.write_text(json.dumps(payload, indent=2) + "\n")
 
     print(f"\n{len(results)} runs in {payload['elapsed_s']}s")
     print(f"agent ${payload['agent_cost_usd']:.4f} + judge ${payload['judge_cost_usd']:.4f}")

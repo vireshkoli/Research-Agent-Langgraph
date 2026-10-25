@@ -154,7 +154,10 @@ def build_trace(
 
 def write_trace(trace: RunTrace, path: Path) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(trace.model_dump_json(indent=2))
+    # Trailing newline so the committed traces are POSIX text files. Without it the
+    # end-of-file pre-commit hook rewrites every trace an eval produces, which turns
+    # a 270-file evaluation into a failed commit and a second staging pass.
+    path.write_text(trace.model_dump_json(indent=2) + "\n")
     return path
 
 
