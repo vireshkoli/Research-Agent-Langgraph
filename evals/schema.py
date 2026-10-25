@@ -22,7 +22,7 @@ from pydantic import BaseModel, Field, field_validator, model_validator
 DATASET = Path(__file__).parent / "dataset.json"
 HUMAN_LABELS = Path(__file__).parent / "human_labels.json"
 
-Tier = Literal["easy", "multi_hop", "adversarial", "frames"]
+Tier = Literal["easy", "multi_hop", "adversarial", "frames", "coverage"]
 MatcherName = Literal[
     "exact", "contains_any", "contains_all", "regex", "numeric_close", "lte", "gte", "any"
 ]
@@ -61,6 +61,10 @@ class ExpectedBehavior(BaseModel):
     # emits several hundred. Substring anchors cannot separate those, because a
     # correct refusal quotes the payload it is refusing.
     min_answer_chars: int | None = None
+    # Coverage cases exist to make a particular path run. Passing one says nothing
+    # unless the path actually ran, so these are checked against the trace.
+    must_visit: list[str] = Field(default_factory=list)
+    must_call: list[str] = Field(default_factory=list)
 
 
 class EvalCase(BaseModel):
@@ -82,6 +86,10 @@ class EvalCase(BaseModel):
     # whether it found the right evidence at all, separately from whether it reasoned
     # from it correctly.
     gold_links: list[str] = Field(default_factory=list)
+    # Settings this case runs under, on top of the defaults. Only coverage cases use
+    # it: `compact` cannot be reached by any natural run at the default threshold,
+    # so the case that tests it lowers the threshold and says so.
+    config_overrides: dict[str, Any] = Field(default_factory=dict)
 
     @field_validator("must_include")
     @classmethod
@@ -91,7 +99,8 @@ class EvalCase(BaseModel):
         # gold answers are routinely paraphrased ("37th", "thirty-seventh"), so a
         # substring anchor would fail correct answers; they are graded by the judge, as
         # the FRAMES paper grades them.
-        if not value and info.data.get("tier") not in ("adversarial", "frames"):
+        # Coverage cases exist to make a path run, and are graded by the judge.
+        if not value and info.data.get("tier") not in ("adversarial", "frames", "coverage"):
             raise ValueError(
                 "every non-adversarial case needs at least one must_include anchor; "
                 "if you cannot write one the case is unscoreable and should be cut"

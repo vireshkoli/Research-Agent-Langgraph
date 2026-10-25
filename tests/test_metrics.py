@@ -555,3 +555,73 @@ def test_every_committed_label_records_what_it_graded() -> None:
     assert records, "the committed labels should load"
     missing = [f"{r.case_id}-r{r.run}" for r in records if not r.answer_sha256]
     assert not missing, f"labels with no provenance: {missing[:5]}"
+
+
+# --- coverage requirements ----------------------------------------------------------
+
+
+def _trace(nodes: list[str], tools: list[str] = ()) -> object:
+    from types import SimpleNamespace
+
+    steps = [{"node": node, "tool_calls": []} for node in nodes]
+    if tools:
+        steps.append({"node": "act", "tool_calls": [{"name": tool} for tool in tools]})
+    return SimpleNamespace(
+        answer="an answer [S1]",
+        citations=["S1"],
+        steps=steps,
+        outcome=SimpleNamespace(early_exit_reason=None),
+    )
+
+
+def _coverage_case(**behaviour: object) -> EvalCase:
+    return EvalCase(
+        id="cov",
+        tier="coverage",
+        question="q",
+        reference_answer="r",
+        must_include=[],
+        expected_behavior=behaviour,
+    )
+
+
+def test_a_coverage_case_fails_if_its_path_never_ran() -> None:
+    from evals.metrics import behavior_satisfied
+
+    case = _coverage_case(must_visit=["compact"])
+    assert behavior_satisfied(case, _trace(["plan", "act", "observe", "compact", "finalize"]))[0]
+    ok, reasons = behavior_satisfied(case, _trace(["plan", "act", "observe", "finalize"]))
+    assert not ok and "compact" in reasons[0]
+
+
+def test_replan_means_plan_ran_a_second_time() -> None:
+    # replan is a route back to `plan`, not a node of its own.
+    from evals.metrics import behavior_satisfied
+
+    case = _coverage_case(must_visit=["replan"])
+    assert not behavior_satisfied(case, _trace(["plan", "act", "observe", "reflect", "finalize"]))[
+        0
+    ]
+    assert behavior_satisfied(case, _trace(["plan", "act", "reflect", "plan", "act", "finalize"]))[
+        0
+    ]
+
+
+def test_a_coverage_case_fails_if_its_tool_was_never_called() -> None:
+    from evals.metrics import behavior_satisfied
+
+    case = _coverage_case(must_call=["code_execution"])
+    assert behavior_satisfied(case, _trace(["plan"], tools=["code_execution"]))[0]
+    assert not behavior_satisfied(case, _trace(["plan"], tools=["calculator"]))[0]
+
+
+def test_the_committed_coverage_cases_validate() -> None:
+    from pathlib import Path
+
+    from evals.schema import load_cases
+
+    cases = load_cases(Path(__file__).parents[1] / "evals" / "coverage.json")
+    exercised = {n for c in cases for n in c.expected_behavior.must_visit} | {
+        t for c in cases for t in c.expected_behavior.must_call
+    }
+    assert exercised == {"compact", "replan", "code_execution", "file_ops"}

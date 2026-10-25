@@ -45,6 +45,7 @@ from research_agent.llm import CostTracker, cost_usd
 from research_agent.trace import RunTrace, write_trace
 
 RESULTS_DIR = Path(__file__).parent / "results"
+COVERAGE = Path(__file__).parent / "coverage.json"
 
 # Measured from real runs during development, used only for the pre-flight estimate.
 TOKENS_PER_RUN = (11_000, 1_000)  # input, output
@@ -56,9 +57,12 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--variant", choices=["full", "baseline", "no_overrule"], default="full")
     parser.add_argument(
         "--dataset",
-        choices=["home", "frames"],
+        choices=["home", "frames", "coverage"],
         default="home",
-        help="home: the 30 hand-written cases. frames: the pre-registered FRAMES sample.",
+        help=(
+            "home: the 30 hand-written cases. frames: the pre-registered FRAMES sample. "
+            "coverage: cases that deliberately exercise paths no natural run reaches."
+        ),
     )
     parser.add_argument(
         "--search-backend",
@@ -225,7 +229,12 @@ def main(argv: list[str] | None = None) -> int:
     if args.model:
         cfg = cfg.model_copy(update={"agent_model": args.model})
 
-    cases = select(frames.load() if args.dataset == "frames" else load_cases(), args)
+    loaders = {
+        "home": load_cases,
+        "frames": frames.load,
+        "coverage": lambda: load_cases(COVERAGE),
+    }
+    cases = select(loaders[args.dataset](), args)
     if not cases:
         print("no cases selected")
         return 1
@@ -303,7 +312,12 @@ def main(argv: list[str] | None = None) -> int:
                 if (case.id, run_index) in done:
                     continue
 
-                trace = run_agent(case.question, variant=args.variant, cfg=cfg)
+                # A coverage case may lower a threshold to reach a path no natural run
+                # does; it says so in its own definition, and only it is affected.
+                case_cfg = (
+                    cfg.model_copy(update=case.config_overrides) if case.config_overrides else cfg
+                )
+                trace = run_agent(case.question, variant=args.variant, cfg=case_cfg)
                 write_trace(trace, traces_dir / f"{case.id}-r{run_index}.json")
                 judged_before = judge_tracker.total_cost_usd
                 result = score(case, trace, run_index, args, judge_tracker)

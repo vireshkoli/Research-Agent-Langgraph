@@ -315,6 +315,129 @@ def loop_efficiency_table(results: list[CaseResult], variant: str = "full") -> l
     return lines
 
 
+NODES = ("plan", "act", "observe", "compact", "reflect", "finalize")
+ROUTES = {
+    "observe": ("reflect", "compact", "finalize"),
+    "reflect": ("act", "plan", "finalize"),
+}
+
+
+def coverage_table(results: list[CaseResult], variant: str = "full") -> list[str]:
+    """Which parts of the graph the evaluation actually exercised.
+
+    A node the evaluation never reaches is a node no number in this report says
+    anything about — it could be broken and every figure here would look the same.
+    `compact` was in exactly that position for the project's whole first release:
+    zero firings in 270 runs, which nothing flagged until someone counted. This
+    counts, every time the report is generated.
+    """
+    from research_agent.tools.registry import REGISTRY
+
+    node_runs = {node: 0 for node in NODES}
+    branch = {(src, dst): 0 for src, targets in ROUTES.items() for dst in targets}
+    tool_calls = {name: 0 for name in REGISTRY}
+    runs = 0
+    for case, run in sorted({(r.case_id, r.run) for r in results}):
+        path = RESULTS_DIR / "traces" / variant / f"{case}-r{run}.json"
+        if not path.is_file():
+            continue
+        runs += 1
+        steps = [step.get("node") for step in json.loads(path.read_text()).get("steps") or []]
+        for node in set(steps):
+            if node in node_runs:
+                node_runs[node] += 1
+        for here, after in zip(steps, steps[1:], strict=False):
+            if (here, after) in branch:
+                branch[(here, after)] += 1
+        for step in json.loads(path.read_text()).get("steps") or []:
+            for observation in step.get("observations") or []:
+                if observation.get("tool") in tool_calls:
+                    tool_calls[observation["tool"]] += 1
+
+    if not runs:
+        return []
+
+    def flag(count: int) -> str:
+        return " **— never exercised**" if count == 0 else ""
+
+    lines = [
+        f"Counted from the {runs} `{variant}` traces. Anything marked never exercised is "
+        "something no number in this report speaks for.",
+        "",
+        "| Node | Runs that reached it |",
+        "|---|---|",
+    ]
+    lines += [f"| `{node}` | {count}/{runs}{flag(count)} |" for node, count in node_runs.items()]
+    lines += ["", "| Route taken | Times |", "|---|---|"]
+    lines += [
+        f"| `{src}` → `{dst}` | {count}{flag(count)} |" for (src, dst), count in branch.items()
+    ]
+    lines += ["", "| Tool | Calls |", "|---|---|"]
+    lines += [f"| `{name}` | {count}{flag(count)} |" for name, count in tool_calls.items()]
+    unused = [n for n, c in node_runs.items() if c == 0] + [
+        t for t, c in tool_calls.items() if c == 0
+    ]
+    if unused:
+        lines += [
+            "",
+            f"Never exercised by this evaluation: {', '.join(f'`{u}`' for u in unused)}. "
+            "The separate coverage suite runs each of them deliberately, and is reported "
+            "apart from these quality numbers so it cannot move them.",
+        ]
+    return lines
+
+
+def coverage_suite() -> list[str]:
+    """Results of the cases that exist to make an unexercised path run.
+
+    Reported apart from every quality number, because these cases are written to
+    reach a path rather than to sample the questions anyone would ask. Two questions
+    per case, kept separate: did the path run, and was the answer right.
+    """
+    path = RESULTS_DIR / "coverage" / "full.json"
+    if not path.is_file():
+        return ["_The coverage suite has not been run yet._"]
+    results = to_results(json.loads(path.read_text()))
+    from evals.schema import load_cases
+
+    cases = {case.id: case for case in load_cases(Path(__file__).parent / "coverage.json")}
+
+    lines = [
+        "| Case | Exercises | Path ran | Answer correct | Notes |",
+        "|---|---|---|---|---|",
+    ]
+    for case_id in sorted({r.case_id for r in results}):
+        runs = [r for r in results if r.case_id == case_id]
+        case = cases.get(case_id)
+        target = (
+            ", ".join(
+                f"`{x}`"
+                for x in (case.expected_behavior.must_visit + case.expected_behavior.must_call)
+            )
+            if case
+            else "?"
+        )
+        ran = sum(
+            not any("never reached" in why or "never called" in why for why in r.reasons)
+            for r in runs
+        )
+        notes = []
+        if case and case.config_overrides:
+            notes.append(
+                "runs with " + ", ".join(f"`{k}={v}`" for k, v in case.config_overrides.items())
+            )
+        resolutions = [r.citation_resolution for r in runs if r.citation_resolution is not None]
+        if case and "compact" in case.expected_behavior.must_visit and resolutions:
+            notes.append(f"citations resolved after compaction: {mean(resolutions) * 100:.0f}%")
+        if case and "best-effort" in case.tags:
+            notes.append("cannot be forced: the model decides whether to replan")
+        lines.append(
+            f"| `{case_id}` | {target} | {ran}/{len(runs)} | "
+            f"{sum(r.success for r in runs)}/{len(runs)} | {'; '.join(notes) or '—'} |"
+        )
+    return lines
+
+
 def cost_table(results: list[CaseResult], payload: dict[str, Any]) -> list[str]:
     costs = [r.cost_usd for r in results]
     latencies = [r.latency_ms / 1000 for r in results]
@@ -990,6 +1113,14 @@ def main() -> int:
         "",
         *tool_table(results),
         *_tool_caveat(results),
+        "",
+        "## Graph coverage",
+        "",
+        *coverage_table(results),
+        "",
+        "### The coverage suite",
+        "",
+        *coverage_suite(),
         "",
         "## Where the rounds go",
         "",

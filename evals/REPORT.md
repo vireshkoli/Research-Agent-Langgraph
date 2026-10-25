@@ -38,6 +38,42 @@ Every per-run trace is committed under `evals/results/traces/`, so each number b
 
 The order score is computed on the 3 run(s) that declare a `tool_order`, so it is a check that nothing is out of sequence on those cases rather than a rate with any sampling behind it.
 
+## Graph coverage
+
+Counted from the 90 `full` traces. Anything marked never exercised is something no number in this report speaks for.
+
+| Node | Runs that reached it |
+|---|---|
+| `plan` | 90/90 |
+| `act` | 90/90 |
+| `observe` | 90/90 |
+| `compact` | 0/90 **— never exercised** |
+| `reflect` | 87/90 |
+| `finalize` | 90/90 |
+
+| Route taken | Times |
+|---|---|
+| `observe` → `reflect` | 194 |
+| `observe` → `compact` | 0 **— never exercised** |
+| `observe` → `finalize` | 16 |
+| `reflect` → `act` | 119 |
+| `reflect` → `plan` | 1 |
+| `reflect` → `finalize` | 74 |
+
+| Tool | Calls |
+|---|---|
+| `web_search` | 328 |
+| `fetch_page` | 49 |
+| `calculator` | 16 |
+| `code_execution` | 0 **— never exercised** |
+| `file_ops` | 0 **— never exercised** |
+
+Never exercised by this evaluation: `compact`, `code_execution`, `file_ops`. The separate coverage suite runs each of them deliberately, and is reported apart from these quality numbers so it cannot move them.
+
+### The coverage suite
+
+_The coverage suite has not been run yet._
+
 ## Where the rounds go
 
 | | Count | Share |

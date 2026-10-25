@@ -238,6 +238,17 @@ def behavior_satisfied(case: EvalCase, trace: Any) -> tuple[bool, list[str]]:
             f"cited {len(trace.citations)} sources, expected at least {expected.min_citations}"
         )
 
+    nodes = [step.get("node") for step in trace.steps]
+    for node in expected.must_visit:
+        # "replan" is a route, not a node: it means plan ran a second time.
+        reached = nodes.count("plan") >= 2 if node == "replan" else node in nodes
+        if not reached:
+            reasons.append(f"never reached {node!r}, which this case exists to exercise")
+    called = {call["name"] for step in trace.steps for call in (step.get("tool_calls") or [])}
+    for tool in expected.must_call:
+        if tool not in called:
+            reasons.append(f"never called {tool!r}, which this case exists to exercise")
+
     reason = trace.outcome.early_exit_reason
     if expected.allowed_early_exit_reasons and reason not in expected.allowed_early_exit_reasons:
         reasons.append(f"early exit reason {reason!r} not in the allowed set")

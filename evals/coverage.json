@@ -1,0 +1,82 @@
+[
+  {
+    "id": "cov-compact",
+    "tier": "coverage",
+    "question": "Compare the city populations of the capitals of Australia, Canada and New Zealand, and say which of the three is largest.",
+    "reference_answer": "Ottawa is the largest of the three (roughly one million), ahead of Canberra (roughly 450,000) and Wellington (roughly 215,000).",
+    "must_include": [
+      "Ottawa"
+    ],
+    "judge_rubric_notes": "Coverage case. Correct if it identifies Ottawa as the largest of the three capitals; exact population figures may vary by source and year.",
+    "expected_behavior": {
+      "must_visit": [
+        "compact"
+      ]
+    },
+    "config_overrides": {
+      "compact_threshold_tokens": 2500
+    },
+    "tags": [
+      "coverage",
+      "compact"
+    ]
+  },
+  {
+    "id": "cov-replan",
+    "tier": "coverage",
+    "question": "Which film won the Academy Award for Best Picture in the year the Eiffel Tower opened to the public?",
+    "reference_answer": "None. The Eiffel Tower opened in 1889, and the first Academy Awards were held in 1929, so no film won Best Picture that year.",
+    "must_include": [
+      "1889"
+    ],
+    "judge_rubric_notes": "Coverage case with a false premise. Correct only if it says no Academy Award existed in 1889; naming any film is INCORRECT.",
+    "expected_behavior": {
+      "must_visit": [
+        "replan"
+      ]
+    },
+    "tags": [
+      "coverage",
+      "replan",
+      "best-effort"
+    ]
+  },
+  {
+    "id": "cov-code",
+    "tier": "coverage",
+    "question": "Write and run a short Python program to count how many prime numbers are below 10,000, and report the count.",
+    "reference_answer": "1,229 primes are below 10,000.",
+    "must_include": [],
+    "judge_rubric_notes": "Coverage case. Correct if it reports 1,229 (any thousands separator).",
+    "expected_behavior": {
+      "must_call": [
+        "code_execution"
+      ],
+      "must_cite": false,
+      "min_citations": 0
+    },
+    "tags": [
+      "coverage",
+      "code_execution"
+    ]
+  },
+  {
+    "id": "cov-file",
+    "tier": "coverage",
+    "question": "Find the year the Eiffel Tower was completed, save that year to a file named eiffel.txt in your workspace, then read the file back and report what it contains.",
+    "reference_answer": "The file contains 1889, the year the Eiffel Tower was completed.",
+    "must_include": [
+      "1889"
+    ],
+    "judge_rubric_notes": "Coverage case. Correct if it reports that the saved file contains 1889.",
+    "expected_behavior": {
+      "must_call": [
+        "file_ops"
+      ]
+    },
+    "tags": [
+      "coverage",
+      "file_ops"
+    ]
+  }
+]
