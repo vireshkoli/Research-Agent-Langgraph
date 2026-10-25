@@ -31,9 +31,11 @@ spike:
 eval-dry:
 	uv run python -m evals.run --dry-run
 
-# The official evaluation. Costs real money — see README before running.
+# The official evaluation. Costs real money — see README before running. The search
+# engine must be pinned, and every variant being compared must use the same one.
+SEARCH_BACKEND ?= tavily
 eval:
-	uv run python -m evals.run --variant full --runs 3 --no-cache
+	uv run python -m evals.run --variant full --runs 3 --no-cache --search-backend $(SEARCH_BACKEND)
 
 # Regenerates evals/REPORT.md from committed results. Must be a pure function
 # of evals/results/ — CI asserts `git diff --exit-code` after running this.

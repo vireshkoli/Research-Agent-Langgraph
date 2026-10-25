@@ -2,6 +2,7 @@
 
 from functools import lru_cache
 from pathlib import Path
+from typing import Literal
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -71,6 +72,10 @@ class Settings(BaseSettings):
     # Off everywhere real. Lets fetch_page reach loopback and private addresses, which
     # only a local test fixture server ever needs.
     allow_private_fetch: bool = False
+    # Which search engine serves web_search. "auto" falls back from Tavily to DuckDuckGo
+    # and is for the live demo; an evaluation must pin one, so every variant it
+    # compares searched the same web the same way.
+    search_backend: Literal["auto", "tavily", "ddgs"] = "auto"
     # Refuse to run model-written code on a Linux host without Landlock, rather than
     # run it with reads unconfined. See tools/containment.py for why.
     code_exec_require_landlock: bool = True

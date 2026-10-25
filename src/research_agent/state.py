@@ -143,6 +143,10 @@ class ResearchState(TypedDict, total=False):
     # let any node that forgets to add prior spend silently reset the budget
     tool_calls_by_type: Annotated[dict[str, int], merge_counts]
     search_credits: Annotated[int, operator.add]
+    # Which search engine served each web_search call. An evaluation comparing two
+    # variants is only comparing agents if both searched the same way; this is what
+    # lets a report check that rather than assume it.
+    search_backends: Annotated[dict[str, int], merge_counts]
     llm_calls: Annotated[list[dict[str, Any]], operator.add]
     replans: Annotated[int, operator.add]
     reflections: Annotated[int, operator.add]
@@ -191,6 +195,7 @@ def initial_state(question: str, variant: Variant = "full") -> ResearchState:
         spend_usd=0.0,
         tool_calls_by_type={},
         search_credits=0,
+        search_backends={},
         llm_calls=[],
         replans=0,
         reflections=0,

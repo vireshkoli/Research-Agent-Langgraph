@@ -20,6 +20,7 @@ straight off the trace and needs no judge at all.
 
 import argparse
 import json
+import os
 import sys
 import time
 from dataclasses import asdict
@@ -52,6 +53,11 @@ JUDGE_TOKENS = (900, 250)
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(prog="evals.run", description=__doc__)
     parser.add_argument("--variant", choices=["full", "baseline", "no_overrule"], default="full")
+    parser.add_argument(
+        "--search-backend",
+        choices=["tavily", "ddgs"],
+        help="Pin the search engine. Required for a real run: see main().",
+    )
     parser.add_argument("--runs", type=int, default=3, help="Independent runs per case (k).")
     parser.add_argument("--limit", type=int, help="Only the first N cases.")
     parser.add_argument("--case", action="append", help="Run specific case ids.")
@@ -67,6 +73,33 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         "--resume", action="store_true", help="Skip runs already in the checkpoint."
     )
     return parser.parse_args(argv)
+
+
+def tavily_quota_problem() -> str | None:
+    """Why a Tavily-pinned run should not start, or None if it may. Costs no credit."""
+    import httpx
+
+    from research_agent.llm import _load_env_file
+
+    _load_env_file()  # the key lives in .env, which is otherwise loaded lazily
+    key = os.environ.get("TAVILY_API_KEY")
+    if not key:
+        return "TAVILY_API_KEY is not set"
+    try:
+        account = httpx.get(
+            "https://api.tavily.com/usage",
+            headers={"Authorization": f"Bearer {key}"},
+            timeout=20,
+        ).json()["account"]
+    except Exception as exc:  # noqa: BLE001 — a failed check is reported, not fatal
+        return f"could not read the Tavily quota ({type(exc).__name__}); check it by hand"
+    used, limit = account.get("plan_usage") or 0, account.get("plan_limit")
+    if limit is not None and used >= limit:
+        return (
+            f"Tavily's quota is exhausted ({used}/{limit} this month). Wait for it to "
+            "reset, or pin --search-backend ddgs for every variant being compared."
+        )
+    return None
 
 
 def checkpoint_path(variant: str) -> Path:
@@ -184,9 +217,29 @@ def main(argv: list[str] | None = None) -> int:
         print(f"{spend.summary()}")
         return 0
 
-    if args.no_cache:
-        import os
+    # An unpinned run falls back from Tavily to DuckDuckGo when the quota runs out,
+    # which is right for the demo and wrong here: it happened mid-sweep, so later
+    # variants ran on a different search engine from earlier ones and every number
+    # still looked plausible. A real evaluation must say which engine it used.
+    if args.search_backend is None:
+        print(
+            "refusing to run: pin the search engine with --search-backend tavily|ddgs. "
+            "Unpinned, a quota running out mid-run silently switches engines and "
+            "confounds every comparison that crosses the switch.",
+            file=sys.stderr,
+        )
+        return 2
+    os.environ["RA_SEARCH_BACKEND"] = args.search_backend
+    settings.cache_clear()
+    cfg = (
+        settings() if not args.model else settings().model_copy(update={"agent_model": args.model})
+    )
+    if args.search_backend == "tavily" and (reason := tavily_quota_problem()):
+        print(f"refusing to run: {reason}", file=sys.stderr)
+        return 2
+    print(f"search engine: {args.search_backend} (pinned, no fallback)")
 
+    if args.no_cache:
         os.environ["RA_LLM_CACHE"] = "off"
         print("cassettes: OFF (runs must be independent for pass^k to mean anything)")
 
@@ -244,6 +297,7 @@ def main(argv: list[str] | None = None) -> int:
         "judge_model": None if args.no_judge else cfg.judge_model,
         "judge_samples": 0 if args.no_judge else args.judge_samples,
         "cache": "off" if args.no_cache else "default",
+        "search_backend": args.search_backend,
         "elapsed_s": round(time.perf_counter() - started, 1),
         "agent_cost_usd": round(sum(r.cost_usd for r in results), 6),
         "judge_cost_usd": round(judge_tracker.total_cost_usd, 6),

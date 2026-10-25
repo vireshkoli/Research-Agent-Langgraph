@@ -21,6 +21,11 @@ on:
         description: "Run the LLM judge (off = deterministic metrics only)"
         type: boolean
         default: true
+      search_backend:
+        description: "Search engine, pinned. Every variant being compared must use the same one."
+        type: choice
+        options: [tavily, ddgs]
+        default: tavily
 
 jobs:
   evaluate:
@@ -55,6 +60,7 @@ jobs:
             --runs ${{ inputs.runs }} \
             ${{ inputs.limit && format('--limit {0}', inputs.limit) || '' }} \
             ${{ inputs.judge && '' || '--no-judge' }} \
+            --search-backend ${{ inputs.search_backend }} \
             --no-cache
 
       - name: Regenerate the report

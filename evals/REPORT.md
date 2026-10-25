@@ -101,29 +101,21 @@ _Until then, every judge-derived figure in this report is unvalidated._
 
 ### Against a single round of search
 
-Compared on the **90 runs both variants completed** (adversarial, easy, multi_hop).
+> **Not evidence: these variants searched with different engines.** The full agent sent 0% of its searches somewhere other than Tavily; `baseline` sent 28%. Any difference below mixes the agent with the search engine, so no paired statistic is computed. Re-run both with the same `--search-backend`.
 
-| Variant | pass@1 | Mean steps | Mean cost |
-|---|---|---|---|
-| baseline (one round of parallel search, then answer) | 93.3% | 1.0 | $0.00082 |
-| **full agent** | **96.7%** | 2.3 | $0.00240 |
-
-**Paired comparison.** The full agent leads `baseline` by 3.3 points of pass@1, with a 95% bootstrap interval over cases of [-1.1, +7.8] points. In 11.6% of resamples the full agent was not ahead. McNemar's exact test on the 5 discordant (case, run) pairs — 4 where only the full agent succeeded, 1 where only `baseline` did — gives p = 0.375.
-
-**Unique wins.** The full agent reliably solves **3** cases that `baseline` does not; `baseline` reliably solves **1** that the full agent does not. The richer variant does win ground of its own here, so the extra cost buys something — the question is whether it buys enough.
+| Variant | pass@1 | searches off Tavily |
+|---|---|---|
+| baseline (one round of parallel search, then answer) | 93.3% | 28% |
+| full agent | 96.7% | 0% |
 
 ### Does letting reflect overrule a stop earn its cost?
 
-Compared on the **90 runs both variants completed** (adversarial, easy, multi_hop).
+> **Not evidence: these variants searched with different engines.** The full agent sent 0% of its searches somewhere other than Tavily; `no_overrule` sent 100%. Any difference below mixes the agent with the search engine, so no paired statistic is computed. Re-run both with the same `--search-backend`.
 
-| Variant | pass@1 | Mean steps | Mean cost |
-|---|---|---|---|
-| no_overrule (act's decision to stop is final) | 90.0% | 2.6 | $0.00233 |
-| **full agent** | **96.7%** | 2.3 | $0.00240 |
-
-**Paired comparison.** The full agent leads `no_overrule` by 6.7 points of pass@1, with a 95% bootstrap interval over cases of [+0.0, +14.4] points. In 3.3% of resamples the full agent was not ahead. McNemar's exact test on the 8 discordant (case, run) pairs — 7 where only the full agent succeeded, 1 where only `no_overrule` did — gives p = 0.070.
-
-**Unique wins.** The full agent reliably solves **4** cases that `no_overrule` does not; `no_overrule` reliably solves **1** that the full agent does not. The richer variant does win ground of its own here, so the extra cost buys something — the question is whether it buys enough.
+| Variant | pass@1 | searches off Tavily |
+|---|---|---|
+| no_overrule (act's decision to stop is final) | 90.0% | 100% |
+| full agent | 96.7% | 0% |
 
 
 ## Reading these numbers honestly

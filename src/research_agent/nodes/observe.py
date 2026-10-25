@@ -54,6 +54,7 @@ def observe_node(state: ResearchState, cfg: Settings | None = None) -> ResearchS
     new_sources: list[Source] = []
     messages: list[dict[str, Any]] = []
     counts: dict[str, int] = {}
+    backends: dict[str, int] = {}
     credits = 0
     failures = 0
 
@@ -92,6 +93,9 @@ def observe_node(state: ResearchState, cfg: Settings | None = None) -> ResearchS
         result, latency_ms = executed[call["call_id"]]
         counts[call["name"]] = counts.get(call["name"], 0) + 1
         credits += int(result.meta.get("credits", 0))
+        if call["name"] == "web_search":
+            served_by = str(result.meta.get("backend") or "unknown")
+            backends[served_by] = backends.get(served_by, 0) + 1
         failures = failures + 1 if not result.ok else 0
 
         source_ids: list[str] = []
@@ -144,6 +148,7 @@ def observe_node(state: ResearchState, cfg: Settings | None = None) -> ResearchS
         "pending_calls": [],  # drained; this key is reducer-less so it empties
         "tool_calls_by_type": counts,
         "search_credits": credits,
+        "search_backends": backends,
         # Reducer-less on purpose: a success must reset the streak to zero, which
         # an additive reducer could never do. A round in which every call was
         # refused ran nothing, so it neither extends the streak nor resets it —

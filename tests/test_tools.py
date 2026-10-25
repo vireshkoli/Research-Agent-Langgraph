@@ -451,3 +451,73 @@ def test_the_body_is_capped_while_it_streams(monkeypatch: pytest.MonkeyPatch) ->
 
     assert result.ok
     assert result.meta["bytes"] <= MAX_PAGE_BYTES
+
+
+# --- a pinned search engine never falls back ----------------------------------------
+#
+# The fallback is right for the demo and wrong for an evaluation: when Tavily's quota
+# ran out mid-sweep, later variants silently ran on DuckDuckGo while earlier ones had
+# used Tavily, and every comparison across the switch measured the search engine.
+
+
+def _pin(monkeypatch: pytest.MonkeyPatch, backend: str) -> None:
+    from research_agent.config import settings
+
+    monkeypatch.setenv("RA_SEARCH_BACKEND", backend)
+    settings.cache_clear()
+    web_search._reset_circuit()
+
+
+def test_a_tavily_pinned_search_fails_instead_of_falling_back(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from research_agent.config import settings
+
+    _pin(monkeypatch, "tavily")
+    fell_back: list[str] = []
+
+    def exhausted(*args: Any, **kwargs: Any) -> Any:
+        raise web_search.QuotaExhausted("out of credits")
+
+    monkeypatch.setattr(web_search, "_search_tavily", exhausted)
+    monkeypatch.setattr(
+        web_search, "_search_ddgs", lambda *a, **k: fell_back.append("ddgs") or fake_payload("x")
+    )
+    result = web_search.web_search("anything")
+    settings.cache_clear()
+
+    assert not result.ok and result.meta.get("backend") == "none"
+    assert fell_back == [], "a pinned run must never reach the fallback"
+
+
+def test_a_ddgs_pinned_search_never_spends_a_tavily_credit(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from research_agent.config import settings
+
+    _pin(monkeypatch, "ddgs")
+    monkeypatch.setattr(
+        web_search, "_search_tavily", lambda *a, **k: pytest.fail("Tavily must not be called")
+    )
+    monkeypatch.setattr(web_search, "_search_ddgs", lambda *a, **k: fake_payload("DDG hit"))
+    result = web_search.web_search("anything")
+    settings.cache_clear()
+
+    assert result.ok and result.meta == {"backend": "ddgs", "credits": 0}
+
+
+def test_an_evaluation_refuses_to_run_with_an_unpinned_search_engine() -> None:
+    from evals.run import main
+
+    assert main(["--variant", "full", "--runs", "1", "--case", "easy-001", "--no-cache"]) == 2
+
+
+def test_the_report_reads_search_engines_from_old_and_new_traces() -> None:
+    from evals.report import _off_tavily
+
+    assert _off_tavily({"tavily": 10}) == 0.0
+    assert _off_tavily({"tavily": 6, "other": 4}) == pytest.approx(0.4), "legacy credit-derived mix"
+    assert _off_tavily({"ddgs": 9, "none": 1}) == 1.0, (
+        "a DuckDuckGo-pinned run is entirely off Tavily"
+    )
+    assert _off_tavily({}) == 0.0

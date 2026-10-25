@@ -142,6 +142,7 @@ def build_trace(
             "totals": totals.model_dump(),
             "by_purpose": by_purpose,
             "search_credits": state.get("search_credits", 0),
+            "search_backends": dict(state.get("search_backends", {})),
             "steps": state.get("step", 0),
         },
         timings_ms={"total": elapsed_ms},

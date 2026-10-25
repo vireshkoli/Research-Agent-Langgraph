@@ -65,49 +65,30 @@ test catches:
   measurement is quoted in the prompt, and a proposed stop puts the burden on reflect to name the
   specific missing evidence.
 
-**Pass two, after fixing those two lines and changing nothing else:**
+**Pass two, after fixing those two lines and changing nothing else**, the full agent scored **96.7%
+pass@1 and 93.3% pass^3**, on the same search engine as pass one. Two caveats travel with that
+number: it was measured two and a half months after pass one, so web drift sits inside the
+87.8% → 96.7% change alongside the prompt fix; and 30 cases cannot tell it apart from luck to within
+roughly ±8 points.
 
-| Tier | Full agent | Baseline | `no_overrule` |
-|---|---|---|---|
-| easy | 100.0% | 100.0% | 100.0% |
-| multi-hop | **93.9%** | 81.8% | 81.8% |
-| adversarial | 95.2% | **100.0%** | 85.7% |
-| **overall pass@1** | **96.7%** | 93.3% | 90.0% |
-| pass^3 | **93.3%** | 86.7% | 83.3% |
-| mean steps | 2.33 | 1.00 | 2.56 |
-| mean cost | $0.0024 | $0.0008 | $0.0023 |
+**The pass-two comparison against the baseline is withdrawn.** Tavily's free tier allows 1,000
+searches a month, and it ran out partway through the re-run. The full agent used Tavily for all 328
+of its searches; the baseline fell back to DuckDuckGo for 80 of its 287, and the `no_overrule`
+ablation for all 389. A comparison between them measures two search engines as much as two agent
+designs. An earlier version of this README drew conclusions from it — that the loop now beats the
+baseline, and that a half-finished investigation scores worst on adversarial questions — and
+neither survives. Pass one is unaffected: every variant there used Tavily for 99% or more of its
+searches. The comparison that settles the question is the evaluation described under
+[What I'd do next](#what-id-do-next), run on a single search engine from end to end.
 
-The loop now beats the baseline it used to lose to. **That difference is not significant** —
-+3.3 points, 95% paired interval [−1.1, +7.8], McNemar p = 0.375 — and the baseline remains three
-times cheaper and still perfect on the adversarial tier, where it cannot be talked out of stopping.
-**What the prompt fix changed in the stop decision — and what it did not.** On answerable questions
-`reflect` stopped overruling altogether: **14 overrules on easy and multi-hop cases became 0.** On
-adversarial cases it did not improve at all — **21 became 26**, and `adv-004` still spins eight
-rounds in every run. Overruled stops fell from 37 to 27 overall. The pattern is the diagnosis: on a
-question that cannot be answered, `reflect` can always name a missing piece, because the missing
-piece does not exist. What the fix cannot explain is the accuracy gain itself. Pass@1 rose from 87.8%
-to 96.7%, but the two passes are two and a half months apart, so web drift sits inside that
-difference alongside the prompt change. What is defensible is narrow: **with the corrected prompts
-the loop is no longer worse than one round of search, and its stop decision still fails on
-unanswerable questions.**
-
-**The `no_overrule` ablation loses, but not for the reason its name suggests.** It makes act's stop
-decision final and scores **90.0% against the full agent's 96.7%** — +6.7 points, paired interval
-[+0.0, +14.4], McNemar p = 0.070 — and in pass one this same ablation *beat* the full agent. It is
-tempting to read that as "reflect's overrules earn their place". The traces do not support it:
-**all 26 overrules in the full run come from three adversarial cases** (21 from `adv-004` alone,
-which is the spinning case), and **in 6 of the 7 runs where the full agent wins and `no_overrule`
-loses, reflect overruled nothing.** Overrules cannot explain wins in runs where none happened. What
-`no_overrule` also removes is reflect's final pass before `finalize`, and the ablation does not
-separate the two — so which mechanism carries the gap is not established, and at p = 0.070 the gap
-itself is not settled either.
-
-**One comparison here is confounded and should not be read as a clean before/after.** The 87.8% was
-measured in August and the 96.7% today, so two and a half months of web drift sit inside it
-alongside the prompt change. The three-way comparison in the table above was run back to back
-against one prompt set and is sound; the across-time one is indicative only. Every trace records
-the hash of the prompts that produced it, and `evals/REPORT.md` prints a banner if the committed
-results ever stop matching the code.
+**What the prompt fix changed in the stop decision — and what it did not.** This one compares the
+full agent with itself, on Tavily both times, so it stands. On answerable questions `reflect`
+stopped overruling altogether: **14 overrules on easy and multi-hop cases became 0.** On adversarial
+cases it did not improve at all — **21 became 26**, and `adv-004` still spins eight rounds in every
+run. The pattern is the diagnosis: on a question that cannot be answered, `reflect` can always name a
+missing piece, because the missing piece does not exist. What is defensible is narrow: **with the
+corrected prompts the stop decision no longer fails on answerable questions, and still fails on
+unanswerable ones.**
 
 **Is the judge trustworthy? Not currently demonstrated, and the way that broke is worth
 reading.** The judge was validated against 90 hand labels made before any verdict was visible:
@@ -126,12 +107,12 @@ therefore marked unvalidated until a sample is re-labelled.
 
 Every judge-derived number below should be read in that light.
 
-**Caveats, stated rather than buried.** At 11 multi-hop and 7 adversarial cases the per-tier
-intervals are very wide and no single tier difference here is significant on its own. Only one
-comparison in this README is: capping reflect's overrules makes the agent worse. Everything else is
-a direction, not a result, and this is 30 cases, not 300. The honest claim is *"on this benchmark,
-with these prompts, the loop is no longer losing"* — not *"agent loops work"*, and emphatically not
-the reverse claim this same benchmark supported two months ago.
+**Caveats, stated rather than buried.** No comparison between variants in this README is currently
+established. Pass one's are sound but small — at 11 multi-hop and 7 adversarial cases the per-tier
+intervals are very wide — and pass two's are confounded by the search engine. The honest claim today
+is narrow: *the loop's original failure traced to two prompt lines, and the stop decision still
+fails on unanswerable questions.* Whether the loop beats one round of search is an open question
+with a pre-registered test, not a result.
 
 `pass^3` is 93.3% against a pass@1 of 96.7%, and the gap between `pass^3` and `(pass@1)^3` is
 **+0.030**. Because x^k is convex, that quantity is non-negative whenever per-case rates differ at
@@ -296,11 +277,14 @@ uv run python -m research_agent.tools --demo   # exercise every tool once
 
 Written before anyone asks.
 
-- **The loop's margin over the baseline is not significant.** It wins overall (96.7% vs 93.3%) and
-  on multi-hop, but at +3.3 points with a paired interval of [−1.1, +7.8] and McNemar p = 0.375 that
-  is not a result to lean on. The baseline is still 3× cheaper and still perfect on the adversarial
-  tier. "The loop is better" is not supported; "with corrected prompts the loop is no longer worse"
-  is, and nothing stronger.
+- **Whether the loop beats one round of search is not established.** Pass one said it did not, at
+  n=30 with wide intervals. Pass two cannot say anything either way, because its variants ran on
+  different search engines. The baseline is 3× cheaper in every pass.
+- **A search quota can silently change what an evaluation measures.** When Tavily's monthly free
+  tier ran out mid-sweep, the agent fell back to DuckDuckGo exactly as designed for a live demo —
+  and for an evaluation that fallback is a confound, because later variants then ran on a different
+  search engine from earlier ones. Nothing failed and every number looked plausible. Found by
+  counting search credits against search calls in the committed traces.
 - **The stop decision still fails on unanswerable questions.** 27 of 210 rounds are the agent
   proposing to stop and `reflect` overruling it, every one of them on the adversarial tier; `adv-004`
   spins eight rounds in every run. A further 46 rounds exist only to let `act` say it is finished
@@ -368,15 +352,12 @@ Written before anyone asks.
 
 ## What I'd do next
 
-1. **Find out why the middle is the worst place to be.** On the adversarial tier accuracy is not
-   monotonic in rounds — `baseline` at 1.00 steps scores 100%, `no_overrule` at 2.48 steps scores
-   85.7%, the full agent at 3.38 steps scores 95.2%. Either answer immediately or investigate
-   properly; a truncated investigation returns a confident wrong value where a refusal was wanted,
-   and `wrong_value` is indeed the dominant failure mode on exactly those cases. If that shape
-   generalises it is a real result about when to let an agent stop, and it is the most interesting
-   unexplained thing in this repo.
-2. **Re-run the first pass against the fixed prompts on the same day.** That is the only way to
-   separate the prompt fix from web drift, and it costs about $0.30.
+1. **Settle full against baseline with a test sized to the question.** A paired comparison on harder,
+   multi-hop questions than the 30 here, with enough of them that a real difference cannot be
+   mistaken for luck — sized by a power calculation rather than picked — run on one search engine
+   from end to end, with the hypothesis, the test and the decision rule committed before any run.
+2. **Re-run every variant on the same day, on the same search engine.** That is the only way to
+   separate the prompt fix from web drift and from the search backend.
 3. **A larger labelled sample.** 90 items puts κ's lower bound at 0.580; a few hundred would
    tighten it enough to distinguish "almost perfect" from "moderate".
 4. **A cross-family judge** (Claude or Gemini) to bound self-preference rather than disclaiming it.

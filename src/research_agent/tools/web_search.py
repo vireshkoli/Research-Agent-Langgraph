@@ -152,7 +152,14 @@ def web_search(query: str) -> ToolResult:
         payload = json.loads(cache_file.read_text())
         return _render(query, payload, backend="cache")
 
-    if not _tavily_exhausted:
+    # "auto" falls back from Tavily to DuckDuckGo, which is right for the live demo:
+    # a visitor would rather get an answer from a second search engine than none.
+    # For an evaluation it is a confound. When Tavily's monthly quota ran out partway
+    # through a sweep, later variants silently ran on a different search engine from
+    # earlier ones and every number still looked plausible. A pinned backend never
+    # falls back; it fails, and the run says why.
+    pinned = config.search_backend
+    if pinned != "ddgs" and not _tavily_exhausted:
         try:
             payload = _search_tavily(query, max_results, depth)
             if config.search_cache_enabled:
@@ -162,7 +169,19 @@ def web_search(query: str) -> ToolResult:
         except QuotaExhausted:
             _tavily_exhausted = True
         except (httpx.HTTPError, RuntimeError, ValueError):
-            pass  # fall through to the fallback rather than failing the step
+            if pinned == "tavily":
+                return ToolResult.failure(
+                    "Tavily failed and this run is pinned to Tavily, so there is no "
+                    "fallback. Answer from what you already have.",
+                    backend="none",
+                )
+    if pinned == "tavily":
+        return ToolResult.failure(
+            "Tavily is out of quota and this run is pinned to Tavily, so there is no "
+            "fallback. Answer from what you already have.",
+            backend="none",
+            quota_exhausted=True,
+        )
 
     try:
         return _render(query, _search_ddgs(query, max_results), backend="ddgs")

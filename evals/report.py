@@ -622,10 +622,71 @@ def _matched(
     )
 
 
-def _variant_rows(label: str, main: list[CaseResult], other: list[CaseResult]) -> list[str]:
+def search_mix(results: list[CaseResult], variant: str) -> dict[str, int]:
+    """How many of a variant's searches each engine served, read off its traces.
+
+    Traces written before `search_backends` existed are read from what they do
+    record: only Tavily charges a credit, so credits are Tavily calls and any search
+    beyond them went elsewhere.
+    """
+    mix: dict[str, int] = {}
+    for case, run in sorted({(r.case_id, r.run) for r in results}):
+        path = RESULTS_DIR / "traces" / variant / f"{case}-r{run}.json"
+        if not path.is_file():
+            continue
+        trace = json.loads(path.read_text())
+        usage = trace.get("usage") or {}
+        backends = usage.get("search_backends")
+        if backends is None:
+            searches = sum(
+                1
+                for step in trace.get("steps") or []
+                for observation in step.get("observations") or []
+                if observation.get("tool") == "web_search"
+            )
+            credits = int(usage.get("search_credits", 0))
+            backends = {"tavily": credits, "other": max(0, searches - credits)}
+        for name, count in backends.items():
+            mix[name] = mix.get(name, 0) + int(count)
+    return mix
+
+
+def _off_tavily(mix: dict[str, int]) -> float:
+    total = sum(mix.values())
+    return (total - mix.get("tavily", 0)) / total if total else 0.0
+
+
+def _variant_rows(
+    label: str, main: list[CaseResult], other: list[CaseResult], other_variant: str = ""
+) -> list[str]:
     left, right = _matched(main, other)
     if not left:
         return [f"_No runs shared with `{label}` to compare against._", ""]
+
+    # Two variants are only being compared as agents if they searched the same web the
+    # same way. A Tavily quota that ran out mid-sweep once left one variant entirely on
+    # DuckDuckGo while another stayed on Tavily, and nothing raised an error. When the
+    # mix differs the numbers are shown for the record and no statistic is computed.
+    if other_variant:
+        main_off, other_off = (
+            _off_tavily(search_mix(left, "full")),
+            _off_tavily(search_mix(right, other_variant)),
+        )
+        if abs(main_off - other_off) > 0.05:
+            short = label.split(" (")[0]
+            return [
+                f"> **Not evidence: these variants searched with different engines.** The full "
+                f"agent sent {main_off * 100:.0f}% of its searches somewhere other than Tavily; "
+                f"`{short}` sent {other_off * 100:.0f}%. Any difference below mixes the agent "
+                "with the search engine, so no paired statistic is computed. Re-run both with "
+                "the same `--search-backend`.",
+                "",
+                "| Variant | pass@1 | searches off Tavily |",
+                "|---|---|---|",
+                f"| {label} | {_pct(pass_at_1(right))} | {other_off * 100:.0f}% |",
+                f"| full agent | {_pct(pass_at_1(left))} | {main_off * 100:.0f}% |",
+                "",
+            ]
 
     tiers = ", ".join(sorted({r.tier for r in left}))
     return [
@@ -704,6 +765,7 @@ def comparison_section(main: list[CaseResult], k: int) -> list[str]:
             "baseline (one round of parallel search, then answer)",
             main,
             to_results(baseline),
+            "baseline",
         )
 
     if no_overrule := load_variant("no_overrule"):
@@ -725,7 +787,10 @@ def comparison_section(main: list[CaseResult], k: int) -> list[str]:
                 "",
             ]
         lines += _variant_rows(
-            "no_overrule (act's decision to stop is final)", main, to_results(no_overrule)
+            "no_overrule (act's decision to stop is final)",
+            main,
+            to_results(no_overrule),
+            "no_overrule",
         )
 
     return lines or ["_Ablations not run yet._"]
