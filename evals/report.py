@@ -208,39 +208,55 @@ def _tool_caveat(results: list[CaseResult]) -> list[str]:
 def loop_efficiency_table(results: list[CaseResult], variant: str = "full") -> list[str]:
     """Does the loop do anything with the rounds it spends?
 
-    Tool precision cannot answer that question here, so this does. Precision is
-    matched/n_actual against `expected_tools`, and `expected_tools` names a single
-    call for most cases while the agent is *designed* to fan out four to six parallel
-    searches per round. A low precision therefore partly measures how thinly the
-    dataset specifies the task, not how much work the agent wasted, and a number that
-    confounds the two should not be the evidence for a claim about waste.
+    Tool precision cannot answer that here: it is matched/n_actual against
+    `expected_tools`, which names a single call for most cases while the agent fans
+    out several searches per round, so a low figure partly measures the dataset.
+    Every figure below is counted off the committed traces instead.
 
-    Every figure below is counted off the committed traces instead, and none of them
-    depends on an expectation anyone had to write down:
-
-    - a **no-op round** is one where `act` emitted no tool calls at all. `act` sets
-      `act_requested_stop` in that case, so a no-op round is the agent saying it is
-      finished and being sent back round the loop anyway.
-    - a **dry round** ran tools and minted no new source.
-    - a **repeated query** is a search whose normalised terms exactly match an earlier
-      search in the same run.
+    A round where `act` emits no tool calls is the agent saying it can answer. What
+    happens next is the part that matters, and an earlier version of this table got
+    it wrong by counting every such round as waste. Most of them are simply how a run
+    ends — the agent proposes to stop and `reflect` agrees. Only the ones `reflect`
+    overrules send the agent round again with nothing to do, and those are the
+    pathology. They are reported separately, by tier, because where they happen is
+    the diagnosis.
     """
-    rounds = {"noop": 0, "dry": 0, "productive": 0}
+    noop_accepted = noop_overruled = dry = productive = 0
     searches = repeats = calls = barren = 0
+    overruled_by_tier: dict[str, int] = {}
+    tier_of = {(r.case_id, r.run): r.tier for r in results}
 
-    for case, run in sorted({(r.case_id, r.run) for r in results}):
+    for case, run in sorted(tier_of):
         path = RESULTS_DIR / "traces" / variant / f"{case}-r{run}.json"
         if not path.is_file():
             continue
         trace = json.loads(path.read_text())
+        steps = trace.get("steps") or []
         first_seen: dict[int, int] = {}
         for source in trace.get("sources") or []:
-            step = source.get("first_seen_step")
-            first_seen[step] = first_seen.get(step, 0) + 1
+            first_seen[source.get("first_seen_step")] = (
+                first_seen.get(source.get("first_seen_step"), 0) + 1
+            )
 
         seen_queries: set[str] = set()
         index = 0
-        for step in trace.get("steps") or []:
+        for position, step in enumerate(steps):
+            if step.get("node") == "act" and not (step.get("tool_calls") or []):
+                following = next(
+                    (s for s in steps[position + 1 :] if s.get("node") in ("reflect", "finalize")),
+                    None,
+                )
+                decision = ((following or {}).get("reflection") or {}).get("decision")
+                if (
+                    following is None
+                    or following.get("node") == "finalize"
+                    or decision == "finalize"
+                ):
+                    noop_accepted += 1
+                else:
+                    noop_overruled += 1
+                    tier = tier_of[(case, run)]
+                    overruled_by_tier[tier] = overruled_by_tier.get(tier, 0) + 1
             if step.get("node") != "observe":
                 continue
             index += 1
@@ -251,51 +267,49 @@ def loop_efficiency_table(results: list[CaseResult], variant: str = "full") -> l
                     barren += 1
                 if observation.get("tool") == "web_search":
                     searches += 1
-                    query = " ".join(
-                        sorted(
-                            re.findall(
-                                r"[a-z0-9]+",
-                                str((observation.get("args") or {}).get("query", "")).lower(),
-                            )
-                        )
+                    words = re.findall(
+                        r"[a-z0-9]+", str((observation.get("args") or {}).get("query", "")).lower()
                     )
+                    query = " ".join(sorted(words))
                     if query in seen_queries:
                         repeats += 1
                     seen_queries.add(query)
-            if not observations:
-                rounds["noop"] += 1
-            elif not first_seen.get(index):
-                rounds["dry"] += 1
-            else:
-                rounds["productive"] += 1
+            if observations:
+                if first_seen.get(index):
+                    productive += 1
+                else:
+                    dry += 1
 
-    total = sum(rounds.values())
+    total = noop_accepted + noop_overruled + dry + productive
     if not total:
         return []
 
     def row(label: str, count: int, denominator: int) -> str:
         return f"| {label} | {count} | {count / denominator * 100:.1f}% |"
 
+    where = ", ".join(f"{tier} {n}" for tier, n in sorted(overruled_by_tier.items())) or "none"
     lines = [
         "| | Count | Share |",
         "|---|---|---|",
-        row("Rounds where `act` emitted no tool calls", rounds["noop"], total),
-        row("Rounds that ran tools and found nothing new", rounds["dry"], total),
-        row("Productive rounds", rounds["productive"], total),
+        row("Agent proposed to stop; `reflect` agreed (the run's last step)", noop_accepted, total),
+        row("Agent proposed to stop; `reflect` overruled it", noop_overruled, total),
+        row("Ran tools and found nothing new", dry, total),
+        row("Ran tools and found new sources", productive, total),
         row("Searches repeating an earlier query verbatim", repeats, searches or 1),
         row("Tool calls returning no new source", barren, calls or 1),
         "",
-        f"Across {total} rounds the agent made {calls} tool calls, of which "
-        f"{repeats} repeated a query it had already issued. **It is not looping on "
-        "near-identical searches, and it is not making large numbers of useless "
-        f"calls.** What it does do is spend {rounds['noop']} rounds "
-        f"({rounds['noop'] / total * 100:.0f}% of all of them) calling no tools at "
-        "all. `act` emits no calls when it believes it can answer, so those rounds "
-        "are the agent asking to stop and being sent back by `reflect`, paying for "
-        "one `act` call and one `reflect` call each time to do nothing.",
+        f"Across {total} rounds the agent made {calls} tool calls and repeated a query "
+        f"{repeats} time{'' if repeats == 1 else 's'}. It is not looping on near-identical "
+        "searches.",
         "",
-        "That is a different defect from over-searching and it has a different fix: "
-        "not fewer searches, but honouring a stop that has already been proposed.",
+        f"{noop_accepted} rounds are the agent saying it can answer and `reflect` "
+        "agreeing — the graph needs one more `act` call after the last search just to "
+        "say so. That is a structural cost of the topology, not a misjudgement.",
+        "",
+        f"{noop_overruled} rounds are the pathology: the agent proposed to stop and "
+        f"`reflect` sent it back with nothing to do. By tier: {where}. Where they occur "
+        "is the diagnosis — on questions that cannot be answered, `reflect` can always "
+        "name a missing piece, because the missing piece does not exist.",
     ]
     return lines
 
@@ -637,19 +651,32 @@ def _paired_stats(label: str, left: list[CaseResult], right: list[CaseResult]) -
     reverse the sign, while McNemar conditions on the discordant pairs alone and is
     deliberately conservative at these counts.
     """
-    lo, hi, adverse = paired_bootstrap_ci(per_case_rates(right), per_case_rates(left))
+    # Always state the comparison from the side that is ahead, with a positive gap.
+    # An earlier version phrased it from a fixed side, and when the result flipped it
+    # published "-3.3 points in favour of baseline" for a run where the full agent
+    # was the one ahead.
+    short = label.split(" (")[0]
+    full_rate, other_rate = pass_at_1(left), pass_at_1(right)
+    full_ahead = full_rate >= other_rate
+    if full_ahead:
+        leader, trailer = "the full agent", f"`{short}`"
+    else:
+        leader, trailer = f"`{short}`", "the full agent"
+    if full_ahead:
+        lo, hi, adverse = paired_bootstrap_ci(per_case_rates(left), per_case_rates(right))
+    else:
+        lo, hi, adverse = paired_bootstrap_ci(per_case_rates(right), per_case_rates(left))
     only_full, only_other = discordant_counts(left, right)
     wins_full, wins_other = unique_wins(left, right)
-    short = label.split(" (")[0]
+    gap = abs(full_rate - other_rate) * 100
 
     return [
-        f"**Paired comparison.** The difference in pass@1 is "
-        f"{(pass_at_1(right) - pass_at_1(left)) * 100:+.1f} points in favour of "
-        f"`{short}`, with a 95% bootstrap interval over cases of "
-        f"[{lo * 100:+.1f}, {hi * 100:+.1f}] points. "
-        f"{adverse * 100:.1f}% of resamples failed to favour it. McNemar's exact test on "
-        f"the {only_full + only_other} discordant (case, run) pairs — {only_full} where "
-        f"only the full agent succeeded, {only_other} where only `{short}` did — gives "
+        f"**Paired comparison.** {leader[0].upper() + leader[1:]} leads {trailer} by "
+        f"{gap:.1f} points of pass@1, with a 95% bootstrap interval over cases of "
+        f"[{lo * 100:+.1f}, {hi * 100:+.1f}] points. In {adverse * 100:.1f}% of resamples "
+        f"{leader} was not ahead. McNemar's exact test on the "
+        f"{only_full + only_other} discordant (case, run) pairs — {only_full} where only "
+        f"the full agent succeeded, {only_other} where only `{short}` did — gives "
         f"p = {mcnemar_exact(only_full, only_other):.3f}.",
         "",
         f"**Unique wins.** The full agent reliably solves **{wins_full}** "

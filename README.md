@@ -48,10 +48,11 @@ pay for itself but actively destructive. Those results and their traces are tagg
 
 **What the traces actually said.** The obvious reading is that the loop searches too much, and that
 turned out to be false. Only **2 of 305 searches** repeated a query and only 6% of calls returned
-nothing new. What the loop did was stop calling tools and keep going anyway: **77 of 228 rounds —
-34% — ran no tools at all.** `act` emits no calls when it believes it can answer, so each of those
-was the agent asking to stop, `reflect` overruling, and `act` proposing the same stop again. One
-adversarial case did this eight times consecutively.
+nothing new. The waste was elsewhere. `act` emits no tool calls when it believes it can answer, and
+**77 of 228 rounds** were that. In 40 of them `reflect` agreed and the run ended — the graph simply
+needs one more `act` call after the last search to say so. In the other **37, `reflect` overruled
+the stop** and sent the agent round again with nothing to do. Those 35 overrules were spread across
+four cases, two of them perfectly answerable: `easy-001` alone was overruled nine times.
 
 Two lines of prompt contradicted what these very runs measured, and both are the kind of defect no
 test catches:
@@ -79,23 +80,27 @@ test catches:
 The loop now beats the baseline it used to lose to. **That difference is not significant** —
 +3.3 points, 95% paired interval [−1.1, +7.8], McNemar p = 0.375 — and the baseline remains three
 times cheaper and still perfect on the adversarial tier, where it cannot be talked out of stopping.
-**What the prompt fix did not do is stop the spinning.** In the re-run, **73 of 210 rounds — 35% —
-still call no tools at all**, against 34% before. `adv-004` still spins eight rounds in every run,
-and one adversarial run refuses the same request six times while `reflect` keeps answering
-"continue". So the accuracy gain did not come from repairing the stop condition, and this README
-does not know what it did come from: the two passes are two and a half months apart, so web drift
-sits inside the difference alongside the prompt change. What is defensible is narrow: **with the
-corrected prompts the loop is no longer worse than one round of search, and its stop condition is
-still broken.**
+**What the prompt fix changed in the stop decision — and what it did not.** On answerable questions
+`reflect` stopped overruling altogether: **14 overrules on easy and multi-hop cases became 0.** On
+adversarial cases it did not improve at all — **21 became 26**, and `adv-004` still spins eight
+rounds in every run. Overruled stops fell from 37 to 27 overall. The pattern is the diagnosis: on a
+question that cannot be answered, `reflect` can always name a missing piece, because the missing
+piece does not exist. What the fix cannot explain is the accuracy gain itself. Pass@1 rose from 87.8%
+to 96.7%, but the two passes are two and a half months apart, so web drift sits inside that
+difference alongside the prompt change. What is defensible is narrow: **with the corrected prompts
+the loop is no longer worse than one round of search, and its stop decision still fails on
+unanswerable questions.**
 
-**`reflect` now earns its place, and the ablation is how we know.** `no_overrule` makes act's stop
-decision final, removing exactly the authority that looked harmful in pass one. It scores **90.0%
-against the full agent's 96.7%** — +6.7 points, paired interval [+0.0, +14.4], McNemar p = 0.070,
-and the full agent reliably solves 4 cases it does not against 1 the other way. In pass one this
-same ablation *beat* the full agent. The reversal coincides with the prompt change, but also with
-two and a half months of web drift, so it is suggestive rather than proven. And it leaves the real
-open problem standing: reflect's overrules are worth having for accuracy, and they are also what
-produces the 35% of rounds that do nothing.
+**The `no_overrule` ablation loses, but not for the reason its name suggests.** It makes act's stop
+decision final and scores **90.0% against the full agent's 96.7%** — +6.7 points, paired interval
+[+0.0, +14.4], McNemar p = 0.070 — and in pass one this same ablation *beat* the full agent. It is
+tempting to read that as "reflect's overrules earn their place". The traces do not support it:
+**all 26 overrules in the full run come from three adversarial cases** (21 from `adv-004` alone,
+which is the spinning case), and **in 6 of the 7 runs where the full agent wins and `no_overrule`
+loses, reflect overruled nothing.** Overrules cannot explain wins in runs where none happened. What
+`no_overrule` also removes is reflect's final pass before `finalize`, and the ablation does not
+separate the two — so which mechanism carries the gap is not established, and at p = 0.070 the gap
+itself is not settled either.
 
 **One comparison here is confounded and should not be read as a clean before/after.** The 87.8% was
 measured in August and the 96.7% today, so two and a half months of web drift sit inside it
@@ -294,10 +299,12 @@ Written before anyone asks.
   is not a result to lean on. The baseline is still 3× cheaper and still perfect on the adversarial
   tier. "The loop is better" is not supported; "with corrected prompts the loop is no longer worse"
   is, and nothing stronger.
-- **The stop condition is still broken.** 35% of the full agent's rounds call no tools — the agent
-  proposing to stop and `reflect` overruling it — exactly as before the prompt fix. It costs time and
-  money rather than accuracy, and the ablation that removes the overrules entirely loses accuracy,
-  so the fix is not simply taking `reflect`'s authority away.
+- **The stop decision still fails on unanswerable questions.** 27 of 210 rounds are the agent
+  proposing to stop and `reflect` overruling it, every one of them on the adversarial tier; `adv-004`
+  spins eight rounds in every run. A further 46 rounds exist only to let `act` say it is finished
+  after its last search — a structural cost of the topology rather than a misjudgement. Neither is a
+  reason to remove `reflect`: the ablation that does so loses accuracy, through a mechanism the
+  ablation cannot isolate.
 - **The headline reversed once, and could again.** This evaluation concluded the opposite in its
   first pass; between the two passes the prompts changed *and* two and a half months passed. An n=30 benchmark that flips on a
   prompt edit should be treated as a diagnostic instrument, not a leaderboard.

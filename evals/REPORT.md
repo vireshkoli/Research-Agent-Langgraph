@@ -42,15 +42,18 @@ The order score is computed on the 3 run(s) that declare a `tool_order`, so it i
 
 | | Count | Share |
 |---|---|---|
-| Rounds where `act` emitted no tool calls | 73 | 34.8% |
-| Rounds that ran tools and found nothing new | 34 | 16.2% |
-| Productive rounds | 103 | 49.0% |
+| Agent proposed to stop; `reflect` agreed (the run's last step) | 46 | 21.9% |
+| Agent proposed to stop; `reflect` overruled it | 27 | 12.9% |
+| Ran tools and found nothing new | 34 | 16.2% |
+| Ran tools and found new sources | 103 | 49.0% |
 | Searches repeating an earlier query verbatim | 0 | 0.0% |
 | Tool calls returning no new source | 30 | 7.6% |
 
-Across 210 rounds the agent made 393 tool calls, of which 0 repeated a query it had already issued. **It is not looping on near-identical searches, and it is not making large numbers of useless calls.** What it does do is spend 73 rounds (35% of all of them) calling no tools at all. `act` emits no calls when it believes it can answer, so those rounds are the agent asking to stop and being sent back by `reflect`, paying for one `act` call and one `reflect` call each time to do nothing.
+Across 210 rounds the agent made 393 tool calls and repeated a query 0 times. It is not looping on near-identical searches.
 
-That is a different defect from over-searching and it has a different fix: not fewer searches, but honouring a stop that has already been proposed.
+46 rounds are the agent saying it can answer and `reflect` agreeing — the graph needs one more `act` call after the last search just to say so. That is a structural cost of the topology, not a misjudgement.
+
+27 rounds are the pathology: the agent proposed to stop and `reflect` sent it back with nothing to do. By tier: adversarial 27. Where they occur is the diagnosis — on questions that cannot be answered, `reflect` can always name a missing piece, because the missing piece does not exist.
 
 ## Cost and latency
 
@@ -105,7 +108,7 @@ Compared on the **90 runs both variants completed** (adversarial, easy, multi_ho
 | baseline (one round of parallel search, then answer) | 93.3% | 1.0 | $0.00082 |
 | **full agent** | **96.7%** | 2.3 | $0.00240 |
 
-**Paired comparison.** The difference in pass@1 is -3.3 points in favour of `baseline`, with a 95% bootstrap interval over cases of [-7.8, +1.1] points. 94.9% of resamples failed to favour it. McNemar's exact test on the 5 discordant (case, run) pairs — 4 where only the full agent succeeded, 1 where only `baseline` did — gives p = 0.375.
+**Paired comparison.** The full agent leads `baseline` by 3.3 points of pass@1, with a 95% bootstrap interval over cases of [-1.1, +7.8] points. In 11.6% of resamples the full agent was not ahead. McNemar's exact test on the 5 discordant (case, run) pairs — 4 where only the full agent succeeded, 1 where only `baseline` did — gives p = 0.375.
 
 **Unique wins.** The full agent reliably solves **3** cases that `baseline` does not; `baseline` reliably solves **1** that the full agent does not. The richer variant does win ground of its own here, so the extra cost buys something — the question is whether it buys enough.
 
@@ -118,7 +121,7 @@ Compared on the **90 runs both variants completed** (adversarial, easy, multi_ho
 | no_overrule (act's decision to stop is final) | 90.0% | 2.6 | $0.00233 |
 | **full agent** | **96.7%** | 2.3 | $0.00240 |
 
-**Paired comparison.** The difference in pass@1 is -6.7 points in favour of `no_overrule`, with a 95% bootstrap interval over cases of [-14.4, +0.0] points. 99.0% of resamples failed to favour it. McNemar's exact test on the 8 discordant (case, run) pairs — 7 where only the full agent succeeded, 1 where only `no_overrule` did — gives p = 0.070.
+**Paired comparison.** The full agent leads `no_overrule` by 6.7 points of pass@1, with a 95% bootstrap interval over cases of [+0.0, +14.4] points. In 3.3% of resamples the full agent was not ahead. McNemar's exact test on the 8 discordant (case, run) pairs — 7 where only the full agent succeeded, 1 where only `no_overrule` did — gives p = 0.070.
 
 **Unique wins.** The full agent reliably solves **4** cases that `no_overrule` does not; `no_overrule` reliably solves **1** that the full agent does not. The richer variant does win ground of its own here, so the extra cost buys something — the question is whether it buys enough.
 
