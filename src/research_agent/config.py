@@ -68,6 +68,10 @@ class Settings(BaseSettings):
     # a full 30-case x 3-run evaluation spends ~360 of them.
     search_depth: str = "basic"
     fetch_timeout_seconds: float = 15.0
+    # Per model call. Two retries at 30s bounds a single call near 90s, inside the
+    # 120s run budget, where the SDK default of 600s and two retries did not.
+    llm_timeout_seconds: float = 30.0
+    llm_max_retries: int = 2
     # Dev-only. The official evaluation runs with --no-cache: a shared search cache
     # would make repeated runs non-independent and invalidate pass^k.
     search_cache_enabled: bool = False

@@ -150,29 +150,19 @@ def check(question: str, own_key: str | None, session: str = "") -> str | None:
 
 @contextmanager
 def borrowed_key(own_key: str | None) -> Iterator[None]:
-    """Temporarily swap in a visitor's key, and always put the original back.
+    """Use a visitor's own key for one request, without touching the environment.
 
-    The key lives in the environment for the duration of one request and is not
-    written anywhere. `_client()` is cached, so it is cleared on the way in and out
-    to stop a borrowed key leaking into the next visitor's request.
+    An earlier version swapped the key into os.environ and put the old one back on
+    exit. The Space serves two requests at once in one process, and the environment
+    is shared by every thread, so that design let one visitor's request run on
+    another's key — and two overlapping borrowed keys could leave a visitor's key in
+    place for everyone who came after. The key is now scoped to this request's
+    context and never written anywhere.
     """
-    if not own_key:
-        yield
-        return
+    from research_agent.llm import using_api_key
 
-    from research_agent.llm import _client
-
-    previous = os.environ.get("OPENAI_API_KEY")
-    os.environ["OPENAI_API_KEY"] = own_key.strip()
-    _client.cache_clear()
-    try:
+    with using_api_key(own_key):
         yield
-    finally:
-        if previous is None:
-            os.environ.pop("OPENAI_API_KEY", None)
-        else:
-            os.environ["OPENAI_API_KEY"] = previous
-        _client.cache_clear()
 
 
 def status_line() -> str:

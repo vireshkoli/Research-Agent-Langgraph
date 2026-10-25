@@ -148,35 +148,114 @@ def test_a_zero_cap_means_uncapped_for_local_runs(monkeypatch: pytest.MonkeyPatc
 # --- borrowed keys ---------------------------------------------------------------
 
 
-def test_a_borrowed_key_is_used_then_put_back(monkeypatch: pytest.MonkeyPatch) -> None:
+@pytest.fixture
+def owner_key(monkeypatch: pytest.MonkeyPatch) -> Iterator[None]:
+    """The app's own key, with the cached default client rebuilt around it."""
+    from research_agent import llm
+
     monkeypatch.setenv("OPENAI_API_KEY", "sk-owner")
+    llm._default_client.cache_clear()
+    yield
+    llm._default_client.cache_clear()
+
+
+def test_a_borrowed_key_never_touches_the_environment(owner_key: None) -> None:
+    # The defect this replaces: the old implementation wrote the visitor's key into
+    # os.environ, which every concurrent request in the process shares.
+    from research_agent import llm
 
     with demo_guard.borrowed_key("sk-visitor"):
-        assert os.environ["OPENAI_API_KEY"] == "sk-visitor"
+        assert llm._client().api_key == "sk-visitor"
+        assert os.environ["OPENAI_API_KEY"] == "sk-owner", "the environment must not change"
 
-    assert os.environ["OPENAI_API_KEY"] == "sk-owner", "the owner's key must be restored"
+    assert llm._client().api_key == "sk-owner"
 
 
-def test_a_borrowed_key_is_restored_even_when_the_run_raises(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    # Without the finally, one failed request would leave a visitor's key installed
-    # for everyone who came after.
-    monkeypatch.setenv("OPENAI_API_KEY", "sk-owner")
+def test_a_borrowed_key_is_dropped_even_when_the_run_raises(owner_key: None) -> None:
+    from research_agent import llm
 
     with pytest.raises(RuntimeError), demo_guard.borrowed_key("sk-visitor"):
         raise RuntimeError("the run blew up")
 
-    assert os.environ["OPENAI_API_KEY"] == "sk-owner"
+    assert llm._client().api_key == "sk-owner"
 
 
-def test_borrowing_nothing_leaves_the_environment_alone(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    monkeypatch.setenv("OPENAI_API_KEY", "sk-owner")
+def test_borrowing_nothing_uses_the_apps_own_client(owner_key: None) -> None:
+    from research_agent import llm
+
     with demo_guard.borrowed_key(None):
-        assert os.environ["OPENAI_API_KEY"] == "sk-owner"
+        assert llm._client().api_key == "sk-owner"
+    with demo_guard.borrowed_key("   "):
+        assert llm._client().api_key == "sk-owner", "a blank key is not a key"
+
+
+def test_concurrent_visitors_never_see_each_others_keys(owner_key: None) -> None:
+    # The exact failure that motivated the change. Two visitors hold their own keys
+    # at the same moment; a barrier forces both scopes to be open simultaneously,
+    # which is the interleaving the environment-variable version got wrong.
+    import contextvars
+    import threading
+
+    from research_agent import llm
+
+    barrier = threading.Barrier(3)
+    seen: dict[str, str] = {}
+
+    def visitor(name: str, key: str | None) -> None:
+        with demo_guard.borrowed_key(key):
+            barrier.wait(timeout=5)
+            seen[name] = llm._client().api_key
+            barrier.wait(timeout=5)
+
+    threads = [
+        threading.Thread(target=contextvars.copy_context().run, args=(visitor, "a", "sk-alice")),
+        threading.Thread(target=contextvars.copy_context().run, args=(visitor, "b", "sk-bob")),
+        threading.Thread(target=contextvars.copy_context().run, args=(visitor, "c", None)),
+    ]
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join(timeout=10)
+
+    assert seen == {"a": "sk-alice", "b": "sk-bob", "c": "sk-owner"}
+    assert llm._client().api_key == "sk-owner", "no visitor's key may outlive their request"
     assert os.environ["OPENAI_API_KEY"] == "sk-owner"
+
+
+def test_the_key_scope_follows_the_run_into_its_worker_thread(owner_key: None) -> None:
+    # render.py starts the run on a new thread, which begins with an empty context.
+    # It copies the context inside the scope; this pins that the copy is what makes
+    # the borrowed key reach the run.
+    import contextvars
+    import threading
+
+    from research_agent import llm
+
+    seen: list[str] = []
+    with demo_guard.borrowed_key("sk-visitor"):
+        bare = threading.Thread(target=lambda: seen.append(llm._client().api_key))
+        bare.start()
+        bare.join()
+        copied = threading.Thread(
+            target=contextvars.copy_context().run,
+            args=(lambda: seen.append(llm._client().api_key),),
+        )
+        copied.start()
+        copied.join()
+
+    assert seen == ["sk-owner", "sk-visitor"]
+
+
+def test_every_model_call_is_bounded(owner_key: None) -> None:
+    # The SDK default is 600s with two retries, and the run's wall-clock budget is
+    # only checked between nodes, so an unbounded client made max_seconds a hope.
+    from research_agent import llm
+
+    cfg = settings()
+    for client in (llm._client(), llm._build_client("sk-visitor")):
+        assert client.timeout == cfg.llm_timeout_seconds
+        assert client.max_retries == cfg.llm_max_retries
+    assert cfg.llm_timeout_seconds * (cfg.llm_max_retries + 1) < cfg.max_seconds
 
 
 # --- the UI generator ------------------------------------------------------------

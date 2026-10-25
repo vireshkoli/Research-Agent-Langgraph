@@ -31,6 +31,9 @@ one below it cannot:
 import json
 import os
 import time
+from collections.abc import Iterator
+from contextlib import contextmanager
+from contextvars import ContextVar
 from dataclasses import dataclass, field
 from functools import lru_cache
 from pathlib import Path
@@ -223,12 +226,63 @@ def _load_env_file() -> None:
             os.environ.setdefault(key.strip(), value.strip())
 
 
-@lru_cache
-def _client() -> Any:
+# A visitor's own client, for the duration of one request. It lives in a context
+# variable rather than in os.environ because the Space serves requests concurrently
+# in one process. An environment variable is shared by every thread, so a key
+# written there by one visitor could be read by another visitor's request running at
+# the same time — and if two borrowed keys overlapped, the restore order could leave
+# one visitor's key in place for every visitor after them. A context variable is
+# private to the request that set it.
+_request_client: ContextVar[Any | None] = ContextVar("_request_client", default=None)
+
+
+def _build_client(api_key: str | None = None) -> Any:
+    """An OpenAI client that cannot outlive the run's own budget.
+
+    The SDK's defaults are a 600s timeout and two retries. The run's wall-clock
+    budget is only checked between nodes, so a single hung call could hold a node
+    for up to half an hour while every budget reads as fine. Bounding each call is
+    what makes `max_seconds` a real ceiling rather than a hope.
+    """
     from openai import OpenAI
 
     _load_env_file()
-    return OpenAI()
+    cfg = settings()
+    if api_key:
+        return OpenAI(
+            api_key=api_key, timeout=cfg.llm_timeout_seconds, max_retries=cfg.llm_max_retries
+        )
+    return OpenAI(timeout=cfg.llm_timeout_seconds, max_retries=cfg.llm_max_retries)
+
+
+@lru_cache
+def _default_client() -> Any:
+    return _build_client()
+
+
+def _client() -> Any:
+    """The client for this request: the visitor's own if one is in scope, else the app's."""
+    return _request_client.get() or _default_client()
+
+
+@contextmanager
+def using_api_key(api_key: str | None) -> Iterator[None]:
+    """Route every model call made inside this context through a client for `api_key`.
+
+    The client is built once, scoped to the current context, and dropped on exit. It
+    is never cached, so a visitor's key is not retained after their request, and it
+    is never written to the environment, so no other request can see it. Work that
+    runs in another thread must be started inside `contextvars.copy_context()` for
+    the scope to follow it — see `ui/render.py`.
+    """
+    if not api_key or not api_key.strip():
+        yield
+        return
+    token = _request_client.set(_build_client(api_key.strip()))
+    try:
+        yield
+    finally:
+        _request_client.reset(token)
 
 
 def _usage_of(response: Any) -> tuple[int, int, int, int]:

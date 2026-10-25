@@ -23,6 +23,7 @@ Progress is streamed with a plain generator: Gradio sends only the diff of each
 yield, so streaming a long trace costs almost nothing.
 """
 
+import contextvars
 import queue
 import threading
 import time
@@ -253,7 +254,11 @@ def answer(
     yield "", _progress_markdown(events, None, done, 0.0, frame), ""
 
     with demo_guard.borrowed_key(own_key):
-        thread = threading.Thread(target=worker, daemon=True)
+        # A new thread starts with an empty context, so the visitor's key scope would
+        # not follow the run into it. Copying the context here — inside the scope —
+        # is what makes the borrowed key reach every model call the run makes.
+        context = contextvars.copy_context()
+        thread = threading.Thread(target=context.run, args=(worker,), daemon=True)
         thread.start()
 
         while True:
