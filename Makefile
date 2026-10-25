@@ -33,7 +33,7 @@ eval-dry:
 
 # The official evaluation. Costs real money — see README before running.
 eval:
-	uv run python -m evals.run --variant full --runs 3 --no-cache --batch
+	uv run python -m evals.run --variant full --runs 3 --no-cache
 
 # Regenerates evals/REPORT.md from committed results. Must be a pure function
 # of evals/results/ — CI asserts `git diff --exit-code` after running this.

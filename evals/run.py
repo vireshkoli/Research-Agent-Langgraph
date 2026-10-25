@@ -2,7 +2,7 @@
 
     python -m evals.run --dry-run                      validate everything, spend $0
     python -m evals.run --limit 8 --runs 1             shake the harness out cheaply
-    python -m evals.run --variant full --runs 3 --no-cache --batch      the real thing
+    python -m evals.run --variant full --runs 3 --no-cache             the real thing
 
 `--dry-run` is not a formality. It validates every case against the schema, checks
 that referenced tools exist, prints the tier breakdown and estimates the spend — so
@@ -58,9 +58,6 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--dry-run", action="store_true", help="Validate and estimate; spend $0.")
     parser.add_argument("--no-cache", action="store_true", help="Force cassettes off.")
     parser.add_argument("--no-judge", action="store_true", help="Deterministic metrics only.")
-    parser.add_argument(
-        "--batch", action="store_true", help="Judge via the Batch API (half price)."
-    )
     parser.add_argument("--judge-samples", type=int, default=1)
     parser.add_argument("--model", help="Override the agent model.")
     parser.add_argument(
@@ -113,7 +110,7 @@ def estimate_usd(cases: list[EvalCase], args: argparse.Namespace, cfg: Settings)
     if args.no_judge:
         return agent
     judged = runs * args.judge_samples
-    per_judge = cost_usd(cfg.judge_model, JUDGE_TOKENS[0], 0, JUDGE_TOKENS[1], batch=args.batch)
+    per_judge = cost_usd(cfg.judge_model, JUDGE_TOKENS[0], 0, JUDGE_TOKENS[1])
     return agent + judged * per_judge
 
 

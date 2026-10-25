@@ -34,6 +34,24 @@ Every per-run trace is committed under `evals/results/traces/`, so each number b
 | Citation resolution | 97.7% | **fabricated sources** — invisible to every metric above and to a careless judge |
 | Invented-URL rate | 0.0% | URLs in the answer that were never retrieved |
 
+**Read tool precision with care.** `expected_tools` names at most one call for 81 of these 90 runs (mean 0.93 expected against 4.03 actual), while the agent is designed to fan out several parallel searches in a single round. Precision is matched/n_actual, so a correct four-way fan-out against a one-call expectation scores 25% without a single wasted call. The figure above is therefore a lower bound that mixes genuine redundancy with the dataset's own thinness, and it is not evidence of waste on its own — **Where the rounds go** below measures that directly instead.
+
+The order score is computed on the 3 run(s) that declare a `tool_order`, so it is a check that nothing is out of sequence on those cases rather than a rate with any sampling behind it.
+
+## Where the rounds go
+
+| | Count | Share |
+|---|---|---|
+| Rounds where `act` emitted no tool calls | 77 | 33.8% |
+| Rounds that ran tools and found nothing new | 45 | 19.7% |
+| Productive rounds | 106 | 46.5% |
+| Searches repeating an earlier query verbatim | 2 | 0.7% |
+| Tool calls returning no new source | 22 | 6.1% |
+
+Across 228 rounds the agent made 363 tool calls, of which 2 repeated a query it had already issued. **It is not looping on near-identical searches, and it is not making large numbers of useless calls.** What it does do is spend 77 rounds (34% of all of them) calling no tools at all. `act` emits no calls when it believes it can answer, so those rounds are the agent asking to stop and being sent back by `reflect`, paying for one `act` call and one `reflect` call each time to do nothing.
+
+That is a different defect from over-searching and it has a different fix: not fewer searches, but honouring a stop that has already been proposed.
+
 ## Cost and latency
 
 | | Mean | p50 | p95 |
@@ -42,7 +60,7 @@ Every per-run trace is committed under `evals/results/traces/`, so each number b
 | Latency | 23.7s | 15.4s | 79.7s |
 | Steps | 2.5 | 2 | 8 |
 
-Total for this run: agent $0.2073 + judge $0.0596 = **$0.2670** over 90 runs in 2395.7s.
+Total for this run: agent $0.2073 + judge $0.1193 = **$0.3266** over 90 runs in 2395.7s.
 
 ## Budget behaviour
 

@@ -54,7 +54,7 @@ jobs:
             --variant ${{ inputs.variant }} \
             --runs ${{ inputs.runs }} \
             ${{ inputs.limit && format('--limit {0}', inputs.limit) || '' }} \
-            ${{ inputs.judge && '--batch' || '--no-judge' }} \
+            ${{ inputs.judge && '' || '--no-judge' }} \
             --no-cache
 
       - name: Regenerate the report

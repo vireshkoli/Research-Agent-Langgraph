@@ -53,17 +53,29 @@ full iterative agent on **every tier**:
 The baseline is **3× cheaper, 2.5× shorter, and more accurate.** For this task distribution and this
 model, iterative refinement is not just failing to pay for itself — it is actively destructive.
 
-**Why.** Tool recall is already 100% at the first round: the agent finds everything it needs
-immediately, largely because a single `act` step emits four to six parallel searches. Everything
-after that is re-litigating evidence it already had. Precision is 40.4%, the agent makes **3.3× more
-calls than the cases require**, and 11 of 90 runs hit a per-tool call cap rather than deciding they
-were finished. On the adversarial tier the effect is starkest — those cases reward recognising that
-you should stop, and a variant that cannot help but stop scores 100% against the loop's 81%.
+**Why — and it is not over-searching.** Tool recall is already 100% at the first round: the agent
+finds everything it needs immediately, largely because a single `act` step emits four to six
+parallel searches. Everything after that is re-litigating evidence it already had.
+
+The obvious explanation would be that the loop keeps searching, and the traces say otherwise. Only
+**2 of 305 searches** repeat an earlier query, and only 6% of tool calls return nothing new. What
+the loop actually does is stop calling tools and keep going anyway: **77 of 228 rounds — 34% — ran
+no tools at all.** `act` emits no calls when it believes it can answer, so each of those rounds is
+the agent asking to stop, being overruled by `reflect`, and paying for an `act` call and a `reflect`
+call to do nothing. One adversarial case spends eight consecutive rounds this way. The defect is a
+stop condition that can be overruled without limit, not an agent that searches too much. On the
+adversarial tier the effect is starkest — those cases reward recognising that you should stop, and
+a variant that cannot help but stop scores 100% against the loop's 81%.
 
 **The `reflect` node is implicated.** It exists to catch premature *stopping*, and it fired: 35
-overrules across 90 runs. But an ablation that makes act's stop decision final —
-`no_overrule` — scores **93.1% against the full agent's 90.3%** on the 70 runs both completed, with
-fewer steps. On this evidence reflect is mostly overruling correct decisions to stop.
+overrules across 90 runs. An ablation that makes act's stop decision final — `no_overrule` — scores
+**91.1% against the full agent's 87.8%** over all 90 runs, with fewer steps. But that gap is
+**+3.3 points with a 95% paired interval of [-4.4, +11.1] and McNemar p = 0.549**: directionally
+consistent with the rest of the evidence and nowhere near significant on its own. An earlier version
+of this README quoted 93.1% against 90.3% from a partial run that was missing the adversarial tier
+and looked stronger than it was; the tier was re-run and the comparison is now complete. Reflect is
+not exonerated — 34% of rounds are stops it overruled into nothing — but the ablation alone does not
+carry the claim, and it is reported at the strength the data supports.
 
 **Is the judge trustworthy?** This finding rests on judge verdicts, so the judge was checked
 against 90 hand labels made before any verdict was visible: **Cohen's κ = 0.824** (raw agreement
@@ -181,10 +193,12 @@ and safety are not capability. **Citation resolution and invented-URL rate** are
 hallucination checks here and the only ones that catch a confident answer citing a source that does
 not exist.
 
-**The judge** is binary with an anchored rubric and four worked examples, sampled at temperature 1.0
-rather than 0 — three samples at 0 are identical roughly 95% of the time, which is cargo-culted
-self-consistency rather than measurement. Unparseable judgements are excluded and counted, never
-coerced to INCORRECT, since coercion biases the result in whichever direction it goes.
+**The judge** is binary with an anchored rubric and four worked examples, and every committed
+evaluation ran it at one sample per trajectory. It is validated against 90 hand labels instead of
+against itself — agreement with a human is the evidence that matters, and self-consistency would
+not have caught a judge that is confidently and consistently wrong. Unparseable judgements are
+excluded and counted, never coerced to INCORRECT, since coercion biases the result in whichever
+direction it goes.
 
 Every rate carries a **95% Wilson interval**. At n=30 the normal approximation runs outside [0,1] and
 is simply wrong, and a rate without an interval at this sample size is the first thing worth
@@ -235,13 +249,23 @@ uv run python -m research_agent.tools --demo   # exercise every tool once
 Written before anyone asks.
 
 - **The loop does not earn its cost on this benchmark.** A single round of parallel search beats it
-  on every tier, 3× cheaper. See the headline finding above. The agent over-searches: 40.4% tool
-  precision against 100% recall, 3.3× more calls than expected, 11 of 90 runs hitting a tool cap
-  instead of stopping.
-- **One ablation is incomplete.** 20 of the 90 `no_overrule` runs were lost when the API key was
-  rotated mid-run; they failed authentication instantly and were discarded rather than scored, so
-  that comparison covers 70 runs and excludes the adversarial tier. `REPORT.md` states this inline
-  rather than quietly averaging over a smaller sample.
+  on every tier, 3× cheaper. See the headline finding above. 34% of its rounds call no tools at all —
+  the agent asking to stop and being overruled — and 11 of 90 runs hit a tool cap instead of stopping.
+- **Tool precision understates the agent.** The headline 40.4% is matched/n_actual against
+  `expected_tools`, which names at most one call for 81 of 90 runs while the agent is designed to
+  fan out several parallel searches per round. A correct four-way fan-out against a one-call
+  expectation scores 25% with nothing wasted. The number is a lower bound confounded with the
+  dataset's own thinness, and `evals/REPORT.md` now measures redundancy directly instead of
+  inferring it from precision. The order score is likewise computed on only the 3 runs that declare
+  a `tool_order`.
+- **The `no_overrule` ablation mixes two dates.** 20 of its runs were lost to a key rotation and
+  re-run later, so its easy and multi-hop runs are from one day and its adversarial runs from
+  another, with the web moving in between. The comparison is complete rather than truncated, but
+  the two halves are not contemporaneous and `REPORT.md` says so inline.
+- **Judge costs were under-recorded and are now corrected.** Judge calls were priced at the 50%
+  Batch rate while being issued synchronously, which halved every published judge figure. The
+  committed results carry the corrected numbers, the discount is gone from the code, and the
+  totals here reflect the real spend.
 - **The judge's κ interval is wide.** Cohen's κ is 0.824 against 90 hand labels, but the bootstrap
   95% CI runs [0.580, 1.000] — "almost perfect" at the point estimate, only "moderate" at the lower
   bound. κ is unstable when one label dominates the marginals, which is why Gwet's AC1 (0.959) is

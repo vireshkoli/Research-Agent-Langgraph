@@ -13,6 +13,7 @@ interviewer asks about.
 """
 
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -139,6 +140,131 @@ def tool_table(results: list[CaseResult]) -> list[str]:
         f"| Invented-URL rate | {_pct(mean(invented)) if invented else '—'} | "
         "URLs in the answer that were never retrieved |",
     ]
+
+
+def _tool_caveat(results: list[CaseResult]) -> list[str]:
+    """What the precision and order numbers above can and cannot support.
+
+    Written from the dataset rather than asserted, because the honest reading of
+    tool precision here depends entirely on how thinly `expected_tools` is specified
+    and a reader cannot tell that from the percentage.
+    """
+    expected = [r.tools.n_expected for r in results]
+    actual = [r.tools.n_actual for r in results]
+    ordered = sum(1 for r in results if r.tools.order_score is not None)
+    thin = sum(1 for n in expected if n <= 1)
+
+    return [
+        "",
+        f"**Read tool precision with care.** `expected_tools` names at most one call "
+        f"for {thin} of these {len(results)} runs (mean {mean([float(n) for n in expected]):.2f} "
+        f"expected against {mean([float(n) for n in actual]):.2f} actual), while the agent "
+        "is designed to fan out several parallel searches in a single round. Precision "
+        "is matched/n_actual, so a correct four-way fan-out against a one-call "
+        "expectation scores 25% without a single wasted call. The figure above is "
+        "therefore a lower bound that mixes genuine redundancy with the dataset's own "
+        "thinness, and it is not evidence of waste on its own — **Where the rounds go** "
+        "below measures that directly instead.",
+        "",
+        f"The order score is computed on the {ordered} run(s) that declare a "
+        "`tool_order`, so it is a check that nothing is out of sequence on those cases "
+        "rather than a rate with any sampling behind it.",
+    ]
+
+
+def loop_efficiency_table(results: list[CaseResult], variant: str = "full") -> list[str]:
+    """Does the loop do anything with the rounds it spends?
+
+    Tool precision cannot answer that question here, so this does. Precision is
+    matched/n_actual against `expected_tools`, and `expected_tools` names a single
+    call for most cases while the agent is *designed* to fan out four to six parallel
+    searches per round. A low precision therefore partly measures how thinly the
+    dataset specifies the task, not how much work the agent wasted, and a number that
+    confounds the two should not be the evidence for a claim about waste.
+
+    Every figure below is counted off the committed traces instead, and none of them
+    depends on an expectation anyone had to write down:
+
+    - a **no-op round** is one where `act` emitted no tool calls at all. `act` sets
+      `act_requested_stop` in that case, so a no-op round is the agent saying it is
+      finished and being sent back round the loop anyway.
+    - a **dry round** ran tools and minted no new source.
+    - a **repeated query** is a search whose normalised terms exactly match an earlier
+      search in the same run.
+    """
+    rounds = {"noop": 0, "dry": 0, "productive": 0}
+    searches = repeats = calls = barren = 0
+
+    for case, run in sorted({(r.case_id, r.run) for r in results}):
+        path = RESULTS_DIR / "traces" / variant / f"{case}-r{run}.json"
+        if not path.is_file():
+            continue
+        trace = json.loads(path.read_text())
+        first_seen: dict[int, int] = {}
+        for source in trace.get("sources") or []:
+            step = source.get("first_seen_step")
+            first_seen[step] = first_seen.get(step, 0) + 1
+
+        seen_queries: set[str] = set()
+        index = 0
+        for step in trace.get("steps") or []:
+            if step.get("node") != "observe":
+                continue
+            index += 1
+            observations = step.get("observations") or []
+            for observation in observations:
+                calls += 1
+                if not observation.get("source_ids"):
+                    barren += 1
+                if observation.get("tool") == "web_search":
+                    searches += 1
+                    query = " ".join(
+                        sorted(
+                            re.findall(
+                                r"[a-z0-9]+",
+                                str((observation.get("args") or {}).get("query", "")).lower(),
+                            )
+                        )
+                    )
+                    if query in seen_queries:
+                        repeats += 1
+                    seen_queries.add(query)
+            if not observations:
+                rounds["noop"] += 1
+            elif not first_seen.get(index):
+                rounds["dry"] += 1
+            else:
+                rounds["productive"] += 1
+
+    total = sum(rounds.values())
+    if not total:
+        return []
+
+    def row(label: str, count: int, denominator: int) -> str:
+        return f"| {label} | {count} | {count / denominator * 100:.1f}% |"
+
+    lines = [
+        "| | Count | Share |",
+        "|---|---|---|",
+        row("Rounds where `act` emitted no tool calls", rounds["noop"], total),
+        row("Rounds that ran tools and found nothing new", rounds["dry"], total),
+        row("Productive rounds", rounds["productive"], total),
+        row("Searches repeating an earlier query verbatim", repeats, searches or 1),
+        row("Tool calls returning no new source", barren, calls or 1),
+        "",
+        f"Across {total} rounds the agent made {calls} tool calls, of which "
+        f"{repeats} repeated a query it had already issued. **It is not looping on "
+        "near-identical searches, and it is not making large numbers of useless "
+        f"calls.** What it does do is spend {rounds['noop']} rounds "
+        f"({rounds['noop'] / total * 100:.0f}% of all of them) calling no tools at "
+        "all. `act` emits no calls when it believes it can answer, so those rounds "
+        "are the agent asking to stop and being sent back by `reflect`, paying for "
+        "one `act` call and one `reflect` call each time to do nothing.",
+        "",
+        "That is a different defect from over-searching and it has a different fix: "
+        "not fewer searches, but honouring a stop that has already been proposed.",
+    ]
+    return lines
 
 
 def cost_table(results: list[CaseResult], payload: dict[str, Any]) -> list[str]:
@@ -534,6 +660,11 @@ def main() -> int:
         "## Tool-call accuracy",
         "",
         *tool_table(results),
+        *_tool_caveat(results),
+        "",
+        "## Where the rounds go",
+        "",
+        *loop_efficiency_table(results),
         "",
         "## Cost and latency",
         "",

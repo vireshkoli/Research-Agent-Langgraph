@@ -1,23 +1,33 @@
-"""LLM-as-judge: binary verdict, anchored rubric, majority of three.
+"""LLM-as-judge: binary verdict against an anchored rubric, one sample per run.
 
 **Binary, not a 0-1 score.** The agreement literature this project cites is about
-binary criteria; a hand label is naturally binary; and majority-of-three on a binary
-*is* the self-consistency being sought. Continuous scores from an LLM are badly
-calibrated and invite fake precision like "0.87 faithfulness".
+binary criteria, and a hand label is naturally binary. Continuous scores from an LLM
+are badly calibrated and invite fake precision like "0.87 faithfulness".
 
-**Three samples at temperature 1.0, not three at 0.** Three samples at temperature 0
-are identical roughly 95% of the time — that is cargo-culted self-consistency, not
-measurement. At 1.0 the disagreement rate is real information, and it gets published:
-if the judge disagrees with itself more than ~10% of the time, the *rubric* is
-ambiguous and the fix is the rubric, not more samples.
+**One sample, and the honest reason why.** `judge()` takes a `samples` argument and
+will take a majority over repeated calls, but every evaluation committed here ran
+with `samples=1`, and the disagreement rate it returns is therefore always 0 and is
+not published. An earlier version of this docstring described three samples at
+temperature 1.0 as though that were the method; it was never implemented — no
+`temperature` is set anywhere in this codebase — and no committed run used it. The
+claim is removed rather than softened.
+
+Self-consistency would be the weaker evidence here in any case. The judge is
+validated against 90 hand labels made before any verdict was visible (Cohen's
+kappa 0.824, Gwet's AC1 0.959, and zero disagreements in the inflating direction),
+which says more about whether the verdicts can be trusted than agreement with
+itself would. Majority-of-three at a real temperature remains worth doing, and
+`evals/REPORT.md` lists it as future work rather than as something already done.
 
 **Field order is load-bearing.** Structured outputs preserve declaration order, so
 `reasoning` before `verdict` before `failure_mode` forces the model to work through
 the evidence before committing. The failure_mode enum costs nothing extra and turns
 a bare pass rate into "of 21 failures, 11 were missing_key_fact".
 
-The judge runs through the Batch API where possible: eval scoring has no latency
-requirement, and Batch is half price.
+**Pricing.** These calls are issued synchronously and are priced as such. They were
+previously recorded at the 50% Batch rate without the Batch API being used, which
+understated every published judge cost by exactly 2x; the committed results carry
+the corrected figures and say so.
 """
 
 import time
@@ -110,7 +120,7 @@ def judge_once(
     model: str | None = None,
     cfg: Settings | None = None,
     tracker: CostTracker | None = None,
-    batch: bool = True,
+    batch: bool = False,
     attempts: int = 3,
 ) -> Judgement | None:
     """One judgement, retrying transient transport failures.
