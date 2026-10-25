@@ -115,3 +115,24 @@ anything.
 - A second judge from another model family (`evals/judge_cross.py`) on the same
   answers, and both judges against a seeded random sample of owner-labelled answers.
 - Per-reasoning-type pass rates, which at these strata sizes are descriptive only.
+
+## Sample-size decision (recorded after the pilot, before any further run)
+
+The 10-question pilot ran under this exact protocol on both arms. Only its cost was
+used, as registered:
+
+| | per question | 190 remaining |
+|---|---|---|
+| full (agent + judge) | $0.00465 | $0.88 |
+| baseline (agent + judge) | $0.00277 | $0.53 |
+| **both arms** | **$0.00742** | **$1.41** |
+
+Against $2.77 of budget remaining, **n stays at 200**. Feasibility checks, also not
+outcomes: every search in both arms went through DuckDuckGo (132 served, 3 failed,
+none switched engine), and no source came from an answer-key host.
+
+Each arm's remaining spend exceeds the agent's default per-process guard of $0.50,
+which would trip mid-run and turn every later question into `internal_error` —
+and the exclusion rule above would then drop those questions from both arms. The
+main run therefore sets `RA_MAX_PROCESS_COST_USD=1.50` per arm. The project-wide
+ledger cap of $5.00 remains the hard stop.
