@@ -319,10 +319,16 @@ Written before anyone asks.
   *generations*, not different *families*; ruling this out needs a judge from another provider.
 - **n=30 is small.** Every interval above is wide. Differences under ~15 points are not
   distinguishable from noise.
-- **Prompt caching does not engage.** Measured 6.6% cache hit rate. The stable prefix (system prompt
-  plus question) is around 270 tokens, below OpenAI's 1024-token minimum for caching. An earlier cost
-  model here assumed ~58% and was wrong; runs came in cheaper than budgeted anyway, for unrelated
-  reasons.
+- **Prompt caching engages late, and the reason is 1,024 tokens.** Measured across the 90 current
+  `full` runs, 11.4% of input tokens were served from cache — and 0% of the first `act` call, 1.2% of
+  the second, 60.7% of the third onward. OpenAI only caches a prefix once it reaches 1,024 tokens,
+  and the first `act` call is 891 on average, so it is never written to the cache and the second
+  call finds almost nothing to reuse despite beginning with the same text. Most runs stop after two
+  calls, which is why the overall rate is low; longer FRAMES runs reach 34% for the same reason. An
+  earlier version of this README blamed a ~270-token system prompt, which left out the tool
+  definitions that make up most of the prefix, and quoted an older 6.6%. The stable prefix sits just
+  under the threshold, so lengthening it with useful content is expected to save roughly 6% a run —
+  measured, not assumed, once that change lands.
 - **`code_execution` is contained by the kernel, and only the kernel layers are claimed.** The model
   writes this code after reading pages anyone can write, so it is treated as hostile. An audit found
   six escapes from the earlier in-process sandbox (`uuid.os.popen`, `__builtins__['__import__']`,
