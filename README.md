@@ -155,7 +155,7 @@ run-to-run variance than to a fixed set of cases the agent cannot do.
    budget is gone.
 
 Tools: `web_search` (Tavily, with a circuit-broken `ddgs` fallback), `fetch_page`, `calculator`,
-`code_execution` (sandboxed), `file_ops` (workspace-confined).
+`code_execution` (kernel-contained: seccomp + Landlock), `file_ops` (workspace-confined).
 
 ## Architecture
 
@@ -339,11 +339,23 @@ Written before anyone asks.
   plus question) is around 270 tokens, below OpenAI's 1024-token minimum for caching. An earlier cost
   model here assumed ~58% and was wrong; runs came in cheaper than budgeted anyway, for unrelated
   reasons.
-- **`code_execution` is a resource guardrail, not a security boundary**, and its docstring says so at
-  length. Real isolation (network namespaces, bubblewrap, gVisor) needs `CAP_SYS_ADMIN`, which
-  unprivileged container hosts do not grant. What it does provide is a scrubbed environment — the
-  child process never sees an API key — plus an import allowlist, self-imposed resource limits and a
-  process-group kill. Do not point it at anything whose compromise would matter.
+- **`code_execution` is contained by the kernel, and only the kernel layers are claimed.** The model
+  writes this code after reading pages anyone can write, so it is treated as hostile. An audit found
+  six escapes from the earlier in-process sandbox (`uuid.os.popen`, `__builtins__['__import__']`,
+  string-built dunders, reading `.env`, `__loader__.load_module`, `typing.get_type_hints`), and an
+  in-process Python sandbox cannot be made sound. What can be is what the process may ask the kernel
+  for, without privileges: **seccomp-bpf** refuses sockets, exec, signalling or tracing other
+  processes, and every file write; **Landlock** confines reads to the stdlib and a scratch
+  directory, which keeps every `/proc/*/environ` — so every API key — out of reach. Both **fail
+  closed**: on a Linux host that cannot apply them, the code does not run. Tested by running
+  *unrestricted* Python under the real filters on Linux CI, and confirmed on the live Space, where the
+  tool only succeeds if both layers applied. The in-process restrictions still close all six known
+  escapes, but are defence in depth and not claimed as a boundary. On macOS neither kernel layer
+  exists; each result's `meta["isolation"]` says which layers ran.
+- **Two security limitations remain, stated rather than implied away.** `fetch_page` checks the
+  *resolved* address of every request and redirect hop, but httpx resolves again when it connects, so
+  DNS rebinding is not stopped. And the demo's per-session spend cap is keyed on Gradio's session
+  hash, which a page refresh resets; the daily cap is the control that actually holds.
 - **Two of my own eval cases were wrong**, and both were caught before publication. One scored a
   correct refusal as a failure because a substring anchor cannot distinguish quoting a prompt-injection
   payload from obeying it. The other asked how long before the Web went public *Snow Crash* was
