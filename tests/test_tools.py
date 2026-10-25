@@ -345,3 +345,109 @@ def test_every_tool_has_a_per_run_call_cap() -> None:
     # budget_verdict enforces these; a tool with no cap is an unbounded loop.
     for name, spec in REGISTRY.items():
         assert spec.max_calls > 0, name
+
+
+# --- fetch_page: whose URL is this? -----------------------------------------------
+#
+# The model chooses what to fetch and reads pages anyone can write, so a page can
+# point it at an address of the author's choosing. Every case below was reachable
+# before the guard; all are offline (IP literals resolve without DNS, and redirects
+# run against an in-memory transport).
+
+
+@pytest.mark.parametrize(
+    "url",
+    [
+        "http://127.0.0.1:7860/config",  # the Space's own Gradio server
+        "http://localhost:7860/",
+        "http://[::1]/",
+        "http://169.254.169.254/latest/meta-data/",  # cloud instance metadata
+        "http://10.0.0.1/",
+        "http://192.168.1.1/",
+        "http://172.16.0.1/",
+        "http://0.0.0.0/",
+        "http://2130706433/",  # 127.0.0.1 written as one decimal integer
+        "http://[::ffff:127.0.0.1]/",  # IPv4-mapped IPv6
+        "http://224.0.0.1/",  # multicast
+    ],
+)
+def test_fetch_page_refuses_non_public_addresses(url: str) -> None:
+    from research_agent.tools.fetch_page import refusal
+
+    assert refusal(url) is not None, f"{url} must not be fetchable"
+
+
+def test_fetch_page_allows_a_public_address() -> None:
+    from research_agent.tools.fetch_page import refusal
+
+    assert refusal("http://8.8.8.8/") is None
+
+
+def test_private_fetching_is_off_unless_asked_for() -> None:
+    from research_agent.config import Settings
+
+    assert Settings().allow_private_fetch is False
+
+
+def _serve(monkeypatch: pytest.MonkeyPatch, handler: Any) -> None:
+    """Route fetch_page's client through an in-memory transport."""
+    real = httpx.Client
+    monkeypatch.setattr(
+        httpx, "Client", lambda **kwargs: real(transport=httpx.MockTransport(handler), **kwargs)
+    )
+
+
+def test_a_public_url_that_redirects_to_a_private_one_is_refused(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # Checking only the URL the model asked for is not enough: a public page can
+    # answer with a redirect to an internal address.
+    hits: list[str] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        hits.append(str(request.url))
+        return httpx.Response(302, headers={"location": "http://127.0.0.1:7860/config"})
+
+    _serve(monkeypatch, handler)
+    result = fetch_page("http://8.8.8.8/start")
+
+    assert not result.ok and result.meta.get("blocked")
+    assert hits == ["http://8.8.8.8/start"], "the private hop must never be requested"
+
+
+def test_the_citation_points_at_the_url_that_served_the_page(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.host == "8.8.8.8":
+            return httpx.Response(301, headers={"location": "http://1.1.1.1/real"})
+        return httpx.Response(200, headers={"content-type": "text/plain"}, text="the answer")
+
+    _serve(monkeypatch, handler)
+    result = fetch_page("http://8.8.8.8/moved")
+
+    assert result.ok
+    assert [s.url for s in result.sources] == ["http://1.1.1.1/real"]
+    assert result.meta["redirects"] == 1
+
+
+def test_a_redirect_loop_is_cut_off(monkeypatch: pytest.MonkeyPatch) -> None:
+    _serve(monkeypatch, lambda request: httpx.Response(302, headers={"location": "/again"}))
+    result = fetch_page("http://8.8.8.8/again")
+    assert not result.ok and "redirects" in (result.error or "")
+
+
+def test_the_body_is_capped_while_it_streams(monkeypatch: pytest.MonkeyPatch) -> None:
+    # The old cap sliced the text after the whole body had been read into memory,
+    # so the constant did not protect what its name said it did.
+    from research_agent.tools.fetch_page import MAX_PAGE_BYTES
+
+    huge = b"x" * (MAX_PAGE_BYTES * 3)
+    _serve(
+        monkeypatch,
+        lambda request: httpx.Response(200, headers={"content-type": "text/plain"}, content=huge),
+    )
+    result = fetch_page("http://8.8.8.8/huge")
+
+    assert result.ok
+    assert result.meta["bytes"] <= MAX_PAGE_BYTES

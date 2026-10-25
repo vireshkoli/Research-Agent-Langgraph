@@ -9,10 +9,31 @@ The extraction is deliberately crude and the README says so. Getting main-conten
 extraction right is its own project, and on the pages a research agent actually
 lands on (Wikipedia, news, docs, arXiv) dropping script/style/nav and collapsing
 whitespace recovers most of the signal.
+
+**Whose URL is this?** The model chooses what to fetch, and the model reads pages
+written by anyone, so a fetched page can steer it toward an address of the page
+author's choosing. Before this guard only the scheme was checked, and loopback,
+private and link-local addresses were all reachable — including the Space's own
+Gradio server on 127.0.0.1:7860 — with the response flowing to the model and into
+the public Sources pane. Now:
+
+- the *resolved* address is checked, not the hostname, so `localhost`, decimal
+  forms like `2130706433` and IPv4-mapped IPv6 are all caught the same way
+- redirects are followed by hand and every hop is checked, since a public URL can
+  redirect to a private one
+- the body is capped while it streams, not after it has all been buffered
+- the citation points at the URL that served the bytes, not the one requested
+
+**Stated limitation:** this does not stop DNS rebinding. httpx resolves the name
+again when it connects, so a hostname that answers with a public address for the
+check and a private one for the connection gets through. Pinning the connection to
+the checked address is the fix, and it is more machinery than this agent warrants.
 """
 
+import ipaddress
 import re
-from urllib.parse import urlparse
+import socket
+from urllib.parse import urljoin, urlparse
 
 import httpx
 
@@ -20,6 +41,7 @@ from research_agent.config import settings
 from research_agent.tools.base import Source, ToolResult, ToolSpec, truncate
 
 MAX_PAGE_BYTES = 2 * 1024 * 1024
+MAX_REDIRECTS = 5
 MAX_TEXT_CHARS = 6000
 USER_AGENT = "research-agent/0.1 (+https://github.com/vireshkoli/research-agent-langgraph)"
 
@@ -72,49 +94,98 @@ def _unescape(text: str) -> str:
     return text
 
 
+def refusal(url: str) -> str | None:
+    """Why `url` may not be fetched, or None if it may. Checks the resolved address."""
+    parsed = urlparse(url)
+    if parsed.scheme not in ("http", "https"):
+        return f"only http and https URLs are supported, got {url!r}"
+    host = parsed.hostname
+    if not host:
+        return f"not a valid URL: {url!r}"
+    if settings().allow_private_fetch:
+        return None
+    try:
+        port = parsed.port or (443 if parsed.scheme == "https" else 80)
+        resolved = socket.getaddrinfo(host, port, type=socket.SOCK_STREAM)
+    except (OSError, UnicodeError, ValueError) as exc:
+        return f"could not resolve {host!r}: {exc}"
+    for *_, sockaddr in resolved:
+        address = ipaddress.ip_address(str(sockaddr[0]).split("%")[0])
+        if isinstance(address, ipaddress.IPv6Address) and address.ipv4_mapped:
+            address = address.ipv4_mapped
+        if not address.is_global or address.is_multicast:
+            return f"{host!r} resolves to a non-public address ({address}); not fetched"
+    return None
+
+
 def fetch_page(url: str) -> ToolResult:
     """GET `url` and return its readable text."""
     url = (url or "").strip()
-    parsed = urlparse(url)
-    if parsed.scheme not in ("http", "https"):
-        return ToolResult.failure(f"only http and https URLs are supported, got {url!r}")
-    if not parsed.netloc:
-        return ToolResult.failure(f"not a valid URL: {url!r}")
+    timeout = settings().fetch_timeout_seconds
 
     try:
         with httpx.Client(
-            follow_redirects=True,
-            timeout=settings().fetch_timeout_seconds,
-            headers={"User-Agent": USER_AGENT},
+            follow_redirects=False, timeout=timeout, headers={"User-Agent": USER_AGENT}
         ) as client:
-            response = client.get(url)
+            redirects = 0
+            for _ in range(MAX_REDIRECTS + 1):
+                if reason := refusal(url):
+                    return ToolResult.failure(reason, blocked=True)
+                with client.stream("GET", url) as response:
+                    if response.is_redirect:
+                        location = response.headers.get("location")
+                        if not location:
+                            return ToolResult.failure(f"redirect from {url} had no location")
+                        url = urljoin(url, location)
+                        redirects += 1
+                        continue
+                    if response.status_code >= 400:
+                        return ToolResult.failure(f"HTTP {response.status_code} from {url}")
+                    content_type = response.headers.get("content-type", "")
+                    if not any(
+                        kind in content_type
+                        for kind in ("text/html", "text/plain", "application/xhtml")
+                    ):
+                        return ToolResult.failure(f"unsupported content type {content_type!r}")
+                    data = _read_capped(response, MAX_PAGE_BYTES)
+                    raw = data.decode(response.encoding or "utf-8", errors="replace")
+                    final_url, status = str(response.url), response.status_code
+                    break
+            else:
+                return ToolResult.failure(f"more than {MAX_REDIRECTS} redirects from the URL given")
     except httpx.TimeoutException:
-        return ToolResult.failure(f"timed out after {settings().fetch_timeout_seconds:g}s")
+        return ToolResult.failure(f"timed out after {timeout:g}s")
     except httpx.HTTPError as exc:
         return ToolResult.failure(f"request failed: {type(exc).__name__}: {exc}")
 
-    if response.status_code >= 400:
-        return ToolResult.failure(f"HTTP {response.status_code} from {url}")
-
-    content_type = response.headers.get("content-type", "")
-    if not any(kind in content_type for kind in ("text/html", "text/plain", "application/xhtml")):
-        return ToolResult.failure(f"unsupported content type {content_type!r}")
-
-    raw = response.text[:MAX_PAGE_BYTES]
     title, text = html_to_text(raw) if "html" in content_type else ("", raw)
     if not text.strip():
-        return ToolResult.failure(f"no readable text extracted from {url}")
+        return ToolResult.failure(f"no readable text extracted from {final_url}")
 
     body, raw_chars, was_truncated = truncate(text, MAX_TEXT_CHARS)
-    heading = title or url
+    heading = title or final_url
     return ToolResult(
         ok=True,
-        content=f"{heading}\n{url}\n\n{body}",
-        sources=[Source(url=url, title=title or url, snippet=text[:300], tool="fetch_page")],
+        content=f"{heading}\n{final_url}\n\n{body}",
+        sources=[
+            Source(url=final_url, title=title or final_url, snippet=text[:300], tool="fetch_page")
+        ],
         raw_chars=raw_chars,
         truncated=was_truncated,
-        meta={"status": response.status_code, "final_url": str(response.url)},
+        meta={"status": status, "final_url": final_url, "redirects": redirects, "bytes": len(data)},
     )
+
+
+def _read_capped(response: httpx.Response, limit: int) -> bytes:
+    """Read at most `limit` bytes, stopping the download rather than slicing after it."""
+    chunks: list[bytes] = []
+    size = 0
+    for chunk in response.iter_bytes():
+        chunks.append(chunk)
+        size += len(chunk)
+        if size >= limit:
+            break
+    return b"".join(chunks)[:limit]
 
 
 SPEC = ToolSpec(
