@@ -53,7 +53,8 @@ nothing new. What the loop did was stop calling tools and keep going anyway: **7
 was the agent asking to stop, `reflect` overruling, and `act` proposing the same stop again. One
 adversarial case did this eight times consecutively.
 
-Two lines of prompt were responsible, and both are the kind of defect no test catches:
+Two lines of prompt contradicted what these very runs measured, and both are the kind of defect no
+test catches:
 
 - `SYSTEM` said *"prefer several specific searches over one broad one"* and then, four lines later,
   *"do not keep searching to feel thorough."* The first is about the width of one round and now
@@ -78,14 +79,23 @@ Two lines of prompt were responsible, and both are the kind of defect no test ca
 The loop now beats the baseline it used to lose to. **That difference is not significant** —
 +3.3 points, 95% paired interval [−1.1, +7.8], McNemar p = 0.375 — and the baseline remains three
 times cheaper and still perfect on the adversarial tier, where it cannot be talked out of stopping.
-What is defensible is narrower and more useful than the original claim: **the architecture was never
-the problem, and the measured failure was a prompt that told the model to fear the wrong mistake.**
+**What the prompt fix did not do is stop the spinning.** In the re-run, **73 of 210 rounds — 35% —
+still call no tools at all**, against 34% before. `adv-004` still spins eight rounds in every run,
+and one adversarial run refuses the same request six times while `reflect` keeps answering
+"continue". So the accuracy gain did not come from repairing the stop condition, and this README
+does not know what it did come from: the two passes are two and a half months apart, so web drift
+sits inside the difference alongside the prompt change. What is defensible is narrow: **with the
+corrected prompts the loop is no longer worse than one round of search, and its stop condition is
+still broken.**
 
 **`reflect` now earns its place, and the ablation is how we know.** `no_overrule` makes act's stop
 decision final, removing exactly the authority that looked harmful in pass one. It scores **90.0%
 against the full agent's 96.7%** — +6.7 points, paired interval [+0.0, +14.4], McNemar p = 0.070,
 and the full agent reliably solves 4 cases it does not against 1 the other way. In pass one this
-same ablation *beat* the full agent. Nothing about the node changed; its instructions did.
+same ablation *beat* the full agent. The reversal coincides with the prompt change, but also with
+two and a half months of web drift, so it is suggestive rather than proven. And it leaves the real
+open problem standing: reflect's overrules are worth having for accuracy, and they are also what
+produces the 35% of rounds that do nothing.
 
 **One comparison here is confounded and should not be read as a clean before/after.** The 87.8% was
 measured in August and the 96.7% today, so two and a half months of web drift sit inside it
@@ -282,10 +292,14 @@ Written before anyone asks.
 - **The loop's margin over the baseline is not significant.** It wins overall (96.7% vs 93.3%) and
   on multi-hop, but at +3.3 points with a paired interval of [−1.1, +7.8] and McNemar p = 0.375 that
   is not a result to lean on. The baseline is still 3× cheaper and still perfect on the adversarial
-  tier. "The loop is better" is not supported; "the loop is no longer worse, and the prompt was the
-  problem" is.
+  tier. "The loop is better" is not supported; "with corrected prompts the loop is no longer worse"
+  is, and nothing stronger.
+- **The stop condition is still broken.** 35% of the full agent's rounds call no tools — the agent
+  proposing to stop and `reflect` overruling it — exactly as before the prompt fix. It costs time and
+  money rather than accuracy, and the ablation that removes the overrules entirely loses accuracy,
+  so the fix is not simply taking `reflect`'s authority away.
 - **The headline reversed once, and could again.** This evaluation concluded the opposite in its
-  first pass, and the thing that changed was two lines of prompt. An n=30 benchmark that flips on a
+  first pass; between the two passes the prompts changed *and* two and a half months passed. An n=30 benchmark that flips on a
   prompt edit should be treated as a diagnostic instrument, not a leaderboard.
 - **Tool precision understates the agent.** The 36.8% is matched/n_actual against
   `expected_tools`, which names at most one call for 81 of 90 runs while the agent is designed to
