@@ -66,6 +66,9 @@ class CaseResult:
     reasons: list[str] = field(default_factory=list)
     # Benchmarks that name their gold sources only; None everywhere else.
     gold_source_recall: float | None = None
+    # Per run rather than per process, so a resumed evaluation still totals what it
+    # actually spent on judging. Zero in result files written before it existed.
+    judge_cost_usd: float = 0.0
 
 
 # --- tool-call accuracy -----------------------------------------------------------

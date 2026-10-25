@@ -305,7 +305,9 @@ def main(argv: list[str] | None = None) -> int:
 
                 trace = run_agent(case.question, variant=args.variant, cfg=cfg)
                 write_trace(trace, traces_dir / f"{case.id}-r{run_index}.json")
+                judged_before = judge_tracker.total_cost_usd
                 result = score(case, trace, run_index, args, judge_tracker)
+                result.judge_cost_usd = round(judge_tracker.total_cost_usd - judged_before, 8)
 
                 row = _serialise(result)
                 serialised.append(row)
@@ -338,7 +340,10 @@ def main(argv: list[str] | None = None) -> int:
         "dataset": args.dataset,
         "elapsed_s": round(time.perf_counter() - started, 1),
         "agent_cost_usd": round(sum(r.cost_usd for r in results), 6),
-        "judge_cost_usd": round(judge_tracker.total_cost_usd, 6),
+        # Summed over results rather than read off this process's tracker: after a
+        # --resume the tracker has only seen the runs made since, and the total would
+        # quietly leave out the rest.
+        "judge_cost_usd": round(sum(r.judge_cost_usd for r in results), 6),
         "results": serialised,
     }
 
