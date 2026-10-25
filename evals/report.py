@@ -34,7 +34,7 @@ from evals.metrics import (
     unique_wins,
     wilson_interval,
 )
-from evals.schema import load_human_labels
+from evals.schema import answer_fingerprint, load_human_label_records
 from research_agent.prompts import prompt_hash
 
 RESULTS_DIR = Path(__file__).parent / "results"
@@ -434,8 +434,57 @@ def budget_table(results: list[CaseResult]) -> list[str]:
     return lines
 
 
+def _live_labels(variant: str = "full") -> tuple[dict[tuple[str, int], int], int]:
+    """(labels that still describe the committed answers, number discarded).
+
+    A hand label is only evidence about the answer the hand actually read. The
+    labels are keyed by (case_id, run) and those keys are reused by every re-run,
+    so without checking what each one graded, a later evaluation silently repoints
+    all of them at text no human ever saw — and agreement is then computed against
+    the wrong answers while still returning a perfectly plausible number.
+
+    That is not hypothetical. The October re-run moved Cohen's kappa from 0.824 to
+    0.331 with nothing raising an error, because every one of the 90 labels was
+    being compared against a different answer than the one it was written for.
+    """
+    live: dict[tuple[str, int], int] = {}
+    discarded = 0
+    for label in load_human_label_records():
+        path = RESULTS_DIR / "traces" / variant / f"{label.case_id}-r{label.run}.json"
+        if not path.is_file():
+            discarded += 1
+            continue
+        answer = json.loads(path.read_text()).get("answer")
+        if label.answer_sha256 and answer_fingerprint(answer) != label.answer_sha256:
+            discarded += 1
+            continue
+        live[(label.case_id, label.run)] = label.label
+    return live, discarded
+
+
 def agreement_section(results: list[CaseResult]) -> list[str]:
-    labels = load_human_labels()
+    labels, discarded = _live_labels()
+    if discarded and not labels:
+        return [
+            f"_All {discarded} hand labels describe answers that have since been "
+            "re-run, so none of them grades the text committed here. Judge-vs-human "
+            "agreement is **not reported** rather than computed against answers no "
+            "human read — a stale comparison still returns a number, which is what "
+            "makes it dangerous. Re-label a sample of the current trajectories with "
+            "`python -m evals.label` to restore it._",
+            "",
+            "_Until then, every judge-derived figure in this report is unvalidated._",
+        ]
+    if discarded:
+        return [
+            f"_{discarded} of the hand labels describe answers that have since been "
+            f"re-run and are excluded; {len(labels)} still grade the committed text._",
+            "",
+        ] + _agreement_body(results, labels)
+    return _agreement_body(results, labels)
+
+
+def _agreement_body(results: list[CaseResult], labels: dict[tuple[str, int], int]) -> list[str]:
     if not labels:
         return [
             "_No human labels committed yet, so judge-vs-human agreement is not "

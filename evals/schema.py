@@ -12,6 +12,7 @@ measurements. Keeping them together would mean editing a question silently
 invalidates the label attached to it.
 """
 
+import hashlib
 import json
 from pathlib import Path
 from typing import Any, Literal
@@ -111,12 +112,20 @@ class HumanLabel(BaseModel):
     agreement has to be computed over the same unit. Labelling only the cases would
     give kappa on a third of the sample, where the standard error spans several
     Landis-Koch bands.
+
+    `answer_sha256` records *which* answer was graded. Without it a label is keyed
+    only by (case_id, run), and those keys are reused by every re-run — so a later
+    evaluation silently repoints all 90 labels at answers no human ever read, and
+    agreement is computed against the wrong text while still producing a plausible
+    number. That happened here: a re-run moved kappa from 0.824 to 0.331 with no
+    error raised anywhere. The hash makes the mismatch detectable instead.
     """
 
     case_id: str
     run: int
     label: Literal[0, 1]
     note: str = ""
+    answer_sha256: str = ""  # empty on labels written before provenance was tracked
 
 
 def load_cases(path: Path = DATASET) -> list[EvalCase]:
@@ -138,6 +147,19 @@ def load_human_labels(path: Path = HUMAN_LABELS) -> dict[tuple[str, int], int]:
     raw = json.loads(path.read_text())
     labels = [HumanLabel.model_validate(item) for item in raw]
     return {(label.case_id, label.run): label.label for label in labels}
+
+
+def load_human_label_records(path: Path = HUMAN_LABELS) -> list[HumanLabel]:
+    """The labels with their provenance intact, for checking what they describe."""
+    if not path.is_file():
+        return []
+    return [HumanLabel.model_validate(item) for item in json.loads(path.read_text())]
+
+
+def answer_fingerprint(answer: str | None) -> str:
+    """The identity of a graded answer. Whitespace-normalised so that reformatting
+    alone does not invalidate a label."""
+    return hashlib.sha256(" ".join((answer or "").split()).encode()).hexdigest()[:16]
 
 
 def tier_counts(cases: list[EvalCase]) -> dict[str, int]:

@@ -94,12 +94,22 @@ against one prompt set and is sound; the across-time one is indicative only. Eve
 the hash of the prompts that produced it, and `evals/REPORT.md` prints a banner if the committed
 results ever stop matching the code.
 
-**Is the judge trustworthy?** This finding rests on judge verdicts, so the judge was checked
-against 90 hand labels made before any verdict was visible: **Cohen's κ = 0.824** (raw agreement
-96.7%, Gwet's AC1 0.959). More usefully than the headline number, the errors are one-directional —
-the judge said CORRECT where the human said INCORRECT **zero times**, and all three disagreements
-are it being *stricter* than the human. Every pass rate here is therefore a floor rather than a
-flattering estimate, which is the direction an evaluation should fail in.
+**Is the judge trustworthy? Not currently demonstrated, and the way that broke is worth
+reading.** The judge was validated against 90 hand labels made before any verdict was visible:
+**Cohen's κ = 0.824**, raw agreement 96.7%, Gwet's AC1 0.959, with the judge saying CORRECT where
+the human said INCORRECT **zero times** — errors only ever in the stricter direction. That result
+was real, and it describes the August trajectories, which are preserved at
+[`v0.2.0-pre-gate`](../../releases/tag/v0.2.0-pre-gate).
+
+Re-running the evaluation **silently invalidated it**. Labels were keyed by `(case_id, run)` alone,
+and those keys are reused by every run, so all 90 labels quietly repointed at answers no human had
+ever read. κ "fell" to 0.331 and nothing raised an error — a stale comparison still returns a
+perfectly plausible number, which is exactly what makes it dangerous. Labels now carry a hash of
+the answer they graded, `evals/REPORT.md` discards any that no longer match and **refuses to report
+agreement at all** rather than computing it against the wrong text, and the current figures are
+therefore marked unvalidated until a sample is re-labelled.
+
+Every judge-derived number below should be read in that light.
 
 **Caveats, stated rather than buried.** At 11 multi-hop and 7 adversarial cases the per-tier
 intervals are very wide and no single tier difference here is significant on its own. Only one
@@ -214,9 +224,10 @@ hallucination checks here and the only ones that catch a confident answer citing
 not exist.
 
 **The judge** is binary with an anchored rubric and four worked examples, and every committed
-evaluation ran it at one sample per trajectory. It is validated against 90 hand labels instead of
+evaluation ran it at one sample per trajectory. It is validated against hand labels rather than
 against itself — agreement with a human is the evidence that matters, and self-consistency would
-not have caught a judge that is confidently and consistently wrong. Unparseable judgements are
+not have caught a judge that is confidently and consistently wrong. Those labels now record a hash
+of the answer they graded, so a re-run can never silently repoint them again. Unparseable judgements are
 excluded and counted, never coerced to INCORRECT, since coercion biases the result in whichever
 direction it goes.
 
@@ -291,10 +302,12 @@ Written before anyone asks.
   Batch rate while being issued synchronously, which halved every published judge figure. The
   committed results carry the corrected numbers, the discount is gone from the code, and the
   totals here reflect the real spend.
-- **The judge's κ interval is wide.** Cohen's κ is 0.824 against 90 hand labels, but the bootstrap
-  95% CI runs [0.580, 1.000] — "almost perfect" at the point estimate, only "moderate" at the lower
-  bound. κ is unstable when one label dominates the marginals, which is why Gwet's AC1 (0.959) is
-  reported beside it.
+- **The judge is currently unvalidated against the committed answers.** κ = 0.824 (bootstrap CI
+  [0.580, 1.000], Gwet's AC1 0.959) was measured against the August trajectories and still stands
+  for those; re-running the evaluation invalidated all 90 labels, and the report now refuses to
+  report agreement rather than compute it against answers no human read. Re-labelling a sample
+  restores it. The interval was wide even when valid — "almost perfect" at the point estimate,
+  only "moderate" at the lower bound, because κ is unstable when one label dominates the marginals.
 - **Self-preference is not controlled.** Judge and agent are both OpenAI models. They are different
   *generations*, not different *families*; ruling this out needs a judge from another provider.
 - **n=30 is small.** Every interval above is wide. Differences under ~15 points are not

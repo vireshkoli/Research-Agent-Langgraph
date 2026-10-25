@@ -90,27 +90,9 @@ Of 3 failed runs:
 
 ## Is the judge any good?
 
-Hand-labelled **90** judgements before looking at any judge output.
+_All 90 hand labels describe answers that have since been re-run, so none of them grades the text committed here. Judge-vs-human agreement is **not reported** rather than computed against answers no human read — a stale comparison still returns a number, which is what makes it dangerous. Re-label a sample of the current trajectories with `python -m evals.label` to restore it._
 
-| Statistic | Value |
-|---|---|
-| Raw agreement | 92.2% |
-| **Cohen's κ** | **0.331** (fair) |
-| κ 95% CI (bootstrap, seeded) | [-0.033, 0.676] |
-| Gwet's AC1 | 0.912 |
-| Deflation, raw − κ | 59.1 pts |
-| Coverage | 100.0% (0 excluded) |
-
-| | Human CORRECT | Human INCORRECT |
-|---|---|---|
-| **Judge CORRECT** | 81 | 6 |
-| **Judge INCORRECT** | 1 | 2 |
-
-Raw agreement overstates κ by 59 points here. That gap is why raw agreement alone is not reported: it counts the agreement you would get by chance, which on skewed data is most of it. Gwet's AC1 is shown alongside because κ is unstable when one label dominates the marginals. (The literature this design follows measures 33-41 points of deflation on MT-Bench; the gap here is smaller because raw agreement is unusually high, not because the correction stopped mattering.)
-
-**The judge passed 6 run(s) the human failed**, against 1 in the other direction. Pass rates here may therefore be slightly optimistic.
-
-**Verbosity probe:** correlation between verdict and answer length is **r = -0.222** — the judge scored shorter answers higher. Folk wisdom says LLM judges reward length, and the 2026 study behind this design measured that bias below 0.011, so a value this size is worth naming rather than filing away. It is also confounded: this agent writes longest when it is hedging on a question it could not settle, so length here tracks difficulty as much as style. Treat it as a flag for a larger sample, not as evidence the judge prefers brevity.
+_Until then, every judge-derived figure in this report is unvalidated._
 
 ## Against a baseline
 

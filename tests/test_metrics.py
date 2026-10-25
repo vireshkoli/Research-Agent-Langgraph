@@ -521,3 +521,37 @@ def test_discordant_counts_survives_a_variant_with_missing_runs() -> None:
     complete = make_results({"x": [True, True, True]})
     partial = make_results({"x": [False]})
     assert discordant_counts(complete, partial) == (1, 0)
+
+
+# --- label provenance -----------------------------------------------------------------
+
+
+def test_fingerprint_ignores_reformatting_but_not_content() -> None:
+    from evals.schema import answer_fingerprint
+
+    # Re-wrapping an answer must not invalidate the label that graded it.
+    assert answer_fingerprint("Paris is the capital.\nIt is [S1].") == answer_fingerprint(
+        "Paris is   the capital. It is [S1]."
+    )
+    # Changing what it says must.
+    assert answer_fingerprint("Paris [S1]") != answer_fingerprint("Lyon [S1]")
+
+
+def test_fingerprint_treats_no_answer_as_a_value() -> None:
+    from evals.schema import answer_fingerprint
+
+    assert answer_fingerprint(None) == answer_fingerprint("")
+    assert answer_fingerprint(None) != answer_fingerprint("an answer")
+
+
+def test_every_committed_label_records_what_it_graded() -> None:
+    # The defect this guards against: labels keyed only by (case_id, run) are
+    # silently repointed at new text by the next evaluation, and agreement is then
+    # computed against answers no human read. A re-run moved kappa from 0.824 to
+    # 0.331 with nothing raising an error.
+    from evals.schema import load_human_label_records
+
+    records = load_human_label_records()
+    assert records, "the committed labels should load"
+    missing = [f"{r.case_id}-r{r.run}" for r in records if not r.answer_sha256]
+    assert not missing, f"labels with no provenance: {missing[:5]}"
