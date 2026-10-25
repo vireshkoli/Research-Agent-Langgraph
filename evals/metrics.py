@@ -18,6 +18,7 @@ almost nobody publishes that comparison.
 """
 
 import math
+import random
 import re
 from dataclasses import dataclass, field
 from typing import Any
@@ -349,6 +350,115 @@ def percentile(values: list[float], pct: float) -> float:
 
 def mean(values: list[float]) -> float:
     return sum(values) / len(values) if values else 0.0
+
+
+def per_case_rates(results: list[CaseResult]) -> dict[str, float]:
+    """Success rate per case id — the unit that makes a variant comparison *paired*.
+
+    Two variants are run over the same cases, so comparing them with two independent
+    Wilson intervals throws away the pairing and is needlessly conservative. Everything
+    below consumes this mapping rather than a flat rate.
+    """
+    return {
+        case: sum(r.success for r in runs) / len(runs) for case, runs in _group(results).items()
+    }
+
+
+def mcnemar_exact(only_a: int, only_b: int) -> float:
+    """Two-sided exact binomial McNemar on the two discordant counts.
+
+    The chi-squared form of McNemar's test is the one usually reached for, and at
+    these counts it is not trustworthy: the discordant pairs here are single digits,
+    where the continuity-corrected approximation is known to be conservative and
+    erratic. The exact binomial has no such caveat and at n < 100 costs nothing.
+
+    Concordant pairs — cases both variants get right, or both get wrong — carry no
+    information about which is better and are deliberately not arguments.
+    """
+    discordant = only_a + only_b
+    if discordant == 0:
+        return 1.0
+    smaller = min(only_a, only_b)
+    tail = sum(math.comb(discordant, i) for i in range(smaller + 1)) / (2**discordant)
+    return min(1.0, 2 * tail)
+
+
+def paired_bootstrap_ci(
+    rates_a: dict[str, float],
+    rates_b: dict[str, float],
+    iterations: int = 2000,
+    seed: int = 42,
+) -> tuple[float, float, float]:
+    """(lo, hi, p) for the difference in pass@1, resampling *cases* with replacement.
+
+    Resampling cases rather than runs is the whole point: the question is whether
+    this result would survive a different draw of questions, which is the sampling
+    step the 95% intervals in REPORT.md are actually uncertain about.
+
+    `p` is the proportion of resamples where the difference was <= 0, so ties count
+    against. Read it as "how often a different draw of cases would have failed to
+    show this advantage", not as a frequentist p-value from a named test. At these
+    sample sizes the per-case rates are coarse (0, 1/3, 2/3, 1) and exact ties are
+    common, which is why they are counted against rather than split.
+
+    Seeded, so the published interval is reproducible from the committed results.
+    """
+    shared = sorted(set(rates_a) & set(rates_b))
+    if not shared:
+        return 0.0, 0.0, 1.0
+
+    rng = random.Random(seed)
+    differences: list[float] = []
+    for _ in range(iterations):
+        sample = [shared[rng.randrange(len(shared))] for _ in shared]
+        mean_a = sum(rates_a[case] for case in sample) / len(sample)
+        mean_b = sum(rates_b[case] for case in sample) / len(sample)
+        differences.append(mean_a - mean_b)
+
+    differences.sort()
+    lo = differences[int(0.025 * iterations)]
+    hi = differences[min(iterations - 1, int(0.975 * iterations))]
+    adverse = sum(1 for d in differences if d <= 0) / iterations
+    return lo, hi, adverse
+
+
+def unique_wins(results_a: list[CaseResult], results_b: list[CaseResult]) -> tuple[int, int]:
+    """(cases only A solves every time, cases only B solves every time).
+
+    The sharpest question that can be asked of an ablation, and the one a pass rate
+    hides: is there any case the richer variant reliably gets right that the simpler
+    one does not? A variant that costs more and has zero unique wins is not trading
+    accuracy for cost — it is paying for nothing.
+    """
+    a_all = {case: all(r.success for r in runs) for case, runs in _group(results_a).items()}
+    b_all = {case: all(r.success for r in runs) for case, runs in _group(results_b).items()}
+    shared = set(a_all) & set(b_all)
+    return (
+        sum(1 for case in shared if a_all[case] and not b_all[case]),
+        sum(1 for case in shared if b_all[case] and not a_all[case]),
+    )
+
+
+def discordant_counts(results_a: list[CaseResult], results_b: list[CaseResult]) -> tuple[int, int]:
+    """(A right & B wrong, B right & A wrong) over shared (case, run) pairs.
+
+    Pairs on run index as well as case so each comparison is like-for-like; runs are
+    independent samples, so this is a pairing of convenience and the per-case
+    `unique_wins` view is the more defensible one. Both are reported.
+    """
+    by_case_a = _group(results_a)
+    by_case_b = _group(results_b)
+    only_a = only_b = 0
+    for case in set(by_case_a) & set(by_case_b):
+        runs_a = sorted(by_case_a[case], key=lambda r: r.run)
+        runs_b = sorted(by_case_b[case], key=lambda r: r.run)
+        # strict=False is deliberate: the no_overrule ablation lost 20 runs to a key
+        # rotation, so a case can legitimately have fewer runs on one side. Truncating
+        # to the shorter list compares only the runs that both variants actually have.
+        for left, right in zip(runs_a, runs_b, strict=False):
+            only_a += left.success and not right.success
+            only_b += right.success and not left.success
+    return only_a, only_b
 
 
 def _group(results: list[CaseResult]) -> dict[str, list[CaseResult]]:

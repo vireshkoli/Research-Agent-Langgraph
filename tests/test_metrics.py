@@ -19,12 +19,17 @@ from evals.matchers import as_text, call_matches, matches, normalize
 from evals.metrics import (
     anchors_satisfied,
     citation_metrics,
+    discordant_counts,
     independence_gap,
+    mcnemar_exact,
+    paired_bootstrap_ci,
     pass_at_1,
     pass_hat_k,
+    per_case_rates,
     percentile,
     step_efficiency,
     tool_metrics,
+    unique_wins,
     wilson_interval,
 )
 from evals.schema import ArgMatcher, EvalCase, ExpectedTool
@@ -430,3 +435,89 @@ def test_verbosity_probe_returns_a_correlation() -> None:
     # verbosity bias below 0.011, contradicting the folk wisdom.
     assert verbosity_correlation([1, 1, 0, 0], [100, 90, 95, 105]) != 0.0
     assert verbosity_correlation([1, 1, 1], [10, 20, 30]) == 0.0, "no variance in verdicts"
+
+
+# --- paired variant comparison --------------------------------------------------------
+
+
+def test_mcnemar_ignores_concordant_pairs_entirely() -> None:
+    # Cases both variants agree on carry no information about which is better, so
+    # they are not arguments. Only the discordant counts move the p-value.
+    assert mcnemar_exact(0, 0) == 1.0, "no discordant pairs means nothing to distinguish"
+    assert mcnemar_exact(3, 3) == 1.0, "perfectly symmetric disagreement is no evidence"
+
+
+def test_mcnemar_exact_matches_the_binomial_by_hand() -> None:
+    # 5 discordant pairs all favouring B: two-sided p = 2 * C(5,0)/2^5 = 2/32.
+    assert mcnemar_exact(0, 5) == pytest.approx(0.0625)
+    # 10 all one way is the same calculation one order of magnitude down.
+    assert mcnemar_exact(0, 10) == pytest.approx(2 / 1024)
+    # A single discordant pair can never be significant, whichever way it falls.
+    assert mcnemar_exact(1, 0) == 1.0
+
+
+def test_mcnemar_is_symmetric_in_its_arguments() -> None:
+    assert mcnemar_exact(2, 7) == mcnemar_exact(7, 2)
+
+
+def test_per_case_rates_collapses_runs_to_one_number_per_case() -> None:
+    rates = per_case_rates(make_results({"a": [True, True, True], "b": [True, False, False]}))
+    assert rates == {"a": 1.0, "b": pytest.approx(1 / 3)}
+
+
+def test_paired_bootstrap_finds_no_difference_between_identical_variants() -> None:
+    results = make_results({"a": [True, False], "b": [True, True], "c": [False, False]})
+    rates = per_case_rates(results)
+    lo, hi, adverse = paired_bootstrap_ci(rates, rates)
+    assert lo == 0.0 and hi == 0.0, "a variant compared with itself has zero difference"
+    assert adverse == 1.0, "every resample ties, and a tie is not a win"
+
+
+def test_paired_bootstrap_separates_a_variant_that_wins_everywhere() -> None:
+    better = per_case_rates(make_results({"a": [True], "b": [True], "c": [True]}))
+    worse = per_case_rates(make_results({"a": [False], "b": [False], "c": [False]}))
+    lo, hi, adverse = paired_bootstrap_ci(better, worse)
+    assert lo == pytest.approx(1.0) and hi == pytest.approx(1.0)
+    assert adverse == 0.0, "no resample of a clean sweep can reverse the sign"
+
+
+def test_paired_bootstrap_is_seeded_so_the_published_interval_is_reproducible() -> None:
+    a = per_case_rates(make_results({"a": [True, False], "b": [True, True], "c": [False, True]}))
+    b = per_case_rates(make_results({"a": [True, True], "b": [False, True], "c": [True, True]}))
+    assert paired_bootstrap_ci(a, b) == paired_bootstrap_ci(a, b)
+
+
+def test_paired_bootstrap_only_uses_cases_both_variants_ran() -> None:
+    a = per_case_rates(make_results({"shared": [True], "only_a": [False]}))
+    b = per_case_rates(make_results({"shared": [True], "only_b": [False]}))
+    lo, hi, _ = paired_bootstrap_ci(a, b)
+    assert (lo, hi) == (0.0, 0.0), "the unshared cases must not reach the comparison"
+
+
+def test_unique_wins_exposes_an_ablation_that_pays_for_nothing() -> None:
+    # The richer variant wins no case outright; the simpler one wins two. This is the
+    # measurement that a headline pass rate hides.
+    rich = make_results({"a": [True], "b": [False], "c": [False]})
+    simple = make_results({"a": [True], "b": [True], "c": [True]})
+    assert unique_wins(rich, simple) == (0, 2)
+
+
+def test_unique_wins_requires_every_run_to_succeed() -> None:
+    # Succeeding two times in three is not a win: pass^k is all-or-nothing.
+    flaky = make_results({"a": [True, True, False]})
+    solid = make_results({"a": [True, True, True]})
+    assert unique_wins(flaky, solid) == (0, 1)
+
+
+def test_discordant_counts_pairs_on_run_index() -> None:
+    a = make_results({"x": [True, False, True]})
+    b = make_results({"x": [False, False, True]})
+    assert discordant_counts(a, b) == (1, 0), "only run 1 disagrees"
+
+
+def test_discordant_counts_survives_a_variant_with_missing_runs() -> None:
+    # The no_overrule ablation lost runs to a key rotation; comparing against a
+    # complete variant must truncate rather than raise.
+    complete = make_results({"x": [True, True, True]})
+    partial = make_results({"x": [False]})
+    assert discordant_counts(complete, partial) == (1, 0)

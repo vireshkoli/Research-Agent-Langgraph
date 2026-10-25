@@ -21,11 +21,16 @@ from evals.agreement import Agreement, compare, deflation, verbosity_correlation
 from evals.metrics import (
     CaseResult,
     ToolMetrics,
+    discordant_counts,
     independence_gap,
+    mcnemar_exact,
     mean,
+    paired_bootstrap_ci,
     pass_at_1,
     pass_hat_k,
+    per_case_rates,
     percentile,
+    unique_wins,
     wilson_interval,
 )
 from evals.schema import load_human_labels
@@ -333,6 +338,39 @@ def _variant_rows(label: str, main: list[CaseResult], other: list[CaseResult]) -
         f"| **full agent** | **{_pct(pass_at_1(left))}** | "
         f"{mean([float(r.steps) for r in left]):.1f} | "
         f"{_usd(mean([r.cost_usd for r in left]))} |",
+        "",
+    ] + _paired_stats(label, left, right)
+
+
+def _paired_stats(label: str, left: list[CaseResult], right: list[CaseResult]) -> list[str]:
+    """The comparison treated as paired, which is what it is.
+
+    Two independent Wilson intervals on the same cases throw the pairing away and
+    answer a question nobody asked. Both tests below are reported even when they
+    disagree in strength, because the disagreement is informative: the bootstrap
+    resamples *cases* and so speaks to whether another draw of questions would
+    reverse the sign, while McNemar conditions on the discordant pairs alone and is
+    deliberately conservative at these counts.
+    """
+    lo, hi, adverse = paired_bootstrap_ci(per_case_rates(right), per_case_rates(left))
+    only_full, only_other = discordant_counts(left, right)
+    wins_full, wins_other = unique_wins(left, right)
+    short = label.split(" (")[0]
+
+    return [
+        f"**Paired comparison.** The difference in pass@1 is "
+        f"{(pass_at_1(right) - pass_at_1(left)) * 100:+.1f} points in favour of "
+        f"`{short}`, with a 95% bootstrap interval over cases of "
+        f"[{lo * 100:+.1f}, {hi * 100:+.1f}] points. "
+        f"{adverse * 100:.1f}% of resamples failed to favour it. McNemar's exact test on "
+        f"the {only_full + only_other} discordant (case, run) pairs — {only_full} where "
+        f"only the full agent succeeded, {only_other} where only `{short}` did — gives "
+        f"p = {mcnemar_exact(only_full, only_other):.3f}.",
+        "",
+        f"**Unique wins.** The full agent reliably solves **{wins_full}** cases that "
+        f"`{short}` does not; `{short}` reliably solves **{wins_other}** that the full "
+        "agent does not. A variant that costs more and wins nothing outright is not "
+        "trading accuracy for cost — it is paying for nothing.",
         "",
     ]
 

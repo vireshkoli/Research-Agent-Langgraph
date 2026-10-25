@@ -98,6 +98,10 @@ Compared on the **90 runs both variants completed** (adversarial, easy, multi_ho
 | baseline (one round of parallel search, then answer) | 94.4% | 1.0 | $0.00077 |
 | **full agent** | **87.8%** | 2.5 | $0.00230 |
 
+**Paired comparison.** The difference in pass@1 is +6.7 points in favour of `baseline`, with a 95% bootstrap interval over cases of [+0.0, +14.4] points. 3.8% of resamples failed to favour it. McNemar's exact test on the 12 discordant (case, run) pairs — 3 where only the full agent succeeded, 9 where only `baseline` did — gives p = 0.146.
+
+**Unique wins.** The full agent reliably solves **0** cases that `baseline` does not; `baseline` reliably solves **4** that the full agent does not. A variant that costs more and wins nothing outright is not trading accuracy for cost — it is paying for nothing.
+
 ### Does letting reflect overrule a stop earn its cost?
 
 > 20 runs of this variant were discarded: The OpenAI key was rotated while this variant was running. These runs failed authentication instantly (0 steps, $0.00, sub-second) and are transport failures, not agent behaviour. They are removed rather than scored. Affected cases: adv-001, adv-002, adv-003, adv-004, adv-005, adv-006, adv-007. The comparison below is therefore restricted to the runs that survived, and does not cover the adversarial tier.
@@ -108,6 +112,10 @@ Compared on the **70 runs both variants completed** (adversarial, easy, multi_ho
 |---|---|---|---|
 | no_overrule (act's decision to stop is final) | 93.1% | 2.1 | $0.00199 |
 | **full agent** | **90.3%** | 2.4 | $0.00213 |
+
+**Paired comparison.** The difference in pass@1 is +2.8 points in favour of `no_overrule`, with a 95% bootstrap interval over cases of [+0.0, +6.9] points. 11.3% of resamples failed to favour it. McNemar's exact test on the 4 discordant (case, run) pairs — 1 where only the full agent succeeded, 3 where only `no_overrule` did — gives p = 0.625.
+
+**Unique wins.** The full agent reliably solves **0** cases that `no_overrule` does not; `no_overrule` reliably solves **1** that the full agent does not. A variant that costs more and wins nothing outright is not trading accuracy for cost — it is paying for nothing.
 
 
 ## Reading these numbers honestly
