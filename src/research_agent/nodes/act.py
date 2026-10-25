@@ -6,9 +6,13 @@ rendered context block carrying the current source registry. Everything before t
 last block stays byte-identical across turns and is served from cache at 10% of
 list price.
 
-Tools are offered only while they are under their per-run cap, so a model that has
-already used its eight searches simply stops being told `web_search` exists. That is
-gentler than letting it call and be refused, and it costs nothing.
+Tools are offered only while they are under their per-run cap. That alone does not
+enforce the cap: one round can emit many parallel calls, and in 18 of 270 committed
+runs it emitted more than a tool had left — 15 searches against a cap of 8. The cap
+is enforced where calls actually run, in `observe`, which refuses the excess with an
+explicit result. And because `budget_verdict` ends the run as soon as any tool
+reaches its cap, a capped tool is never withdrawn from a *later* round in practice;
+filtering here only stops a tool being offered on the round that reaches its cap.
 
 Emitting no tool calls is a legitimate outcome — it means the model believes it can
 answer — so it sets `act_requested_stop` rather than being treated as a failure.

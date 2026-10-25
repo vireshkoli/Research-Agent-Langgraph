@@ -27,7 +27,7 @@ from research_agent.config import Settings, settings
 from research_agent.nodes import make_step
 from research_agent.state import Observation, ResearchState, Source, ToolCall
 from research_agent.tools.base import ToolResult
-from research_agent.tools.registry import dispatch
+from research_agent.tools.registry import REGISTRY, dispatch
 
 MAX_PARALLEL = 4
 
@@ -44,7 +44,11 @@ def observe_node(state: ResearchState, cfg: Settings | None = None) -> ResearchS
             "scratchpad": [make_step(state, "observe", note="no tool calls")],
         }
 
-    results = _run_all(pending, cfg)
+    allowed, refused = _within_caps(pending, state.get("tool_calls_by_type", {}))
+    executed = {
+        call["call_id"]: (result, latency_ms)
+        for call, result, latency_ms in (_run_all(allowed, cfg) if allowed else [])
+    }
 
     observations: list[Observation] = []
     new_sources: list[Source] = []
@@ -56,7 +60,36 @@ def observe_node(state: ResearchState, cfg: Settings | None = None) -> ResearchS
     known_urls = {source["url"]: source["sid"] for source in state.get("sources", [])}
     next_index = len(state.get("sources", [])) + 1
 
-    for call, result, latency_ms in results:
+    for call in pending:
+        if call["call_id"] in refused:
+            # Not run, and not a tool failure: counting it as one would trip the
+            # circuit breaker over a budget decision. It still needs an output — the
+            # Responses API rejects a history containing a call with no result.
+            limit = refused[call["call_id"]]
+            note = (
+                f"Not run: the per-run limit of {limit} {call['name']} calls is reached. "
+                "Answer from the evidence already gathered."
+            )
+            observations.append(
+                Observation(
+                    call_id=call["call_id"],
+                    tool=call["name"],
+                    args=call["args"],
+                    ok=False,
+                    content=note,
+                    error=note,
+                    latency_ms=0.0,
+                    raw_chars=0,
+                    truncated=False,
+                    source_ids=[],
+                )
+            )
+            messages.append(
+                {"type": "function_call_output", "call_id": call["call_id"], "output": note}
+            )
+            continue
+
+        result, latency_ms = executed[call["call_id"]]
         counts[call["name"]] = counts.get(call["name"], 0) + 1
         credits += int(result.meta.get("credits", 0))
         failures = failures + 1 if not result.ok else 0
@@ -112,9 +145,13 @@ def observe_node(state: ResearchState, cfg: Settings | None = None) -> ResearchS
         "tool_calls_by_type": counts,
         "search_credits": credits,
         # Reducer-less on purpose: a success must reset the streak to zero, which
-        # an additive reducer could never do.
+        # an additive reducer could never do. A round in which every call was
+        # refused ran nothing, so it neither extends the streak nor resets it —
+        # resetting would read a budget decision as evidence the tools are healthy.
         "consecutive_tool_failures": (
-            state.get("consecutive_tool_failures", 0) + failures if failures else 0
+            state.get("consecutive_tool_failures", 0) + failures
+            if failures
+            else (0 if executed else state.get("consecutive_tool_failures", 0))
         ),
         "scratchpad": [make_step(state, "observe", observations=observations)],
     }
@@ -127,6 +164,36 @@ def _for_model(result: ToolResult, source_ids: list[str]) -> str:
     if not source_ids:
         return result.content
     return f"{result.content}\n\n(cite as: {', '.join(f'[{sid}]' for sid in source_ids)})"
+
+
+def _within_caps(
+    pending: list[ToolCall], used: dict[str, int]
+) -> tuple[list[ToolCall], dict[str, int]]:
+    """Split calls into those the per-run caps still allow and those they do not.
+
+    `act` only stops *offering* a capped tool, and one act round can emit any number
+    of parallel calls, so before this check a single round could run 15 searches
+    against a cap of 8 — and did, in 18 of the 270 committed runs. Calls are admitted
+    in the order the model made them until each tool's allowance is spent.
+
+    Returns the admitted calls and, for each refused one, the limit it ran into.
+    Unknown tools are admitted untouched: `dispatch` already answers those with an
+    error, and calling that a cap would misreport why.
+    """
+    tally = dict(used)
+    allowed: list[ToolCall] = []
+    refused: dict[str, int] = {}
+    for call in pending:
+        spec = REGISTRY.get(call["name"])
+        if spec is None:
+            allowed.append(call)
+            continue
+        if tally.get(call["name"], 0) < spec.max_calls:
+            tally[call["name"]] = tally.get(call["name"], 0) + 1
+            allowed.append(call)
+        else:
+            refused[call["call_id"]] = spec.max_calls
+    return allowed, refused
 
 
 def _run_all(pending: list[ToolCall], cfg: Settings) -> list[tuple[ToolCall, ToolResult, float]]:

@@ -286,6 +286,76 @@ def test_observe_reports_malformed_arguments_back_to_the_model() -> None:
     assert "not valid JSON" in observation["error"]
 
 
+def test_observe_never_runs_more_calls_than_a_tools_cap_allows(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # The committed traces contain a run that executed 15 searches against a cap of
+    # 8: act only stops *offering* a capped tool, and one round can emit any number
+    # of parallel calls. The cap has to be enforced where calls run.
+    executed: list[str] = []
+
+    def record(name: str, args: dict[str, object]) -> ToolResult:
+        executed.append(str(args["query"]))
+        return ToolResult(ok=True, content="ok")
+
+    monkeypatch.setattr("research_agent.nodes.observe.dispatch", record)
+    pending = [
+        ToolCall(call_id=f"c{i}", name="web_search", args={"query": f"q{i}"}) for i in range(12)
+    ]
+    update = observe_node(state(pending_calls=pending, tool_calls_by_type={"web_search": 3}), cfg())
+
+    assert executed == ["q0", "q1", "q2", "q3", "q4"], "only the 5 left under a cap of 8 may run"
+    assert update["tool_calls_by_type"] == {"web_search": 5}, "refused calls were never run"
+
+
+def test_every_refused_call_still_gets_an_output(monkeypatch: pytest.MonkeyPatch) -> None:
+    # The Responses API rejects a history in which any function call has no result,
+    # so dropping refused calls would break the very next act call.
+    monkeypatch.setattr(
+        "research_agent.nodes.observe.dispatch",
+        lambda name, args: ToolResult(ok=True, content="ok"),
+    )
+    pending = [
+        ToolCall(call_id=f"c{i}", name="web_search", args={"query": f"q{i}"}) for i in range(4)
+    ]
+    update = observe_node(state(pending_calls=pending, tool_calls_by_type={"web_search": 6}), cfg())
+
+    outputs = {m["call_id"]: m["output"] for m in update["messages"]}
+    assert set(outputs) == {"c0", "c1", "c2", "c3"}, "one output per call, in any case"
+    assert "Not run" in outputs["c2"] and "Not run" in outputs["c3"]
+    assert [m["call_id"] for m in update["messages"]] == ["c0", "c1", "c2", "c3"], "request order"
+
+
+def test_a_refused_call_is_not_a_tool_failure(monkeypatch: pytest.MonkeyPatch) -> None:
+    # Counting a budget refusal as a failure would trip the consecutive-failure
+    # circuit breaker over a decision that has nothing to do with tool health.
+    monkeypatch.setattr(
+        "research_agent.nodes.observe.dispatch",
+        lambda name, args: ToolResult(ok=True, content="ok"),
+    )
+    capped = state(
+        consecutive_tool_failures=2,
+        tool_calls_by_type={"web_search": 8},
+        pending_calls=[ToolCall(call_id="c", name="web_search", args={"query": "A"})],
+    )
+    update = observe_node(capped, cfg())
+    assert update["consecutive_tool_failures"] == 2, "a refusal must not extend the streak"
+    assert update["tool_calls_by_type"] == {}
+
+
+def test_a_cap_on_one_tool_does_not_hold_back_another(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(
+        "research_agent.nodes.observe.dispatch",
+        lambda name, args: ToolResult(ok=True, content="ok"),
+    )
+    pending = [
+        ToolCall(call_id="s", name="web_search", args={"query": "A"}),
+        ToolCall(call_id="f", name="fetch_page", args={"url": "https://a"}),
+    ]
+    update = observe_node(state(pending_calls=pending, tool_calls_by_type={"web_search": 8}), cfg())
+    assert update["tool_calls_by_type"] == {"fetch_page": 1}
+
+
 def test_observe_is_a_noop_when_there_is_nothing_to_run() -> None:
     update = observe_node(state(), cfg())
     assert update["pending_calls"] == []
