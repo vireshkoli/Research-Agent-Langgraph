@@ -1,0 +1,511 @@
+{
+  "schema_version": "1",
+  "run_id": "66a0eb07e475",
+  "ts": "2026-10-25T08:23:02+00:00",
+  "question": "How many years passed between the publication of 'Attention Is All You Need' and the 2024 Nobel Prize in Physics being awarded for neural network research?",
+  "variant": "gated",
+  "config": {
+    "agent_model": "gpt-5.4-nano",
+    "reasoning_effort": "none",
+    "max_steps": 8,
+    "max_seconds": 120.0,
+    "max_run_cost_usd": 0.05,
+    "finalize_reserve_usd": 0.008,
+    "compact_threshold_tokens": 12000,
+    "git_sha": "e577c53",
+    "prompt_hash": "sha256:e2655640140a"
+  },
+  "plan": {
+    "version": 1,
+    "subquestions": [
+      "In what year was the paper 'Attention Is All You Need' published?",
+      "In what year was the Nobel Prize in Physics awarded for neural network research (the 2024 prize)?"
+    ],
+    "replans": 0
+  },
+  "steps": [
+    {
+      "i": 1,
+      "node": "plan",
+      "plan_version": 0,
+      "ts_offset_ms": 2048.732874999587,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 2,
+      "node": "act",
+      "plan_version": 1,
+      "ts_offset_ms": 3582.9810420000285,
+      "tool_calls": [
+        {
+          "call_id": "call_4bLbocZV8zfVAEmgIieMOrIg",
+          "name": "web_search",
+          "args": {
+            "query": "Attention Is All You Need published year 2017 Vaswani et al"
+          }
+        },
+        {
+          "call_id": "call_cvbJ9qZflHzQHmX2vkiuZQ84",
+          "name": "web_search",
+          "args": {
+            "query": "2024 Nobel Prize in Physics awarded year announced neural networks research"
+          }
+        },
+        {
+          "call_id": "call_HzPz6rXKFq8BtgRpQRgFX2FN",
+          "name": "web_search",
+          "args": {
+            "query": "2024 Nobel Prize in Physics neural networks awarded for which research year 2024"
+          }
+        },
+        {
+          "call_id": "call_qhA23lyjlp01e1eGbgko3lcj",
+          "name": "web_search",
+          "args": {
+            "query": "Nobel Prize in Physics 2024 date awarded neural networks"
+          }
+        }
+      ],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 3,
+      "node": "observe",
+      "plan_version": 1,
+      "ts_offset_ms": 6284.169167000073,
+      "tool_calls": [],
+      "observations": [
+        {
+          "call_id": "call_4bLbocZV8zfVAEmgIieMOrIg",
+          "tool": "web_search",
+          "args": {
+            "query": "Attention Is All You Need published year 2017 Vaswani et al"
+          },
+          "ok": true,
+          "content": "Summary: \"Attention Is All You Need\" is a 2017 research paper authored by Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. The paper introduced a new deep learning architecture known as the transformer, based solely on the attention mechanism. The transformer architecture has become the main architecture of a wide variety of artificial intelligence systems, including large language models.\n\n[1] Attention Is All You Need - Wikipedia\n    https://en.wikipedia.org/wiki/Attention_Is_All_You_Need\n    1. 1 2 3 4 5 6 Vaswani, Ashish; Shazeer, Noam; Parmar, Niki; Uszkoreit, Jakob; Jones, Llion; Gomez, Aidan N; Kaiser, Łukasz; Polosukhin, Illia (December 2017). \"Attention is All you Need\" (PDF). In I. Guyon and U. Von Luxburg and S. Bengio and H. Wallach and R. Fergus and S. Vishwanathan and R. Garnett (ed.). 31st Conference on Neural Information Processing Systems (NIPS). Advances in Neural Information Processing Systems. Vol. 30. Curran Associates, Inc. arXiv \"ArXiv (identifier)\"):1706.03762. [...] \"Attention Is All You Need\" is a 2017 research paper on machine learning authored by eight scientists and engineers working at Google. The paper introduced a new deep learning architecture known as the transformer \"Transformer (deep learning)\"), based on the attention mechanism \"Attention (machine learning)\") proposed in 2014 by Bahdanau et al. The transformer approach it describes has become the main architecture of a wide variety of artificial intelligence systems, including large language [...] 41. ↑ Kaiser, Lukasz; Gomez, Aidan N.; Shazeer, Noam; Vaswani, Ashish; Parmar, Niki; Jones, Llion; Uszkoreit, Jakob (16 June 2017). \"One Model To Learn Them All\". arXiv \"ArXiv (identifier)\"):1706.05137v1 [cs.LG].\n42. ↑ Liu, Zhuang; Mao, Hanzi; Wu, Chao-Yuan; Feichtenhofer, Christoph; Darrell, Trevor; Xie, Saining (2022). A ConvNet for the 2020s. Conference on Computer Vision and Pattern Recognition (CVPR). pp. 11976–11986.\n\n[2] GitHub - brandokoch/attention-is-all-you-need-paper: Original transformer paper: Implementation of Vaswani, Ashish, et al. \"Attention is all you need.\" Advances in neural information processing systems. 2017. · GitHub\n    https://github.com/brandokoch/attention-is-all-you-need-paper\n    The original transformer architecture presented in this paper consists of an encoder and decoder part purposely included to match the seq2seq problem type of machine translation. There are also encoder-only (e.g. BERT) and decoder-only (e.g. GPT) transformer architectures, those won't be covered here. One of the main features of transformers , in general, is parallelized sequence processing which RNN's lack. Main ingredient here is the attention mechanism which enables creating modified word [...] Optimizer 📉:\n  + BETAS - Adam beta parameter\n  + EPS - Adam eps parameter\n Scheduler ⏲️:\n  + N\\_WARMUP\\_STEPS - How many warmup steps to use in the scheduler\n Model 🤖:\n  + D\\_MODEL - Model dimension\n  + N\\_BLOCKS - Number of encoder and decoder blocks\n  + N\\_HEADS - Number of heads in the Multi-Head attention mechanism\n  + D\\_FF - Dimension of the Position Wise Feed Forward network\n  + DROPOUT\\_PROBA - Dropout probability\n Other 🧰:\n  + DEVICE - 'gpu' or 'cpu' [...] ```\n@misc{Koch2021attentionisallyouneed, author = {Koch, Brando}, title = {attention-is-all-you-need}, year = {2021}, publisher = {GitHub}, journal = {GitHub repository}, howpublished = {\\url{ } \n```\n\nThis repository is under an MIT License\n\n## About\n\nOriginal transformer paper: Implementation of Vaswani, Ashish, et al. \"Attention is all you need.\" Advances in neural information processing systems. 2017.\n\n### Topics\n\nattention-is-all-you-needdeep-learningmachine-learningpytorchtransformer\n\n[3] Attention Is All You Need\n    https://ysu1989.github.io/courses/au20/cse5539/Transformer.pdf\n    and cannot attend long-term dependency ● Stacking more encoders/decoders might lead to vanishing gradients ● “Attention Is\n\n[truncated: 3,415 of 7,411 chars]",
+          "error": null,
+          "latency_ms": 2694.067625000571,
+          "raw_chars": 7411,
+          "truncated": true,
+          "source_ids": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5"
+          ]
+        },
+        {
+          "call_id": "call_cvbJ9qZflHzQHmX2vkiuZQ84",
+          "tool": "web_search",
+          "args": {
+            "query": "2024 Nobel Prize in Physics awarded year announced neural networks research"
+          },
+          "ok": true,
+          "content": "Summary: The 2024 Nobel Prize in Physics was awarded to John J. Hopfield and Geoffrey Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural networks.\" The Royal Swedish Academy of Sciences highlighted their contributions to the development of artificial neural networks, which have been instrumental in various applications within physics, including the discovery of the Higgs particle and the development of new materials. The laureates' work has laid the foundation for today's powerful machine learning techniques.\n\n[1] Press release: The Nobel Prize in Physics 2024 - NobelPrize.org\n    https://www.nobelprize.org/prizes/physics/2024/press-release\n    Skip to content \n\n# Nobel Prize\n\n# Press release\n\nEnglish  \nEnglish (pdf)  \nSwedish  \nSwedish (pdf)\n\n8 October 2024\n\nThe Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJohn J. Hopfield  \nPrinceton University, NJ, USA\n\nGeoffrey Hinton  \nUniversity of Toronto, Canada\n\n“for foundational discoveries and inventions that enable machine learning with artificial neural networks”\n\n## They trained artificial neural networks using physics [...] between nodes with simultaneously high values. This year’s laureates have conducted important work with artificial neural networks from the 1980s onward. [...] “The laureates’ work has already been of the greatest benefit. In physics we use artificial neural networks in a vast range of areas, such as developing new materials with specific properties,” says Ellen Moons, Chair of the Nobel Committee for Physics.\n\n### Illustrations\n\nThe illustrations are free to use for non-commercial purposes. Attribute ”©Johan Jarnestad/The Royal Swedish Academy of Sciences”.\n\n[2] Scientific Background to the Nobel Prize in Physics 2024\n    https://www.nobelprize.org/uploads/2024/09/advanced-physicsprize2024.pdf\n    BOX 50005 (LILLA FRESCATIVÄGEN 4 A), SE-104 05 STOCKHOLM, SWEDEN TEL +46 8 673 95 00  WWW.KVA.SE 1 (12) The Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 jointly to John J. Hopfield and Geoffrey E. Hinton “for foundational discoveries and inventions that enable machine learning with artificial neural networks” Introduction With its roots in the 1940s, machine learning based on artificial neural networks (ANNs) has developed over the past three decades [...] in many physical systems are robust to changes in model details, he addressed this question using a neural network with N binary nodes si (0 or 1). The dynamics were asynchronous with threshold updates of individual nodes at random times. The new value of a node si was determined by a weighted sum over all other nodes, 4 (12) ℎ𝑖𝑖= ∑ 𝑗𝑗≠𝑖𝑖 𝑤𝑤𝑖𝑖𝑖𝑖𝑠𝑠𝑗𝑗, and was set to si=1 if hi>0, and si=0 otherwise (with the threshold set to zero). The couplings wij were assumed symmetric and to reflect pairwise [...] both biological and artificial neural networks. Another influential early contribution came from the psychologist Donald Hebb . In 1949, Hebb proposed a mechanism for learning and memories, where the simultaneous and repeated activation of two neurons leads to an increased strength of the synapse between them. In the ANN area, two architectures for systems of interconnected nodes were explored, “recurrent” and “feedforward” networks, where the former allows for feedback interactions (Figures 1\n\n[3] Neural Networks and the 2024 Nobel Prize in Physics - Sixty Symbols\n    https://www.youtube.com/watch?v=itywoDU3sL8\n    # Neural Networks and the 2024 Nobel Prize in Physics - Sixty Symbols\n## Channel: Sixty Symbols (verified)\n888K subscribers\n2.3K likes\n\n### Description\n59,026 views\nPosted: 2024-10-18\nThis video features Juan Garrahan, Phil Moriarty and Mike Pound... More links and info below  ↓ ↓ ↓\n\nThe 2024 Nobel Prize in Physics is awarded to John Hopfield and Geoffrey Hinton “for foundational discoveries and inventions that enable machine learning with artificial neural\n\n[truncated: 3,959 of 7,950 chars]",
+          "error": null,
+          "latency_ms": 2698.2127920000494,
+          "raw_chars": 7950,
+          "truncated": true,
+          "source_ids": [
+            "S6",
+            "S7",
+            "S8",
+            "S9",
+            "S10"
+          ]
+        },
+        {
+          "call_id": "call_HzPz6rXKFq8BtgRpQRgFX2FN",
+          "tool": "web_search",
+          "args": {
+            "query": "2024 Nobel Prize in Physics neural networks awarded for which research year 2024"
+          },
+          "ok": true,
+          "content": "Summary: The 2024 Nobel Prize in Physics was awarded to John J. Hopfield and Geoffrey E. Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural networks.\" Their work, which began in the 1980s, includes Hopfield's creation of a structure that can store and reconstruct information and Hinton's invention of a method that can independently discover properties in data, which has become important for large artificial neural networks now in use.\n\n[1] 2024 Nobel Prize in Physics Awarded | Department of Physics | Brown University\n    https://physics.brown.edu/news/2024-10-08/2024-physics-nobel-prize\n    Skip to Main Content\n\nBrown University \n\n# Physics\n\nSearch   Menu\n\nSearch\n\nPhysics\n\nDate  October 8, 2024\n\nAll News\n\nShare\n\nFacebook   Twitter\\_X   Linkedin   Email\n\n# 2024 Nobel Prize in Physics Awarded\n\nThe Royal Swedish Academy of Sciences has decided to award the 2024 Nobel Prize in Physics to John J. Hopfield and Geoffrey E. Hinton “for foundational discoveries and inventions that enable machine learning with artificial neural networks.\"\n\n2024 Nobel Prize in Physics \n\n1 of 1 [...] 1 of 1\n\nFrom NobelPrize.org\n\n“This year’s physics laureates John Hopfield and Geoffrey Hinton used tools from physics to construct methods that helped lay the foundation for today’s powerful machine learning. Hopfield created a structure that can store and reconstruct information. Hinton invented a method that can independently discover properties in data and which has become important for the large artificial neural networks now in use.\n\n[2] Press release: The Nobel Prize in Physics 2024 - NobelPrize.org\n    https://www.nobelprize.org/prizes/physics/2024/press-release\n    Skip to content \n\n# Nobel Prize\n\n# Press release\n\nEnglish  \nEnglish (pdf)  \nSwedish  \nSwedish (pdf)\n\n8 October 2024\n\nThe Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJohn J. Hopfield  \nPrinceton University, NJ, USA\n\nGeoffrey Hinton  \nUniversity of Toronto, Canada\n\n“for foundational discoveries and inventions that enable machine learning with artificial neural networks”\n\n## They trained artificial neural networks using physics [...] Geoffrey Hinton used the Hopfield network as the foundation for a new network that uses a different method: the Boltzmann machine. This can learn to recognise characteristic elements in a given type of data. Hinton used tools from statistical physics, the science of systems built from many similar components. The machine is trained by feeding it examples that are very likely to arise when the machine is run. The Boltzmann machine can be used to classify images or create new examples of the type [...] between nodes with simultaneously high values. This year’s laureates have conducted important work with artificial neural networks from the 1980s onward.\n\n[3] Artificial Intelligence awarded two Nobel Prizes for innovations that will shape the future of medicine | npj Digital Medicine\n    https://www.nature.com/articles/s41746-024-01345-9\n    Metrics details\n\nJohn J. Hopfield and Geoffrey E. Hinton were awarded the 2024 Nobel Prize in Physics for developing machine learning technology using artificial neural networks. In Chemistry it was awarded to Demis Hassabis and John M. Jumper for developing an AI algorithm that solved the 50-year protein structure prediction challenge. This highlights AI’s impact on science, medicine and society; however, the winners acknowledge ethical aspects of AI that must be considered.\n\n### Subjects [...] In October 2024, the Nobel Committees in Stockholm announced that the prizes in Physics and Chemistry were awarded to work related to artificial intelligence (AI)1,2. The prize in Physics was awarded to John J. Hopfield and Geoffrey E. Hinton (formerly of Google) for “foundational discoveries and inventions that enable machine learning with artificial neural networks1.” The prize in Chemistry was awarded one-half to David Baker for\n\n[truncated: 3,117 of 7,108 chars]",
+          "error": null,
+          "latency_ms": 2604.2192499999146,
+          "raw_chars": 7108,
+          "truncated": true,
+          "source_ids": [
+            "S11",
+            "S6",
+            "S12",
+            "S13",
+            "S14"
+          ]
+        },
+        {
+          "call_id": "call_qhA23lyjlp01e1eGbgko3lcj",
+          "tool": "web_search",
+          "args": {
+            "query": "Nobel Prize in Physics 2024 date awarded neural networks"
+          },
+          "ok": true,
+          "content": "Summary: The Nobel Prize in Physics 2024 was awarded to John J. Hopfield and Geoffrey Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural networks.\" The prize was announced on 8 October 2024 by the Royal Swedish Academy of Sciences. The laureates' work has been instrumental in the development of machine learning technology using artificial neural networks, which were inspired by the structure of the brain. This recognition highlights the significant impact of artificial intelligence on various scientific disciplines.\n\n[1] Press release: The Nobel Prize in Physics 2024 - NobelPrize.org\n    https://www.nobelprize.org/prizes/physics/2024/press-release\n    Skip to content \n\n# Nobel Prize\n\n# Press release\n\nEnglish  \nEnglish (pdf)  \nSwedish  \nSwedish (pdf)\n\n8 October 2024\n\nThe Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJohn J. Hopfield  \nPrinceton University, NJ, USA\n\nGeoffrey Hinton  \nUniversity of Toronto, Canada\n\n“for foundational discoveries and inventions that enable machine learning with artificial neural networks”\n\n## They trained artificial neural networks using physics [...] between nodes with simultaneously high values. This year’s laureates have conducted important work with artificial neural networks from the 1980s onward. [...] When we talk about artificial intelligence, we often mean machine learning using artificial neural networks. This technology was originally inspired by the structure of the brain. In an artificial neural network, the brain’s neurons are represented by nodes that have different values. These nodes influence each other through con­nections that can be likened to synapses and which can be made stronger or weaker. The network is trained, for example by developing stronger connections between nodes\n\n[2] Neural Networks and the 2024 Nobel Prize in Physics - Sixty Symbols\n    https://www.youtube.com/watch?v=itywoDU3sL8\n    # Neural Networks and the 2024 Nobel Prize in Physics - Sixty Symbols\n## Channel: Sixty Symbols (verified)\n888K subscribers\n2.3K likes\n\n### Description\n59,026 views\nPosted: 2024-10-18\nThis video features Juan Garrahan, Phil Moriarty and Mike Pound... More links and info below  ↓ ↓ ↓\n\nThe 2024 Nobel Prize in Physics is awarded to John Hopfield and Geoffrey Hinton “for foundational discoveries and inventions that enable machine learning with artificial neural networks”. [...] [14:28] this year's which was also awarded for some AI type research and if you liked this video you're probably going to like our Channel computer file do you watch\n[14:36] those videos there will be a link to computer file as well [...] Nobel Prize press release - \n\nPhil Moriarty blog (and vintage rant) on the prize - \n\nMore Physics Nobel Prize videos -    • Nobel Prize Videos - Sixty Symbols  \nChemistry Nobel Prize videos -    • Nobel Prize - Periodic Videos  \nThe 2024 Nobel Prize in Chemistry (also AI related) -    • Protein Folding and AI (Nobel Prize 2024) ...  \n\nComputerphile -    / computerphile  \n\nHow AI Image Generators Work -    • How AI Image Generators Work (Stable Diffu...\n\n[3] Artificial Intelligence awarded two Nobel Prizes for innovations that will shape the future of medicine | npj Digital Medicine\n    https://www.nature.com/articles/s41746-024-01345-9\n    In October 2024, the Nobel Committees in Stockholm announced that the prizes in Physics and Chemistry were awarded to work related to artificial intelligence (AI)1,2. The prize in Physics was awarded to John J. Hopfield and Geoffrey E. Hinton (formerly of Google) for “foundational discoveries and inventions that enable machine learning with artificial neural networks1.” The prize in Chemistry was awarded one-half to David Baker for “computational protein design” and one-half to Demis Hassabis [...] Metrics details\n\nJohn J. Hopfield and Geoffrey E. Hinton were awarded the 2024 Nobel Prize in Physics for developing machine learning technology using\n\n[truncated: 3,271 of 7,270 chars]",
+          "error": null,
+          "latency_ms": 2348.4592499999053,
+          "raw_chars": 7270,
+          "truncated": true,
+          "source_ids": [
+            "S6",
+            "S8",
+            "S12",
+            "S15",
+            "S10"
+          ]
+        }
+      ],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 4,
+      "node": "reflect",
+      "plan_version": 1,
+      "ts_offset_ms": 6286.22495899981,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": "skipped on first step"
+    },
+    {
+      "i": 5,
+      "node": "act",
+      "plan_version": 1,
+      "ts_offset_ms": 8096.927958999913,
+      "tool_calls": [
+        {
+          "call_id": "call_40j613sexGbqAKGQijxnI2WN",
+          "name": "fetch_page",
+          "args": {
+            "url": "https://papers.nips.cc/paper/7181-attention-is-all-you-need"
+          }
+        },
+        {
+          "call_id": "call_VjKIxtUIxAgrSRHKdtyzRaiY",
+          "name": "fetch_page",
+          "args": {
+            "url": "https://www.nobelprize.org/prizes/physics/2024/press-release"
+          }
+        }
+      ],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 6,
+      "node": "observe",
+      "plan_version": 1,
+      "ts_offset_ms": 9929.11224999989,
+      "tool_calls": [],
+      "observations": [
+        {
+          "call_id": "call_40j613sexGbqAKGQijxnI2WN",
+          "tool": "fetch_page",
+          "args": {
+            "url": "https://papers.nips.cc/paper/7181-attention-is-all-you-need"
+          },
+          "ok": true,
+          "content": "Attention is All you Need\nhttps://papers.nips.cc/paper/7181-attention-is-all-you-need\n\nAttention is All you Need\n\nBibtex Metadata Paper Reviews\n\nAbstract\n\nThe dominant sequence transduction models are based on complex recurrent orconvolutional neural networks in an encoder and decoder configuration. The best performing such models also connect the encoder and decoder through an attentionm echanisms. We propose a novel, simple network architecture based solely onan attention mechanism, dispensing with recurrence and convolutions entirely.Experiments on two machine translation tasks show these models to be superiorin quality while being more parallelizable and requiring significantly less timeto train. Our single model with 165 million parameters, achieves 27.5 BLEU onEnglish-to-German translation, improving over the existing best ensemble result by over 1 BLEU. On English-to-French translation, we outperform the previoussingle state-of-the-art with model by 0.7 BLEU, achieving a BLEU score of 41.1.\n\nName Change Policy\n\n&times;\n\nRequests for name changes in the electronic proceedings will be accepted with no questions asked. However name changes may cause bibliographic tracking issues. Authors are asked to consider this carefully and discuss it with their co-authors prior to requesting a name change in the electronic proceedings.\n\nUse the \"Report an Issue\" link to request a name change.\n\nDo not remove: This comment is monitored to verify that the site is working properly",
+          "error": null,
+          "latency_ms": 1830.5217080005605,
+          "raw_chars": 1406,
+          "truncated": false,
+          "source_ids": [
+            "S4"
+          ]
+        },
+        {
+          "call_id": "call_VjKIxtUIxAgrSRHKdtyzRaiY",
+          "tool": "fetch_page",
+          "args": {
+            "url": "https://www.nobelprize.org/prizes/physics/2024/press-release"
+          },
+          "ok": true,
+          "content": "Press release: The Nobel Prize in Physics 2024 - NobelPrize.org\nhttps://www.nobelprize.org/prizes/physics/2024/press-release\n\nPress release: The Nobel Prize in Physics 2024 - NobelPrize.org\n\nSkip to content\n\nNavigate to:\nSummary - John J. Hopfield - Geoffrey Hinton Prize announcement Press release Popular information Advanced information Award ceremony speech Award ceremony video\n\nEnglish English (pdf) Swedish Swedish (pdf)\n\n8 October 2024\n\nThe Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJohn J. Hopfield Princeton University, NJ, USA\n\nGeoffrey Hinton University of Toronto, Canada\n\n“for foundational discoveries and inventions that enable machine learning with artificial neural networks”\n\nThey trained artificial neural networks using physics\n\nThis year’s two Nobel Laureates in Physics have used tools from physics to develop methods that are the foundation of today’s powerful machine learning. John Hopfield created an associative memory that can store and reconstruct images and other types of patterns in data. Geoffrey Hinton invented a method that can autonomously find properties in data, and so perform tasks such as identifying specific elements in pictures.\n\nWhen we talk about artificial intelligence, we often mean machine learning using artificial neural networks. This technology was originally inspired by the structure of the brain. In an artificial neural network, the brain’s neurons are represented by nodes that have different values. These nodes influence each other through con­nections that can be likened to synapses and which can be made stronger or weaker. The network is trained , for example by developing stronger connections between nodes with simultaneously high values. This year’s laureates have conducted important work with artificial neural networks from the 1980s onward.\n\nJohn Hopfield invented a network that uses a method for saving and recreating patterns. We can imagine the nodes as pixels. The Hopfield network utilises physics that describes a material’s characteristics due to its atomic spin – a property that makes each atom a tiny magnet. The network as a whole is described in a manner equivalent to the energy in the spin system found in physics, and is trained by finding values for the connections between the nodes so that the saved images have low energy. When the Hopfield network is fed a distorted or incomplete image, it methodically works through the nodes and updates their values so the network’s energy falls. The network thus works stepwise to find the saved image that is most like the imperfect one it was fed with.\n\nGeoffrey Hinton used the Hopfield network as the foundation for a new network that uses a different method: the Boltzmann machine . This can learn to recognise characteristic elements in a given type of data. Hinton used tools from statistical physics, the science of systems built from many similar components. The machine is trained by feeding it examples that are very likely to arise when the machine is run. The Boltzmann machine can be used to classify images or create new examples of the type of pattern on which it was trained. Hinton has built upon this work, helping initiate the current explosive development of machine learning.\n\n&#8220;The laureates’ work has already been of the greatest benefit. In physics we use artificial neural networks in a vast range of areas, such as developing new materials with specific properties,&#8221; says Ellen Moons, Chair of the Nobel Committee for Physics.\n\nIllustrations\n\nThe illustrations are free to use for non-commercial purposes. Attribute ”©Johan Jarnestad/The Royal Swedish Academy of Sciences”.\n\nIllustration: The Nobel Prize in Physics 2024 (pdf) Illustration: Natural and artificial neurons (pdf) Illustration: Memories are stored in a landscape (pdf) Illustration: Different types of network (pdf)\n\nRead more about this year&#8217;s prize\n\nPopular science background: They used physics to find patterns in information (pdf) Scientific background: “For foundational discoveries and inventions that enable machine learning with artificial neural networks” (pdf)\n\nJohn J. Hopfield , born 1933 in Chicago, IL, USA. PhD 1958 from Cornell University, Ithaca, NY, USA. Professor at Princeton University, NJ, USA.\n\nGeoffrey Hinton , born 1947 in London, UK. PhD 1978 from The University of Edinburgh, UK. Professor at University of Toronto, Canada.\n\nPrize amount : 11 million Swedish kronor, to be shared equally between the laureates. Further information : www.kva.se and www.nobelprize.org Press contact : Eva Nevelius, Press Secretary, +46 70 878 67 63, [email&#160;protected] Experts : Olle Eriksson, +46 18 471 36 25, [email&#160;protected] and Anders Irbäck, +46 46 222 34 93, [email&#160;protected] , members of the Nobel Committee for Physics.\n\nThe Royal Swedish Academy of Sciences, founded in 1739, is an independent organisation whose overall objective is to promote the sciences and strengthen their influence in society. The Academy takes special responsibility for the natural sciences and mathematics, but endeavours to promote the exchange of ideas between various disciplines.\n\nNobel Prize® is a registered trademark of the Nobel Foundation.\n\nGo to the top of the page\n\nSix prizes were awarded for achievements that have conferred the greatest benefit to humankind. The 10 laureates' work and discoveries range from optogenetics to efforts to promote peace and international law.\n\nSee them all presented here.\n\nScroll to top",
+          "error": null,
+          "latency_ms": 1066.05912500072,
+          "raw_chars": 5409,
+          "truncated": false,
+          "source_ids": [
+            "S6"
+          ]
+        }
+      ],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 7,
+      "node": "reflect",
+      "plan_version": 1,
+      "ts_offset_ms": 11677.472999999736,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": {
+        "decision": "finalize",
+        "reasoning": "The observations identify that 'Attention Is All You Need' was published in 2017 and that the 2024 Nobel Prize in Physics (for neural network research) was awarded in 2024, which is enough to compute the years elapsed.",
+        "covered": {
+          "In what year was the paper 'Attention Is All You Need' published?": true,
+          "In what year was the Nobel Prize in Physics awarded for neural network research (the 2024 prize)?": true
+        },
+        "open_gaps": [],
+        "overruled_stop": false
+      },
+      "note": null
+    },
+    {
+      "i": 8,
+      "node": "finalize",
+      "plan_version": 1,
+      "ts_offset_ms": 12899.559542000134,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    }
+  ],
+  "sources": [
+    {
+      "sid": "S1",
+      "url": "https://en.wikipedia.org/wiki/Attention_Is_All_You_Need",
+      "title": "Attention Is All You Need - Wikipedia",
+      "snippet": "1. 1 2 3 4 5 6 Vaswani, Ashish; Shazeer, Noam; Parmar, Niki; Uszkoreit, Jakob; Jones, Llion; Gomez, Aidan N; Kaiser, Łukasz; Polosukhin, Illia (December 2017). \"Attention is All you Need\" (PDF). In I. Guyon and U. Von Luxburg and S. Bengio and H. Wallach and R. Fergus and S. Vishwanathan and R. Garn",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S2",
+      "url": "https://github.com/brandokoch/attention-is-all-you-need-paper",
+      "title": "GitHub - brandokoch/attention-is-all-you-need-paper: Original transformer paper: Implementation of Vaswani, Ashish, et al. \"Attention is all you need.\" Advances in neural information processing systems. 2017. · GitHub",
+      "snippet": "The original transformer architecture presented in this paper consists of an encoder and decoder part purposely included to match the seq2seq problem type of machine translation. There are also encoder-only (e.g. BERT) and decoder-only (e.g. GPT) transformer architectures, those won't be covered her",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S3",
+      "url": "https://ysu1989.github.io/courses/au20/cse5539/Transformer.pdf",
+      "title": "Attention Is All You Need",
+      "snippet": "and cannot attend long-term dependency ● Stacking more encoders/decoders might lead to vanishing gradients ● “Attention Is All You Need,” Vaswani et al. NeurIPS 2017 ● “Why Self-Attention? A Targeted Evaluation of Neural Machine Translation Architectures,” Tang et al. EMNLP 2018 ● “The Annotated Tra",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S4",
+      "url": "https://papers.nips.cc/paper/7181-attention-is-all-you-need",
+      "title": "Attention is All you Need",
+      "snippet": "# Attention is All you Need\n\nAshish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, Illia Polosukhin\n\nAdvances in Neural Information Processing Systems 30 (NIPS 2017)\n\nBibtex Metadata Paper Reviews\n\n## Abstract [...] The dominant sequence transduction ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S5",
+      "url": "https://www.alphaxiv.org/abs/1706.03762",
+      "title": "Attention Is All You Need | alphaXiv",
+      "snippet": "AbstractPaper\n\nSubmitted 02 Aug 2023\n\n# Attention Is All You Need\n\nSpotlight at NeurIPS 2017\n\nDeepMindGoogle ResearchUniversity of Toronto\nAshish VaswaniAshish VaswaniNoam ShazeerNoam ShazeerNiki ParmarNiki ParmarJakob UszkoreitJakob UszkoreitLlion JonesLlion JonesAidan N. GomezAidan N. GomezLukasz ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S6",
+      "url": "https://www.nobelprize.org/prizes/physics/2024/press-release",
+      "title": "Press release: The Nobel Prize in Physics 2024 - NobelPrize.org",
+      "snippet": "Skip to content \n\n# Nobel Prize\n\n# Press release\n\nEnglish  \nEnglish (pdf)  \nSwedish  \nSwedish (pdf)\n\n8 October 2024\n\nThe Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJohn J. Hopfield  \nPrinceton University, NJ, USA\n\nGeoffrey Hinton  \nUniversity of Toront",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S7",
+      "url": "https://www.nobelprize.org/uploads/2024/09/advanced-physicsprize2024.pdf",
+      "title": "Scientific Background to the Nobel Prize in Physics 2024",
+      "snippet": "BOX 50005 (LILLA FRESCATIVÄGEN 4 A), SE-104 05 STOCKHOLM, SWEDEN TEL +46 8 673 95 00  WWW.KVA.SE 1 (12) The Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 jointly to John J. Hopfield and Geoffrey E. Hinton “for foundational discoveries and inventions that ena",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S8",
+      "url": "https://www.youtube.com/watch?v=itywoDU3sL8",
+      "title": "Neural Networks and the 2024 Nobel Prize in Physics - Sixty Symbols",
+      "snippet": "# Neural Networks and the 2024 Nobel Prize in Physics - Sixty Symbols\n## Channel: Sixty Symbols (verified)\n888K subscribers\n2.3K likes\n\n### Description\n59,026 views\nPosted: 2024-10-18\nThis video features Juan Garrahan, Phil Moriarty and Mike Pound... More links and info below  ↓ ↓ ↓\n\nThe 2024 Nobel ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S9",
+      "url": "https://www.nobelprize.org/prizes/physics/2024/popular-information",
+      "title": "The Nobel Prize in Physics 2024 - Popular science background - NobelPrize.org",
+      "snippet": "### The Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJOHN J. HOPFIELD  \nBorn 1933 in Chicago, IL, USA. PhD 1958 from Cornell University, Ithaca, NY, USA. Professor at Princeton University, NJ, USA.\n\nGEOFFREY HINTON  \nBorn 1947 in London, UK. PhD 1978 fro",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S10",
+      "url": "https://lamarr-institute.org/blog/thoughts-physics-nobel-prize-2024",
+      "title": "Thoughts about the Nobel Prize in Physics 2024 … ML Blog",
+      "snippet": "If you are reading this blog, you likely already know that the 2024 Nobel Prize in Physics has been awarded to John Hopfield and Geoffrey Hinton. To see why, let me just quote from the press release of the Nobel Committee for Physics: “When we talk about artificial intelligence, we often mean machin",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S11",
+      "url": "https://physics.brown.edu/news/2024-10-08/2024-physics-nobel-prize",
+      "title": "2024 Nobel Prize in Physics Awarded | Department of Physics | Brown University",
+      "snippet": "Skip to Main Content\n\nBrown University \n\n# Physics\n\nSearch   Menu\n\nSearch\n\nPhysics\n\nDate  October 8, 2024\n\nAll News\n\nShare\n\nFacebook   Twitter\\_X   Linkedin   Email\n\n# 2024 Nobel Prize in Physics Awarded\n\nThe Royal Swedish Academy of Sciences has decided to award the 2024 Nobel Prize in Physics to J",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S12",
+      "url": "https://www.nature.com/articles/s41746-024-01345-9",
+      "title": "Artificial Intelligence awarded two Nobel Prizes for innovations that will shape the future of medicine | npj Digital Medicine",
+      "snippet": "Metrics details\n\nJohn J. Hopfield and Geoffrey E. Hinton were awarded the 2024 Nobel Prize in Physics for developing machine learning technology using artificial neural networks. In Chemistry it was awarded to Demis Hassabis and John M. Jumper for developing an AI algorithm that solved the 50-year p",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S13",
+      "url": "https://www.nobelprize.org/uploads/2024/10/press-physicsprize2024.pdf",
+      "title": "8 October 2024 The Nobel Prize in Physics 2024",
+      "snippet": "They trained artificial neural networks using physics 8 October 2024 “for foundational discoveries and inventions that enable machine learning with artificial neural networks” Nobel Prize® is a registered trademark of the Nobel Foundation.\nJohn J. Hopfield Princeton University, NJ, USA Geoffrey E. H",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S14",
+      "url": "https://www.scientificamerican.com/article/nobel-prize-in-physics-awarded-for-breakthroughs-in-machine-learning",
+      "title": "Nobel Prize in Physics Awarded for Breakthroughs in Machine Learning | Scientific American",
+      "snippet": "Scientific American\n\nSubscribeSign In\n\nNew Issue: Orbital Catastrophe Ahead? Read Now\n\nOctober 8, 2024\n\n4min read\n\nGoogle Logo Add Us On GoogleAdd SciAm\n\nNobel Prize in Physics Awarded for Breakthroughs in Machine Learning\n\nThe 2024 Nobel Prize in Physics was given to John Hopfield and Geoffrey Hint",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S15",
+      "url": "https://jqi.umd.edu/news/nobel-prize-celebrates-interplay-physics-and-ai",
+      "title": "Nobel Prize Celebrates Interplay of Physics and AI",
+      "snippet": "UMD Joint Quantum Institute logo\n\nSearch\n\nSearch\n\n# Nobel Prize Celebrates Interplay of Physics and AI\n\nOctober 11, 2024\n\n(Credit: © Johan Jarnestad/The Royal Swedish Academy of Sciences) [...] \"We, and many others, thought that the RBM framework, applied by 2024 Nobel Physics Laureate Geoffrey Hint",
+      "tool": "web_search",
+      "first_seen_step": 1
+    }
+  ],
+  "answer": "14 years passed between the publication of **“Attention Is All You Need”** (2017) and the **2024 Nobel Prize in Physics** being awarded for neural network research (2024). [S4][S6]",
+  "citations": [
+    "S4",
+    "S6"
+  ],
+  "coverage": {
+    "In what year was the paper 'Attention Is All You Need' published?": true,
+    "In what year was the Nobel Prize in Physics awarded for neural network research (the 2024 prize)?": true
+  },
+  "outcome": {
+    "status": "completed",
+    "early_exit_reason": null,
+    "used_deterministic_finalize": false,
+    "reflect_overrules": 0,
+    "error": null
+  },
+  "usage": {
+    "llm_calls": [
+      {
+        "purpose": "plan",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 240,
+        "cached_tokens": 0,
+        "output_tokens": 193,
+        "reasoning_tokens": 111,
+        "cost_usd": 0.00028925,
+        "latency_ms": 2032.5025000001915,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 925,
+        "cached_tokens": 0,
+        "output_tokens": 127,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.00034375,
+        "latency_ms": 1531.1071670003003,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 5488,
+        "cached_tokens": 0,
+        "output_tokens": 82,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.0012001000000000002,
+        "latency_ms": 1807.4461250007516,
+        "replayed": false
+      },
+      {
+        "purpose": "reflect",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 979,
+        "cached_tokens": 0,
+        "output_tokens": 140,
+        "reasoning_tokens": 26,
+        "cost_usd": 0.0003708,
+        "latency_ms": 1743.7397500007137,
+        "replayed": false
+      },
+      {
+        "purpose": "finalize",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 1278,
+        "cached_tokens": 0,
+        "output_tokens": 51,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.00031935000000000004,
+        "latency_ms": 1218.3521670003756,
+        "replayed": false
+      }
+    ],
+    "totals": {
+      "input_tokens": 8910,
+      "cached_tokens": 0,
+      "output_tokens": 593,
+      "reasoning_tokens": 137,
+      "cost_usd": 0.0025232500000000003,
+      "cache_hit_rate": 0.0
+    },
+    "by_purpose": {
+      "plan": {
+        "calls": 1,
+        "cost_usd": 0.00028925,
+        "output_tokens": 193
+      },
+      "act": {
+        "calls": 2,
+        "cost_usd": 0.0015438500000000003,
+        "output_tokens": 209
+      },
+      "reflect": {
+        "calls": 1,
+        "cost_usd": 0.0003708,
+        "output_tokens": 140
+      },
+      "finalize": {
+        "calls": 1,
+        "cost_usd": 0.00031935000000000004,
+        "output_tokens": 51
+      }
+    },
+    "search_credits": 4,
+    "steps": 2
+  },
+  "timings_ms": {
+    "total": 12895.557958000609
+  },
+  "compaction": {
+    "count": 0,
+    "compacted_upto": 0
+  }
+}

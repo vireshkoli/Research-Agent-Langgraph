@@ -1,0 +1,379 @@
+{
+  "schema_version": "1",
+  "run_id": "32bff4aface7",
+  "ts": "2026-10-25T08:21:20+00:00",
+  "question": "What does the acronym RAG stand for in the context of large language models?",
+  "variant": "gated",
+  "config": {
+    "agent_model": "gpt-5.4-nano",
+    "reasoning_effort": "none",
+    "max_steps": 8,
+    "max_seconds": 120.0,
+    "max_run_cost_usd": 0.05,
+    "finalize_reserve_usd": 0.008,
+    "compact_threshold_tokens": 12000,
+    "git_sha": "e577c53",
+    "prompt_hash": "sha256:e2655640140a"
+  },
+  "plan": {
+    "version": 1,
+    "subquestions": [
+      "In the context of large language models, what does the acronym RAG stand for?"
+    ],
+    "replans": 0
+  },
+  "steps": [
+    {
+      "i": 1,
+      "node": "plan",
+      "plan_version": 0,
+      "ts_offset_ms": 1841.85804200024,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 2,
+      "node": "act",
+      "plan_version": 1,
+      "ts_offset_ms": 3422.090959000343,
+      "tool_calls": [
+        {
+          "call_id": "call_78U0cSBitXAIkCYXlx5FyUk6",
+          "name": "web_search",
+          "args": {
+            "query": "RAG acronym stands for Retrieval-Augmented Generation large language models"
+          }
+        },
+        {
+          "call_id": "call_w1uAmqTzIxADJjpXbLF6QaFt",
+          "name": "web_search",
+          "args": {
+            "query": "what does RAG mean retrieval augmented generation LLM"
+          }
+        },
+        {
+          "call_id": "call_llUXHaNIV45PkGCWtmtHWcqr",
+          "name": "web_search",
+          "args": {
+            "query": "Retrieval-Augmented Generation paper acronym RAG"
+          }
+        }
+      ],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 3,
+      "node": "observe",
+      "plan_version": 1,
+      "ts_offset_ms": 6549.320542000714,
+      "tool_calls": [],
+      "observations": [
+        {
+          "call_id": "call_78U0cSBitXAIkCYXlx5FyUk6",
+          "tool": "web_search",
+          "args": {
+            "query": "RAG acronym stands for Retrieval-Augmented Generation large language models"
+          },
+          "ok": true,
+          "content": "Summary: RAG stands for Retrieval-Augmented Generation, a technique that enables large language models (LLMs) to retrieve and incorporate new information from external data sources. With RAG, LLMs first refer to a specified set of documents, then respond to user queries. These documents supplement information from the LLM’s pre-existing training data, allowing LLMs to use domain-specific and/or updated information that is not available in the training data. This allows LLM-based chatbots to provide more accurate and up-to-date responses.\n\n[1] Retrieval-augmented generation - Wikipedia\n    https://en.wikipedia.org/wiki/Retrieval-augmented_generation\n    Retrieval-augmented generation (RAG) is a technique that enables large language models (LLMs) to retrieve and incorporate new information from external data sources. With RAG, LLMs first refer to a specified set of documents, then respond to user queries. These documents supplement information from the LLM's pre-existing training data. This allows LLMs to use domain-specific and/or updated information that is not available in the training data. For example, this enables LLM-based chatbots to [...] Retrieval-augmented generation (RAG) enhances large language models (LLMs) by incorporating an information-retrieval mechanism that allows models to access and utilize additional data beyond their original training set. Ars Technica notes that \"when new information becomes available, rather than having to retrain the model, all that's needed is to augment the model's external knowledge base with the updated information (\"augmentation\"). IBM states that \"in the generative phase, the LLM draws [...] While RAG improves the accuracy of large language models (LLMs), it does not eliminate all challenges. One limitation is that while RAG reduces the need for frequent model retraining, it does not remove it entirely. Additionally, LLMs may struggle to recognize when they lack sufficient information to provide a reliable response. Without specific training, models may generate answers even when they should indicate uncertainty. According to IBM, this issue can arise when the model lacks the\n\n[2] What is Retrieval-Augmented Generation (RAG)? | Google Cloud\n    https://cloud.google.com/use-cases/retrieval-augmented-generation\n    RAG, which stands for Retrieval-Augmented Generation, is an AI framework that combines the strengths of traditional information retrieval systems (such as search and databases) with the capabilities of generative large language models (LLMs). By combining your data and world knowledge with LLM language skills, grounded generation is more accurate, up-to-date, and relevant to your specific needs. Check out this ebook to unlock your “Enterprise Truth.”\n\nimage of what is RAG [...] By fine-tuning or prompt-engineering the LLM to generate text entirely based on the retrieved knowledge, RAG helps to minimize contradictions and inconsistencies in the generated text. This significantly improves the quality of the generated text, and improves the user experience.\n\n[3] What is RAG? - Retrieval-Augmented Generation AI Explained - AWS\n    https://aws.amazon.com/what-is/retrieval-augmented-generation\n    Retrieval-Augmented Generation (RAG) is the process of optimizing the output of a large language model, so it references an authoritative knowledge base outside of its training data sources before generating a response. Large Language Models (LLMs) are trained on vast volumes of data and use billions of parameters to generate original output for tasks like answering questions, translating languages, and completing sentences. RAG extends the already powerful capabilities of LLMs to specific [...] ### Augment the LLM prompt\n\nNext, the RAG model augments the user input (or prompts) by adding the relevant retrieved data in context. This step uses prompt engineering techniques to communicate effectively with the LLM. The augmented prompt allows the large language models to generate an\n\n[truncated: 2,659 of 6,655 chars]",
+          "error": null,
+          "latency_ms": 2534.6547079998345,
+          "raw_chars": 6655,
+          "truncated": true,
+          "source_ids": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5"
+          ]
+        },
+        {
+          "call_id": "call_w1uAmqTzIxADJjpXbLF6QaFt",
+          "tool": "web_search",
+          "args": {
+            "query": "what does RAG mean retrieval augmented generation LLM"
+          },
+          "ok": true,
+          "content": "Summary: Retrieval-augmented generation (RAG) is a technique that enables large language models (LLMs) to retrieve and incorporate new information from external data sources. With RAG, LLMs first refer to a specified set of documents, then respond to user queries. These documents supplement information from the LLM’s pre-existing training data. This allows LLMs to use domain-specific and/or updated information that is not available in the training data. RAG combines the strengths of traditional information retrieval systems with the capabilities of generative large language models, improving the accuracy, up-to-dateness, and relevance of the generated text.\n\n[1] Retrieval-augmented generation - Wikipedia\n    https://en.wikipedia.org/wiki/Retrieval-augmented_generation\n    Retrieval-augmented generation (RAG) is a technique that enables large language models (LLMs) to retrieve and incorporate new information from external data sources. With RAG, LLMs first refer to a specified set of documents, then respond to user queries. These documents supplement information from the LLM's pre-existing training data. This allows LLMs to use domain-specific and/or updated information that is not available in the training data. For example, this enables LLM-based chatbots to [...] Retrieval-augmented generation (RAG) enhances large language models (LLMs) by incorporating an information-retrieval mechanism that allows models to access and utilize additional data beyond their original training set. Ars Technica notes that \"when new information becomes available, rather than having to retrain the model, all that's needed is to augment the model's external knowledge base with the updated information (\"augmentation\"). IBM states that \"in the generative phase, the LLM draws [...] RAG improves LLMs by incorporating information retrieval before generating responses. Unlike LLMs that rely on static training data, RAG pulls relevant text from databases, uploaded documents, or web sources. According to Ars Technica, \"RAG is a way of improving LLM performance, in essence by blending the LLM process with a web search or other document look-up process to help LLMs stick to the facts.\" This method helps reduce AI hallucinations, which have caused chatbots to describe policies\n\n[2] What is Retrieval-Augmented Generation (RAG)? | Google Cloud\n    https://cloud.google.com/use-cases/retrieval-augmented-generation\n    RAG, which stands for Retrieval-Augmented Generation, is an AI framework that combines the strengths of traditional information retrieval systems (such as search and databases) with the capabilities of generative large language models (LLMs). By combining your data and world knowledge with LLM language skills, grounded generation is more accurate, up-to-date, and relevant to your specific needs. Check out this ebook to unlock your “Enterprise Truth.”\n\nimage of what is RAG [...] By fine-tuning or prompt-engineering the LLM to generate text entirely based on the retrieved knowledge, RAG helps to minimize contradictions and inconsistencies in the generated text. This significantly improves the quality of the generated text, and improves the user experience.\n\n[3] What is RAG (Retrieval Augmented Generation)? | IBM\n    https://www.ibm.com/think/topics/retrieval-augmented-generation\n    Retrieval augmented generation, or RAG, is an architecture for optimizing the performance of an artificial intelligence (AI) model by connecting it with external knowledge bases. RAG helps large language models (LLMs) deliver more relevant responses at a higher quality. [...] The difference between RAG and fine-tuning is that RAG lets an LLM query an external data source while fine-tuning trains an LLM on domain-specific data. Both have the same general goal: to make an LLM perform better in a specified domain.\n\nRAG and fine-tuning are often contrasted but can be used in tandem. Fine-tuning increases a model’s familiarity with the intended domain and output requirements,\n\n[truncated: 3,427 of 7,426 chars]",
+          "error": null,
+          "latency_ms": 3124.583249999887,
+          "raw_chars": 7426,
+          "truncated": true,
+          "source_ids": [
+            "S1",
+            "S2",
+            "S4",
+            "S6",
+            "S3"
+          ]
+        },
+        {
+          "call_id": "call_llUXHaNIV45PkGCWtmtHWcqr",
+          "tool": "web_search",
+          "args": {
+            "query": "Retrieval-Augmented Generation paper acronym RAG"
+          },
+          "ok": true,
+          "content": "Summary: Retrieval-augmented generation (RAG) is a technique that enables large language models (LLMs) to retrieve and incorporate new information from external data sources. With RAG, LLMs first refer to a specified set of documents, then respond to user queries. These documents supplement information from the LLM’s pre-existing training data. This allows LLMs to use domain-specific and/or updated information that is not available in the training data. The term retrieval-augmented generation (RAG) was introduced in a 2020 paper that described combining a parametric language model with a non-parametric external memory accessed through retrieval at inference time.\n\n[1] Retrieval-augmented generation - Wikipedia\n    https://en.wikipedia.org/wiki/Retrieval-augmented_generation\n    Retrieval-augmented generation (RAG) is a technique that enables large language models (LLMs) to retrieve and incorporate new information from external data sources. With RAG, LLMs first refer to a specified set of documents, then respond to user queries. These documents supplement information from the LLM's pre-existing training data. This allows LLMs to use domain-specific and/or updated information that is not available in the training data. For example, this enables LLM-based chatbots to [...] The term retrieval-augmented generation (RAG) was introduced in a 2020 paper that described combining a parametric language model with a non-parametric external memory accessed through retrieval at inference time.\n\n## RAG and LLM limitations\n\n[edit] [...] Retrieval-augmented generation (RAG) enhances large language models (LLMs) by incorporating an information-retrieval mechanism that allows models to access and utilize additional data beyond their original training set. Ars Technica notes that \"when new information becomes available, rather than having to retrain the model, all that's needed is to augment the model's external knowledge base with the updated information (\"augmentation\"). IBM states that \"in the generative phase, the LLM draws\n\n[2] Introduction To Undertsanding RAG(Retrieval-Augmented Generation)\n    https://www.youtube.com/watch?v=fZM3oX4xEyg\n    Retrieval-Augmented Generation (RAG) is the process of optimizing the output of a large language model, so it references an authoritative knowledge base outside of its training data sources before generating a response. Large Language Models (LLMs) are trained on vast volumes of data and use billions of parameters to generate original output for tasks like answering questions, translating languages, and completing sentences. RAG extends the already powerful capabilities of LLMs to specific [...] [1:41] first of all we'll try to understand rag. Okay. So first of all let's go through the definition and then I will give you a brief idea what exactly rag\n[1:49] is all about you know. So here you can clearly see that rag is the process of optimizing the output of a large\n[1:59] language model. Okay. So it references an authorative knowledge base outside of\n[2:07] it training data set source before get generating a response. LLMs are trained [...] of LLMs to specific domains or an organization's internal knowledge base, all without the need to retrain the model. It is a cost-effective approach to improving LLM output so it remains relevant, accurate, and useful in various contexts.\n\n[3] What is retrieval-augmented generation (RAG)? - IBM Research\n    https://research.ibm.com/blog/retrieval-augmented-generation-RAG\n    Retrieval-augmented generation (RAG) is an AI framework for improving the quality of LLM-generated responses by grounding the model on external sources of knowledge to supplement the LLM’s internal representation of information. [...] 5 minute read\n\n# What is retrieval-augmented generation?\n\nRAG is an AI framework for retrieving facts from an external knowledge base to ground large language models (LLMs) on the most accurate, up-to-date information and to give users insight into LLMs'\n\n[truncated: 2,958 of 6,949 chars]",
+          "error": null,
+          "latency_ms": 2509.957332999875,
+          "raw_chars": 6949,
+          "truncated": true,
+          "source_ids": [
+            "S1",
+            "S7",
+            "S8",
+            "S2",
+            "S3"
+          ]
+        }
+      ],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 4,
+      "node": "reflect",
+      "plan_version": 1,
+      "ts_offset_ms": 6551.568209000834,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": "skipped on first step"
+    },
+    {
+      "i": 5,
+      "node": "act",
+      "plan_version": 1,
+      "ts_offset_ms": 7783.340000000862,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": "In the context of large language models, **RAG** stands for **Retrieval-Augmented Generation**. ([S1] Wikipedia; [S2] Google Cloud; [S3] AWS; [S4] IBM)"
+    },
+    {
+      "i": 6,
+      "node": "observe",
+      "plan_version": 1,
+      "ts_offset_ms": 7784.617334000359,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": "no tool calls"
+    },
+    {
+      "i": 7,
+      "node": "reflect",
+      "plan_version": 1,
+      "ts_offset_ms": 9252.390417000242,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": {
+        "decision": "finalize",
+        "reasoning": "All gathered observations explicitly state that RAG in LLM context stands for “Retrieval-Augmented Generation.” No further searching is needed to answer the single sub-question.",
+        "covered": {
+          "In the context of large language models, what does the acronym RAG stand for?": true
+        },
+        "open_gaps": [],
+        "overruled_stop": false
+      },
+      "note": null
+    },
+    {
+      "i": 8,
+      "node": "finalize",
+      "plan_version": 1,
+      "ts_offset_ms": 11262.525292000646,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    }
+  ],
+  "sources": [
+    {
+      "sid": "S1",
+      "url": "https://en.wikipedia.org/wiki/Retrieval-augmented_generation",
+      "title": "Retrieval-augmented generation - Wikipedia",
+      "snippet": "Retrieval-augmented generation (RAG) is a technique that enables large language models (LLMs) to retrieve and incorporate new information from external data sources. With RAG, LLMs first refer to a specified set of documents, then respond to user queries. These documents supplement information from ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S2",
+      "url": "https://cloud.google.com/use-cases/retrieval-augmented-generation",
+      "title": "What is Retrieval-Augmented Generation (RAG)? | Google Cloud",
+      "snippet": "RAG, which stands for Retrieval-Augmented Generation, is an AI framework that combines the strengths of traditional information retrieval systems (such as search and databases) with the capabilities of generative large language models (LLMs). By combining your data and world knowledge with LLM langu",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S3",
+      "url": "https://aws.amazon.com/what-is/retrieval-augmented-generation",
+      "title": "What is RAG? - Retrieval-Augmented Generation AI Explained - AWS",
+      "snippet": "Retrieval-Augmented Generation (RAG) is the process of optimizing the output of a large language model, so it references an authoritative knowledge base outside of its training data sources before generating a response. Large Language Models (LLMs) are trained on vast volumes of data and use billion",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S4",
+      "url": "https://www.ibm.com/think/topics/retrieval-augmented-generation",
+      "title": "What is RAG (Retrieval Augmented Generation)? | IBM",
+      "snippet": "Retrieval augmented generation, or RAG, is an architecture for optimizing the performance of an artificial intelligence (AI) model by connecting it with external knowledge bases. RAG helps large language models (LLMs) deliver more relevant responses at a higher quality. [...] RAG works by combining ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S5",
+      "url": "https://www.techment.com/blogs/rag-in-2026",
+      "title": "RAG in 2026: How Retrieval-Augmented Generation Works for Enterprise AI",
+      "snippet": "## What Is RAG in 2026? Understanding Retrieval-Augmented Generation Models\n\nRetrieval-Augmented Generation (RAG) in 2026 is an AI architecture that enhances large language models by pairing them with an external retrieval system. Instead of generating answers solely from internal parameters, the mo",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S6",
+      "url": "https://blogs.nvidia.com/blog/what-is-retrieval-augmented-generation",
+      "title": "What Is Retrieval-Augmented Generation aka RAG | NVIDIA Blogs",
+      "snippet": "Retrieval-augmented generation is a technique for enhancing the accuracy and reliability of generative AI models with information fetched from specific and relevant data sources.\n\nIn other words, it fills a gap in how LLMs work. Under the hood, LLMs are neural networks, typically measured by how man",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S7",
+      "url": "https://www.youtube.com/watch?v=fZM3oX4xEyg",
+      "title": "Introduction To Undertsanding RAG(Retrieval-Augmented Generation)",
+      "snippet": "Retrieval-Augmented Generation (RAG) is the process of optimizing the output of a large language model, so it references an authoritative knowledge base outside of its training data sources before generating a response. Large Language Models (LLMs) are trained on vast volumes of data and use billion",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S8",
+      "url": "https://research.ibm.com/blog/retrieval-augmented-generation-RAG",
+      "title": "What is retrieval-augmented generation (RAG)? - IBM Research",
+      "snippet": "Retrieval-augmented generation (RAG) is an AI framework for improving the quality of LLM-generated responses by grounding the model on external sources of knowledge to supplement the LLM’s internal representation of information. [...] 5 minute read\n\n# What is retrieval-augmented generation?\n\nRAG is ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    }
+  ],
+  "answer": "In the context of large language models, **RAG** stands for **Retrieval-Augmented Generation** [S1][S2][S3][S4].",
+  "citations": [
+    "S1",
+    "S2",
+    "S3",
+    "S4"
+  ],
+  "coverage": {
+    "In the context of large language models, what does the acronym RAG stand for?": true
+  },
+  "outcome": {
+    "status": "completed",
+    "early_exit_reason": null,
+    "used_deterministic_finalize": false,
+    "reflect_overrules": 0,
+    "error": null
+  },
+  "usage": {
+    "llm_calls": [
+      {
+        "purpose": "plan",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 225,
+        "cached_tokens": 0,
+        "output_tokens": 106,
+        "reasoning_tokens": 42,
+        "cost_usd": 0.0001775,
+        "latency_ms": 1827.0109579998461,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 854,
+        "cached_tokens": 0,
+        "output_tokens": 91,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.00028455,
+        "latency_ms": 1576.7934999994395,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 3774,
+        "cached_tokens": 0,
+        "output_tokens": 51,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.00081855,
+        "latency_ms": 1228.6522920003335,
+        "replayed": false
+      },
+      {
+        "purpose": "reflect",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 699,
+        "cached_tokens": 0,
+        "output_tokens": 89,
+        "reasoning_tokens": 12,
+        "cost_usd": 0.00025105,
+        "latency_ms": 1464.6339999999327,
+        "replayed": false
+      },
+      {
+        "purpose": "finalize",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 667,
+        "cached_tokens": 0,
+        "output_tokens": 38,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.0001809,
+        "latency_ms": 2006.6068749993065,
+        "replayed": false
+      }
+    ],
+    "totals": {
+      "input_tokens": 6219,
+      "cached_tokens": 0,
+      "output_tokens": 375,
+      "reasoning_tokens": 54,
+      "cost_usd": 0.00171255,
+      "cache_hit_rate": 0.0
+    },
+    "by_purpose": {
+      "plan": {
+        "calls": 1,
+        "cost_usd": 0.0001775,
+        "output_tokens": 106
+      },
+      "act": {
+        "calls": 2,
+        "cost_usd": 0.0011031,
+        "output_tokens": 142
+      },
+      "reflect": {
+        "calls": 1,
+        "cost_usd": 0.00025105,
+        "output_tokens": 89
+      },
+      "finalize": {
+        "calls": 1,
+        "cost_usd": 0.0001809,
+        "output_tokens": 38
+      }
+    },
+    "search_credits": 3,
+    "steps": 2
+  },
+  "timings_ms": {
+    "total": 11258.483999999953
+  },
+  "compaction": {
+    "count": 0,
+    "compacted_upto": 0
+  }
+}

@@ -1,7 +1,7 @@
 {
   "schema_version": "1",
-  "run_id": "8ca832f039a2",
-  "ts": "2026-08-08T18:04:55+00:00",
+  "run_id": "f3e9ac300108",
+  "ts": "2026-10-25T08:49:49+00:00",
   "question": "Which won the Nobel Prize in Physics more recently: research related to neural networks, or research related to black holes? Give both years.",
   "variant": "full",
   "config": {
@@ -12,14 +12,14 @@
     "max_run_cost_usd": 0.05,
     "finalize_reserve_usd": 0.008,
     "compact_threshold_tokens": 12000,
-    "git_sha": "ffb33e3",
-    "prompt_hash": "sha256:512e8e5d8eaa"
+    "git_sha": "e577c53",
+    "prompt_hash": "sha256:e2655640140a"
   },
   "plan": {
     "version": 1,
     "subquestions": [
-      "What year did the most recently awarded Nobel Prize in Physics go to work related to neural networks (or machine learning / artificial intelligence as recognized in Nobel citations)?",
-      "What year did the most recently awarded Nobel Prize in Physics go to work related to black holes (as recognized in Nobel citations)?"
+      "What is the most recent Nobel Prize in Physics (year) whose award rationale/cited work is specifically about neural networks (or machine learning as a core theme)?",
+      "What is the most recent Nobel Prize in Physics (year) whose award rationale/cited work is specifically about black holes?"
     ],
     "replans": 0
   },
@@ -28,7 +28,7 @@
       "i": 1,
       "node": "plan",
       "plan_version": 0,
-      "ts_offset_ms": 3701.1819999897853,
+      "ts_offset_ms": 5775.878124999508,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -38,41 +38,48 @@
       "i": 2,
       "node": "act",
       "plan_version": 1,
-      "ts_offset_ms": 6368.158290992142,
+      "ts_offset_ms": 7783.069916999921,
       "tool_calls": [
         {
-          "call_id": "call_m57ziRiNhBSRUvyq90lYEpbO",
+          "call_id": "call_kGG40KbfumWg91cfoDFqrkv2",
           "name": "web_search",
           "args": {
-            "query": "site:nobelprize.org Nobel Prize in Physics 2024 machine learning neural networks citation"
+            "query": "Nobel Prize in Physics 2024 award neural networks machine learning rationale"
           }
         },
         {
-          "call_id": "call_gzzmbkDGLaV7Rf2Na6eehXZL",
+          "call_id": "call_qYlwGRy4FNlq5zD15DHoz3wT",
           "name": "web_search",
           "args": {
-            "query": "site:nobelprize.org Nobel Prize in Physics neural network"
+            "query": "Nobel Prize in Physics 2023 award machine learning neural networks"
           }
         },
         {
-          "call_id": "call_jIonWFD36YcBwBRWz01eV6lY",
+          "call_id": "call_T5iXhuxarZZil6i8QMvHt3W4",
           "name": "web_search",
           "args": {
-            "query": "site:nobelprize.org Nobel Prize in Physics black holes citation year"
+            "query": "site:nobelprize.org physics prize machine learning neural networks award citation"
           }
         },
         {
-          "call_id": "call_9ZNItOGw0yyE1SdCBk8S4cCv",
+          "call_id": "call_LDhUOBPfeOXdUPa0BvcszRCy",
           "name": "web_search",
           "args": {
-            "query": "Nobel Prize physics black hole year Nobel citation gravitational waves 2017"
+            "query": "most recent Nobel Prize in Physics black holes year nobelprize.org award citation"
           }
         },
         {
-          "call_id": "call_hCABW4ubVj8wUNb3uEY7Xklr",
+          "call_id": "call_1eAUIdlMVaPqCd6yd09vg51r",
           "name": "web_search",
           "args": {
-            "query": "Nobel Prize Physics machine learning 2023 citation"
+            "query": "site:nobelprize.org Nobel Prize in Physics black holes 2019 gravitational waves black holes citation"
+          }
+        },
+        {
+          "call_id": "call_vtiifoYkG2SThJiCAVNVcB3j",
+          "name": "web_search",
+          "args": {
+            "query": "Nobel Prize in Physics black holes 2020 2021 2022 award"
           }
         }
       ],
@@ -84,20 +91,20 @@
       "i": 3,
       "node": "observe",
       "plan_version": 1,
-      "ts_offset_ms": 11914.462207991164,
+      "ts_offset_ms": 13308.806625000216,
       "tool_calls": [],
       "observations": [
         {
-          "call_id": "call_m57ziRiNhBSRUvyq90lYEpbO",
+          "call_id": "call_kGG40KbfumWg91cfoDFqrkv2",
           "tool": "web_search",
           "args": {
-            "query": "site:nobelprize.org Nobel Prize in Physics 2024 machine learning neural networks citation"
+            "query": "Nobel Prize in Physics 2024 award neural networks machine learning rationale"
           },
           "ok": true,
-          "content": "Summary: In 2024, the Nobel Prize in Physics was awarded to John J. Hopfield and Geoffrey Hinton for foundational discoveries in machine learning with artificial neural networks. Their work has enabled advancements in various fields, including physics.\n\n[1] Nobel Prize laureates and research affiliations\n    https://www.nobelprize.org/prizes/lists/nobel-laureates-and-research-affiliations\n    Riccardo Giacconi\n\n> “for pioneering contributions to astrophysics, which have led to the discovery of cosmic X-ray sources”\n\n## University of Toronto, Toronto, Canada (4)\n\n### Nobel Prize in Physics 2024\n\nJohn J. Hopfield and Geoffrey Hinton\n\n> “for foundational discoveries and inventions that enable machine learning with artificial neural networks”\n\n### Nobel Prize in Physiology or Medicine 1923\n\nFrederick G. Banting and John Macleod\n\n> “for the discovery of insulin”\n\n[2] The Nobel Prize in Physics 2024\n    https://www.nobelprize.org/prizes/physics/2024/summary\n    Prize share: 1/2\n\nThe Nobel Prize in Physics 2024 was awarded jointly to John J. Hopfield and Geoffrey Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural networks\"\n\nTo cite this section   \nMLA style: The Nobel Prize in Physics 2024. NobelPrize.org. Nobel Prize Outreach 2026. Fri. 7 Aug 2026. \n\n### Explore prizes and laureates\n\n#### About the Nobel Prize organisation\n\n##### The Nobel Foundation\n\n[3] All Nobel Prizes\n    https://www.nobelprize.org/prizes/lists/all-nobel-prizes\n    > “for the theory of sustained growth through creative destruction”\n\n## 2024\n\n### Nobel Prize in Physics 2024\n\nJohn J. Hopfield and Geoffrey Hinton\n\n> “for foundational discoveries and inventions that enable machine learning with artificial neural networks”\n\n### Nobel Prize in Chemistry 2024\n\nDavid Baker\n\n> “for computational protein design”\n\nDemis Hassabis and John Jumper\n\n> “for protein structure prediction”\n\n### Nobel Prize in Physiology or Medicine 2024\n\nVictor Ambros and Gary Ruvkun\n\n[4] Press release: The Nobel Prize in Physics 2024\n    https://www.nobelprize.org/prizes/physics/2024/press-release\n    # Nobel Prize\n\n### Enhanced Page Navigation\n\n## Nobel Prize in Physics 2024\n\n## Share this\n\n# Press release\n\nEnglish  \nEnglish (pdf)  \nSwedish  \nSwedish (pdf)\n\nLogo\n\n8 October 2024\n\nThe Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJohn J. Hopfield  \nPrinceton University, NJ, USA\n\nGeoffrey Hinton  \nUniversity of Toronto, Canada\n\n“for foundational discoveries and inventions that enable machine learning with artificial neural networks” [...] ## They trained artificial neural networks using physics\n\nThis year’s two Nobel Laureates in Physics have used tools from physics to develop methods that are the foundation of today’s powerful machine learning. John Hopfield created an associative memory that can store and reconstruct images and other types of patterns in data. Geoffrey Hinton invented a method that can autonomously find properties in data, and so perform tasks such as identifying specific elements in pictures. [...] “The laureates’ work has already been of the greatest benefit. In physics we use artificial neural networks in a vast range of areas, such as developing new materials with specific properties,” says Ellen Moons, Chair of the Nobel Committee for Physics.\n\n### Illustrations\n\nThe illustrations are free to use for non-commercial purposes. Attribute ”©Johan Jarnestad/The Royal Swedish Academy of Sciences”.\n\n[5] Scientific Background to the Nobel Prize in Physics 2024\n    https://www.nobelprize.org/uploads/2024/09/advanced-physicsprize2024.pdf\n    BOX 50005 (LILLA FRESCATIVÄGEN 4 A), SE-104 05 STOCKHOLM, SWEDEN TEL +46 8 673 95 00  WWW.KVA.SE 1 (12) The Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 jointly to John J. Hopfield and Geoffrey E. Hinton “for foundational discoveries and inventions that enable machine learning with artificial neural\n\n[truncated: 1,162 of 5,152 chars]",
+          "content": "Summary: The Nobel Prize in Physics 2024 was awarded to John J. Hopfield and Geoffrey E. Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural networks.\" The award recognizes their seminal work in developing foundational methods that form the basis for today’s machine learning technologies and artificial neural networks. They used principles from physics to train artificial neural networks capable of recognizing patterns and learning from data, contributing greatly to the current expansion and explosion in machine learning approaches and artificial intelligence (AI) methods.\n\n[1] Nobel Prize in Physics 2024\n    https://www.nature.com/collections/ehbjaifcgc\n    The Nobel Prize in Physics 2024 has been awarded to John J. Hopfield and Geoffrey E. Hinton “for foundational discoveries and inventions that enable machine learning with artificial neural networks”. In recognition of this award, Nature Portfolio presents a collection of research, review and opinion articles that celebrates the direct contributions by the awardees and the advances they have inspired. [...] ### A new frontier for Hopfield networks\n\nDmitry Krotov discusses recent theoretical advances in Hopfield networks and their broader impact in the context of energy-based neural architectures.\n\n### Optimizing the synergy between physics and machine learning\n\nAlthough the initial inspiration of neural networks came from biology, insights from physics have helped neural networks to become usable. New connections between physics and machine learning produce powerful computational methods. [...] A Nobel Prize medal sitting in front of a gold background featuring linear and circular particle traces\n\n## Editors\n\n### Yann Sweeney\n\nSenior Editor, Nature\n\n## Highlights\n\n### Physics Nobel scooped by machine-learning pioneers\n\nJohn Hopfield and Geoffrey Hinton pioneered computational methods that enabled the development of neural networks.\n\n### Pattern recognition computation using action potential timing for stimulus representation\n\n### Computation by neural networks\n\n[2] Machine learning discoveries honoured with 2024 Nobel Prize for Physics | EMBL\n    https://www.embl.org/news/science-technology/machine-learning-discoveries-honoured-with-2024-nobel-prize-for-physics\n    John J. Hopfield, Princeton University, USA, and Geoffrey E. Hinton, University of Toronto, Canada have been awarded the 2024 Nobel Prize for Physics. The award recognises their seminal work in developing foundational methods that form the basis for today’s machine learning technologies and artificial neural networks. [...] The two awardees used principles from physics to train artificial neural networks capable of recognising patterns and learning from data. The discoveries contributed greatly to the current expansion and explosion in machine learning approaches and artificial intelligence (AI) methods. These approaches have found applications in diverse fields, such as particle physics, life sciences, astrophysics, and chemical engineering, as well as in the everyday use of computers. [...] European Molecular Biology Laboratory Home\n\n Edit\n\n# Machine learning discoveries honoured with 2024 Nobel Prize for Physics\n\nThe prize was awarded to John J. Hopfield and Geoffrey Hinton for their seminal contributions to the foundational methods that enabled the development of machine learning.\n\n  \n\nCredit: Isabel Romero Calvo/EMBL\n\n[3] Neural Networks and the 2024 Nobel Prize in Physics - Sixty Symbols\n    https://www.youtube.com/watch?v=itywoDU3sL8\n    # Neural Networks and the 2024 Nobel Prize in Physics - Sixty Symbols\n## Channel: Sixty Symbols (verified)\n888K subscribers\n2.3K likes\n\n### Description\n59,026 views\nPosted: 2024-10-18\nThis video features Juan Garrahan, Phil Moriarty and Mike Pound... More links and info below  ↓ ↓ ↓\n\nThe 2024 Nobel Prize in Physics is awarded to John Hopfield and Geoffrey Hinton “for foundational discoveries and inventions that enable\n\n[truncated: 3,666 of 7,662 chars]",
           "error": null,
-          "latency_ms": 3384.311458998127,
-          "raw_chars": 5152,
+          "latency_ms": 3021.858166999664,
+          "raw_chars": 7662,
           "truncated": true,
           "source_ids": [
             "S1",
@@ -108,83 +115,103 @@
           ]
         },
         {
-          "call_id": "call_gzzmbkDGLaV7Rf2Na6eehXZL",
+          "call_id": "call_qYlwGRy4FNlq5zD15DHoz3wT",
           "tool": "web_search",
           "args": {
-            "query": "site:nobelprize.org Nobel Prize in Physics neural network"
+            "query": "Nobel Prize in Physics 2023 award machine learning neural networks"
           },
           "ok": true,
-          "content": "Summary: The 2024 Nobel Prize in Physics was awarded to John J. Hopfield and Geoffrey Hinton for foundational discoveries in artificial neural networks. Their work enables machine learning. The prize recognized their contributions to the development of neural networks used in physics.\n\n[1] Press release: The Nobel Prize in Physics 2024\n    https://www.nobelprize.org/prizes/physics/2024/press-release\n    ## They trained artificial neural networks using physics\n\nThis year’s two Nobel Laureates in Physics have used tools from physics to develop methods that are the foundation of today’s powerful machine learning. John Hopfield created an associative memory that can store and reconstruct images and other types of patterns in data. Geoffrey Hinton invented a method that can autonomously find properties in data, and so perform tasks such as identifying specific elements in pictures. [...] # Nobel Prize\n\n### Enhanced Page Navigation\n\n## Nobel Prize in Physics 2024\n\n## Share this\n\n# Press release\n\nEnglish  \nEnglish (pdf)  \nSwedish  \nSwedish (pdf)\n\nLogo\n\n8 October 2024\n\nThe Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJohn J. Hopfield  \nPrinceton University, NJ, USA\n\nGeoffrey Hinton  \nUniversity of Toronto, Canada\n\n“for foundational discoveries and inventions that enable machine learning with artificial neural networks” [...] “The laureates’ work has already been of the greatest benefit. In physics we use artificial neural networks in a vast range of areas, such as developing new materials with specific properties,” says Ellen Moons, Chair of the Nobel Committee for Physics.\n\n### Illustrations\n\nThe illustrations are free to use for non-commercial purposes. Attribute ”©Johan Jarnestad/The Royal Swedish Academy of Sciences”.\n\n[2] Scientific Background to the Nobel Prize in Physics 2024\n    https://www.nobelprize.org/uploads/2024/09/advanced-physicsprize2024.pdf\n    BOX 50005 (LILLA FRESCATIVÄGEN 4 A), SE-104 05 STOCKHOLM, SWEDEN TEL +46 8 673 95 00  WWW.KVA.SE 1 (12) The Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 jointly to John J. Hopfield and Geoffrey E. Hinton “for foundational discoveries and inventions that enable machine learning with artificial neural networks” Introduction With its roots in the 1940s, machine learning based on artificial neural networks (ANNs) has developed over the past three decades [...] in many physical systems are robust to changes in model details, he addressed this question using a neural network with N binary nodes si (0 or 1). The dynamics were asynchronous with threshold updates of individual nodes at random times. The new value of a node si was determined by a weighted sum over all other nodes, 4 (12) ℎ𝑖𝑖= ∑ 𝑗𝑗≠𝑖𝑖 𝑤𝑤𝑖𝑖𝑖𝑖𝑠𝑠𝑗𝑗, and was set to si=1 if hi>0, and si=0 otherwise (with the threshold set to zero). The couplings wij were assumed symmetric and to reflect pairwise [...] both biological and artificial neural networks. Another influential early contribution came from the psychologist Donald Hebb . In 1949, Hebb proposed a mechanism for learning and memories, where the simultaneous and repeated activation of two neurons leads to an increased strength of the synapse between them. In the ANN area, two architectures for systems of interconnected nodes were explored, “recurrent” and “feedforward” networks, where the former allows for feedback interactions (Figures 1\n\n[3] The Nobel Prize in Physics 2024\n    https://www.nobelprize.org/prizes/physics/2024/summary\n    Prize share: 1/2\n\nThe Nobel Prize in Physics 2024 was awarded jointly to John J. Hopfield and Geoffrey Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural networks\"\n\nTo cite this section   \nMLA style: The Nobel Prize in Physics 2024. NobelPrize.org. Nobel Prize Outreach 2026. Fri. 7 Aug 2026. \n\n### Explore prizes and laureates\n\n#### About the Nobel Prize organisation\n\n##### The Nobel Foundation\n\n[4]\n\n[truncated: 2,233 of 6,229 chars]",
+          "content": "Summary: The sources indicate that the Nobel Prize in Physics 2024 was awarded to John Hopfield and Geoffrey Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural networks.\" This recognition highlights the significant role of their work in advancing artificial intelligence through machine learning. Specifically, their contributions include the development of methods that are foundational to today's powerful machine learning, such as Hopfield's associative memory and Hinton's backpropagation and convolutional neural networks.\n\n[1] Nobel Prize Celebrates Interplay of Physics and AI\n    https://jqi.umd.edu/news/nobel-prize-celebrates-interplay-physics-and-ai\n    On Tuesday, theNobel Prize in physics was awarded to John Hopfield and Geoffrey E. Hinton for their foundational discoveries and inventions that have enabled artificial neural networks to be used for machine learning—a widely used form of AI. The award highlights how the field of physics is intertwined with neural networks and the field of AI. [...] Some physics research applications of neural networks draw more directly on the physics foundation of neural networks. Earlier this year, JQI Fellow Charles Clark and JQI graduate student Ruizhi Pan proposed new tools to expand the use of machine learning in quantum physics research. They investigated a type of neural network called a restricted Boltzmann machine (RBM)—a variation of Boltzmann machines with additional restrictions on the networks. Their research returned to the spin description [...] Neural networks can also be useful for physicists who need to identify relevant data so they can focus their attention effectively. For instance, the scientific background document that was shared as part of the prize announcement cites the use of neural networks in the analysis of data from the IceCube neutrino detector at the South Pole. The project was a collaboration of many researchers, including UMD physics professors Kara Hoffman and Gregory Sullivan and UMD physics assistant professor\n\n[2] Physics Nobel awarded to neural network pioneers who laid foundations for AI\n    https://theconversation.com/physics-nobel-awarded-to-neural-network-pioneers-who-laid-foundations-for-ai-240833\n    While recent rapid progress in AI – familiar to most of us from generative AI systems such as ChatGPT – might seem like vindication for the early proponents of neural networks, Hinton at least has expressed concern. In 2023, after quitting a decade-long stint at Google’s AI branch, he said he was scared by the rate of development and joined the growing throng of voices calling for more proactive AI regulation. [...] The 2024 Nobel Prize in Physics has been awarded to scientists John Hopfield and Geoffrey Hinton “for foundational discoveries and inventions that enable machine learning with artificial neural networks”. [...] More important was the conceptual breakthrough that an artificial neural network could learn from data. Hinton continued to develop this idea. He later published influential papers on backpropagation (the learning process used in modern machine learning systems) and convolutional neural networks (the main type of neural network used today for AI systems that work with image and video data).\n\n## Why this prize, now?\n\n[3] Event information - NobelPrize.org\n    https://www.nobelprize.org/events/nobel-prize-dialogue/tokyo-2025/panellists/geoffrey-hinton\n    Skip to content \n\n# Nobel Prize\n\n2025 Tokyo\n\n# THE FUTURE OF LIFE\n\n# Nobel Prize Dialogue\n\n### Geoffrey Hinton\n\nGeoffrey Hinton was awarded the 2024 Nobel Prize in Physics for his work on machine learning with artificial neural networks. [...] Geoffrey Hinton, physics laureate and the “Godfather of AI,” is internationally renowned as a pioneer in the field of deep learning as a mode of artificial intelligence. With John J. Hopfield, he received the Nobel Prize in Physics 2024 “for foundational discoveries and inventions that\n\n[truncated: 2,925 of 6,922 chars]",
           "error": null,
-          "latency_ms": 3175.7464580005035,
-          "raw_chars": 6229,
+          "latency_ms": 2348.712875000274,
+          "raw_chars": 6922,
           "truncated": true,
           "source_ids": [
-            "S4",
-            "S5",
-            "S2",
             "S6",
-            "S7"
-          ]
-        },
-        {
-          "call_id": "call_jIonWFD36YcBwBRWz01eV6lY",
-          "tool": "web_search",
-          "args": {
-            "query": "site:nobelprize.org Nobel Prize in Physics black holes citation year"
-          },
-          "ok": true,
-          "content": "Summary: The Nobel Prize in Physics 2020 was awarded for discoveries related to black holes. Roger Penrose received half for showing black hole formation is predicted by relativity. Reinhard Genzel and Andrea Ghez shared the other half for discovering a supermassive black hole in the Milky Way.\n\n[1] Press release: The Nobel Prize in Physics 2020\n    https://www.nobelprize.org/prizes/physics/2020/press-release\n    In January 1965, ten years after Einstein’s death, Roger Penrose proved that black holes really can form and described them in detail; at their heart, black holes hide a singularity in which all the known laws of nature cease. His groundbreaking article is still regarded as the most important contribution to the general theory of relativity since Einstein. [...] Three Laureates share this year’s Nobel Prize in Physics for their discoveries about one of the most exotic phenomena in the universe, the black hole. Roger Penrose showed that the general theory of relativity leads to the formation of black holes. Reinhard Genzel and Andrea Ghez discovered that an invisible and extremely heavy object governs the orbits of stars at the centre of our galaxy. A supermassive black hole is the only currently known explanation. [...] # Nobel Prize\n\n### Enhanced Page Navigation\n\n## Nobel Prize in Physics 2020\n\n## Share this\n\n# Press release\n\n##### English English (pdf) Swedish Swedish (pdf)\n\nLogo\n\nLogo\n\n6 October 2020\n\nThe Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2020\n\nwith one half to\n\nRoger Penrose  \nUniversity of Oxford, UK\n\n“for the discovery that black hole formation is a robust prediction of the general theory of relativity”\n\nand the other half jointly to\n\n[2] The Nobel Prize in Physics 2020 - Popular science background\n    https://www.nobelprize.org/prizes/physics/2020/popular-information\n    Three Laureates share this year’s Nobel Prize in Physics for their discoveries about one of the most exotic phenomena in the universe, the black hole. Roger Penrose showed that black holes are a direct consequence of the general theory of relativity. Reinhard Genzel and Andrea Ghez discovered that an invisible and extremely heavy object governs the stars’ orbits at the centre of our galaxy, the Milky Way. A supermassive black hole is the only currently known explanation. [...] ### The Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2020\n\nwith one half to\n\nROGER PENROSE  \nBorn 1931 in Colchester, UK. Ph.D.  \n1957 at University of Cambridge, UK.  \nProfessor at University of Oxford, UK\n\n“for the discovery that black hole formation is a robust prediction of the general theory of relativity”\n\nand the other half jointly to [...] Black holes are perhaps the strangest consequence of the general theory of relativity. When Albert Einstein presented his theory in November 1915, it upended all the previous concepts of space and time. The theory provided an entirely new foundation for understanding gravity, which shapes the universe at the largest scale. Since then, this theory has provided the basis for all studies of the universe, and also has a practical use in one of our most common navigation tools, the GPS.\n\n[3] The Nobel Prize in Physics 2020 - Award ceremony speech\n    https://www.nobelprize.org/prizes/physics/2020/ceremony-speech\n    Professors Penrose, Genzel and Ghez, you have been awarded the 2020 Nobel Prize in Physics for your outstanding contributions to our understanding of black holes. It is an honor and a privilege to convey to you, on behalf of the Royal Swedish Academy of Sciences, our warmest congratulations.\n\nCopyright © The Nobel Foundation 2020\n\nGo to the top of the page\n\n### Explore prizes and laureates\n\nLook for popular awards and laureates in different fields, and discover the history of the Nobel Prize. [...] This year’s Laureates have made groundbreaking discoveries concerning the most mythical and strange objects in physics: black holes.\n\nBlack\n\n[truncated: 1,540 of 5,537 chars]",
-          "error": null,
-          "latency_ms": 2366.0700409964193,
-          "raw_chars": 5537,
-          "truncated": true,
-          "source_ids": [
+            "S7",
             "S8",
-            "S9",
-            "S10",
-            "S11",
-            "S6"
+            "S4",
+            "S9"
           ]
         },
         {
-          "call_id": "call_9ZNItOGw0yyE1SdCBk8S4cCv",
+          "call_id": "call_T5iXhuxarZZil6i8QMvHt3W4",
           "tool": "web_search",
           "args": {
-            "query": "Nobel Prize physics black hole year Nobel citation gravitational waves 2017"
+            "query": "site:nobelprize.org physics prize machine learning neural networks award citation"
           },
           "ok": true,
-          "content": "Summary: In 2017, the Nobel Prize in Physics was awarded to Rainer Weiss, Kip Thorne, and Barry Barish for their role in detecting gravitational waves, confirming a prediction by Einstein. The detection was made by observing the collision of two black holes.\n\n[1] Gravitational wave - Wikipedia\n    https://en.wikipedia.org/wiki/Gravitational_wave\n    56. ↑ Rincon, Paul; Amos, Jonathan (3 October 2017). \"Einstein's waves win Nobel Prize\". BBC News. Retrieved 3 October 2017.\n57. ↑ Overbye, Dennis (3 October 2017). \"2017 Nobel Prize in Physics Awarded to LIGO Black Hole Researchers\". The New York Times. Retrieved 3 October 2017.\n58. ↑ Kaiser, David \"David Kaiser (physicist)\") (3 October 2017). \"Learning from Gravitational Waves\". The New York Times. Retrieved 3 October 2017. [...] The first direct observation of gravitational waves was made in September 2015, when a signal generated by the merger of two black holes was received by the LIGO gravitational wave detectors in Livingston, Louisiana, and in Hanford, Washington. The 2017 Nobel Prize in Physics was subsequently awarded to Rainer Weiss, Kip Thorne and Barry Barish for their role in the direct detection of gravitational waves.\n\n## Introduction\n\n[edit]\n\n|  | [...] A year earlier, the BICEP2 collaboration claimed that they had detected the imprint of gravitational waves in the cosmic microwave background. However, they were later forced to retract this result.\n\nIn 2017, the Nobel Prize in Physics was awarded to Rainer Weiss, Kip Thorne and Barry Barish for their role in the detection of gravitational waves.\n\n[2] Nobel Prize: Facing the Reality of Black Holes - APS Journals\n    https://link.aps.org/doi/10.1103/Physics.13.158\n    Cardoso sees a connection between this year’s Nobel Prize and the 2017 prize awarded for the detection of gravitational waves. “These are truly fascinating times for those trying to understand how gravity and the cosmos work,” he says.\n\n[3] The Nobel Prize in Physics {2017} | Gravitational Wave Detection\n    https://www.youtube.com/watch?v=5NJx1pMV6-U\n    From peering inside a supernova to capturing signals from the universe's first moment, gravitational waves have the potential to reveal the most powerful events in the cosmos.  In 2017, Rainer Weiss, Barry C. Barish and Kip S. Thorne were awarded the Nobel Prize in Physics for leading a successful effort to observe gravitational waves using NSF's Laser Interferometer Gravitational Wave Observatory (LIGO).\n\n[4] 2017 Nobel Prize in Physics Awarded to LIGO Founders | LIGO Lab | Caltech\n    https://www.ligo.caltech.edu/page/press-release-2017-nobel-prize\n    years ago when two black holes spiraled together and collided. Two additional detections of gravitational waves, once again from merging black-hole pairs, were made on December 26, 2015, and January 4, 2017, and, on August 14, 2017, a fourth event was detected by LIGO and the European Virgo gravitational-wave detector. [...] Rainer Weiss ’55, PhD ’62, professor emeritus of physics at MIT, has won the Nobel Prize in physics for 2017. Weiss wins half the prize, sharing the other half of the award with Kip S. Thorne, professor emeritus of theoretical physics at Caltech, and Barry C. Barish, professor emeritus of physics at Caltech.\n\nThe Nobel Foundation, in its announcement this morning, cited the physicists \"for decisive contributions to the LIGO detector and the observation of gravitational waves.” [...] \"I am humbled and honored to receive this award,\" says Barish. \"The detection of gravitational waves is truly a triumph of modern large-scale experimental physics. Over several decades, our teams at Caltech and MIT developed LIGO into the incredibly sensitive device that made the discovery. When the signal reached LIGO from a collision of two stellar black holes that occurred 1.3 billion years ago, the 1,000-scientist-strong LIGO Scientific Collaboration was able to both identify the candidate\n\n[5] Medium\n   \n\n[truncated: 649 of 4,604 chars]",
+          "content": "Summary: The Royal Swedish Academy of Sciences awarded the Nobel Prize in Physics 2024 jointly to John J. Hopfield and Geoffrey Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural networks.\" The prize recognized their contributions to the development of machine learning techniques inspired by physics, which have become essential tools in various scientific fields, including the discovery of the Higgs particle. The citation highlights the significant role of physics in the development of artificial neural networks and the reciprocal benefit of neural networks in advancing physics research.\n\n[1] “FOR FOUNDATIONAL DISCOVERIES AND INVENTIONS ...\n    https://www.nobelprize.org/uploads/2024/11/advanced-physicsprize2024-3.pdf\n    BOX 50005 (LILLA FRESCATIVÄGEN 4 A), SE-104 05 STOCKHOLM, SWEDEN TEL +46 8 673 95 00  WWW.KVA.SE The Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 jointly to John J. Hopfield and Geoffrey Hinton “for foundational discoveries and inventions that enable machine learning with artificial neural networks” Introduction With its roots in the 1940s, machine learning based on artificial neural networks (ANNs) has developed over the past three decades into a [...] physics has been a driving force underlying inventions and development of ANNs. Conversely, ANNs are increasingly playing an important role as a powerful tool for modelling and analysis in almost all of physics. In some applications, ANNs are employed as a function approximator ; i.e. the ANNs are used to provide a “copycat” for the physics model in question. This can significantly reduce the computational resources required, thereby allowing larger systems to be probed at higher resolution. [...] Nobel Prize® and the Nobel Prize® medal design mark are registrated trademarks of the Nobel Foundation 8 OCTOBER 2024 Scientific Background to the Nobel Prize in Physics 2024 “F O R F O U N D AT I O N A L D I S C O V E R I E S A N D I N V E N T I O N S T H AT E N A B L E M A C H I N E L E A R N I N G W I T H A RT I F I C I A L N E U R A L N E T WO R K S” The Nobel Committee for Physics THE ROYAL SWEDISH ACADEMY OF SCIENCES has as its aim to promote the sciences and strengthen their influence in\n\n[2] Press release: The Nobel Prize in Physics 2024 - NobelPrize.org\n    https://www.nobelprize.org/prizes/physics/2024/press-release\n    Skip to content \n\n# Nobel Prize\n\n# Press release\n\nEnglish  \nEnglish (pdf)  \nSwedish  \nSwedish (pdf)\n\n8 October 2024\n\nThe Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJohn J. Hopfield  \nPrinceton University, NJ, USA\n\nGeoffrey Hinton  \nUniversity of Toronto, Canada\n\n“for foundational discoveries and inventions that enable machine learning with artificial neural networks”\n\n## They trained artificial neural networks using physics [...] When we talk about artificial intelligence, we often mean machine learning using artificial neural networks. This technology was originally inspired by the structure of the brain. In an artificial neural network, the brain’s neurons are represented by nodes that have different values. These nodes influence each other through con­nections that can be likened to synapses and which can be made stronger or weaker. The network is trained, for example by developing stronger connections between nodes [...] Illustration: The Nobel Prize in Physics 2024 (pdf)  \nIllustration: Natural and artificial neurons (pdf)  \nIllustration: Memories are stored in a landscape (pdf)  \nIllustration: Different types of network (pdf)\n\n### Read more about this year’s prize\n\nPopular science background: They used physics to find patterns in information (pdf)  \nScientific background: “For foundational discoveries and inventions that enable machine learning with artificial neural networks” (pdf)\n\n[3] The Nobel Prize in Physics 2024 - Popular science background - NobelPrize.org\n   \n\n[truncated: 3,667 of 7,640 chars]",
           "error": null,
-          "latency_ms": 2366.317208012333,
-          "raw_chars": 4604,
+          "latency_ms": 2860.509207999712,
+          "raw_chars": 7640,
           "truncated": true,
           "source_ids": [
+            "S10",
+            "S4",
+            "S11",
             "S12",
-            "S13",
+            "S13"
+          ]
+        },
+        {
+          "call_id": "call_LDhUOBPfeOXdUPa0BvcszRCy",
+          "tool": "web_search",
+          "args": {
+            "query": "most recent Nobel Prize in Physics black holes year nobelprize.org award citation"
+          },
+          "ok": true,
+          "content": "Summary: The most recent Nobel Prize in Physics related to black holes was awarded in 2020. The Royal Swedish Academy of Sciences awarded the prize to Roger Penrose \"for the discovery that black hole formation is a robust prediction of the general theory of relativity\" and jointly to Reinhard Genzel and Andrea Ghez \"for the discovery of a supermassive compact object at the centre of our galaxy.\"\n\n[1] Press release: The Nobel Prize in Physics 2020 - NobelPrize.org\n    https://www.nobelprize.org/prizes/physics/2020/press-release\n    Skip to content \n\n# Nobel Prize\n\n# Press release\n\nEnglish  \nEnglish (pdf)  \nSwedish  \nSwedish (pdf)\n\n6 October 2020\n\nThe Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2020\n\nwith one half to\n\nRoger Penrose  \nUniversity of Oxford, UK\n\n“for the discovery that black hole formation is a robust prediction of the general theory of relativity”\n\nand the other half jointly to [...] In January 1965, ten years after Einstein’s death, Roger Penrose proved that black holes really can form and described them in detail; at their heart, black holes hide a singularity in which all the known laws of nature cease. His groundbreaking article is still regarded as the most important contribution to the general theory of relativity since Einstein. [...] Three Laureates share this year’s Nobel Prize in Physics for their discoveries about one of the most exotic phenomena in the universe, the black hole. Roger Penrose showed that the general theory of relativity leads to the formation of black holes. Reinhard Genzel and Andrea Ghez discovered that an invisible and extremely heavy object governs the orbits of stars at the centre of our galaxy. A supermassive black hole is the only currently known explanation.\n\n[2] All Nobel Prizes - NobelPrize.org\n    https://www.nobelprize.org/prizes/lists/all-nobel-prizes\n    David Card\n\n> “for his empirical contributions to labour economics”\n\nJoshua D. Angrist and  Guido W. Imbens\n\n> “for their methodological contributions to the analysis of causal relationships”\n\n## 2020\n\n### Nobel Prize in Physics 2020\n\nRoger Penrose\n\n> “for the discovery that black hole formation is a robust prediction of the general theory of relativity”\n\nReinhard Genzel and  Andrea Ghez\n\n> “for the discovery of a supermassive compact object at the centre of our galaxy” [...] ## 2025\n\n### Nobel Prize in Physics 2025\n\nJohn Clarke,  Michel H. Devoret and  John M. Martinis\n\n> “for the discovery of macroscopic quantum mechanical tunnelling and energy quantisation in an electric circuit”\n\n### Nobel Prize in Chemistry 2025\n\nSusumu Kitagawa,  Richard Robson and  Omar M. Yaghi\n\n> “for the development of metal–organic frameworks”\n\n### Nobel Prize in Physiology or Medicine 2025\n\nMary E. Brunkow,  Fred Ramsdell and  Shimon Sakaguchi [...] > “for studies of how institutions are formed and affect prosperity”\n\n## 2023\n\n### Nobel Prize in Physics 2023\n\nPierre Agostini,  Ferenc Krausz and  Anne L’Huillier\n\n> “for experimental methods that generate attosecond pulses of light for the study of electron dynamics in matter”\n\n### Nobel Prize in Chemistry 2023\n\nMoungi Bawendi,  Louis Brus and  Aleksey Yekimov\n\n> “for the discovery and synthesis of quantum dots”\n\n### Nobel Prize in Physiology or Medicine 2023\n\n[3] The Nobel Prize in Physics 2020 - NobelPrize.org\n    https://www.nobelprize.org/prizes/physics/2020/summary\n    Prize share: 1/4\n\n> The Nobel Prize in Physics 2020 was divided, one half awarded to Roger Penrose \"for the discovery that black hole formation is a robust prediction of the general theory of relativity\", the other half jointly to Reinhard Genzel and Andrea Ghez \"for the discovery of a supermassive compact object at the centre of our galaxy\"\n\nGo to the top of the page\n\n## Nobel Prize and laureates\n\n### Nobel Prizes 2020 [...] Twelve laureates were awarded a Nobel Prize in 2020, for achievements that have conferred the greatest benefit to humankind.\n\nTheir work and discoveries range from\n\n[truncated: 3,236 of 7,233 chars]",
+          "error": null,
+          "latency_ms": 2655.727750000551,
+          "raw_chars": 7233,
+          "truncated": true,
+          "source_ids": [
             "S14",
             "S15",
-            "S16"
+            "S16",
+            "S17",
+            "S13"
           ]
         },
         {
-          "call_id": "call_hCABW4ubVj8wUNb3uEY7Xklr",
+          "call_id": "call_1eAUIdlMVaPqCd6yd09vg51r",
           "tool": "web_search",
           "args": {
-            "query": "Nobel Prize Physics machine learning 2023 citation"
+            "query": "site:nobelprize.org Nobel Prize in Physics black holes 2019 gravitational waves black holes citation"
           },
           "ok": true,
-          "content": "Summary: In 2024, John Hopfield and Geoffrey Hinton won the Nobel Prize in Physics for foundational work in machine learning using artificial neural networks. Their contributions laid the groundwork for modern AI.\n\n[1] Press release: The Nobel Prize in Physics 2024\n    https://www.nobelprize.org/prizes/physics/2024/press-release\n    ## They trained artificial neural networks using physics\n\nThis year’s two Nobel Laureates in Physics have used tools from physics to develop methods that are the foundation of today’s powerful machine learning. John Hopfield created an associative memory that can store and reconstruct images and other types of patterns in data. Geoffrey Hinton invented a method that can autonomously find properties in data, and so perform tasks such as identifying specific elements in pictures. [...] # Nobel Prize\n\n### Enhanced Page Navigation\n\n## Nobel Prize in Physics 2024\n\n## Share this\n\n# Press release\n\nEnglish  \nEnglish (pdf)  \nSwedish  \nSwedish (pdf)\n\nLogo\n\n8 October 2024\n\nThe Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJohn J. Hopfield  \nPrinceton University, NJ, USA\n\nGeoffrey Hinton  \nUniversity of Toronto, Canada\n\n“for foundational discoveries and inventions that enable machine learning with artificial neural networks” [...] “The laureates’ work has already been of the greatest benefit. In physics we use artificial neural networks in a vast range of areas, such as developing new materials with specific properties,” says Ellen Moons, Chair of the Nobel Committee for Physics.\n\n### Illustrations\n\nThe illustrations are free to use for non-commercial purposes. Attribute ”©Johan Jarnestad/The Royal Swedish Academy of Sciences”.\n\n[2] Machine learning wins physics Nobel\n    https://cen.acs.org/people/nobel-prize/Machine-learning-wins-physics-Nobel/102/web/2024/10\n    If you use AlphaFold, ChatGPT, or other AI tools, you have this year’s physics Nobel laureates, John J. Hopfield of Princeton University and Geoffrey E. Hinton of the University of Toronto to thank. The two men laid the foundation for artificial neural networks. These computer algorithms are designed to mimic the way information is processed in the human brain. [...] “The creation and explorations of this network by John Hopfield was a milestone in our understanding of the computational abilities of artificial neural networks,” said Anders Irbäck, a member of the Nobel Committee for Physics. [...] Hopfield and Hinton will share the 11 million Swedish kronor (about US $1.1 million) prize.\n\nWith additional reporting by Mitch Jacoby and Prachi Patel\n\n## UPDATE:\n\nThis story was updated on Oct. 8, 2024 to add quotes from Anders Irbäck, Geoffrey E. Hinton, and Alán Aspuru-Guzik, as well as more detail about the laureates’ prizewinning work.\n\nFionna Samuels is a physical sciences reporter at C&EN.\n\n## Enjoyed the article?\n\n## More in Nobel Prize\n\n2/3\n\nFREE ARTICLES LEFT THIS MONTH\n\n[3] Artificial Intelligence awarded two Nobel Prizes for ...\n    https://www.nature.com/articles/s41746-024-01345-9\n    large multimodal models11.\"). This is an evolving landscape of multipurpose foundation technologies, that some have compared to the printing press or the Internet in terms of reach and impact12.\"). As an example of this, and maybe as a portent of what is to come, the ML of the 2024 Nobel Prize in Physics even enabled the groundbreaking discovery associated with the 2024 Nobel Prize in Chemistry2. [...] Lazar, S. & Nelson, A. AI safety on whose terms? Science 381, 138 (2023).\n\nArticle \nPubMed \nGoogle Scholar\n\nQian, N. & Sejnowski, T. J. Predicting the secondary structure of globular proteins using neural network models. J. Mol. Biol. 202, 865–884 (1988).\n\nArticle \nCAS \nPubMed \nGoogle Scholar\n\nBohr, H. et al. Protein secondary structure and homology by neural networks. The alpha-helices in rhodopsin. FEBS Lett. 241, 223–228 (1988).\n\nArticle \nCAS \nPubMed \nGoogle Scholar [...] Metrics details\n\nJohn J. Hopfield and\n\n[truncated: 3,125 of 7,118 chars]",
+          "content": "Summary: The 2019 Nobel Prize in Physics was awarded to James Peebles \"for theoretical discoveries in physical cosmology,\" and Michel Mayor and Didier Queloz \"for the discovery of an exoplanet orbiting a solar-type star.\" The sources do not provide a definitive answer regarding a citation specifically about black holes and gravitational waves for the 2019 prize.\n\n[1] Nobel Prize laureates and research affiliations\n    https://www.nobelprize.org/prizes/lists/nobel-laureates-and-research-affiliations\n    > “for their experimental approach to alleviating global poverty”\n\n### Sveriges Riksbank Prize in Economic Sciences in Memory of Alfred Nobel 2019\n\nAbhijit Banerjee, Esther Duflo and Michael Kremer\n\n> “for their experimental approach to alleviating global poverty”\n\n### Nobel Prize in Physics 2017\n\nRainer Weiss, Barry C. Barish and Kip S. Thorne\n\n> “for decisive contributions to the LIGO detector and the observation of gravitational waves” [...] ## Max Planck Institute for Extraterrestrial Physics, Garching, Germany (1)\n\n### Nobel Prize in Physics 2020\n\nRoger Penrose\n\n> “for the discovery that black hole formation is a robust prediction of the general theory of relativity”\n\nReinhard Genzel and Andrea Ghez\n\n> “for the discovery of a supermassive compact object at the centre of our galaxy”\n\n## Max Planck Institute for Meteorology, Hamburg, Germany (1)\n\n### Nobel Prize in Physics 2021 [...] > “for the physical modelling of Earth’s climate, quantifying variability and reliably predicting global warming”\n\nGiorgio Parisi\n\n> “for the discovery of the interplay of disorder and fluctuations in physical systems from atomic to planetary scales”\n\n### Nobel Prize in Physics 2019\n\n> “for contributions to our understanding of the evolution of the universe and Earth’s place in the cosmos”\n\nJames Peebles\n\n> “for theoretical discoveries in physical cosmology”\n\nMichel Mayor and Didier Queloz\n\n[2] All Nobel Prizes - NobelPrize.org\n    https://www.nobelprize.org/prizes/lists/all-nobel-prizes/all\n    David Card\n\n> “for his empirical contributions to labour economics”\n\nJoshua D. Angrist and Guido W. Imbens\n\n> “for their methodological contributions to the analysis of causal relationships”\n\n## 2020\n\n### Nobel Prize in Physics 2020\n\nRoger Penrose\n\n> “for the discovery that black hole formation is a robust prediction of the general theory of relativity”\n\nReinhard Genzel and Andrea Ghez\n\n> “for the discovery of a supermassive compact object at the centre of our galaxy” [...] > “for contributions to our understanding of the evolution of the universe and Earth’s place in the cosmos”\n\nJames Peebles\n\n> “for theoretical discoveries in physical cosmology”\n\nMichel Mayor and Didier Queloz\n\n> “for the discovery of an exoplanet orbiting a solar-type star”\n\n### Nobel Prize in Chemistry 2019\n\nJohn B. Goodenough, M. Stanley Whittingham and Akira Yoshino\n\n> “for the development of lithium-ion batteries”\n\n### Nobel Prize in Physiology or Medicine 2019 [...] > “for its efforts to combat hunger, for its contribution to bettering conditions for peace in conflict-affected areas and for acting as a driving force in efforts to prevent the use of hunger as a weapon of war and conflict”\n\n### Sveriges Riksbank Prize in Economic Sciences in Memory of Alfred Nobel 2020\n\nPaul R. Milgrom and Robert B. Wilson\n\n> “for improvements to auction theory and inventions of new auction formats”\n\n## 2019\n\n### Nobel Prize in Physics 2019\n\n[3] All Nobel Prizes in Physics - NobelPrize.org\n    https://www.nobelprize.org/prizes/lists/all-nobel-prizes-in-physics/all\n    Giorgio Parisi\n\n> “for the discovery of the interplay of disorder and fluctuations in physical systems from atomic to planetary scales”\n\n### Nobel Prize in Physics 2020\n\nRoger Penrose\n\n> “for the discovery that black hole formation is a robust prediction of the general theory of relativity”\n\nReinhard Genzel and  Andrea Ghez\n\n> “for the discovery of a supermassive compact object at the centre of our galaxy”\n\n### Nobel Prize in Physics\n\n[truncated: 3,533 of 7,532 chars]",
           "error": null,
-          "latency_ms": 3177.243833008106,
-          "raw_chars": 7118,
+          "latency_ms": 3174.4311660004314,
+          "raw_chars": 7532,
           "truncated": true,
           "source_ids": [
-            "S4",
-            "S17",
             "S18",
-            "S6",
-            "S19"
+            "S19",
+            "S20",
+            "S21",
+            "S22"
+          ]
+        },
+        {
+          "call_id": "call_vtiifoYkG2SThJiCAVNVcB3j",
+          "tool": "web_search",
+          "args": {
+            "query": "Nobel Prize in Physics black holes 2020 2021 2022 award"
+          },
+          "ok": true,
+          "content": "Summary: The Nobel Prize in Physics for 2020 was awarded to Roger Penrose, Reinhard Genzel, and Andrea Ghez for their contributions to the understanding of black holes. Roger Penrose received half the prize for his 1965 paper showing that black hole formation is a robust prediction of the general theory of relativity. Reinhard Genzel and Andrea Ghez shared the other half for their independent observations of stars orbiting the supermassive black hole at the center of the Milky Way. The Royal Swedish Academy of Sciences highlighted that their discoveries advanced our understanding of black holes, one of the most exotic phenomena in the universe.\n\n[1] Physics Nobel Awarded for Black Hole Breakthroughs | Quanta Magazine\n    https://www.quantamagazine.org/physics-nobel-awarded-for-black-hole-breakthroughs-20201006\n    October 6, 2020\n\nRoger Penrose, Reinhard Genzel and Andrea Ghez were awarded the Nobel Prize in Physics for their studies of black holes.\n\nRead Later\n\nReinhard Genzel and Andrea Ghez independently tracked the activity around the supermassive black hole at the Milky Way’s center over a period of decades.\n\nESO/MPE/M. Schartmann/L. Calçada\n\n## Introduction [...] This year’s Nobel Prize in Physics has been awarded for earlier work that indirectly established the existence of black holes. The English mathematical physicist Roger Penrose won half the prize for his 1965 paper showing that “black hole formation is a robust prediction of the general theory of relativity,” according to the Nobel committee. The other half was shared by rival astrophysicists Reinhard Genzel and Andrea Ghez, who made groundbreaking observations of stars orbiting the Milky Way’s [...] From top: Roger Penrose, Reinhard Genzel and Andrea Ghez, winners of the 2020 Nobel Prize in Physics.\n\nFrom top: Roger Penrose, Reinhard Genzel and Andrea Ghez, winners of the 2020 Nobel Prize in Physics.\n\n \n\nFrom left: Roger Penrose, Reinhard Genzel and Andrea Ghez, winners of the 2020 Nobel Prize in Physics.\n\nGabriela Secara/Perimeter Institute; ESO/M. Zamani; John Hook  \n for Quanta Magazine\n\n[2] Three scientists win Nobel physics prize for black hole research | PBS News\n    https://www.pbs.org/newshour/science/three-scientists-win-nobel-physics-prize-for-black-hole-research\n    STOCKHOLM (AP) — Three scientists won this year's Nobel Prize in physics Tuesday for advancing our understanding of black holes, the all-consuming monsters that lurk in the darkest parts of the universe.\n\nBriton Roger Penrose received half of this year's prize \"for the discovery that black hole formation is a robust prediction of the general theory of relativity,\" the Nobel Committee said. [...] Left:\nDavid Haviland, member of the Nobel Committee for Physics and Secretary General of the Royal Swedish Academy of Sciences Goran K. Hansson announce the winners of the 2020 Nobel Prize in Physics presented on the screen: Roger Penrose, Reinhard Genzel and Andrea Ghez during a news conference at the Royal Swedish Academy of Sciences, in Stockholm, Sweden October 6, 2020. TT News Agency/Fredrik Sandberg via REUTERS\n\n## Related\n\nBy Seth Borenstein, Associated Press\n\nBy Associated Press [...] It is common for several scientists who worked in related fields to share the prize. Last year's prize went to Canadian-born cosmologist James Peebles for theoretical work about the early moments after the Big Bang, and Swiss astronomers Michel Mayor and Didier Queloz for discovering a planet outside our solar system.\n\n[3] The Nobel Prize in Physics 2020 | Proving that the centre of the Milky Way is a BLACK HOLE!\n    https://www.youtube.com/watch?v=Pv8eKhryAbM\n    The Nobel Prize in Physics for 2020 was awarded to Sir Roger Penrose, Prof. Reinhard Genzel and Prof. Andrea Ghez for their contribution to our understanding of black holes! That’s right, your favourite, MY favourite - BLACK HOLES! They won for figuring out that at the centre of the Milky Way there's a supermassive black hole. I dropped everything\n\n[truncated: 3,765 of 7,762 chars]",
+          "error": null,
+          "latency_ms": 2559.7344580000936,
+          "raw_chars": 7762,
+          "truncated": true,
+          "source_ids": [
+            "S23",
+            "S24",
+            "S25",
+            "S14",
+            "S17"
           ]
         }
       ],
@@ -195,7 +222,7 @@
       "i": 4,
       "node": "reflect",
       "plan_version": 1,
-      "ts_offset_ms": 11916.651291001472,
+      "ts_offset_ms": 13310.641916999884,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -205,17 +232,17 @@
       "i": 5,
       "node": "act",
       "plan_version": 1,
-      "ts_offset_ms": 14950.944208001602,
+      "ts_offset_ms": 15667.056459000378,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
-      "note": "- **Neural networks / machine learning (most recent): 2024** — The Nobel Prize in Physics 2024 was awarded “**for foundational discoveries and inventions that enable machine learning with artificial n"
+      "note": "- **Neural networks / machine learning (most recent): 2024** — awarded in Physics 2024 “**for foundational discoveries and inventions that enable machine learning with artificial neural networks**.” ("
     },
     {
       "i": 6,
       "node": "observe",
       "plan_version": 1,
-      "ts_offset_ms": 14952.324290992692,
+      "ts_offset_ms": 15668.302625000251,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -225,19 +252,19 @@
       "i": 7,
       "node": "reflect",
       "plan_version": 1,
-      "ts_offset_ms": 17674.916165997274,
+      "ts_offset_ms": 17786.813208999774,
       "tool_calls": [],
       "observations": [],
       "reflection": {
         "decision": "finalize",
-        "reasoning": "The observations identify the latest Nobel Prize in Physics tied to neural networks as 2024, and the latest Nobel Prize in Physics tied to black holes as 2020. No further searching is needed to answer both requested years.",
+        "reasoning": "The evidence provided identifies the most recent Physics Nobel tied to neural networks (2024, Hopfield & Hinton) and the most recent one tied to black holes (2020, Penrose, Genzel & Ghez). Both sub-questions are answered with specific years and award rationales.",
         "covered": {
-          "What year did the most recently awarded Nobel Prize in Physics go to work related to neural networks (or machine learning / artificial intelligence as recognized in Nobel citations)?": false,
-          "What year did the most recently awarded Nobel Prize in Physics go to work related to black holes (as recognized in Nobel citations)?": false
+          "What is the most recent Nobel Prize in Physics (year) whose award rationale/cited work is specifically about neural networks (or machine learning as a core theme)?": false,
+          "What is the most recent Nobel Prize in Physics (year) whose award rationale/cited work is specifically about black holes?": false
         },
         "open_gaps": [
-          "What year did the most recently awarded Nobel Prize in Physics go to work related to neural networks (or machine learning / artificial intelligence as recognized in Nobel citations)?",
-          "What year did the most recently awarded Nobel Prize in Physics go to work related to black holes (as recognized in Nobel citations)?"
+          "What is the most recent Nobel Prize in Physics (year) whose award rationale/cited work is specifically about neural networks (or machine learning as a core theme)?",
+          "What is the most recent Nobel Prize in Physics (year) whose award rationale/cited work is specifically about black holes?"
         ],
         "overruled_stop": false
       },
@@ -247,7 +274,7 @@
       "i": 8,
       "node": "finalize",
       "plan_version": 1,
-      "ts_offset_ms": 19158.083791000536,
+      "ts_offset_ms": 18936.01837499955,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -257,86 +284,126 @@
   "sources": [
     {
       "sid": "S1",
-      "url": "https://www.nobelprize.org/prizes/lists/nobel-laureates-and-research-affiliations",
-      "title": "Nobel Prize laureates and research affiliations",
-      "snippet": "Riccardo Giacconi\n\n> “for pioneering contributions to astrophysics, which have led to the discovery of cosmic X-ray sources”\n\n## University of Toronto, Toronto, Canada (4)\n\n### Nobel Prize in Physics 2024\n\nJohn J. Hopfield and Geoffrey Hinton\n\n> “for foundational discoveries and inventions that enab",
+      "url": "https://www.nature.com/collections/ehbjaifcgc",
+      "title": "Nobel Prize in Physics 2024",
+      "snippet": "The Nobel Prize in Physics 2024 has been awarded to John J. Hopfield and Geoffrey E. Hinton “for foundational discoveries and inventions that enable machine learning with artificial neural networks”. In recognition of this award, Nature Portfolio presents a collection of research, review and opinion",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S2",
-      "url": "https://www.nobelprize.org/prizes/physics/2024/summary",
-      "title": "The Nobel Prize in Physics 2024",
-      "snippet": "Prize share: 1/2\n\nThe Nobel Prize in Physics 2024 was awarded jointly to John J. Hopfield and Geoffrey Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural networks\"\n\nTo cite this section   \nMLA style: The Nobel Prize in Physics 2024. NobelPrize.org",
+      "url": "https://www.embl.org/news/science-technology/machine-learning-discoveries-honoured-with-2024-nobel-prize-for-physics",
+      "title": "Machine learning discoveries honoured with 2024 Nobel Prize for Physics | EMBL",
+      "snippet": "John J. Hopfield, Princeton University, USA, and Geoffrey E. Hinton, University of Toronto, Canada have been awarded the 2024 Nobel Prize for Physics. The award recognises their seminal work in developing foundational methods that form the basis for today’s machine learning technologies and artifici",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S3",
-      "url": "https://www.nobelprize.org/prizes/lists/all-nobel-prizes",
-      "title": "All Nobel Prizes",
-      "snippet": "> “for the theory of sustained growth through creative destruction”\n\n## 2024\n\n### Nobel Prize in Physics 2024\n\nJohn J. Hopfield and Geoffrey Hinton\n\n> “for foundational discoveries and inventions that enable machine learning with artificial neural networks”\n\n### Nobel Prize in Chemistry 2024\n\nDavid ",
+      "url": "https://www.youtube.com/watch?v=itywoDU3sL8",
+      "title": "Neural Networks and the 2024 Nobel Prize in Physics - Sixty Symbols",
+      "snippet": "# Neural Networks and the 2024 Nobel Prize in Physics - Sixty Symbols\n## Channel: Sixty Symbols (verified)\n888K subscribers\n2.3K likes\n\n### Description\n59,026 views\nPosted: 2024-10-18\nThis video features Juan Garrahan, Phil Moriarty and Mike Pound... More links and info below  ↓ ↓ ↓\n\nThe 2024 Nobel ",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S4",
       "url": "https://www.nobelprize.org/prizes/physics/2024/press-release",
-      "title": "Press release: The Nobel Prize in Physics 2024",
-      "snippet": "# Nobel Prize\n\n### Enhanced Page Navigation\n\n## Nobel Prize in Physics 2024\n\n## Share this\n\n# Press release\n\nEnglish  \nEnglish (pdf)  \nSwedish  \nSwedish (pdf)\n\nLogo\n\n8 October 2024\n\nThe Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJohn J. Hopfield  \nPrin",
+      "title": "Press release: The Nobel Prize in Physics 2024 - NobelPrize.org",
+      "snippet": "Skip to content \n\n# Nobel Prize\n\n# Press release\n\nEnglish  \nEnglish (pdf)  \nSwedish  \nSwedish (pdf)\n\n8 October 2024\n\nThe Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJohn J. Hopfield  \nPrinceton University, NJ, USA\n\nGeoffrey Hinton  \nUniversity of Toront",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S5",
-      "url": "https://www.nobelprize.org/uploads/2024/09/advanced-physicsprize2024.pdf",
-      "title": "Scientific Background to the Nobel Prize in Physics 2024",
-      "snippet": "BOX 50005 (LILLA FRESCATIVÄGEN 4 A), SE-104 05 STOCKHOLM, SWEDEN TEL +46 8 673 95 00  WWW.KVA.SE 1 (12) The Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 jointly to John J. Hopfield and Geoffrey E. Hinton “for foundational discoveries and inventions that ena",
+      "url": "https://lamarr-institute.org/blog/thoughts-physics-nobel-prize-2024",
+      "title": "Thoughts about the Nobel Prize in Physics 2024 … ML Blog",
+      "snippet": "If you are reading this blog, you likely already know that the 2024 Nobel Prize in Physics has been awarded to John Hopfield and Geoffrey Hinton. To see why, let me just quote from the press release of the Nobel Committee for Physics: “When we talk about artificial intelligence, we often mean machin",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S6",
-      "url": "https://www.nobelprize.org/prizes/physics/2024/popular-information",
-      "title": "The Nobel Prize in Physics 2024 - Popular science ...",
-      "snippet": "### The Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJOHN J. HOPFIELD  \nBorn 1933 in Chicago, IL, USA. PhD 1958 from Cornell University, Ithaca, NY, USA. Professor at Princeton University, NJ, USA.\n\nGEOFFREY HINTON  \nBorn 1947 in London, UK. PhD 1978 fro",
+      "url": "https://jqi.umd.edu/news/nobel-prize-celebrates-interplay-physics-and-ai",
+      "title": "Nobel Prize Celebrates Interplay of Physics and AI",
+      "snippet": "On Tuesday, theNobel Prize in physics was awarded to John Hopfield and Geoffrey E. Hinton for their foundational discoveries and inventions that have enabled artificial neural networks to be used for machine learning—a widely used form of AI. The award highlights how the field of physics is intertwi",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S7",
-      "url": "https://www.nobelprize.org/prizes/physics/2024/hinton/speech",
-      "title": "Geoffrey Hinton – Banquet speech - NobelPrize.org",
-      "snippet": "This year the Nobel committees in Physics and Chemistry have recognized the dramatic progress being made in a new form of Artificial Intelligence that uses artificial neural networks to learn how to solve difficult computational problems. This new form of AI excels at modeling human intuition rather",
+      "url": "https://theconversation.com/physics-nobel-awarded-to-neural-network-pioneers-who-laid-foundations-for-ai-240833",
+      "title": "Physics Nobel awarded to neural network pioneers who laid foundations for AI",
+      "snippet": "While recent rapid progress in AI – familiar to most of us from generative AI systems such as ChatGPT – might seem like vindication for the early proponents of neural networks, Hinton at least has expressed concern. In 2023, after quitting a decade-long stint at Google’s AI branch, he said he was sc",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S8",
-      "url": "https://www.nobelprize.org/prizes/physics/2020/press-release",
-      "title": "Press release: The Nobel Prize in Physics 2020",
-      "snippet": "In January 1965, ten years after Einstein’s death, Roger Penrose proved that black holes really can form and described them in detail; at their heart, black holes hide a singularity in which all the known laws of nature cease. His groundbreaking article is still regarded as the most important contri",
+      "url": "https://www.nobelprize.org/events/nobel-prize-dialogue/tokyo-2025/panellists/geoffrey-hinton",
+      "title": "Event information - NobelPrize.org",
+      "snippet": "Skip to content \n\n# Nobel Prize\n\n2025 Tokyo\n\n# THE FUTURE OF LIFE\n\n# Nobel Prize Dialogue\n\n### Geoffrey Hinton\n\nGeoffrey Hinton was awarded the 2024 Nobel Prize in Physics for his work on machine learning with artificial neural networks. [...] Geoffrey Hinton, physics laureate and the “Godfather of ",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S9",
-      "url": "https://www.nobelprize.org/prizes/physics/2020/popular-information",
-      "title": "The Nobel Prize in Physics 2020 - Popular science background",
-      "snippet": "Three Laureates share this year’s Nobel Prize in Physics for their discoveries about one of the most exotic phenomena in the universe, the black hole. Roger Penrose showed that black holes are a direct consequence of the general theory of relativity. Reinhard Genzel and Andrea Ghez discovered that a",
+      "url": "https://www.youtube.com/watch?v=BcG9KEdiZfw",
+      "title": "Nobel Physics Prize awarded to scientists for AI and machine learning work | DW News",
+      "snippet": "[1:44] models particle physics atmospheric and climate\n[1:51] modeling and predicting the structure of proteins the physics prize this year goes for research that has changed and\n[2:00] continues to change the world as we know it and joining me here in the studio now is my colleague Matthew Ward age",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S10",
-      "url": "https://www.nobelprize.org/prizes/physics/2020/ceremony-speech",
-      "title": "The Nobel Prize in Physics 2020 - Award ceremony speech",
-      "snippet": "Professors Penrose, Genzel and Ghez, you have been awarded the 2020 Nobel Prize in Physics for your outstanding contributions to our understanding of black holes. It is an honor and a privilege to convey to you, on behalf of the Royal Swedish Academy of Sciences, our warmest congratulations.\n\nCopyri",
+      "url": "https://www.nobelprize.org/uploads/2024/11/advanced-physicsprize2024-3.pdf",
+      "title": "“FOR FOUNDATIONAL DISCOVERIES AND INVENTIONS ...",
+      "snippet": "BOX 50005 (LILLA FRESCATIVÄGEN 4 A), SE-104 05 STOCKHOLM, SWEDEN TEL +46 8 673 95 00  WWW.KVA.SE The Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 jointly to John J. Hopfield and Geoffrey Hinton “for foundational discoveries and inventions that enable machin",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S11",
+      "url": "https://www.nobelprize.org/prizes/physics/2024/popular-information",
+      "title": "The Nobel Prize in Physics 2024 - Popular science background - NobelPrize.org",
+      "snippet": "Because physics has contributed tools for the development of machine learning, it is interesting to see how physics, as a research field, is also benefitting from artificial neural networks. Machine learning has long been used in areas we may be familiar with from previous Nobel Prizes in Physics. T",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S12",
+      "url": "https://www.nobelprize.org/prizes/physics/2024/summary",
+      "title": "The Nobel Prize in Physics 2024 - NobelPrize.org",
+      "snippet": "Skip to content \n\n# Nobel Prize\n\n# Nobel Prize in Physics 2024\n\n© Nobel Prize Outreach. Photo: Nanaka Adachi\n\n \n\n### John J. Hopfield\n\nPrize share: 1/2\n\n   \n\n© Nobel Prize Outreach. Photo: Clément Morin\n\n \n\n### Geoffrey Hinton\n\nPrize share: 1/2\n\n> The Nobel Prize in Physics 2024 was awarded jointly ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S13",
+      "url": "https://www.nobelprize.org/prizes/lists/all-nobel-prizes-in-physics",
+      "title": "All Nobel Prizes in Physics - NobelPrize.org",
+      "snippet": "> “for the discovery of macroscopic quantum mechanical tunnelling and energy quantisation in an electric circuit”\n\n### Nobel Prize in Physics 2024\n\nJohn J. Hopfield and  Geoffrey Hinton\n\n> “for foundational discoveries and inventions that enable machine learning with artificial neural networks”\n\n###",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S14",
+      "url": "https://www.nobelprize.org/prizes/physics/2020/press-release",
+      "title": "Press release: The Nobel Prize in Physics 2020 - NobelPrize.org",
+      "snippet": "Skip to content \n\n# Nobel Prize\n\n# Press release\n\nEnglish  \nEnglish (pdf)  \nSwedish  \nSwedish (pdf)\n\n6 October 2020\n\nThe Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2020\n\nwith one half to\n\nRoger Penrose  \nUniversity of Oxford, UK\n\n“for the discovery that black h",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S15",
+      "url": "https://www.nobelprize.org/prizes/lists/all-nobel-prizes",
+      "title": "All Nobel Prizes - NobelPrize.org",
+      "snippet": "David Card\n\n> “for his empirical contributions to labour economics”\n\nJoshua D. Angrist and  Guido W. Imbens\n\n> “for their methodological contributions to the analysis of causal relationships”\n\n## 2020\n\n### Nobel Prize in Physics 2020\n\nRoger Penrose\n\n> “for the discovery that black hole formation is ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S16",
       "url": "https://www.nobelprize.org/prizes/physics/2020/summary",
       "title": "The Nobel Prize in Physics 2020 - NobelPrize.org",
       "snippet": "Prize share: 1/4\n\n> The Nobel Prize in Physics 2020 was divided, one half awarded to Roger Penrose \"for the discovery that black hole formation is a robust prediction of the general theory of relativity\", the other half jointly to Reinhard Genzel and Andrea Ghez \"for the discovery of a supermassive ",
@@ -344,78 +411,86 @@
       "first_seen_step": 1
     },
     {
-      "sid": "S12",
-      "url": "https://en.wikipedia.org/wiki/Gravitational_wave",
-      "title": "Gravitational wave - Wikipedia",
-      "snippet": "56. ↑ Rincon, Paul; Amos, Jonathan (3 October 2017). \"Einstein's waves win Nobel Prize\". BBC News. Retrieved 3 October 2017.\n57. ↑ Overbye, Dennis (3 October 2017). \"2017 Nobel Prize in Physics Awarded to LIGO Black Hole Researchers\". The New York Times. Retrieved 3 October 2017.\n58. ↑ Kaiser, David",
-      "tool": "web_search",
-      "first_seen_step": 1
-    },
-    {
-      "sid": "S13",
-      "url": "https://link.aps.org/doi/10.1103/Physics.13.158",
-      "title": "Nobel Prize: Facing the Reality of Black Holes - APS Journals",
-      "snippet": "Cardoso sees a connection between this year’s Nobel Prize and the 2017 prize awarded for the detection of gravitational waves. “These are truly fascinating times for those trying to understand how gravity and the cosmos work,” he says.",
-      "tool": "web_search",
-      "first_seen_step": 1
-    },
-    {
-      "sid": "S14",
-      "url": "https://www.youtube.com/watch?v=5NJx1pMV6-U",
-      "title": "The Nobel Prize in Physics {2017} | Gravitational Wave Detection",
-      "snippet": "From peering inside a supernova to capturing signals from the universe's first moment, gravitational waves have the potential to reveal the most powerful events in the cosmos.  In 2017, Rainer Weiss, Barry C. Barish and Kip S. Thorne were awarded the Nobel Prize in Physics for leading a successful e",
-      "tool": "web_search",
-      "first_seen_step": 1
-    },
-    {
-      "sid": "S15",
-      "url": "https://www.ligo.caltech.edu/page/press-release-2017-nobel-prize",
-      "title": "2017 Nobel Prize in Physics Awarded to LIGO Founders | LIGO Lab | Caltech",
-      "snippet": "years ago when two black holes spiraled together and collided. Two additional detections of gravitational waves, once again from merging black-hole pairs, were made on December 26, 2015, and January 4, 2017, and, on August 14, 2017, a fourth event was detected by LIGO and the European Virgo gravitat",
-      "tool": "web_search",
-      "first_seen_step": 1
-    },
-    {
-      "sid": "S16",
-      "url": "https://medium.com/starts-with-a-bang/gravitational-waves-win-2017-nobel-prize-in-physics-the-ultimate-fusion-of-theory-and-experiment-b3c078fdde36",
-      "title": "Medium",
-      "snippet": "In a moment over 100 years in the making, the 2017 Nobel Prize in physics was just awarded to Rainer Weiss (1/2), Kip Thorne (1/4), and Barry Barish (1/4), for pioneering work in the discovery of gravitational waves. Weiss, an experimentalist who first conceived of using interferometry for this purp",
-      "tool": "web_search",
-      "first_seen_step": 1
-    },
-    {
       "sid": "S17",
-      "url": "https://cen.acs.org/people/nobel-prize/Machine-learning-wins-physics-Nobel/102/web/2024/10",
-      "title": "Machine learning wins physics Nobel",
-      "snippet": "If you use AlphaFold, ChatGPT, or other AI tools, you have this year’s physics Nobel laureates, John J. Hopfield of Princeton University and Geoffrey E. Hinton of the University of Toronto to thank. The two men laid the foundation for artificial neural networks. These computer algorithms are designe",
+      "url": "https://www.nobelprize.org/prizes/physics/2020/popular-information",
+      "title": "The Nobel Prize in Physics 2020 - Popular science background - NobelPrize.org",
+      "snippet": "### The Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2020\n\nwith one half to\n\nROGER PENROSE  \nBorn 1931 in Colchester, UK. Ph.D.  \n1957 at University of Cambridge, UK.  \nProfessor at University of Oxford, UK\n\n“for the discovery that black hole formation is a robus",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S18",
-      "url": "https://www.nature.com/articles/s41746-024-01345-9",
-      "title": "Artificial Intelligence awarded two Nobel Prizes for ...",
-      "snippet": "large multimodal models11.\"). This is an evolving landscape of multipurpose foundation technologies, that some have compared to the printing press or the Internet in terms of reach and impact12.\"). As an example of this, and maybe as a portent of what is to come, the ML of the 2024 Nobel Prize in Ph",
+      "url": "https://www.nobelprize.org/prizes/lists/nobel-laureates-and-research-affiliations",
+      "title": "Nobel Prize laureates and research affiliations",
+      "snippet": "> “for their experimental approach to alleviating global poverty”\n\n### Sveriges Riksbank Prize in Economic Sciences in Memory of Alfred Nobel 2019\n\nAbhijit Banerjee, Esther Duflo and Michael Kremer\n\n> “for their experimental approach to alleviating global poverty”\n\n### Nobel Prize in Physics 2017\n\nR",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S19",
-      "url": "https://www.youtube.com/watch?v=hXN5F9dX7W4",
-      "title": "Machine learning pioneers win Nobel physics prize | REUTERS",
-      "snippet": "# Machine learning pioneers win Nobel physics prize | REUTERS\n## Reuters\n4280000 subscribers\n44 likes\n\n### Description\n5915 views\nPosted: 8 Oct 2024\nAI pioneers John Hopfield and Geoffrey Hinton won the 2024 #NobelPrize in Physics for their work which laid the foundation for machine learning and pav",
+      "url": "https://www.nobelprize.org/prizes/lists/all-nobel-prizes/all",
+      "title": "All Nobel Prizes - NobelPrize.org",
+      "snippet": "David Card\n\n> “for his empirical contributions to labour economics”\n\nJoshua D. Angrist and Guido W. Imbens\n\n> “for their methodological contributions to the analysis of causal relationships”\n\n## 2020\n\n### Nobel Prize in Physics 2020\n\nRoger Penrose\n\n> “for the discovery that black hole formation is a",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S20",
+      "url": "https://www.nobelprize.org/prizes/lists/all-nobel-prizes-in-physics/all",
+      "title": "All Nobel Prizes in Physics - NobelPrize.org",
+      "snippet": "Giorgio Parisi\n\n> “for the discovery of the interplay of disorder and fluctuations in physical systems from atomic to planetary scales”\n\n### Nobel Prize in Physics 2020\n\nRoger Penrose\n\n> “for the discovery that black hole formation is a robust prediction of the general theory of relativity”\n\nReinhar",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S21",
+      "url": "https://www.nobelprize.org/uploads/2024/02/penrose-lecture.pdf",
+      "title": "[PDF] Nobel Lecture: Black Holes, Cosmology, and Space-Time Singularities",
+      "snippet": "89 Roger Penrose Lecture An alternative, which has indeed been examined is the possibility of gravitational wave signals getting across. These could certainly get through, in the CCC picture. We can imagine that encounters between supermassive black holes within a previous-aeon galactic cluster shou",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S22",
+      "url": "https://www.nobelprize.org/prizes/lists/video-lectures-from-nobel-laureates-in-physics",
+      "title": "Videos of Nobel Prize lectures from physics laureates - NobelPrize.org",
+      "snippet": "Multiple equilibria  \nNobel Prize lecture by Giorgio Parisi\n\n### 2020\n\nBlack Holes, Cosmology, and Space-Time Singularities  \nNobel Prize lecture by Roger Penrose\n\nA Forty Year Journey  \nNobel Prize lecture by Reinhard Genzel\n\nFrom the Possibility to the Certainty of a Supermassive Black Hole  \nNobe",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S23",
+      "url": "https://www.quantamagazine.org/physics-nobel-awarded-for-black-hole-breakthroughs-20201006",
+      "title": "Physics Nobel Awarded for Black Hole Breakthroughs | Quanta Magazine",
+      "snippet": "October 6, 2020\n\nRoger Penrose, Reinhard Genzel and Andrea Ghez were awarded the Nobel Prize in Physics for their studies of black holes.\n\nRead Later\n\nReinhard Genzel and Andrea Ghez independently tracked the activity around the supermassive black hole at the Milky Way’s center over a period of deca",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S24",
+      "url": "https://www.pbs.org/newshour/science/three-scientists-win-nobel-physics-prize-for-black-hole-research",
+      "title": "Three scientists win Nobel physics prize for black hole research | PBS News",
+      "snippet": "STOCKHOLM (AP) — Three scientists won this year's Nobel Prize in physics Tuesday for advancing our understanding of black holes, the all-consuming monsters that lurk in the darkest parts of the universe.\n\nBriton Roger Penrose received half of this year's prize \"for the discovery that black hole form",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S25",
+      "url": "https://www.youtube.com/watch?v=Pv8eKhryAbM",
+      "title": "The Nobel Prize in Physics 2020 | Proving that the centre of the Milky Way is a BLACK HOLE!",
+      "snippet": "The Nobel Prize in Physics for 2020 was awarded to Sir Roger Penrose, Prof. Reinhard Genzel and Prof. Andrea Ghez for their contribution to our understanding of black holes! That’s right, your favourite, MY favourite - BLACK HOLES! They won for figuring out that at the centre of the Milky Way there'",
       "tool": "web_search",
       "first_seen_step": 1
     }
   ],
-  "answer": "The most recently awarded Nobel Prize in Physics related to **neural networks** was in **2024**, while the most recently awarded Nobel Prize in Physics related to **black holes** was in **2020**. [S2][S11]",
+  "answer": "Research related to **neural networks (machine learning)** won more recently—**2024** [S4]—while research related to **black holes** won most recently in **2020** [S14].",
   "citations": [
-    "S2",
-    "S11"
+    "S4",
+    "S14"
   ],
   "coverage": {
-    "What year did the most recently awarded Nobel Prize in Physics go to work related to neural networks (or machine learning / artificial intelligence as recognized in Nobel citations)?": false,
-    "What year did the most recently awarded Nobel Prize in Physics go to work related to black holes (as recognized in Nobel citations)?": false
+    "What is the most recent Nobel Prize in Physics (year) whose award rationale/cited work is specifically about neural networks (or machine learning as a core theme)?": false,
+    "What is the most recent Nobel Prize in Physics (year) whose award rationale/cited work is specifically about black holes?": false
   },
   "outcome": {
     "status": "completed",
@@ -431,92 +506,92 @@
         "model": "gpt-5.4-nano",
         "input_tokens": 236,
         "cached_tokens": 0,
-        "output_tokens": 400,
-        "reasoning_tokens": 284,
-        "cost_usd": 0.0005472000000000001,
-        "latency_ms": 3689.6593750134343,
+        "output_tokens": 940,
+        "reasoning_tokens": 824,
+        "cost_usd": 0.0012222000000000001,
+        "latency_ms": 5765.725249999377,
         "replayed": false
       },
       {
         "purpose": "act",
         "model": "gpt-5.4-nano",
-        "input_tokens": 885,
+        "input_tokens": 957,
         "cached_tokens": 0,
-        "output_tokens": 154,
+        "output_tokens": 193,
         "reasoning_tokens": 0,
-        "cost_usd": 0.0003695,
-        "latency_ms": 2663.1586250005057,
+        "cost_usd": 0.00043264999999999997,
+        "latency_ms": 2003.7966669997331,
         "replayed": false
       },
       {
         "purpose": "act",
         "model": "gpt-5.4-nano",
-        "input_tokens": 6468,
+        "input_tokens": 7558,
         "cached_tokens": 0,
-        "output_tokens": 181,
+        "output_tokens": 160,
         "reasoning_tokens": 0,
-        "cost_usd": 0.00151985,
-        "latency_ms": 3030.8425839903066,
+        "cost_usd": 0.0017116000000000002,
+        "latency_ms": 2352.8507920000266,
         "replayed": false
       },
       {
         "purpose": "reflect",
         "model": "gpt-5.4-nano",
-        "input_tokens": 809,
+        "input_tokens": 977,
         "cached_tokens": 0,
-        "output_tokens": 228,
-        "reasoning_tokens": 69,
-        "cost_usd": 0.0004468,
-        "latency_ms": 2719.0804580022814,
+        "output_tokens": 224,
+        "reasoning_tokens": 72,
+        "cost_usd": 0.00047539999999999995,
+        "latency_ms": 2115.6343339998784,
         "replayed": false
       },
       {
         "purpose": "finalize",
         "model": "gpt-5.4-nano",
-        "input_tokens": 1277,
+        "input_tokens": 1656,
         "cached_tokens": 0,
-        "output_tokens": 54,
+        "output_tokens": 48,
         "reasoning_tokens": 0,
-        "cost_usd": 0.0003229,
-        "latency_ms": 1479.2962909996277,
+        "cost_usd": 0.0003912,
+        "latency_ms": 1145.5116670003918,
         "replayed": false
       }
     ],
     "totals": {
-      "input_tokens": 9675,
+      "input_tokens": 11384,
       "cached_tokens": 0,
-      "output_tokens": 1017,
-      "reasoning_tokens": 353,
-      "cost_usd": 0.0032062500000000003,
+      "output_tokens": 1565,
+      "reasoning_tokens": 896,
+      "cost_usd": 0.00423305,
       "cache_hit_rate": 0.0
     },
     "by_purpose": {
       "plan": {
         "calls": 1,
-        "cost_usd": 0.0005472000000000001,
-        "output_tokens": 400
+        "cost_usd": 0.0012222000000000001,
+        "output_tokens": 940
       },
       "act": {
         "calls": 2,
-        "cost_usd": 0.0018893500000000001,
-        "output_tokens": 335
+        "cost_usd": 0.0021442500000000003,
+        "output_tokens": 353
       },
       "reflect": {
         "calls": 1,
-        "cost_usd": 0.0004468,
-        "output_tokens": 228
+        "cost_usd": 0.00047539999999999995,
+        "output_tokens": 224
       },
       "finalize": {
         "calls": 1,
-        "cost_usd": 0.0003229,
-        "output_tokens": 54
+        "cost_usd": 0.0003912,
+        "output_tokens": 48
       }
     },
-    "search_credits": 5,
+    "search_credits": 6,
     "steps": 2
   },
   "timings_ms": {
-    "total": 19154.49712499685
+    "total": 18932.879875000253
   },
   "compaction": {
     "count": 0,

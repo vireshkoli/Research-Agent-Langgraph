@@ -1,7 +1,7 @@
 {
   "schema_version": "1",
-  "run_id": "f30abba007a9",
-  "ts": "2026-08-08T18:05:13+00:00",
+  "run_id": "0c49dfb3d4f2",
+  "ts": "2026-10-25T08:50:06+00:00",
   "question": "What is the population of Tokyo's metropolitan prefecture, and roughly what percentage of Japan's total population is that?",
   "variant": "full",
   "config": {
@@ -12,14 +12,14 @@
     "max_run_cost_usd": 0.05,
     "finalize_reserve_usd": 0.008,
     "compact_threshold_tokens": 12000,
-    "git_sha": "ffb33e3",
-    "prompt_hash": "sha256:512e8e5d8eaa"
+    "git_sha": "e577c53",
+    "prompt_hash": "sha256:e2655640140a"
   },
   "plan": {
     "version": 1,
     "subquestions": [
-      "What is the population of Tokyo (Tokyo Metropolis / Tokyo-to, metropolitan prefecture) according to the latest official estimate (e.g., Statistics Bureau of Japan)?",
-      "What is Japan’s total population according to the latest official estimate (e.g., Statistics Bureau of Japan)?"
+      "What is the most recent population figure for Tokyo Metropolis (Tokyo-to)?",
+      "What is Japan’s total population for the same reference year as the Tokyo figure?"
     ],
     "replans": 0
   },
@@ -28,7 +28,7 @@
       "i": 1,
       "node": "plan",
       "plan_version": 0,
-      "ts_offset_ms": 2287.4462500039954,
+      "ts_offset_ms": 1812.6541669998915,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -38,34 +38,34 @@
       "i": 2,
       "node": "act",
       "plan_version": 1,
-      "ts_offset_ms": 4572.046250003041,
+      "ts_offset_ms": 3376.9582920003813,
       "tool_calls": [
         {
-          "call_id": "call_U0ch0a9IDmBDOE8nwgtKIC9N",
+          "call_id": "call_3nKhgglO406npCwnmk57zrhD",
           "name": "web_search",
           "args": {
-            "query": "Statistics Bureau of Japan Tokyo population latest estimate Tokyo-to population 2024 2025"
+            "query": "Tokyo Metropolis population 2020 census population figure Tokyo-to total population"
           }
         },
         {
-          "call_id": "call_6GAElOL9oTwTEMBEG2TGmPjt",
+          "call_id": "call_yiDS0t3Em0cUOLo7Jzik0BRd",
           "name": "web_search",
           "args": {
-            "query": "Statistics Bureau of Japan total population Japan latest estimate 2024 2025"
+            "query": "Japan total population 2020 census total population figure"
           }
         },
         {
-          "call_id": "call_uevkG3c4NTx2vVxPGHQPsaMz",
+          "call_id": "call_tnIC9vHMm761CEPtOlAeGFbS",
           "name": "web_search",
           "args": {
-            "query": "Japan total population estimate Statistics Bureau 2025 January 1 population"
+            "query": "Statistics Bureau Japan Tokyo population (Tokyo-to) latest estimate"
           }
         },
         {
-          "call_id": "call_WKRAr0nTv58mDrxXa75QydJl",
+          "call_id": "call_MWphy1oPEqmLnyEcFt9dxHWT",
           "name": "web_search",
           "args": {
-            "query": "Tokyo Metropolis population estimate Statistics Bureau of Japan 2025 January 1"
+            "query": "Statistics Bureau Japan population estimate 2024 Japan total population"
           }
         }
       ],
@@ -77,20 +77,20 @@
       "i": 3,
       "node": "observe",
       "plan_version": 1,
-      "ts_offset_ms": 7829.746791991056,
+      "ts_offset_ms": 7577.712958999655,
       "tool_calls": [],
       "observations": [
         {
-          "call_id": "call_U0ch0a9IDmBDOE8nwgtKIC9N",
+          "call_id": "call_3nKhgglO406npCwnmk57zrhD",
           "tool": "web_search",
           "args": {
-            "query": "Statistics Bureau of Japan Tokyo population latest estimate Tokyo-to population 2024 2025"
+            "query": "Tokyo Metropolis population 2020 census population figure Tokyo-to total population"
           },
           "ok": true,
-          "content": "Summary: Tokyo's population in 2024 was 37,115,000. In 2025, it declined to 37,036,000. The latest estimate for 2026 is 36,954,000.\n\n[1] Tokyo, Japan Metro Area Population (1950-2026)\n    https://www.macrotrends.net/global-metrics/cities/21671/tokyo/population\n    ✖\n\nImage 1: Macrotrends Logo\n\n## Tokyo, Japan Metro Area Population (1950-2026)\n\n##### The current metro area population of Tokyo in 2026 is 36,954,000, a 0.22% decline from 2025.\n\n   The metro area population of Tokyo in 2025 was 37,036,000, a 0.21% decline from 2024.\n   The metro area population of Tokyo in 2024 was 37,115,000, a 0.21% decline from 2023.\n   The metro area population of Tokyo in 2023 was 37,194,000, a 0.21% decline from 2022. [...] | City Name | Population |\n| Tokyo | 36,014,000 |\n| Osaka | 18,346,000 |\n| Nagoya | 9,254,000 |\n| Kitakyushu-Fukuoka | 5,310,000 |\n| Shizuoka-Hamamatsu | 2,828,000 |\n| Sapporo | 2,564,000 |\n| Sendai | 2,259,000 |\n| Hiroshima | 1,998,000 |\n| Niigata | 770,000 |\n| Kumamoto | 714,000 |\n| Okayama | 697,000 |\n| Kagoshima | 552,000 |\n| Utsunomiya | 502,000 |\n| Matsuyama | 484,000 |\n| Oita | 461,000 |\n| Kurashiki | 456,000 |\n| Fukuyama | 447,000 |\n| Kanazawa | 447,000 |\n| Takamatsu | 402,000 | [...] | Toyama | 389,000 |\n| Miyazaki | 383,000 |\n| Nagasaki | 362,000 |\n| Takasaki | 354,000 |\n| Toyohashi | 352,000 |\n| Nagano | 347,000 |\n| Iwaki | 343,000 |\n| Koriyama | 309,000 |\n| Maebashi | 307,000 |\n| Naha | 307,000 |\n| Kochi | 301,000 |\n| Asahikawa | 298,000 |\n| Kurume | 292,000 |\n| Akita | 275,000 |\n\n[2] Demographics of Tokyo - Wikipedia\n    https://en.wikipedia.org/wiki/Demographics_of_Tokyo\n    As of 2025, the total population of Tokyo is 14,195,730 and had the largest population (11.5 percent of the total population).\n\n## History\n\n[edit]\n\n\n\nHistorical population [...] | 2021 | 14,011,487 | 95,404 | 127,649 | -32,245 | 6.8 | 9.1 | –2.3 | 2.8 | 1.08 |\n| 2022 | 14,040,732 | 91,097 | 139,264 | -48,167 | 6.5 | 9.9 | –3.4 | 5.5 | 1.04 |\n| 2023 | 14,099,993 | 86,348 | 137,241 | -50,893 | 6.1 | 9.7 | –3.6 | 7.8 | 0.99 |\n| 2024 | 14,192,184 | 84,207 | 140,329 | -56,122 | 5.9 | 9.9 | -4.0 | 10.5 | 0.96 |\n| 2025 | 14,273,066 | 85,064 | 138,377 | -53 313 | 6.3 | 10.3 | -4.0 | 9.4 | 0.96 | [...] | Population pyramid of Tokyo (2020) |\n| Population | Increase 14,270,748 (2026) |\n| Fertility rate | Decrease 0.96 (2024) |\n\n[3] Japan Population\n    https://tradingeconomics.com/japan/population\n    ##### Members\n\n##### \n\n# Japan Population\n\n## The total population in Japan was estimated at 123.2 million people in 2025, according to the latest census figures and projections from Trading Economics. Looking back, in the year of 1950, Japan had a population of 83.2 million people. source: Statistics Bureau of Japan\n\n## [...] ## \n\n### Population in Japan is expected to reach 122.60 Million by the end of 2026, according to Trading Economics global macro models and analysts expectations. In the long-term, the Japan Population is projected to trend around 122.00 Million in 2027 and 121.50 Million in 2028, according to our econometric models.\n\n[4] Japan's population marks sharpest drop to 123m in 2025: census - Nikkei Asia\n    https://asia.nikkei.com/economy/demography/japan-s-population-marks-sharpest-drop-to-123m-in-2025-census\n    TOKYO (Kyodo) -- Japan's population, including foreign residents, fell by a record 3.1 million from 2020 to 123,049,524 in 2025, the latest census showed Friday, highlighting the demographic challenges facing the rapidly graying society.\n\nThe total population fell 2.5%, declining for the third straight survey. [...] The census, conducted every five years, also showed that 30.1% of the population was concentrated in the Tokyo metropolitan area as of Oct. 1 last year, crossing the 30% threshold for the first time.\n\nThe Ministry of Internal Affairs and Communications attributed the decline to the country's graying population and the widening natural decrease, in which deaths outnumber births. [...] With the trend expected to\n\n[truncated: 1,520 of 5,517 chars]",
+          "content": "Summary: According to the Population Census, as of October 1, 2020, the population of Tokyo was 13,982,112. The Tokyo Metropolitan Government reported an overall population of Tokyo as about 14.27 million as of October 1, 2025. The Tokyo Statistical Yearbook 2020 figure for Tokyo prefecture was 14.05 million people. The Tokyo Metropolitan Government area had 14 million people as of 2020. The sources do not provide a definitive answer for the exact population figure for Tokyo in 2020.\n\n[1] Tokyo's History, Geography, and Population -TMG\n    https://www.english.metro.tokyo.lg.jp/w/000-101-007591\n    According to the Population Census, as of October 1, 2020, the population of Tokyo was 14.0476 million (Statistics Bureau, Ministry of Internal Affairs and Communications). Divided into three age categories, the child population (ages 0-14) was 1.568 million, the working-age population (ages 15-64) was 9.284 million, and the aged population (ages 65 and over) was 3.195 million, for a population composition of 11.2%, 66.1%, and 22.7%, respectively. [...] The Population Census in 2020 lists the daytime population of Tokyo as 16.752 million people, which is 2.704 million more than the de jure population of 14.048 million. This difference is caused mainly by the daytime influx of commuting workers and students from the three neighboring prefectures of Saitama, Chiba, and Kanagawa. The daytime/ nighttime population, which is daytime population per 100 de jure population, is 119.2, with the daytime population about 1.19 times more than the de jure [...] Tokyo Metropolis is a regional local government (metropolitan prefecture) comprising 23 special wards (ku in Japanese), 26 cities (shi), 5 towns (machi), and 8 villages (mura). The overall population of Tokyo is about 14.27 million (as of October 1, 2025), and the area is about 2,199.94 square kilometers (as of July 1, 2025). The climate is generally mild.\n\n[2] Demographics of Tokyo - Wikipedia\n    https://en.wikipedia.org/wiki/Demographics_of_Tokyo\n    | 1980 | 11,618,281 | −0.5% |\n| 1985 | 11,829,363 | +1.8% |\n| 1990 | 11,855,563 | +0.2% |\n| 1995 | 11,773,605 | −0.7% |\n| 2000 | 12,064,101 | +2.5% |\n| 2005 | 12,576,601 | +4.2% |\n| 2010 | 13,159,388 | +4.6% |\n| 2015 | 13,515,271 | +2.7% |\n| 2020 | 13,982,112 | +3.5% |\n| 2025 | 14,273,066 | +2.1% |\n| Source: Tokyo Metropolitan Government | [...] | Population pyramid of Tokyo (2020) |\n| Population | Increase 14,270,748 (2026) |\n| Fertility rate | Decrease 0.96 (2024) | [...] | 2015 | 13,515,271 | 113,194 | 111,673 | 1,521 | 8.4 | 8.3 | 0.1 | 7.6 | 1.24 |\n| 2016 | 13,651,276 | 111,964 | 113,415 | -1,451 | 8.2 | 8.3 | –0.1 | 10.1 | 1.24 |\n| 2017 | 13,773,187 | 108,990 | 116,453 | -7,463 | 7.9 | 8.5 | –0.5 | 9.4 | 1.21 |\n| 2018 | 13,888,986 | 107,150 | 119,253 | -12,103 | 7.7 | 8.6 | –0.9 | 9.2 | 1.20 |\n| 2019 | 14,004,097 | 101,818 | 120,870 | -19,052 | 7.3 | 8.6 | –1.4 | 9.6 | 1.15 |\n| 2020 | 14,047,594 | 99,661 | 121,219 | -21,558 | 7.1 | 8.6 | –1.5 | 4.6 | 1.12 |\n\n[3] Tokyo Population 2026\n    https://worldpopulationreview.com/cities/japan/tokyo\n    Tokyo's 2026 population is now estimated at 10,316,210.In 1995, the population of Tokyo was 7,967,614.Tokyo has grown by 99,525 in the last year, which represents a 0.97% annual change.These population values and projections come from Japan city census series 1995 to 2005 via CityPopulation fallback access, Japan 2010 Census municipal population Table 1 (e-Stat official CSV), Japan 2015 Census municipal population Table 1 (e-Stat official CSV), Japan 2020 Census municipal population Table 1-3 [...] Tokyo's 2026 population is now estimated at 10,316,210.In 1995, the population of Tokyo was 7,967,614.Tokyo has grown by 99,525 in the last year, which represents a 0.97% annual change.These population values and projections come from Japan city census series 1995 to 2005 via CityPopulation fallback access, Japan 2010 Census municipal population Table 1 (e-Stat official CSV), Japan 2015 Census\n\n[truncated: 3,183 of 7,174 chars]",
           "error": null,
-          "latency_ms": 3255.666208002367,
-          "raw_chars": 5517,
+          "latency_ms": 2507.1697499997754,
+          "raw_chars": 7174,
           "truncated": true,
           "source_ids": [
             "S1",
@@ -101,63 +101,63 @@
           ]
         },
         {
-          "call_id": "call_6GAElOL9oTwTEMBEG2TGmPjt",
+          "call_id": "call_yiDS0t3Em0cUOLo7Jzik0BRd",
           "tool": "web_search",
           "args": {
-            "query": "Statistics Bureau of Japan total population Japan latest estimate 2024 2025"
+            "query": "Japan total population 2020 census total population figure"
           },
           "ok": true,
-          "content": "Summary: Japan's population was 123.7 million in December 2024 and is projected to decrease to 123.2 million by December 2025. This decline reflects the country's aging population and lower birth rates. The population is expected to continue decreasing in the coming years.\n\n[1] UNdata | record view | Population by age, sex and urban/rural residence\n    http://data.un.org/Data.aspx?q=JAPAN+population+age&d=POP&f=tableCode%3A22%3BcountryCode%3A392\n    | Country or Area | Year | Area | Sex | Age | Record Type | Reliability | Source Year | Value |  |\n ---  ---  ---  ---  --- |\n| Japan | 2024 | Total | Both Sexes | Total | Estimate - de jure | Final figure, complete | 2025 | 123,975,000 | 1,2,3 |\n| Japan | 2024 | Total | Both Sexes | 0 | Estimate - de jure | Final figure, complete | 2025 | 716,000 | 1,2,3 |\n| Japan | 2024 | Total | Both Sexes | 0 - 4 | Estimate - de jure | Final figure, complete | 2025 | 3,974,000 | 1,2,3 | [...] | Japan | 2024 | Total | Both Sexes | 25 | Estimate - de jure | Final figure, complete | 2025 | 1,295,000 | 1,2,3 |\n| Japan | 2024 | Total | Both Sexes | 25 - 29 | Estimate - de jure | Final figure, complete | 2025 | 6,517,000 | 1,2,3 |\n| Japan | 2024 | Total | Both Sexes | 26 | Estimate - de jure | Final figure, complete | 2025 | 1,312,000 | 1,2,3 |\n| Japan | 2024 | Total | Both Sexes | 27 | Estimate - de jure | Final figure, complete | 2025 | 1,304,000 | 1,2,3 | [...] | Japan | 2024 | Total | Both Sexes | 5 | Estimate - de jure | Final figure, complete | 2025 | 872,000 | 1,2,3 |\n| Japan | 2024 | Total | Both Sexes | 5 - 9 | Estimate - de jure | Final figure, complete | 2025 | 4,761,000 | 1,2,3 |\n| Japan | 2024 | Total | Both Sexes | 6 | Estimate - de jure | Final figure, complete | 2025 | 915,000 | 1,2,3 |\n| Japan | 2024 | Total | Both Sexes | 7 | Estimate - de jure | Final figure, complete | 2025 | 940,000 | 1,2,3 |\n\n[2] Japan Population\n    https://tradingeconomics.com/japan/population\n    ##### Members\n\n##### \n\n# Japan Population\n\n## The total population in Japan was estimated at 123.2 million people in 2025, according to the latest census figures and projections from Trading Economics. Looking back, in the year of 1950, Japan had a population of 83.2 million people. source: Statistics Bureau of Japan\n\n## [...] |  | Actual | Previous | Highest | Lowest | Dates | Unit | Frequency |  |\n ---  ---  ---  --- \n|  | 123.22 | 123.80 | 128.06 | 83.20 | 1950 - 2025 | Million | Yearly |  |\n\n## Markets\n\n## GDP\n\n## Labour\n\n## Prices\n\n## Money\n\n## Trade\n\n## Government\n\n## Business\n\n## Consumer\n\n## Housing\n\n## Taxes\n\n## Health\n\n## Climate\n\nIOs app on Apple\nAndroid app on Google Play [...] ## \n\n### Population in Japan is expected to reach 122.60 Million by the end of 2026, according to Trading Economics global macro models and analysts expectations. In the long-term, the Japan Population is projected to trend around 122.00 Million in 2027 and 121.50 Million in 2028, according to our econometric models.\n\n[3] Demographics of Japan\n    https://en.wikipedia.org/wiki/Demographics_of_Japan\n    and Statistics Bureau \"Statistics Bureau (Japan)\"). In April 2025, Japan's population was roughly 123.4 million people, and peaked at 128.5 million people in 2010. It is the 6th-most populous country in Asia, and the 11th-most populous country \"List of countries and dependencies by population (United Nations)\") in the world. [...] | Population pyramid of Japan in 2026 |\n| Population | Decrease 123,400,000 (April 2025) (11th) |\n| Density | 343.28/km2 (889.1/sq mi) (2022) |\n| Growth rate | Decrease –0.44% (2024) |\n| Birth rate | Decrease 5.8 births/1,000 population (2023 est.) |\n| Death rate | Negative increase 12.7 deaths/1,000 population (2023 est.) |\n| Life expectancy | Increase 84.83 years |\n| • male | Increase 81 years |\n| • female | Increase 87 years |\n| Fertility rate | Decrease 1.14 children born/woman (2024) | [...] ### Current vital statistics\n\n[edit]\n\n| Period | Live births | Deaths | Natural increase |\n ---  --- |\n|\n\n[truncated: 2,840 of 6,832 chars]",
+          "content": "Summary: According to the 2020 census, Japan's total population was 126,146,099. This figure is directly supported by the official government document from the Statistics Bureau, Ministry of Internal Affairs and Communications, Japan. The sources also indicate that the population decreased in 39 prefectures, with Tokyo-to having the largest population at 14,048 thousand. The total population of the top 8 prefectures accounted for 50.7% of Japan's total population.\n\n[1] 2020 Population Census POPULATION AND ...\n    https://www.stat.go.jp/english/data/kokusei/2020/summary/pdf/01.pdf\n    From outside Japan 㸫16㸫 Table 2. Rate of migration by place of usual residence five years ago, age group (five-year age group) and sex – Japan(2020) From the same Shi, Machi or Mura From other Shi, Machi or Mura of the same prefecture From other prefecture From the same Shi, Machi or Mura From other Shi, Machi or Mura of the same prefecture From other prefecture Total 126,146,099 97,474,410 28,671,689 27,636,396 13,707,048 6,140,086 7,789,262 1,035,293 100.0 77.3 22.7 21.9 10.9 4.9 6.2 0.8 0-4 [...] -962,607 -0.8 -0.15 94.8 2020 126,146,099 61,349,581 64,796,518 -948,646 -0.7 -0.15 94.7 1) Population adjusted by deducting the military and civilian personnel stationed outside Japan from the census population. [...] it decreased in 39 prefectures.\u0003 ࠐ\u0003 Japan is divided into 47 prefectures. Looking at the population by prefecture in 2020, the population of Tokyo-to is the largest (14,048 thousand). The total population of the top 8 prefectures is 63,984 thousand, accounting for 50.7% of the total population of Japan. ࠐ\u0003 The population of the Tokyo Metropolitan Area including Tokyo-to, Kanagawa-ken, Saitama-ken and Chiba-ken is 36,914 thousand, accounting for approximately 30% (29.3%) of the total population\n\n[2] Japan Population (2026) - Worldometer\n    https://www.worldometers.info/world-population/japan-population\n    | 2020 | 126,304,543 | −0.15% | −194,266 | 42,001 | 47.7 | 1.3 | 346 | 91.9% | 116,099,672 | 1.6% | 7,887,001,292 | 11 |\n| 2015 | 127,275,872 | −0.14% | −181,881 | 168,896 | 45.8 | 1.42 | 349 | 91.9% | 116,944,428 | 1.7% | 7,470,491,872 | 10 |\n| 2010 | 128,185,275 | 0.04% | 54,389 | 131,860 | 44.2 | 1.36 | 352 | 91.1% | 116,741,034 | 1.8% | 7,021,732,148 | 10 |\n| 2005 | 127,913,330 | 0.14% | 177,108 | 113,017 | 42.6 | 1.25 | 351 | 86.3% | 110,340,709 | 1.9% | 6,586,970,132 | 10 | [...] | 2000 | 127,027,789 | 0.21% | 271,025 | 23,468 | 40.8 | 1.35 | 348 | 79% | 100,303,716 | 2.1% | 6,171,702,993 | 9 |\n| 1995 | 125,672,665 | 0.37% | 454,580 | 87,714 | 39 | 1.41 | 345 | 78.5% | 98,593,178 | 2.2% | 5,758,878,982 | 8 |\n| 1990 | 123,399,765 | 0.42% | 513,520 | 124,582 | 36.9 | 1.51 | 338 | 78% | 96,298,507 | 2.3% | 5,327,803,110 | 7 |\n| 1985 | 120,832,163 | 0.41% | 494,681 | −141,323 | 34.5 | 1.74 | 331 | 77.4% | 93,507,944 | 2.5% | 4,868,943,465 | 7 | [...] The total land area is 364,555 Km² (140,755 sq. miles).\n 93.4% of the population is urban (114,292,213 people in 2026)\n The median age in Japan is 50.2 years.\n\n[3] Demographics of Japan - Wikipedia\n    https://en.wikipedia.org/wiki/Demographics_of_Japan\n    1. ↑ The proportion of foreign nationals is most likely higher due to those that did not declare a nationality. The Statistics of Foreign Residents estimated that there was a total of 2,887,116 (2.3% of the total population) foreign nationals in December 2020, while in the 2020 census carried out in October enumerated 2,402,460 foreign nationals.\n\n## See also\n\n[edit] [...] | Age group | Male | Female | Total | % |\n ---  --- \n| Total | 61 226 000 | 64 610 000 | 125 836 000 | 100 |\n| 0–4 | 2 406 000 | 2 288 000 | 4 694 000 | 3.73 |\n| 5–9 | 2 580 000 | 2 462 000 | 5 042 000 | 4.01 |\n| 10–14 | 2 736 000 | 2 605 000 | 5 341 000 | 4.24 |\n| 15–19 | 2 932 000 | 2 792 000 | 5 724 000 | 4.55 |\n| 20–24 | 3 298 000 | 3 089 000 | 6 386 000 | 5.07 |\n| 25–29 | 3 240 000 | 3 036 000 | 6 275 000 | 4.99 |\n| 30–34 | 3 391 000 | 3 244 000 | 6 635 000 |\n\n[truncated: 3,220 of 7,219 chars]",
           "error": null,
-          "latency_ms": 2635.7428329938557,
-          "raw_chars": 6832,
+          "latency_ms": 2348.4494160002214,
+          "raw_chars": 7219,
           "truncated": true,
           "source_ids": [
             "S6",
-            "S3",
-            "S7",
-            "S5",
-            "S4"
-          ]
-        },
-        {
-          "call_id": "call_uevkG3c4NTx2vVxPGHQPsaMz",
-          "tool": "web_search",
-          "args": {
-            "query": "Japan total population estimate Statistics Bureau 2025 January 1 population"
-          },
-          "ok": true,
-          "content": "Summary: Japan's population in 2025 was estimated at 123 million people. The population has been declining since 2020. This drop highlights demographic challenges.\n\n[1] Japan Population\n    https://tradingeconomics.com/japan/population\n    ##### Members\n\n##### \n\n# Japan Population\n\n## The total population in Japan was estimated at 123.2 million people in 2025, according to the latest census figures and projections from Trading Economics. Looking back, in the year of 1950, Japan had a population of 83.2 million people. source: Statistics Bureau of Japan\n\n## [...] ## \n\n### Population in Japan is expected to reach 122.60 Million by the end of 2026, according to Trading Economics global macro models and analysts expectations. In the long-term, the Japan Population is projected to trend around 122.00 Million in 2027 and 121.50 Million in 2028, according to our econometric models. [...] |  | Actual | Previous | Highest | Lowest | Dates | Unit | Frequency |  |\n ---  ---  ---  --- \n|  | 123.22 | 123.80 | 128.06 | 83.20 | 1950 - 2025 | Million | Yearly |  |\n\n## Markets\n\n## GDP\n\n## Labour\n\n## Prices\n\n## Money\n\n## Trade\n\n## Government\n\n## Business\n\n## Consumer\n\n## Housing\n\n## Taxes\n\n## Health\n\n## Climate\n\nIOs app on Apple\nAndroid app on Google Play\n\n[2] Demographics of Japan\n    https://en.wikipedia.org/wiki/Demographics_of_Japan\n    and Statistics Bureau \"Statistics Bureau (Japan)\"). In April 2025, Japan's population was roughly 123.4 million people, and peaked at 128.5 million people in 2010. It is the 6th-most populous country in Asia, and the 11th-most populous country \"List of countries and dependencies by population (United Nations)\") in the world. [...] ### Current vital statistics\n\n[edit]\n\n| Period | Live births | Deaths | Natural increase |\n ---  --- |\n| January–May 2025 | 280,979 | 721,038 | −440,059 |\n| January–May 2026 | 282,222 | 664,510 | −382,288 |\n| Difference | Increase +1,243 (+0.4%) | Positive decrease −56,528 (−7.8%) | Increase +57,771 |\n| Source: |\n\n### Total fertility rate by prefecture\n\n[edit]\n\n2025 [...] | Country region groups | Number | Percentage of |\n --- \n| Foreign citizens | Total population |\n| Asians | 3,258,155 | 86.45% | 2.63% |\n| South Americans | 278,814 | 7.4% | 0.22% |\n| Europeans | 102,792 | 2.73% | 0.08% |\n| North Americans | 85,431 | 2.27% | 0.07% |\n| African | 25,283 | 0.67% | 0.02% |\n| Oceania | 18,034 | 0.48% | 0.01% |\n| Total (as of 2024) | 3,768,977 | 100% | 3.04% |\n\n### Table: numbers of foreign nationals in Japan\n\n[edit]\n\n|  |\n\n[3] Japan Population (1950-2026)\n    https://www.macrotrends.net/global-metrics/countries/jpn/japan/population\n    Total population for Japan in 2025 was 121,960,408, a 0.55% decline from 2024.\n Total population for Japan in 2024 was 122,631,432, a 0.54% decline from 2023.\n Total population for Japan in 2023 was 123,294,513, a 0.53% decline from 2022. [...] ## Japan Population (1950-2026)\n\nPopulation Economy Trade Health Education Development Labor Force Environment Crime Immigration Other\n\nPopulation Growth Rate Density Urban Rural Life Expectancy Birth Rate Death Rate Infant Mortality Rate Fertility Rate\n\n##### Total current population for Japan in 2026 is 121,282,488, a 0.56% decline from 2025. [...] Total population is based on the de facto definition of population, which counts all residents regardless of legal status or citizenship. The values shown are midyear estimates. The full historical dataset is available for download here: Population of Japan | Historical Data | 1950 - 2026.\n\n## Population\n\n| Region Rankings |\n\n| Name | Population |\n| World | 8264364509 |\n| Africa | 1565426616 |\n| Sub-Saharan Africa | 1288536936 |\n| North America | 385245079 |\n| Central America | 185365829 |\n\n[4] Japan Population (2026) - Worldometer\n    https://www.worldometers.info/world-population/japan-population\n    | Rank | Urban Area | Population Estimate (2025) |\n --- \n| 1 | Tōkyō (Tokyo) | 33,412,512 |\n| 2 | Osaka | 12,964,145 |\n| 3 | Nagoya | 7,146,160 |\n| 4 | Fukuoka |\n\n[truncated: 2,244 of 6,237 chars]",
-          "error": null,
-          "latency_ms": 2195.8049169916194,
-          "raw_chars": 6237,
-          "truncated": true,
-          "source_ids": [
-            "S3",
             "S7",
             "S8",
-            "S5",
-            "S4"
+            "S9",
+            "S10"
           ]
         },
         {
-          "call_id": "call_WKRAr0nTv58mDrxXa75QydJl",
+          "call_id": "call_tnIC9vHMm761CEPtOlAeGFbS",
           "tool": "web_search",
           "args": {
-            "query": "Tokyo Metropolis population estimate Statistics Bureau of Japan 2025 January 1"
+            "query": "Statistics Bureau Japan Tokyo population (Tokyo-to) latest estimate"
           },
           "ok": true,
-          "content": "Summary: Tokyo's population estimate for January 1, 2025, is 14.273 million. This represents a slight decline from previous years. The population density is high, at 6,488 persons per square kilometer.\n\n[1] Tokyo, Japan Metro Area Population (1950-2026)\n    https://www.macrotrends.net/global-metrics/cities/21671/tokyo/population\n    ✖\n\nImage 1: Macrotrends Logo\n\n## Tokyo, Japan Metro Area Population (1950-2026)\n\n##### The current metro area population of Tokyo in 2026 is 36,954,000, a 0.22% decline from 2025.\n\n   The metro area population of Tokyo in 2025 was 37,036,000, a 0.21% decline from 2024.\n   The metro area population of Tokyo in 2024 was 37,115,000, a 0.21% decline from 2023.\n   The metro area population of Tokyo in 2023 was 37,194,000, a 0.21% decline from 2022. [...] | City Name | Population |\n| Tokyo | 36,014,000 |\n| Osaka | 18,346,000 |\n| Nagoya | 9,254,000 |\n| Kitakyushu-Fukuoka | 5,310,000 |\n| Shizuoka-Hamamatsu | 2,828,000 |\n| Sapporo | 2,564,000 |\n| Sendai | 2,259,000 |\n| Hiroshima | 1,998,000 |\n| Niigata | 770,000 |\n| Kumamoto | 714,000 |\n| Okayama | 697,000 |\n| Kagoshima | 552,000 |\n| Utsunomiya | 502,000 |\n| Matsuyama | 484,000 |\n| Oita | 461,000 |\n| Kurashiki | 456,000 |\n| Fukuyama | 447,000 |\n| Kanazawa | 447,000 |\n| Takamatsu | 402,000 | [...] | Toyama | 389,000 |\n| Miyazaki | 383,000 |\n| Nagasaki | 362,000 |\n| Takasaki | 354,000 |\n| Toyohashi | 352,000 |\n| Nagano | 347,000 |\n| Iwaki | 343,000 |\n| Koriyama | 309,000 |\n| Maebashi | 307,000 |\n| Naha | 307,000 |\n| Kochi | 301,000 |\n| Asahikawa | 298,000 |\n| Kurume | 292,000 |\n| Akita | 275,000 |\n\n[2] Demographics of Tokyo - Wikipedia\n    https://en.wikipedia.org/wiki/Demographics_of_Tokyo\n    As of 2025, the total population of Tokyo is 14,195,730 and had the largest population (11.5 percent of the total population).\n\n## History\n\n[edit]\n\n\n\nHistorical population [...] | 1980 | 11,618,281 | −0.5% |\n| 1985 | 11,829,363 | +1.8% |\n| 1990 | 11,855,563 | +0.2% |\n| 1995 | 11,773,605 | −0.7% |\n| 2000 | 12,064,101 | +2.5% |\n| 2005 | 12,576,601 | +4.2% |\n| 2010 | 13,159,388 | +4.6% |\n| 2015 | 13,515,271 | +2.7% |\n| 2020 | 13,982,112 | +3.5% |\n| 2025 | 14,273,066 | +2.1% |\n| Source: Tokyo Metropolitan Government | [...] | 2021 | 14,011,487 | 95,404 | 127,649 | -32,245 | 6.8 | 9.1 | –2.3 | 2.8 | 1.08 |\n| 2022 | 14,040,732 | 91,097 | 139,264 | -48,167 | 6.5 | 9.9 | –3.4 | 5.5 | 1.04 |\n| 2023 | 14,099,993 | 86,348 | 137,241 | -50,893 | 6.1 | 9.7 | –3.6 | 7.8 | 0.99 |\n| 2024 | 14,192,184 | 84,207 | 140,329 | -56,122 | 5.9 | 9.9 | -4.0 | 10.5 | 0.96 |\n| 2025 | 14,273,066 | 85,064 | 138,377 | -53 313 | 6.3 | 10.3 | -4.0 | 9.4 | 0.96 |\n\n[3] Tokyo's History, Geography, and Population -TMG\n    https://www.english.metro.tokyo.lg.jp/w/000-101-007591\n    Tokyo Metropolis is a regional local government (metropolitan prefecture) comprising 23 special wards (ku in Japanese), 26 cities (shi), 5 towns (machi), and 8 villages (mura). The overall population of Tokyo is about 14.27 million (as of October 1, 2025), and the area is about 2,199.94 square kilometers (as of July 1, 2025). The climate is generally mild. [...] Administrative Areas of Tokyo\n\n## Population of Tokyo\n\n### Population Summary\n\n  As of October 1, 2025, the population of Tokyo is estimated to be 14.273 million, about 11.6% of Japan’s total population. It has the largest population among all the 47 prefectures.\n\n  At 2,199.94 square kilometers as of July 1, 2025, the area of Tokyo is 0.6% of the total area of Japan. With a population density of 6,488 persons per square kilometer, Tokyo is the most densely populated prefecture in Japan. [...] Map of Japan\n\nTokyo Metropolis  \n and Surrounding Prefectures\n\n### The 23 Special-ward Area\n\n  The total area covers about 628 square kilometers. The population has been showing an upward trend, with 9.95 million residents—a population density of about 15,853 persons per square kilometer—as of October 1, 2025.\n\n[4] Japan's population marks sharpest drop to 123m in 2025\n   \n\n[truncated: 2,828 of 6,817 chars]",
+          "content": "Summary: As of October 1, 2025, the population of Tokyo-to was estimated to be 14.273 million, making it the most populous prefecture in Japan, accounting for 11.6% of the country's total population. The Tokyo metropolitan area, which includes Tokyo-to, Kanagawa-ken, Saitama-ken, and Chiba-ken, had a population of 36.986 million, representing about 30.1% of Japan's population. The total population of Japan as of October 1, 2025, was 123.05 million.\n\n[1] Tokyo, Japan Population by Boundary | Tokyo Bureau\n    https://www.tokyobureau.com/2026/japan-population-tokyo\n    ## Tokyo’s share of Japan’s population\n\nJapan had an official population of 123.802 million on October 1, 2024. That was 550,000 fewer people than a year earlier, a decline of 0.44% and the country’s fourteenth consecutive annual decrease. Tokyo-to was Japan’s most populous prefecture and held 11.5% of the national population, according to the Statistics Bureau of Japan’s 2024 population estimates.\n\nIn plain language, about one in nine people in Japan lived in Tokyo-to in 2024. [...] | Tokyo Metropolis (Tokyo-to) | About 14.27 million | October 1, 2025 | The 23 special wards, the Tama area in western Tokyo and Tokyo’s outlying islands | Administrative statistics and comparisons with Japan’s prefectures |\n| UN-defined Tokyo urban agglomeration | 33.4 million | 2025 | Tokyo’s continuously developed urban area and surrounding suburbs across administrative borders | International comparisons of large urban areas | [...] Tokyo-to accounted for 11.5% of Japan’s population in the official October 1, 2024 estimate—about one person in nine. A broader region comprising Tokyo, Saitama, Chiba and Kanagawa contains around 30%, but that is a different, boundary-sensitive measure (Statistics Bureau of Japan and Tokyo Metropolitan Government, cited above).\n\n### Is Tokyo still the largest city in the world?\n\n[2] Statistics Bureau Home Page/News Bulletin June 25, 2026\n    https://www.stat.go.jp/english/info/news/20260625.html\n    According to the population by prefecture in 2025, the population of Tokyo-to was largest (14.246 million). The population of the Tokyo metropolitan area, which consists of Tokyo-to, Kanagawa-ken, Saitama-ken and Chiba-ken, was 36.986 million, which accounts for about 30% (30.1%) of the population of Japan.\n\n- Population by municipality\n\n   According to the population by municipality in 2025, the population decreased in 1,558 (90.6%) of the 1,719 municipalities in Japan.\n\n- Households [...] The Population Census has been conducted every five years since 1920 and the 22nd Census was conducted in October 2025.\n\n- Population of Japan\n\n   The total population of Japan as of October 1, 2025, was 123.05 million. Compared to 2020, the population of Japan decreased by 3.097 million (-2.5%), and the rate of decline accelerated.\n\n- Population by prefecture\n\n[3] Statistics Bureau Home Page/Population Estimates/Current Population Estimates as of October 1, 2024\n    https://www.stat.go.jp/english/data/jinsui/2024np/index.html\n    [Population]\n\n The top five prefectures in population were Tokyo-to, Kanagawa-ken, Osaka-fu, Aichi-ken and Saitama-ken. These prefectures account for 37.9 percent of the total population.\n Tokyo-to had the largest population in 2024 (11.5 percent of the total population).\n\n[Rates of Population Change] [...] The population increased in Tokyo-to and Saitama-ken. Tokyo-to had the highest rate of increase in population.\n The population decreased in 45 prefectures. Akita-ken had the highest rate of decrease in population.\n\n[Population by Age Group] [...] The percentage of the population under 15 years old was the highest in Okinawa-ken and lowest in Akita-ken.\n The percentage of the population aged 15 to 64 was the highest in Tokyo-to and lowest in Akita-ken.\n The percentage of the population aged 65 years old and over was the highest in Akita-ken and lowest in Tokyo-to, and it increased in 44 prefectures.\n\nTop of this page\n\n[4] Tokyo's History,\n\n[truncated: 3,079 of 7,075 chars]",
           "error": null,
-          "latency_ms": 2565.1444579998497,
-          "raw_chars": 6817,
+          "latency_ms": 4198.590375000094,
+          "raw_chars": 7075,
           "truncated": true,
           "source_ids": [
+            "S11",
+            "S12",
+            "S13",
             "S1",
-            "S2",
-            "S9",
-            "S4",
-            "S10"
+            "S7"
+          ]
+        },
+        {
+          "call_id": "call_MWphy1oPEqmLnyEcFt9dxHWT",
+          "tool": "web_search",
+          "args": {
+            "query": "Statistics Bureau Japan population estimate 2024 Japan total population"
+          },
+          "ok": true,
+          "content": "Summary: According to the Statistics Bureau Japan, the total population of Japan in 2024 was 123,802 thousand, a decrease of 550 thousand compared with the previous year. The male population was 60,233 thousand, a decrease of 260 thousand (0.43 percent), while the female population was 63,569 thousand, a decrease of 290 thousand (0.45 percent). The sources do not provide a definitive answer for the exact population estimate for 2024.\n\n[1] Statistics Bureau Home Page/Population Estimates/Current Population Estimates as of October 1, 2024\n    https://www.stat.go.jp/english/data/jinsui/2024np/index.html\n    [Population]\n\n The top five prefectures in population were Tokyo-to, Kanagawa-ken, Osaka-fu, Aichi-ken and Saitama-ken. These prefectures account for 37.9 percent of the total population.\n Tokyo-to had the largest population in 2024 (11.5 percent of the total population).\n\n[Rates of Population Change] [...] [Population by Age Group]\n\n The population under 15 years  old was 13,830 thousand (11.2  percent of the total population).\n The population aged 15 to 64 was 73,728 thousand (59.6 percent of the total population).\n The population aged 65 years old and over was 36,243 thousand (29.3 percent of the total population).\n\n### Population by Prefecture\n\n[Population] [...] The total population was 123,802 thousand, a decrease of 550 thousand compared with the previous year. The rate of decrease was 0.44 percent. The total population decreased for the fourteenth year in a row.\n The male population was 60,233  thousand, a decrease of 260  thousand (0.43 percent), while the female population was 63,569  thousand, a decrease of 290   thousand (0.45 percent).\n\n[2] Japan’s Population Falls Again in 2024 | Nippon.com\n    https://www.nippon.com/en/japan-data/h02503\n    Japan Data\n\n# Japan’s Population Falls Again in 2024\n\nJapan’s population was 124,330,690, as of January 1, 2025, after a 0.44% year-on-year decrease, according to a demographic survey published by the Ministry of Internal Affairs and Communications. [...] Meanwhile, there were 3,677,463 non-Japanese residents, a year-on-year increase of 354,089 or 10.7%, due to factors including the greater ease of movement to Japan since the 2023 relaxation of the entry restrictions that had been in place during the COVID-19 pandemic. This was the highest total since statistics were first compiled in 2013. As a result, the overall population fell by some 550,000 in 2024.\n\nPopulation of Japanese Citizens\n\nPopulation of Japanese Citizens [...] Japan had 687,689 births in 2024, marking the ninth consecutive record low year and the first time for the figure to fall below 700,000. The natural population decline, calculated by subtracting births from deaths, increased to 912,161, rising for the seventeenth straight year.\n\n[3] Japan Population (2026) - Worldometer\n    https://www.worldometers.info/world-population/japan-population\n    | 2025 | 123,103,479 | −0.52% | −649,562 | 140,579 | 49.8 | 1.23 | 338 | 93.1% | 114,645,589 | 1.5% | 8,231,613,070 | 12 |\n| 2024 | 123,753,041 | −0.5% | −617,906 | 153,357 | 49.4 | 1.22 | 339 | 92.9% | 114,979,260 | 1.5% | 8,161,972,572 | 12 |\n| 2023 | 124,370,947 | −0.5% | −626,631 | 175,003 | 49 | 1.21 | 341 | 92.7% | 115,292,289 | 1.5% | 8,091,734,930 | 12 |\n| 2022 | 124,997,578 | −0.52% | −653,483 | 175,003 | 48.5 | 1.26 | 343 | 92.5% | 115,583,843 | 1.6% | 8,021,407,192 | 12 | [...] | Rank | Urban Area | Population Estimate (2025) |\n --- \n| 1 | Tōkyō (Tokyo) | 33,412,512 |\n| 2 | Osaka | 12,964,145 |\n| 3 | Nagoya | 7,146,160 |\n| 4 | Fukuoka | 2,225,078 |\n| 5 | Sapporo | 1,964,519 |\n| 6 | Sendai | 1,256,440 |\n| 7 | Kitakyushu | 1,206,731 |\n| 8 | Hiroshima | 1,185,788 |\n| 9 | Naha | 1,060,017 |\n| 10 | Nara | 993,952 |\n| 11 | Okayama | 817,266 |\n| 12 | Kumamoto | 641,185 |\n| 13 | Otsu | 559,798 |\n| 14 | Kanazawa | 533,682 |\n| 15 | Himeji | 494,064 | [...] | 2020 | 126,304,543 | −0.15% | −194,266 | 42,001 | 47.7 | 1.3 | 346 | 91.9% | 116,099,672 | 1.6% |\n\n[truncated: 3,333 of 7,320 chars]",
+          "error": null,
+          "latency_ms": 2442.393207999885,
+          "raw_chars": 7320,
+          "truncated": true,
+          "source_ids": [
+            "S13",
+            "S14",
+            "S7",
+            "S8",
+            "S15"
           ]
         }
       ],
@@ -168,7 +168,7 @@
       "i": 4,
       "node": "reflect",
       "plan_version": 1,
-      "ts_offset_ms": 7831.944624995231,
+      "ts_offset_ms": 7579.390375000003,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -178,13 +178,27 @@
       "i": 5,
       "node": "act",
       "plan_version": 1,
-      "ts_offset_ms": 8924.371583998436,
+      "ts_offset_ms": 9315.097792000415,
       "tool_calls": [
         {
-          "call_id": "call_awnef4ffVmqr3OP1BF64iD1g",
-          "name": "web_search",
+          "call_id": "call_uzyziCfMm1Rb6rP0nHRvwNeW",
+          "name": "fetch_page",
           "args": {
-            "query": "Statistics Bureau of Japan Tokyo metropolitan prefecture population October 1 2025 14,273,066"
+            "url": "https://www.stat.go.jp/english/info/news/20260625.html"
+          }
+        },
+        {
+          "call_id": "call_eUDgxEwgJVeqRfwAOHSFZSjS",
+          "name": "fetch_page",
+          "args": {
+            "url": "https://www.stat.go.jp/english/data/jinsui/2024np/index.html"
+          }
+        },
+        {
+          "call_id": "call_z0Ge6hXGuBjjrAHd3pJuV5nx",
+          "name": "fetch_page",
+          "args": {
+            "url": "https://www.stat.go.jp/english/data/jinsui/2024np/index.html"
           }
         }
       ],
@@ -196,27 +210,55 @@
       "i": 6,
       "node": "observe",
       "plan_version": 1,
-      "ts_offset_ms": 11381.715374998748,
+      "ts_offset_ms": 10163.82695900029,
       "tool_calls": [],
       "observations": [
         {
-          "call_id": "call_awnef4ffVmqr3OP1BF64iD1g",
-          "tool": "web_search",
+          "call_id": "call_uzyziCfMm1Rb6rP0nHRvwNeW",
+          "tool": "fetch_page",
           "args": {
-            "query": "Statistics Bureau of Japan Tokyo metropolitan prefecture population October 1 2025 14,273,066"
+            "url": "https://www.stat.go.jp/english/info/news/20260625.html"
           },
           "ok": true,
-          "content": "Summary: As of October 1, 2025, Tokyo metropolitan prefecture's population is 14,273,066. The Tokyo metropolitan area comprises 30.1% of Japan's total population. Japan's overall population in 2025 is projected to be 123 million.\n\n[1] Tōkyō (Japan): Prefecture, Major Cities & Towns - Population Statistics, Maps, Charts, Weather and Web Information\n    https://www.citypopulation.de/en/japan/cities/tokyo\n    ## Major Cities\n\n|  | Name | Population Census (Cp) 2025-10-01 |\n --- \n| 1 | Tōkyō) | 9,953,160 |\n| 2 | Hachiōji) | 574,087 |\n| 3 | Machida) | 420,962 |\n| 4 | Fuchū) | 263,172 |\n| 5 | Chōfu) | 245,536 |\n| 6 | Nishitōkyō) | 207,589 |\n| 7 | Kodaira) | 198,491 |\n| 8 | Mitaka) | 194,959 |\n| 9 | Hino) | 190,383 |\n| 10 | Tachikawa) | 189,141 |\n\n## Contents: Cities & Towns [...] | Name) | Abbr.) | Status) | Native) | Capital) | Area) A-L (km²) | Population) Census (Cf) 1995-10-01 | Population) Census (Cf) 2000-10-01 | Population) Census (Cf) 2005-10-01 | Population) Census (Cf) 2010-10-01 | Population) Census (Cf) 2015-10-01 | Population) Census (Cf) 2020-10-01 | Population) Census (Cp) 2025-10-01 |  |  |\n ---  ---  ---  ---  ---  ---  --- [...] ## Population Structure\n\nFurther information about the population structure.\n\n| Gender (C 2025) | |\n --- |\n| Males | 6,971,785 |\n| Females | 7,274,434 |\n\n| Age Groups (C 2020) | |\n --- |\n| 0-17 years | 1,838,675 |\n| 18-64 years | 8,672,358 |\n| 65+ years | 3,107,822 |\n\n[2] Demographics of Tokyo\n    https://en.wikipedia.org/wiki/Demographics_of_Tokyo\n    | 1980 | 11,618,281 | −0.5% |\n| 1985 | 11,829,363 | +1.8% |\n| 1990 | 11,855,563 | +0.2% |\n| 1995 | 11,773,605 | −0.7% |\n| 2000 | 12,064,101 | +2.5% |\n| 2005 | 12,576,601 | +4.2% |\n| 2010 | 13,159,388 | +4.6% |\n| 2015 | 13,515,271 | +2.7% |\n| 2020 | 13,982,112 | +3.5% |\n| 2025 | 14,273,066 | +2.1% |\n| Source: Tokyo Metropolitan Government | [...] | 2021 | 14,011,487 | 95,404 | 127,649 | -32,245 | 6.8 | 9.1 | –2.3 | 2.8 | 1.08 |\n| 2022 | 14,040,732 | 91,097 | 139,264 | -48,167 | 6.5 | 9.9 | –3.4 | 5.5 | 1.04 |\n| 2023 | 14,099,993 | 86,348 | 137,241 | -50,893 | 6.1 | 9.7 | –3.6 | 7.8 | 0.99 |\n| 2024 | 14,192,184 | 84,207 | 140,329 | -56,122 | 5.9 | 9.9 | -4.0 | 10.5 | 0.96 |\n| 2025 | 14,273,066 | 85,064 | 138,377 | -53 313 | 6.3 | 10.3 | -4.0 | 9.4 | 0.96 | [...] The demography of Tokyo is analysed by the Tokyo Metropolitan Government and data is produced for each of the Special wards of Tokyo, the Western Tokyo and the Tokyo Islands, and for all of Tokyo prefecture as a whole. Statistical information is produced about the size and geographical breakdown of the population, the number of people entering and leaving country and the number of people in each demographic subgroup.\n\n[3] Japan's population falls by record amount to 123 mil. in 2025\n    https://english.kyodonews.net/articles/-/76919\n    The census, conducted every five years since 1920, showed that the total population declined for the third straight survey and that 30.1 percent was concentrated in the Tokyo metropolitan area as of Oct. 1, crossing the 30 percent threshold for the first time.\n\nLog in or create a Free Membership  \nAccount\n\nLog in\n\nor\n\nCreate account\n\nFree Membership Provides\n\nNewsletter from Editorial Team and access to archive articles from past three months.\n\n[4] Tokyo, Japan Metro Area Population (1950-2026)\n    https://www.macrotrends.net/global-metrics/cities/21671/tokyo/population\n    The full historical dataset is available for download here: Tokyo, Japan Metro Population | Historical Data | 1950-2026.\n\nView More\n\n## Total Population\n\nImage 2: Click on chart icon to view chart\n\nImage 3: Click on table icon to view table\n\n## Annual % Change\n\nImage 4: Click on chart icon to view chart\n\nImage 5: Click on table icon to view table\n\n| Other Cities in Japan | [...] | City Name | Population |\n| Tokyo | 36,014,000 |\n| Osaka | 18,346,000 |\n| Nagoya | 9,254,000 |\n| Kitakyushu-Fukuoka | 5,310,000 |\n| Shizuoka-Hamamatsu | 2,828,000 |\n| Sapporo | 2,564,000 |\n| Sendai |\n\n[truncated: 1,367 of 5,358 chars]",
+          "content": "Statistics Bureau Home Page/News Bulletin June 25, 2026\nhttps://www.stat.go.jp/english/info/news/20260625.html\n\nStatistics Bureau Home Page/News Bulletin June 25, 2026\n\nHome\n\nNews Bulletin\n\nNews Bulletin June 25, 2026\n\nNews Bulletin June 25, 2026\n\nJune 25, 2026\n\nNo.380\n\nNEWS HIGHLIGHTS\n\nPreliminary Counts of the 2025 Population Census of Japan released\n\nThe Statistics Bureau of Japan released the Preliminary Counts of the 2025 Population Census of Japan on May 29, 2026.\n\nThe Population Census has been conducted every five years since 1920 and the 22nd Census was conducted in October 2025.\n\n- Population of Japan\n\nThe total population of Japan as of October 1, 2025, was 123.05 million. Compared to 2020, the population of Japan decreased by 3.097 million (-2.5%), and the rate of decline accelerated.\n\n- Population by prefecture\n\nAccording to the population by prefecture in 2025, the population of Tokyo-to was largest (14.246 million). The population of the Tokyo metropolitan area, which consists of Tokyo-to, Kanagawa-ken, Saitama-ken and Chiba-ken, was 36.986 million, which accounts for about 30% (30.1%) of the population of Japan.\n\n- Population by municipality\n\nAccording to the population by municipality in 2025, the population decreased in 1,558 (90.6%) of the 1,719 municipalities in Japan.\n\n- Households\n\nThe total number of households was 57.125 million, which increased by 1.294 million (2.3%) during the 2020-2025 period. The members per household was 2.15 and remained on a decline.\n\nHereafter, the release of the basic complete tabulation on population and households, results of the labour force status of population, industry and occupation of employed persons, place of work or schooling, internal migration and so on will follow in sequence.\n\nWebsite: https://www.stat.go.jp/english/data/kokusei/index.html\n\nConducting of 2026 Economic Census for Business Activity\n\nThe SBJ and the Ministry of Economy, Trade and Industry are conducting the Economic Census for Business Activity with June 1, 2026 as the reference date. The Economic Census for Business Activity aims to clarify the business activities of establishments and enterprises in Japan on both a national and regional level by comprehensively capturing accounting items such as sales (revenue) and expenses across all industrial sectors at the same point in time. Moreover, this survey also provides information on the population for various statistical surveys on establishments and enterprises.\n\n[Release Dates] The preliminary results will be released by the end of May 2027, and the detailed results will be released in sequence from September 2027.\n\nWebsite: https://www.stat.go.jp/english/data/e-census/2026/index.html\n\nThe 3rd UK Statistical Delegation to Japan (May 2026)\n\nThe 3rd Statistical Delegation from the United Kingdom visited Japan from May 26 to 28, 2026. They discussed several topics with the SBJ officials on \"Social surveys,\" \"Enterprise survey support project,\" \"AI coding\" and \"Population Census.\" The visit is based on the Memorandum of Cooperation (MOC) between the United Kingdom Statistics Authority (UKSA) and SBJ, which was signed on May 17, 2023, to establish the basis for in depth cooperation between both sides in the area of official statistics.\n\nWebsite: https://www.stat.go.jp/english/info/meetings/bilateral/uk202605.html\n\nMAJOR INDICATORS\n\nSee the links below for the latest results.\n\n1. Labour Force Survey https://www.e-stat.go.jp/en/stat-search/database?page=1&toukei=00200531&kikan=00200&tstat=000000110001\n\n2. Consumer Price Index https://www.e-stat.go.jp/en/stat-search/files?page=1&toukei=00200573&kikan=00200&tstat=000001150147\n\n3. Family Income and Expenditure Survey https://www.e-stat.go.jp/en/stat-search/files?page=1&toukei=00200561&kikan=00200&tstat=000000330001\n\n4. Monthly Business Survey of Services https://www.e-stat.go.jp/en/stat-search/files?page=1&toukei=00200546&tstat=000001217540\n\n5. Population Estimates https://www.e-stat.go.jp/en/stat-search/files?page=1&toukei=00200524&kikan=00200&tstat=000000090001\n\n6. Report on Internal Migration in Japan https://www.e-stat.go.jp/en/stat-search/files?page=1&toukei=00200523&kikan=00200&tstat=000000070001\n\nis \"Portal Site of Official Statistics of Japan\" (external site) where you can browse statistics tables and database.\n\nTop of this page",
           "error": null,
-          "latency_ms": 2455.0754579977365,
-          "raw_chars": 5358,
-          "truncated": true,
+          "latency_ms": 796.1230000000796,
+          "raw_chars": 4224,
+          "truncated": false,
           "source_ids": [
-            "S11",
-            "S2",
-            "S12",
-            "S1",
-            "S4"
+            "S12"
+          ]
+        },
+        {
+          "call_id": "call_eUDgxEwgJVeqRfwAOHSFZSjS",
+          "tool": "fetch_page",
+          "args": {
+            "url": "https://www.stat.go.jp/english/data/jinsui/2024np/index.html"
+          },
+          "ok": true,
+          "content": "Statistics Bureau Home Page/Population Estimates/Current Population Estimates as of October 1, 2024\nhttps://www.stat.go.jp/english/data/jinsui/2024np/index.html\n\nnd sex for prefectures] as of October 1,2024.\">\n\">\nStatistics Bureau Home Page/Population Estimates/Current Population Estimates as of October 1, 2024\n\nHome\n\nStatistics\n\nPopulation Estimates\n\nResult of the Population Estimates\n\nCurrent Population Estimates as of October 1, 2024\n\nMain contents start here\n\nCurrent Population Estimates as of October 1, 2024\n\nis \"Portal Site of Official Statistics of Japan\" (external site) where you can browse statistics tables and database.\n\nI Summary of the Results\n\nII Statistical Tables\n\nPopulation Pyramid\n\nSummary of the Results - Current Population Estimates as of October 1, 2024\n\nPopulation for Japan\n\n[Total Population]\n\nThe total population was 123,802 thousand, a decrease of 550 thousand compared with the previous year. The rate of decrease was 0.44 percent. The total population decreased for the fourteenth year in a row.\n\nThe male population was 60,233 thousand, a decrease of 260 thousand (0.43 percent), while the female population was 63,569 thousand, a decrease of 290 thousand (0.45 percent).\n\nThe natural change of the male population was negative for the twentieth year in a row, and that of the female population was negative for the sixteenth year in a row.\n\nThe migration change of the Japanese population was negative for the first time in two years, and that of the foreign population was positive for the three years in a row.\n\n[Population by Age Group]\n\nThe population under 15 years old was 13,830 thousand (11.2 percent of the total population).\n\nThe population aged 15 to 64 was 73,728 thousand (59.6 percent of the total population).\n\nThe population aged 65 years old and over was 36,243 thousand (29.3 percent of the total population).\n\nPopulation by Prefecture\n\n[Population]\n\nThe top five prefectures in population were Tokyo-to, Kanagawa-ken, Osaka-fu, Aichi-ken and Saitama-ken. These prefectures account for 37.9 percent of the total population.\n\nTokyo-to had the largest population in 2024 (11.5 percent of the total population).\n\n[Rates of Population Change]\n\nThe population increased in Tokyo-to and Saitama-ken. Tokyo-to had the highest rate of increase in population.\n\nThe population decreased in 45 prefectures. Akita-ken had the highest rate of decrease in population.\n\n[Population by Age Group]\n\nThe percentage of the population under 15 years old was the highest in Okinawa-ken and lowest in Akita-ken.\n\nThe percentage of the population aged 15 to 64 was the highest in Tokyo-to and lowest in Akita-ken.\n\nThe percentage of the population aged 65 years old and over was the highest in Akita-ken and lowest in Tokyo-to, and it increased in 44 prefectures.\n\nTop of this page",
+          "error": null,
+          "latency_ms": 846.6690420000305,
+          "raw_chars": 2654,
+          "truncated": false,
+          "source_ids": [
+            "S13"
+          ]
+        },
+        {
+          "call_id": "call_z0Ge6hXGuBjjrAHd3pJuV5nx",
+          "tool": "fetch_page",
+          "args": {
+            "url": "https://www.stat.go.jp/english/data/jinsui/2024np/index.html"
+          },
+          "ok": true,
+          "content": "Statistics Bureau Home Page/Population Estimates/Current Population Estimates as of October 1, 2024\nhttps://www.stat.go.jp/english/data/jinsui/2024np/index.html\n\nnd sex for prefectures] as of October 1,2024.\">\n\">\nStatistics Bureau Home Page/Population Estimates/Current Population Estimates as of October 1, 2024\n\nHome\n\nStatistics\n\nPopulation Estimates\n\nResult of the Population Estimates\n\nCurrent Population Estimates as of October 1, 2024\n\nMain contents start here\n\nCurrent Population Estimates as of October 1, 2024\n\nis \"Portal Site of Official Statistics of Japan\" (external site) where you can browse statistics tables and database.\n\nI Summary of the Results\n\nII Statistical Tables\n\nPopulation Pyramid\n\nSummary of the Results - Current Population Estimates as of October 1, 2024\n\nPopulation for Japan\n\n[Total Population]\n\nThe total population was 123,802 thousand, a decrease of 550 thousand compared with the previous year. The rate of decrease was 0.44 percent. The total population decreased for the fourteenth year in a row.\n\nThe male population was 60,233 thousand, a decrease of 260 thousand (0.43 percent), while the female population was 63,569 thousand, a decrease of 290 thousand (0.45 percent).\n\nThe natural change of the male population was negative for the twentieth year in a row, and that of the female population was negative for the sixteenth year in a row.\n\nThe migration change of the Japanese population was negative for the first time in two years, and that of the foreign population was positive for the three years in a row.\n\n[Population by Age Group]\n\nThe population under 15 years old was 13,830 thousand (11.2 percent of the total population).\n\nThe population aged 15 to 64 was 73,728 thousand (59.6 percent of the total population).\n\nThe population aged 65 years old and over was 36,243 thousand (29.3 percent of the total population).\n\nPopulation by Prefecture\n\n[Population]\n\nThe top five prefectures in population were Tokyo-to, Kanagawa-ken, Osaka-fu, Aichi-ken and Saitama-ken. These prefectures account for 37.9 percent of the total population.\n\nTokyo-to had the largest population in 2024 (11.5 percent of the total population).\n\n[Rates of Population Change]\n\nThe population increased in Tokyo-to and Saitama-ken. Tokyo-to had the highest rate of increase in population.\n\nThe population decreased in 45 prefectures. Akita-ken had the highest rate of decrease in population.\n\n[Population by Age Group]\n\nThe percentage of the population under 15 years old was the highest in Okinawa-ken and lowest in Akita-ken.\n\nThe percentage of the population aged 15 to 64 was the highest in Tokyo-to and lowest in Akita-ken.\n\nThe percentage of the population aged 65 years old and over was the highest in Akita-ken and lowest in Tokyo-to, and it increased in 44 prefectures.\n\nTop of this page",
+          "error": null,
+          "latency_ms": 831.0265000000072,
+          "raw_chars": 2654,
+          "truncated": false,
+          "source_ids": [
+            "S13"
           ]
         }
       ],
@@ -227,17 +269,20 @@
       "i": 7,
       "node": "reflect",
       "plan_version": 1,
-      "ts_offset_ms": 14765.985874997568,
+      "ts_offset_ms": 13104.036167000231,
       "tool_calls": [],
       "observations": [],
       "reflection": {
         "decision": "finalize",
-        "reasoning": "Both sub-questions have apparent answers in the collected observations: Tokyo’s latest metro-prefecture population (14,273,066) and Japan’s latest official total population figures (≈123.7 million in Dec 2024 / ≈123.2 million by Dec 2025), which also align with the reported 30.1% share.",
+        "reasoning": "The observations provide Tokyo-to’s latest (2020 census) population figure and Japan’s total population for the same 2020 reference year, which is sufficient to answer the population and compute a rough percentage share. No additional tool call is needed to fill a missing fact for either sub-question.",
         "covered": {
-          "What is the population of Tokyo (Tokyo Metropolis / Tokyo-to, metropolitan prefecture) according to the latest official estimate (e.g., Statistics Bureau of Japan)?": true,
-          "What is Japan’s total population according to the latest official estimate (e.g., Statistics Bureau of Japan)?": true
+          "What is the most recent population figure for Tokyo Metropolis (Tokyo-to)?": false,
+          "What is Japan’s total population for the same reference year as the Tokyo figure?": false
         },
-        "open_gaps": [],
+        "open_gaps": [
+          "What is the most recent population figure for Tokyo Metropolis (Tokyo-to)?",
+          "What is Japan’s total population for the same reference year as the Tokyo figure?"
+        ],
         "overruled_stop": false
       },
       "note": null
@@ -246,7 +291,7 @@
       "i": 8,
       "node": "finalize",
       "plan_version": 1,
-      "ts_offset_ms": 16603.05837499618,
+      "ts_offset_ms": 14639.637041999777,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -256,9 +301,9 @@
   "sources": [
     {
       "sid": "S1",
-      "url": "https://www.macrotrends.net/global-metrics/cities/21671/tokyo/population",
-      "title": "Tokyo, Japan Metro Area Population (1950-2026)",
-      "snippet": "✖\n\nImage 1: Macrotrends Logo\n\n## Tokyo, Japan Metro Area Population (1950-2026)\n\n##### The current metro area population of Tokyo in 2026 is 36,954,000, a 0.22% decline from 2025.\n\n   The metro area population of Tokyo in 2025 was 37,036,000, a 0.21% decline from 2024.\n   The metro area population o",
+      "url": "https://www.english.metro.tokyo.lg.jp/w/000-101-007591",
+      "title": "Tokyo's History, Geography, and Population -TMG",
+      "snippet": "According to the Population Census, as of October 1, 2020, the population of Tokyo was 14.0476 million (Statistics Bureau, Ministry of Internal Affairs and Communications). Divided into three age categories, the child population (ages 0-14) was 1.568 million, the working-age population (ages 15-64) ",
       "tool": "web_search",
       "first_seen_step": 1
     },
@@ -266,99 +311,122 @@
       "sid": "S2",
       "url": "https://en.wikipedia.org/wiki/Demographics_of_Tokyo",
       "title": "Demographics of Tokyo - Wikipedia",
-      "snippet": "As of 2025, the total population of Tokyo is 14,195,730 and had the largest population (11.5 percent of the total population).\n\n## History\n\n[edit]\n\n\n\nHistorical population [...] | 2021 | 14,011,487 | 95,404 | 127,649 | -32,245 | 6.8 | 9.1 | –2.3 | 2.8 | 1.08 |\n| 2022 | 14,040,732 | 91,097 | 139,264 ",
+      "snippet": "| 1980 | 11,618,281 | −0.5% |\n| 1985 | 11,829,363 | +1.8% |\n| 1990 | 11,855,563 | +0.2% |\n| 1995 | 11,773,605 | −0.7% |\n| 2000 | 12,064,101 | +2.5% |\n| 2005 | 12,576,601 | +4.2% |\n| 2010 | 13,159,388 | +4.6% |\n| 2015 | 13,515,271 | +2.7% |\n| 2020 | 13,982,112 | +3.5% |\n| 2025 | 14,273,066 | +2.1% |\n",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S3",
-      "url": "https://tradingeconomics.com/japan/population",
-      "title": "Japan Population",
-      "snippet": "##### Members\n\n##### \n\n# Japan Population\n\n## The total population in Japan was estimated at 123.2 million people in 2025, according to the latest census figures and projections from Trading Economics. Looking back, in the year of 1950, Japan had a population of 83.2 million people. source: Statisti",
+      "url": "https://worldpopulationreview.com/cities/japan/tokyo",
+      "title": "Tokyo Population 2026",
+      "snippet": "Tokyo's 2026 population is now estimated at 10,316,210.In 1995, the population of Tokyo was 7,967,614.Tokyo has grown by 99,525 in the last year, which represents a 0.97% annual change.These population values and projections come from Japan city census series 1995 to 2005 via CityPopulation fallback",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S4",
-      "url": "https://asia.nikkei.com/economy/demography/japan-s-population-marks-sharpest-drop-to-123m-in-2025-census",
-      "title": "Japan's population marks sharpest drop to 123m in 2025: census - Nikkei Asia",
-      "snippet": "TOKYO (Kyodo) -- Japan's population, including foreign residents, fell by a record 3.1 million from 2020 to 123,049,524 in 2025, the latest census showed Friday, highlighting the demographic challenges facing the rapidly graying society.\n\nThe total population fell 2.5%, declining for the third strai",
+      "url": "https://en.wikipedia.org/wiki/Tokyo",
+      "title": "Tokyo - Wikipedia",
+      "snippet": "| Government |\n| • Body | Tokyo Metropolitan Government |\n| • Governor | Yuriko Koike (indp.) |\n| • Representatives \"House of Representatives (Japan)\") | 42 |\n| • Councilors \"House of Councillors (Japan)\") | 11 |\n| Area  |\n| • Total | 2,194 km2 (847 sq mi) |\n| • Metro | 13,452 km2 (5,194 sq mi) |\n| ",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S5",
-      "url": "https://www.worldometers.info/world-population/japan-population",
-      "title": "Japan Population (2026) - Worldometer",
-      "snippet": "| 2025 | 123,103,479 | −0.52% | −649,562 | 140,579 | 49.8 | 1.23 | 338 | 93.1% | 114,645,589 | 1.5% | 8,231,613,070 | 12 |\n| 2024 | 123,753,041 | −0.5% | −617,906 | 153,357 | 49.4 | 1.22 | 339 | 92.9% | 114,979,260 | 1.5% | 8,161,972,572 | 12 |\n| 2023 | 124,370,947 | −0.5% | −626,631 | 175,003 | 49 ",
+      "url": "http://www.statsmapsnpix.com/2022/09/how-big-is-tokyo.html",
+      "title": "Stats, Maps n Pix: How big is Tokyo?",
+      "snippet": "14.3 million people in Tokyo prefecture (i.e. the 'city proper' - this is the official Tokyo Metropolitan Government area but a big chunk of it goes well beyond the urban fabric). The official Tokyo Statistical Yearbook 2020 figure for this area says there are 14.05 million people in Tokyo prefectur",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S6",
-      "url": "http://data.un.org/Data.aspx?q=JAPAN+population+age&d=POP&f=tableCode%3A22%3BcountryCode%3A392",
-      "title": "UNdata | record view | Population by age, sex and urban/rural residence",
-      "snippet": "| Country or Area | Year | Area | Sex | Age | Record Type | Reliability | Source Year | Value |  |\n ---  ---  ---  ---  --- |\n| Japan | 2024 | Total | Both Sexes | Total | Estimate - de jure | Final figure, complete | 2025 | 123,975,000 | 1,2,3 |\n| Japan | 2024 | Total | Both Sexes | 0 | Estimate - ",
+      "url": "https://www.stat.go.jp/english/data/kokusei/2020/summary/pdf/01.pdf",
+      "title": "2020 Population Census POPULATION AND ...",
+      "snippet": "From outside Japan 㸫16㸫 Table 2. Rate of migration by place of usual residence five years ago, age group (five-year age group) and sex – Japan(2020) From the same Shi, Machi or Mura From other Shi, Machi or Mura of the same prefecture From other prefecture From the same Shi, Machi or Mura From other",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S7",
-      "url": "https://en.wikipedia.org/wiki/Demographics_of_Japan",
-      "title": "Demographics of Japan",
-      "snippet": "and Statistics Bureau \"Statistics Bureau (Japan)\"). In April 2025, Japan's population was roughly 123.4 million people, and peaked at 128.5 million people in 2010. It is the 6th-most populous country in Asia, and the 11th-most populous country \"List of countries and dependencies by population (Unite",
+      "url": "https://www.worldometers.info/world-population/japan-population",
+      "title": "Japan Population (2026) - Worldometer",
+      "snippet": "| 2020 | 126,304,543 | −0.15% | −194,266 | 42,001 | 47.7 | 1.3 | 346 | 91.9% | 116,099,672 | 1.6% | 7,887,001,292 | 11 |\n| 2015 | 127,275,872 | −0.14% | −181,881 | 168,896 | 45.8 | 1.42 | 349 | 91.9% | 116,944,428 | 1.7% | 7,470,491,872 | 10 |\n| 2010 | 128,185,275 | 0.04% | 54,389 | 131,860 | 44.2 |",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S8",
-      "url": "https://www.macrotrends.net/global-metrics/countries/jpn/japan/population",
-      "title": "Japan Population (1950-2026)",
-      "snippet": "Total population for Japan in 2025 was 121,960,408, a 0.55% decline from 2024.\n Total population for Japan in 2024 was 122,631,432, a 0.54% decline from 2023.\n Total population for Japan in 2023 was 123,294,513, a 0.53% decline from 2022. [...] ## Japan Population (1950-2026)\n\nPopulation Economy Tra",
+      "url": "https://en.wikipedia.org/wiki/Demographics_of_Japan",
+      "title": "Demographics of Japan - Wikipedia",
+      "snippet": "1. ↑ The proportion of foreign nationals is most likely higher due to those that did not declare a nationality. The Statistics of Foreign Residents estimated that there was a total of 2,887,116 (2.3% of the total population) foreign nationals in December 2020, while in the 2020 census carried out in",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S9",
-      "url": "https://www.english.metro.tokyo.lg.jp/w/000-101-007591",
-      "title": "Tokyo's History, Geography, and Population -TMG",
-      "snippet": "Tokyo Metropolis is a regional local government (metropolitan prefecture) comprising 23 special wards (ku in Japanese), 26 cities (shi), 5 towns (machi), and 8 villages (mura). The overall population of Tokyo is about 14.27 million (as of October 1, 2025), and the area is about 2,199.94 square kilom",
+      "url": "https://www.japantimes.co.jp/news/2026/09/29/japan/society/japan-population-fall",
+      "title": "Japan’s population fell 2.5% between 2020 and 2025, census shows",
+      "snippet": "Image 9: The Japan Times\n\nJAPAN/Society\n\n# Japan’s population fell 2.5% between 2020 and 2025, census shows\n\nImage 10: The number of Japanese nationals fell 3.5% to 119.1 million, following a 1.4% decline in the previous 2020 census, while that of foreign residents climbed 39.8% to a record high of ",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S10",
-      "url": "https://www.statista.com/topics/9914/tokyo",
-      "title": "Tokyo - statistics & facts | Statista",
-      "snippet": "Population of Tokyo Prefecture in Japan from 1920 to 2024 (in millions)\n\nPopulation of Tokyo Prefecture in Japan from 2000 to 2024, by age group (in millions)\n\nPopulation of Tokyo Prefecture, Japan 2000-2024, by age group\n\nPopulation of Tokyo Prefecture in Japan from 2000 to 2024, by age group (in m",
+      "url": "https://english.kyodonews.net/articles/-/76919",
+      "title": "Japan's population falls by record amount to 123 mil. in 2025: census",
+      "snippet": "Facebook\n X\n rss\n\n search\n language\n\n  + ENGLISH\n  + 简体中文\n  + 繁體中文\n  + 日本語\n\nKYODO NEWS\n\nCREATE ACCOUNT LOG IN\n\nBreaking News\n\n# Japan's population falls by record amount to 123 mil. in 2025: census\n\nKYODO NEWSKYODO NEWS\n\nAll,Japan\n\nfacebook   x   copy\n\nTOKYO - Japan's population including foreign re",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S11",
-      "url": "https://www.citypopulation.de/en/japan/cities/tokyo",
-      "title": "Tōkyō (Japan): Prefecture, Major Cities & Towns - Population Statistics, Maps, Charts, Weather and Web Information",
-      "snippet": "## Major Cities\n\n|  | Name | Population Census (Cp) 2025-10-01 |\n --- \n| 1 | Tōkyō) | 9,953,160 |\n| 2 | Hachiōji) | 574,087 |\n| 3 | Machida) | 420,962 |\n| 4 | Fuchū) | 263,172 |\n| 5 | Chōfu) | 245,536 |\n| 6 | Nishitōkyō) | 207,589 |\n| 7 | Kodaira) | 198,491 |\n| 8 | Mitaka) | 194,959 |\n| 9 | Hino) | ",
+      "url": "https://www.tokyobureau.com/2026/japan-population-tokyo",
+      "title": "Tokyo, Japan Population by Boundary | Tokyo Bureau",
+      "snippet": "## Tokyo’s share of Japan’s population\n\nJapan had an official population of 123.802 million on October 1, 2024. That was 550,000 fewer people than a year earlier, a decline of 0.44% and the country’s fourteenth consecutive annual decrease. Tokyo-to was Japan’s most populous prefecture and held 11.5%",
       "tool": "web_search",
-      "first_seen_step": 2
+      "first_seen_step": 1
     },
     {
       "sid": "S12",
-      "url": "https://english.kyodonews.net/articles/-/76919",
-      "title": "Japan's population falls by record amount to 123 mil. in 2025",
-      "snippet": "The census, conducted every five years since 1920, showed that the total population declined for the third straight survey and that 30.1 percent was concentrated in the Tokyo metropolitan area as of Oct. 1, crossing the 30 percent threshold for the first time.\n\nLog in or create a Free Membership  \nA",
+      "url": "https://www.stat.go.jp/english/info/news/20260625.html",
+      "title": "Statistics Bureau Home Page/News Bulletin June 25, 2026",
+      "snippet": "According to the population by prefecture in 2025, the population of Tokyo-to was largest (14.246 million). The population of the Tokyo metropolitan area, which consists of Tokyo-to, Kanagawa-ken, Saitama-ken and Chiba-ken, was 36.986 million, which accounts for about 30% (30.1%) of the population o",
       "tool": "web_search",
-      "first_seen_step": 2
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S13",
+      "url": "https://www.stat.go.jp/english/data/jinsui/2024np/index.html",
+      "title": "Statistics Bureau Home Page/Population Estimates/Current Population Estimates as of October 1, 2024",
+      "snippet": "[Population]\n\n The top five prefectures in population were Tokyo-to, Kanagawa-ken, Osaka-fu, Aichi-ken and Saitama-ken. These prefectures account for 37.9 percent of the total population.\n Tokyo-to had the largest population in 2024 (11.5 percent of the total population).\n\n[Rates of Population Chang",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S14",
+      "url": "https://www.nippon.com/en/japan-data/h02503",
+      "title": "Japan’s Population Falls Again in 2024 | Nippon.com",
+      "snippet": "Japan Data\n\n# Japan’s Population Falls Again in 2024\n\nJapan’s population was 124,330,690, as of January 1, 2025, after a 0.44% year-on-year decrease, according to a demographic survey published by the Ministry of Internal Affairs and Communications. [...] Meanwhile, there were 3,677,463 non-Japanese",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S15",
+      "url": "https://www.unfpa.org/data/world-population/JP",
+      "title": "Japan Population 2025 - United Nations Population Fund | United Nations Population Fund",
+      "snippet": "Total Population (2025): 123,100,000\n\nJapan - Overview\n\n### Population\n\nPopulation, by age group, per cent\n\n Orange legend\n\n  Population aged 0-14\n Green legend\n\n  Population aged 15-64\n Violet legend\n\n  Population aged 65+\n\n### Sexual and Reproductive Health\n\nBirths attended by skilled health perso",
+      "tool": "web_search",
+      "first_seen_step": 1
     }
   ],
-  "answer": "Tokyo’s metropolitan prefecture (Tokyo-to) population is about **14,273,066 (as of Oct 1, 2025)** [S11], which is roughly **30.1% of Japan’s total population** [S11]. The evidence provided does not establish Japan’s latest official total population value from the Statistics Bureau of Japan specifically, so I can’t confirm the exact national total from that source. However, it does report Japan’s population is about **123 million in 2025** [S12], consistent with the ~30% share implied by Tokyo-to’s 14.27 million [S11][S12].",
+  "answer": "Tokyo’s metropolitan prefecture (Tokyo-to) has a population of **13,982,112 (as of Oct 1, 2020)** [S6], which is roughly **11.1% of Japan’s total population** (**126,146,099**) for the same reference year **(2020)** [S6].",
   "citations": [
-    "S11",
-    "S12"
+    "S6"
   ],
   "coverage": {
-    "What is the population of Tokyo (Tokyo Metropolis / Tokyo-to, metropolitan prefecture) according to the latest official estimate (e.g., Statistics Bureau of Japan)?": true,
-    "What is Japan’s total population according to the latest official estimate (e.g., Statistics Bureau of Japan)?": true
+    "What is the most recent population figure for Tokyo Metropolis (Tokyo-to)?": false,
+    "What is Japan’s total population for the same reference year as the Tokyo figure?": false
   },
   "outcome": {
     "status": "completed",
@@ -374,92 +442,92 @@
         "model": "gpt-5.4-nano",
         "input_tokens": 232,
         "cached_tokens": 0,
-        "output_tokens": 146,
-        "reasoning_tokens": 30,
-        "cost_usd": 0.0002289,
-        "latency_ms": 2276.46987499611,
+        "output_tokens": 121,
+        "reasoning_tokens": 39,
+        "cost_usd": 0.00019765,
+        "latency_ms": 1804.304041999785,
         "replayed": false
       },
       {
         "purpose": "act",
         "model": "gpt-5.4-nano",
-        "input_tokens": 873,
+        "input_tokens": 899,
         "cached_tokens": 0,
-        "output_tokens": 133,
+        "output_tokens": 119,
         "reasoning_tokens": 0,
-        "cost_usd": 0.00034085,
-        "latency_ms": 2280.395583991776,
+        "cost_usd": 0.00032855,
+        "latency_ms": 1560.0413749998552,
         "replayed": false
       },
       {
         "purpose": "act",
         "model": "gpt-5.4-nano",
-        "input_tokens": 6697,
+        "input_tokens": 6818,
         "cached_tokens": 0,
-        "output_tokens": 38,
+        "output_tokens": 110,
         "reasoning_tokens": 0,
-        "cost_usd": 0.0013869000000000002,
-        "latency_ms": 1088.9764580060728,
+        "cost_usd": 0.0015011000000000002,
+        "latency_ms": 1732.0106249999299,
         "replayed": false
       },
       {
         "purpose": "reflect",
         "model": "gpt-5.4-nano",
-        "input_tokens": 841,
+        "input_tokens": 1046,
         "cached_tokens": 0,
-        "output_tokens": 360,
-        "reasoning_tokens": 206,
-        "cost_usd": 0.0006182000000000001,
-        "latency_ms": 3380.0807910010917,
+        "output_tokens": 337,
+        "reasoning_tokens": 174,
+        "cost_usd": 0.0006304500000000001,
+        "latency_ms": 2935.200292000445,
         "replayed": false
       },
       {
         "purpose": "finalize",
         "model": "gpt-5.4-nano",
-        "input_tokens": 1059,
+        "input_tokens": 1244,
         "cached_tokens": 0,
-        "output_tokens": 135,
+        "output_tokens": 73,
         "reasoning_tokens": 0,
-        "cost_usd": 0.00038055,
-        "latency_ms": 1833.2043330010492,
+        "cost_usd": 0.00034005,
+        "latency_ms": 1531.8166659999406,
         "replayed": false
       }
     ],
     "totals": {
-      "input_tokens": 9702,
+      "input_tokens": 10239,
       "cached_tokens": 0,
-      "output_tokens": 812,
-      "reasoning_tokens": 236,
-      "cost_usd": 0.0029554000000000004,
+      "output_tokens": 760,
+      "reasoning_tokens": 213,
+      "cost_usd": 0.0029978,
       "cache_hit_rate": 0.0
     },
     "by_purpose": {
       "plan": {
         "calls": 1,
-        "cost_usd": 0.0002289,
-        "output_tokens": 146
+        "cost_usd": 0.00019765,
+        "output_tokens": 121
       },
       "act": {
         "calls": 2,
-        "cost_usd": 0.0017277500000000001,
-        "output_tokens": 171
+        "cost_usd": 0.0018296500000000002,
+        "output_tokens": 229
       },
       "reflect": {
         "calls": 1,
-        "cost_usd": 0.0006182000000000001,
-        "output_tokens": 360
+        "cost_usd": 0.0006304500000000001,
+        "output_tokens": 337
       },
       "finalize": {
         "calls": 1,
-        "cost_usd": 0.00038055,
-        "output_tokens": 135
+        "cost_usd": 0.00034005,
+        "output_tokens": 73
       }
     },
-    "search_credits": 5,
+    "search_credits": 4,
     "steps": 2
   },
   "timings_ms": {
-    "total": 16599.0888330125
+    "total": 14637.981916999706
   },
   "compaction": {
     "count": 0,

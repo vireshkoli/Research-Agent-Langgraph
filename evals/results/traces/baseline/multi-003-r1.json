@@ -1,7 +1,7 @@
 {
   "schema_version": "1",
-  "run_id": "d2cecc7e8fde",
-  "ts": "2026-08-08T19:06:00+00:00",
+  "run_id": "bf3cb2556a90",
+  "ts": "2026-10-25T09:08:20+00:00",
   "question": "Who founded DeepMind, and which company acquired it and in what year?",
   "variant": "baseline",
   "config": {
@@ -12,13 +12,13 @@
     "max_run_cost_usd": 0.05,
     "finalize_reserve_usd": 0.008,
     "compact_threshold_tokens": 12000,
-    "git_sha": "a4216f3",
-    "prompt_hash": "sha256:512e8e5d8eaa"
+    "git_sha": "e577c53",
+    "prompt_hash": "sha256:e2655640140a"
   },
   "plan": {
     "version": 1,
     "subquestions": [
-      "Who founded DeepMind?",
+      "Who founded DeepMind (founder name(s))?",
       "Which company acquired DeepMind, and in what year?"
     ],
     "replans": 0
@@ -28,7 +28,7 @@
       "i": 1,
       "node": "plan",
       "plan_version": 0,
-      "ts_offset_ms": 1206.7762920050882,
+      "ts_offset_ms": 1330.6561669996881,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -38,27 +38,34 @@
       "i": 2,
       "node": "act",
       "plan_version": 1,
-      "ts_offset_ms": 2858.831999998074,
+      "ts_offset_ms": 2896.975666999424,
       "tool_calls": [
         {
-          "call_id": "call_Zazz794posGy8oWp5tqBnZJI",
+          "call_id": "call_h86FFWQX0UUzZIpcXB5fZzZW",
           "name": "web_search",
           "args": {
             "query": "DeepMind founded by who"
           }
         },
         {
-          "call_id": "call_MjPJKh3FWWYDNj3X7fr8axxc",
+          "call_id": "call_LrHjNV9borVU4xJYE87nazxn",
           "name": "web_search",
           "args": {
-            "query": "Google acquired DeepMind year"
+            "query": "Google acquired DeepMind year acquired"
           }
         },
         {
-          "call_id": "call_wGzcQk4SeM5ll1tZb20BgOVb",
+          "call_id": "call_3ju15WnJ4K8Fl8Z3ltzycj6L",
           "name": "web_search",
           "args": {
-            "query": "DeepMind acquisition Google 2014 2015 deal year acquired"
+            "query": "DeepMind acquisition 2014 Google 2014 acquired DeepMind Technologies"
+          }
+        },
+        {
+          "call_id": "call_Ehbpvys8P6UIbPRQHbqsw0Un",
+          "name": "web_search",
+          "args": {
+            "query": "DeepMind founders Demis Hassabis Shane Legg Mustafa Suleyman founded 2010"
           }
         }
       ],
@@ -70,20 +77,20 @@
       "i": 3,
       "node": "observe",
       "plan_version": 1,
-      "ts_offset_ms": 5603.883707997738,
+      "ts_offset_ms": 5967.327667000063,
       "tool_calls": [],
       "observations": [
         {
-          "call_id": "call_Zazz794posGy8oWp5tqBnZJI",
+          "call_id": "call_h86FFWQX0UUzZIpcXB5fZzZW",
           "tool": "web_search",
           "args": {
             "query": "DeepMind founded by who"
           },
           "ok": true,
-          "content": "Summary: DeepMind was founded in 2010 by Demis Hassabis, Shane Legg, and Mustafa Suleyman. The company focuses on artificial general intelligence. Google acquired DeepMind in 2014.\n\n[1] Google DeepMind | History, Innovations, & Controversies\n    https://www.britannica.com/topic/Google-DeepMind\n    DeepMind was founded in 2010 by Demis Hassabis, Mustafa Suleyman, and Shane Legg. The founders brought together expertise in neuroscience, computer science, and machine learning with the goal of advancing artificial intelligence. Their shared ambition was to create systems capable of general learning and reasoning, rather than narrowly specialized software designed for specific tasks.\n\n### What were DeepMind’s early breakthroughs in AI? [...] ## History\n\nDeepMind was founded in 2010 by Demis Hassabis, Mustafa Suleyman, and Shane Legg to “solve intelligence” by creating artificial general intelligence (AGI). Its approach centered on using machine learning to train neural networks to learn and make decisions in ways that resemble human cognition, rather than programming actions and reactions individually or specializing software for specific tasks (such as playing chess or modeling climate systems). [...] Google DeepMind is an artificial intelligence (AI) research laboratory created through the merger of Google AI’s Google Brain division and the tech start-up DeepMind. As a subsidiary of Alphabet, it focuses on advancing artificial general intelligence (AGI) and developing AI systems for use across Google’s products. The organization is headquartered in London and operates internationally.\n\n### Who founded DeepMind?\n\n[2] Google DeepMind - Wikipedia\n    https://en.wikipedia.org/wiki/Google_DeepMind\n    The start-up was founded by Demis Hassabis, Shane Legg and Mustafa Suleyman in November 2010.( Hassabis and Legg first met at the Gatsby Computational Neuroscience Unit at University College London (UCL).( The goal of the founders is to create a general-purpose AI that can be useful and effective for almost anything. Hassabis said that the start-up began working on artificial intelligence technology by teaching it how to play Atari video games from the seventies and eighties including _Breakout [...] From Wikipedia, the free encyclopedia\n\nAI research laboratory\n\nDeepMind Technologies LimitedImage 4\nTrade name   Google DeepMind\nFormerly DeepMind (2010–2023)\nTypeSubsidiary\nIndustryArtificial intelligence\nFounded 23 September 2010;15 years ago(2010-09-23) (incorporation)(\n\n 15 November 2010;15 years ago(2010-11-15) (official launch)(\nFounders   Demis Hassabis\n   Shane Legg\n   Mustafa Suleyman\nHeadquartersLondon\n\n, [...] DeepMind Technologies Limited,trading asGoogle DeepMind or simply DeepMind, is a British-American artificial intelligence (AI) research laboratory which serves as a subsidiary of Alphabet Inc. Founded in the UK in 2010, it was acquired by Google in 2014,( and merged with Google AI's Google Brain division to become Google DeepMind in April 2023. The company is headquartered in London, with research centres in the United States, Canada,( France,( Germany, and Switzerland.\n\n[3] Demis Hassabis - Wikipedia\n    https://en.wikipedia.org/wiki/Demis_Hassabis\n    ### DeepMind\n\n[edit]\n\nHassabis is the CEO and co-founder of DeepMind, a machine learning AI startup, founded in London in 2010 with Shane Legg and Mustafa Suleyman. Hassabis met Legg when both were postdocs at the Gatsby Computational Neuroscience Unit, and he and Suleyman had been friends through family. Hassabis also recruited his university friend and Elixir partner David Silver \"David Silver (computer scientist)\"). [...] Sir Demis Hassabis (born 27 July 1976) is a British artificial intelligence (AI) researcher and entrepreneur. He is the chairman and co-founder of Google DeepMind and the chief scientist of Alphabet, as well as the chief executive officer and co-founder of Isomorphic Labs. Hassabis is also a UK Government AI Adviser. In 2024, Hassabis and John M. Jumper\n\n[truncated: 1,736 of 5,733 chars]",
+          "content": "Summary: DeepMind was founded by Demis Hassabis, Shane Legg, and Mustafa Suleyman in November 2010. Hassabis and Legg first met at the Gatsby Computational Neuroscience Unit at University College London, and the trio aimed to create a general-purpose AI that can be useful and effective for almost anything. The company was later acquired by Google in 2014 and merged with Google AI's Google Brain division to become Google DeepMind in April 2023.\n\n[1] Google DeepMind - Wikipedia\n    https://en.wikipedia.org/wiki/Google_DeepMind\n    The start-up was founded by Demis Hassabis, Shane Legg and Mustafa Suleyman in November 2010. Hassabis and Legg first met at the Gatsby Computational Neuroscience Unit at University College London (UCL). The goal of the founders is to create a general-purpose AI that can be useful and effective for almost anything. Hassabis said that the start-up began working on artificial intelligence technology by teaching it how to play Atari video games from the seventies and eighties including Breakout [...] | Headquarters at Platform 37, Kings Cross Central, London |\n| Trade name |  Google DeepMind |\n| Formerly | DeepMind (2010–2023) |\n| Type | Subsidiary |\n| Industry | Artificial intelligence |\n| Founded | 23 September 2010; 16 years ago (2010-09-23) (incorporation)  15 November 2010; 15 years ago (2010-11-15) (official launch) |\n| Founders |  Demis Hassabis  Shane Legg  Mustafa Suleyman |\n| Headquarters | London , England | [...] DeepMind Technologies Limited, trading as Google DeepMind or simply DeepMind, is a British-American artificial intelligence (AI) research laboratory which serves as a subsidiary of Alphabet Inc. Founded in the UK in 2010, it was acquired by Google in 2014, and merged with Google AI's Google Brain division to become Google DeepMind in April 2023. The company is headquartered in London, with research centres in the United States, Canada, France, Germany, and Switzerland.\n\n[2] What Is Deepmind - Business Insider\n    https://www.businessinsider.com/what-is-deepmind-2014-1\n    Google is buying another pricey startup, Deep Mind, for a reported $400 – 500 million.\n\nThat sounds cheap compared to the $3.2 billion it paid for smart hardware startup, Nest.\n\nHere's what you need to know about DeepMind:\n\nWho founded it: DeepMind was founded by Demis Hassabis, Shane Legg and Mustafa Suleyman in late 2010. Hassabis is an avid chess player whose Elo rating was so good, he was once considered the second-best Under-14 player in the world.\n\n[3] Google DeepMind Enters a New Era: Where Are Its 3 Founders Now? | Observer\n    https://observer.com/2026/09/google-deepmind-cofounders-ai-leadership\n    Long before it became an A.I. powerhouse, Google DeepMind was simply DeepMind. Founded in London by machine learning researchers Demis Hassabis, Shane Legg and Mustafa Suleyman, the lab was launched with the goal of achieving artificial general intelligence (AGI). Hassabis and Suleyman met as teenagers in London, while Hassabis later met Legg at University College London’s Gatsby Computational Neuroscience Unit.\n\n[4] Who Is Demis Hassabis, the DeepMind Founder and Nobel Prize Winner? - Business Insider\n    https://www.businessinsider.com/who-is-demis-hassabis-deepmind-founder-ai-google-nobel-prize-2024-10?op=1\n    DeepMind is a London-based tech company now owned by Google that aims to \"solve intelligence\" and use it to \"make the world a better place.\"\n\nHassabis founded DeepMind alongside his childhood friend, Mustafa Suleyman. Suleyman is now the CEO of Microsoft AI. Shane Legg was also a cofounder. He remains at Google DeepMind developing artificial general intelligence. [...] He founded DeepMind in 2010, which he sold to Google in 2014 in what was Google's largest European acquisition at the time. DeepMind is now focused on applying its algorithms to areas that can benefit humanity, including healthcare and climate change.\n\nHere's a closer look at his life.\n\nHassabis, 48, is the eldest of three siblings. His\n\n[truncated: 1,986 of 5,984 chars]",
           "error": null,
-          "latency_ms": 2743.3061250048922,
-          "raw_chars": 5733,
+          "latency_ms": 887.9556669999147,
+          "raw_chars": 5984,
           "truncated": true,
           "source_ids": [
             "S1",
@@ -94,43 +101,63 @@
           ]
         },
         {
-          "call_id": "call_MjPJKh3FWWYDNj3X7fr8axxc",
+          "call_id": "call_LrHjNV9borVU4xJYE87nazxn",
           "tool": "web_search",
           "args": {
-            "query": "Google acquired DeepMind year"
+            "query": "Google acquired DeepMind year acquired"
           },
           "ok": true,
-          "content": "Summary: Google acquired DeepMind in 2014 for a reported price between $400 million and $650 million. The acquisition was considered one of Google's most significant moves in the AI sector. DeepMind was later merged with Google Brain in 2023 to form Google DeepMind.\n\n[1] Google DeepMind - Wikipedia\n    https://en.wikipedia.org/wiki/Google_DeepMind\n    DeepMind Technologies Limited,trading asGoogle DeepMind or simply DeepMind, is a British-American artificial intelligence (AI) research laboratory which serves as a subsidiary of Alphabet Inc. Founded in the UK in 2010, it was acquired by Google in 2014,( and merged with Google AI's Google Brain division to become Google DeepMind in April 2023. The company is headquartered in London, with research centres in the United States, Canada,( France,( Germany, and Switzerland. [...] On 26 January 2014, Google confirmed its acquisition of DeepMind for a price reportedly ranging between $400 million and $650 million.( The company was afterwards renamed Google DeepMind and kept that name for about two years.( In 2014, DeepMind received the \"Company of the Year\" award from Cambridge Computer Laboratory.( [...] In December 2019, co-founder Suleyman announced he would be leaving DeepMind to join the parent company Google, working in a policy role.(\n\nIn April 2023, DeepMind merged with Google AI's Google Brain division to form Google DeepMind, as part of the company's continued efforts to accelerate work on AI in response to OpenAI's release of ChatGPT to the general public.( This marked the end of a years-long struggle from DeepMind executives to secure greater autonomy from Google.(\n\n[2] DeepMind lost $649 million and Alphabet waived a $1.5 billion debt\n    https://www.cnbc.com/2020/12/17/deepmind-lost-649-million-and-alphabet-waived-a-1point5-billion-debt-.html\n    DeepMind was acquired by Google in 2014 for around $600 million. Today, the company relies on a steady stream of capital from parent firm Alphabet.\n\nIn 2019, Google Ireland waived the repayment of intercompany loans and all accrued interest amounting to £1.1 billion, according to the filing.\n\n[3] Google DeepMind | History, Innovations, & Controversies | Britannica\n    https://www.britannica.com/topic/Google-DeepMind\n    In its early days the company employed about 100 leading scientists in machine learning and computational neuroscience from dozens of countries to work on these problems. It was acquired by Google in 2014 for a reported total between $400 million and $650 million.\n\nDemis Hassabis [...] Demis Hassabis\n\nGoogle Brain was launched in 2011 at X, the Moonshot Factory, Google’s division for experimental technologies, including early work on self-driving cars. It was intended to use AI to enhance Google’s existing products and search capabilities and was merged with DeepMind in 2023 to form Google DeepMind.\n\n## Innovations\n\n[4] Google buys UK artificial intelligence startup Deepmind for £400m | AI (artificial intelligence) | The Guardian\n    https://www.theguardian.com/technology/2014/jan/27/google-acquires-uk-artificial-intelligence-startup-deepmind\n    DeepMind has reportedly competed with Google and other major artificial intelligence companies for talent and Google’s chief executive Larry Page is said to have led the deal himself. Facebook reportedly failed to acquire DeepMind in December 2012, according to Forbes.\n\nPart of the acquisition deal saw Google establish an artificial intelligence ethics board to ensure the technology is not abused, according tosources talking to The Information. [...] “DeepMind was generally interested in reinforcement learning, and in deep learning, which is very useful in mining so called ‘big data’, something Google has a lot of and is interested in processing,” said Murray Shanahan a professor of Cognitive Robotics at Imperial College London.\n\nGoogle also acquired a string of robotics firms in 2013, culminating in the purchase of Boston Dynamics in December,the most high-profile\n\n[truncated: 1,686 of 5,679 chars]",
+          "content": "Summary: Google acquired DeepMind Technologies in 2014. The acquisition was reported by multiple sources, including Wikipedia, Business Insider, and CNBC. According to Wikipedia and Business Insider, the acquisition was finalized on October 23, 2014. CNBC also confirmed the acquisition year as 2014 and mentioned the approximate acquisition price of around $600 million.\n\n[1] Google DeepMind - Wikipedia\n    https://en.wikipedia.org/wiki/Google_DeepMind\n    DeepMind Technologies Limited, trading as Google DeepMind or simply DeepMind, is a British-American artificial intelligence (AI) research laboratory which serves as a subsidiary of Alphabet Inc. Founded in the UK in 2010, it was acquired by Google in 2014, and merged with Google AI's Google Brain division to become Google DeepMind in April 2023. The company is headquartered in London, with research centres in the United States, Canada, France, Germany, and Switzerland. [...] 27. ↑ Efrati, Amir (26 January 2014). \"Google beats Facebook for Acquisition of DeepMind Technologies\". The Information. Archived from the original on 31 January 2014. Retrieved 27 January 2014.\n28. ↑ \"Google to buy artificial intelligence company DeepMind\". Reuters. 26 January 2014. Archived from the original on 11 March 2016. Retrieved 12 October 2014. [...] DeepMind developed an app called Streams, which sends alerts to doctors about patients at risk of acute kidney injury. On 13 November 2018, DeepMind announced that its health division and the Streams app would be absorbed into Google Health. Privacy advocates said the announcement betrayed patient trust and appeared to contradict previous statements by DeepMind that patient data would not be connected to Google accounts or services. A spokesman for DeepMind said that patient data would still be\n\n[2] The 10 Craziest Projects Google Has Acquired - Business Insider\n    https://www.businessinsider.com/the-10-craziest-projects-google-has-acquired-2015-9\n    What they do: Founded in 2010, DeepMind Technologies was acquired by Google in 2014 to create Google DeepMind. DeepMind specializes in artificial intelligence, creating algorithms capable of learning games like Space Invader. In this case, the only instructions the algorithm was given was to maximize the score. In 30 minutes, it was the best Space Invader player in the world. [...] When it was acquired: October 23, 2014. The same time Google acquired another artificial intelligence company, Vision Factory.\n\nWhat it integrates with: Nothing. It was turned into its own thing. DeepMind Technologies was acquired to become Google DeepMind. Vision Factory integrates with Google DeepMind as well.\n\n[3] DeepMind lost $649 million and Alphabet waived a $1.5 billion debt\n    https://www.cnbc.com/2020/12/17/deepmind-lost-649-million-and-alphabet-waived-a-1point5-billion-debt-.html\n    DeepMind was acquired by Google in 2014 for around $600 million. Today, the company relies on a steady stream of capital from parent firm Alphabet.\n\nIn 2019, Google Ireland waived the repayment of intercompany loans and all accrued interest amounting to £1.1 billion, according to the filing. [...] \"Our teams were involved in a huge range of projects, from improving the predictability of wind power to accelerating ecological research in the Serengeti. We're excited to build on this unprecedented progress as we head into next year,\" the spokesperson added.\n\nWhile losses climbed slightly, revenue grew from £103 million in 2018 to £266 million in 2019. However, the revenue is coming from other companies within Alphabet (namely Google), which pay DeepMind for research and development. [...] DeepMind has been based out of a large Google building in London's King's Cross neighborhood, but it plans to move into a new office early next year. According to the filing, DeepMind spent £1.3 million on construction, furniture and fixtures, and network and production equipment in 2019.\n\nThe filing also shows that DeepMind donated £6.3 million to\n\n[truncated: 1,775 of 5,771 chars]",
           "error": null,
-          "latency_ms": 2345.8580000005895,
-          "raw_chars": 5679,
+          "latency_ms": 2579.0345830009755,
+          "raw_chars": 5771,
           "truncated": true,
           "source_ids": [
-            "S2",
-            "S6",
             "S1",
+            "S6",
             "S7",
-            "S8"
+            "S8",
+            "S9"
           ]
         },
         {
-          "call_id": "call_wGzcQk4SeM5ll1tZb20BgOVb",
+          "call_id": "call_3ju15WnJ4K8Fl8Z3ltzycj6L",
           "tool": "web_search",
           "args": {
-            "query": "DeepMind acquisition Google 2014 2015 deal year acquired"
+            "query": "DeepMind acquisition 2014 Google 2014 acquired DeepMind Technologies"
           },
           "ok": true,
-          "content": "Summary: Google acquired DeepMind in January 2014 for a reported $400–650 million. The acquisition was Google's largest in Europe at the time. DeepMind became part of Alphabet's AI research lab.\n\n[1] Google DeepMind - Company Profile, Milestones & Funding\n    https://www.ventureatlas.org/company/google-deepmind\n    2016AlphaGo defeats Lee Sedol\n\nDeepMind's AlphaGo beats world champion Lee Sedol 4–1 at the ancient game of Go - a landmark long thought to be a decade away - demonstrating deep reinforcement learning at superhuman level and catapulting the lab to global prominence.\n\n2014Acquired by Google\n\nGoogle acquires DeepMind on January 26, 2014 for a reported $400–650 million, in what was then Google's largest European acquisition, keeping the research team based in London. [...] Google DeepMind is Alphabet's consolidated artificial-intelligence research lab, formed in April 2023 by merging the original DeepMind (founded in London in 2010, acquired by Google in 2014) with Google Brain. Led by Nobel laureate and co-founder Demis Hassabis, it builds the Gemini family of frontier multimodal models - which powers the Gemini app (900M+ monthly active users as of mid-2026), Google Search's AI Mode and AI Overviews, Google Cloud's Vertex AI, and, via a 2026 partnership, [...] | Round | Date | Amount | Investors | Source |\n ---  --- \n| Google acquisition | Jan 2014 | ~$400–650M (reported) | Google (now Alphabet) |\n| Alphabet internal funding (ongoing) | 2014–present | Funded via Alphabet R&D; parent capex guided to $180–190B for 2026 | Alphabet Inc. |\n| Isomorphic Labs Series A (DeepMind spinout) | Mar 2025 | $600M | Thrive Capital (lead), GV, Alphabet |\n| Isomorphic Labs Series B (DeepMind spinout) | May 2026 | ~$2.1B | External investors and Alphabet |\n\n[2] Google DeepMind - Wikipedia\n    https://en.wikipedia.org/wiki/Google_DeepMind\n    DeepMind Technologies Limited,trading asGoogle DeepMind or simply DeepMind, is a British-American artificial intelligence (AI) research laboratory which serves as a subsidiary of Alphabet Inc. Founded in the UK in 2010, it was acquired by Google in 2014,( and merged with Google AI's Google Brain division to become Google DeepMind in April 2023. The company is headquartered in London, with research centres in the United States, Canada,( France,( Germany, and Switzerland. [...] On 26 January 2014, Google confirmed its acquisition of DeepMind for a price reportedly ranging between $400 million and $650 million.( The company was afterwards renamed Google DeepMind and kept that name for about two years.( In 2014, DeepMind received the \"Company of the Year\" award from Cambridge Computer Laboratory.( [...] 10.   ↑Bray, Chad (27 January 2014). \"Google Acquires British Artificial Intelligence Developer\". _DealBook_. Archived from the original on 27 January 2014. Retrieved 4 November 2019.\n11.   ↑\"About Us\". _DeepMind_. 14 May 2024. Archived from the original on 23 December 2016. Retrieved 7 July 2018.\n12.   ↑\"A return to Paris\". _DeepMind_. 14 May 2024. Archived from the original on 29 March 2018. Retrieved 17 November 2018.\n\n[3] Google's $500+ Million Acquisition of DeepMind Is Looking Good - Business Insider\n    https://www.businessinsider.com/googles-400-million-acquisition-of-deepmind-is-looking-good-2016-7\n    Google cofounders Sergey Brin and Larry Page.   Ralph Orlowski/Getty Images\n\n  \n\nGoogle forked out over $500 million for a little-known London startup called DeepMind in 2014 without specifying how the company's artificial-intelligence technology would be used to increase Google's revenues, which already run into tens of billions of dollars every year.\n\nThat all changed on Wednesday when DeepMind announced that Google had found a use for DeepMind's technology in its enormous data centers.\n\n[4] 2014: Google acquires Deepmind for $500m \"Google’s hiring of DeepMind will help it compete against other major tech companies as they all try to gain business advantages by focusing on deep… | Przemek\n\n[truncated: 2,633 of 6,627 chars]",
+          "content": "Summary: Google acquired DeepMind Technologies in January 2014 for a reported figure between $500 million and $650 million, outbidding Facebook for the four-year-old London-based company. DeepMind, founded in 2010 by Demis Hassabis, Shane Legg, and Mustafa Suleyman, focused on solving intelligence through artificial intelligence research. The acquisition was announced on January 26, 2014, and DeepMind was later merged with Google AI's Google Brain division to form Google DeepMind in April 2023.\n\n[1] Google DeepMind acquired by Google — 500.0M USD (Jan 2014) | Seedtable\n    https://seedtable.com/exits/google-deepmind\n    Seedtable\n\n# Google DeepMindacquired byGoogle\n\n500.0M USD\n\n### The Deal\n\nGoogle acquired DeepMind Technologies in January 2014 for a reported figure between $500 million and $650 million, outbidding Facebook for a four-year-old London company with about 50 employees, no product and no revenue. [...] Type\n\nDeal value\n\n500.0M USD\n\nAcquirer\n\nAnnounced\n\n26 Jan 2014\n\n### Funding history & who backed Google DeepMind\n\n| Round | Date | Raised | Pre-money | Post-money | Investors | Est. return |\n ---  ---  --- \n| Series A | 1 Feb 2011 | 3.3M USD | — | — | Horizons Ventures,Founders Fund | ~30x(~214%/yr) | [...] DeepMind had been founded in 2010 by Demis Hassabis, Shane Legg and Mustafa Suleyman with an explicitly stated goal — to solve intelligence — and had raised from Founders Fund, Horizons and Elon Musk. What it had to show was research: deep reinforcement learning agents that learned to play Atari games from raw pixels, which was the first convincing demonstration that a single architecture could learn diverse tasks without task-specific engineering.\n\n[2] Google DeepMind - Wikipedia\n    https://en.wikipedia.org/wiki/Google_DeepMind\n    DeepMind Technologies Limited, trading as Google DeepMind or simply DeepMind, is a British-American artificial intelligence (AI) research laboratory which serves as a subsidiary of Alphabet Inc. Founded in the UK in 2010, it was acquired by Google in 2014, and merged with Google AI's Google Brain division to become Google DeepMind in April 2023. The company is headquartered in London, with research centres in the United States, Canada, France, Germany, and Switzerland. [...] 27. ↑ Efrati, Amir (26 January 2014). \"Google beats Facebook for Acquisition of DeepMind Technologies\". The Information. Archived from the original on 31 January 2014. Retrieved 27 January 2014.\n28. ↑ \"Google to buy artificial intelligence company DeepMind\". Reuters. 26 January 2014. Archived from the original on 11 March 2016. Retrieved 12 October 2014. [...] 29. ↑ Gibbs, Samuel (27 January 2014). \"Google Acquires UK AI startup Deepmind\". The Guardian. Archived from the original on 3 February 2014. Retrieved 27 January 2014.\n30. ↑ Shu, Catherine (26 January 2014). \"Report of Acquisition, TechCrunch\". TechCrunch. Archived from the original on 28 January 2014. Retrieved 27 January 2014.\n\n[3] Google DeepMind - Products, Competitors, Financials, Employees, Headquarters Locations\n    https://www.cbinsights.com/company/deepmind-technologies\n    Kingdom. In January 2014, Google DeepMind was acquired by Google. [...] Google DeepMind's latest funding round is Acquired.\n Who are the investors of Google DeepMind?\n\n  Investors of Google DeepMind include Google, Elon Musk, Peter Thiel, Horizons Ventures, Founders Fund and 6 more.\n Who are Google DeepMind's competitors?\n\n  Competitors of Google DeepMind include Aleph Alpha, Mistral, Poolside, Moonshot AI, Multiverse Computing and 7 more.\n\nLoading...\n\n## Compare Google DeepMind to Competitors\n\nOpenAI Logo\n\nOpenAI [...] Google DeepMind engages in artificial intelligence (AI) research and development, with a focus on creating AI systems applicable in various sectors. The company develops AI models and systems for life sciences, climate and sustainability, and weather forecasting. Google DeepMind's aims include addressing safety, ethics, and the exploration of artificial general\n\n[truncated: 2,572 of 6,571 chars]",
           "error": null,
-          "latency_ms": 2343.955999996979,
-          "raw_chars": 6627,
+          "latency_ms": 3068.352500000401,
+          "raw_chars": 6571,
           "truncated": true,
           "source_ids": [
-            "S9",
-            "S2",
             "S10",
+            "S1",
             "S11",
-            "S7"
+            "S12",
+            "S13"
+          ]
+        },
+        {
+          "call_id": "call_Ehbpvys8P6UIbPRQHbqsw0Un",
+          "tool": "web_search",
+          "args": {
+            "query": "DeepMind founders Demis Hassabis Shane Legg Mustafa Suleyman founded 2010"
+          },
+          "ok": true,
+          "content": "Summary: DeepMind was founded in 2010 by Demis Hassabis, Shane Legg, and Mustafa Suleyman. The company was officially launched on November 15, 2010, and was acquired by Google in 2014. The founders aimed to create a general-purpose AI that could be useful and effective for almost anything. The company is headquartered in London, with research centers in the United States, Canada, France, Germany, and Switzerland.\n\n[1] Google DeepMind - Wikipedia\n    https://en.wikipedia.org/wiki/Google_DeepMind\n    The start-up was founded by Demis Hassabis, Shane Legg and Mustafa Suleyman in November 2010. Hassabis and Legg first met at the Gatsby Computational Neuroscience Unit at University College London (UCL). The goal of the founders is to create a general-purpose AI that can be useful and effective for almost anything. Hassabis said that the start-up began working on artificial intelligence technology by teaching it how to play Atari video games from the seventies and eighties including Breakout [...] | Headquarters at Platform 37, Kings Cross Central, London |\n| Trade name |  Google DeepMind |\n| Formerly | DeepMind (2010–2023) |\n| Type | Subsidiary |\n| Industry | Artificial intelligence |\n| Founded | 23 September 2010; 16 years ago (2010-09-23) (incorporation)  15 November 2010; 15 years ago (2010-11-15) (official launch) |\n| Founders |  Demis Hassabis  Shane Legg  Mustafa Suleyman |\n| Headquarters | London , England | [...] DeepMind Technologies Limited, trading as Google DeepMind or simply DeepMind, is a British-American artificial intelligence (AI) research laboratory which serves as a subsidiary of Alphabet Inc. Founded in the UK in 2010, it was acquired by Google in 2014, and merged with Google AI's Google Brain division to become Google DeepMind in April 2023. The company is headquartered in London, with research centres in the United States, Canada, France, Germany, and Switzerland.\n\n[2] \"Mustafa Suleyman Leadership Style: From DeepMind to Microsoft AI CEO\"\n    https://resources.rework.com/libraries/leadership-legends/mustafa-suleyman-leadership\n    Key Facts: Mustafa Suleyman (b. 1984, London) co-founded DeepMind in 2010 with Demis Hassabis and Shane Legg after a London School of Economics drop-out and an early career running Muslim Youth Helpline and advising on conflict resolution. He led applied AI and ethics at DeepMind through Google's 2014 acquisition, served as VP of AI Product and AI Policy at Google from 2019 to 2022, then co-founded Inflection AI in 2022 with Reid Hoffman and Karén Simonyan, raising over $1.3B and launching the [...] DeepMind was founded in London in 2010 by Demis Hassabis, Shane Legg, and Mustafa Suleyman with an explicit thesis that AI should be built responsibly or not at all. Google acquired it in 2014 for roughly $500M, and the deal preserved research independence and a commitment against military use, protections Suleyman helped negotiate.\n\nWhy did Suleyman leave DeepMind? [...] Mustafa Suleyman (b. 1984) is a British entrepreneur who co-founded DeepMind in 2010, co-founded Inflection AI in 2022, and has served as CEO of Microsoft AI since March 2024. He also wrote the 2023 bestseller \"The Coming Wave\" on AI and synthetic biology risk.\n\nHow did DeepMind start?\n\n[3] What were DeepMind’s early breakthroughs in AI?  | Britannica\n    https://www.britannica.com/question/Who-founded-DeepMind\n    DeepMind was founded in 2010 by Demis Hassabis, Mustafa Suleyman, and Shane Legg. The founders brought together expertise in neuroscience, computer science, and machine learning with the goal of advancing artificial intelligence. Their shared ambition was to create systems capable of general learning and reasoning, rather than narrowly specialized software designed for specific tasks.\n\n# What ethical concerns are associated with AI research at Google DeepMind?\n\nWritten and fact-checked by\n\n[4] Shane Legg - Wikipedia\n    https://en.wikipedia.org/wiki/Shane_Legg\n    ### DeepMind\n\n[edit]\n\nDemis Hassabis and\n\n[truncated: 2,554 of 6,548 chars]",
+          "error": null,
+          "latency_ms": 2525.5139580003743,
+          "raw_chars": 6548,
+          "truncated": true,
+          "source_ids": [
+            "S1",
+            "S14",
+            "S15",
+            "S16",
+            "S17"
           ]
         }
       ],
@@ -141,7 +168,7 @@
       "i": 4,
       "node": "finalize",
       "plan_version": 1,
-      "ts_offset_ms": 7440.865166994627,
+      "ts_offset_ms": 7469.064332999551,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -151,100 +178,148 @@
   "sources": [
     {
       "sid": "S1",
-      "url": "https://www.britannica.com/topic/Google-DeepMind",
-      "title": "Google DeepMind | History, Innovations, & Controversies",
-      "snippet": "DeepMind was founded in 2010 by Demis Hassabis, Mustafa Suleyman, and Shane Legg. The founders brought together expertise in neuroscience, computer science, and machine learning with the goal of advancing artificial intelligence. Their shared ambition was to create systems capable of general learnin",
+      "url": "https://en.wikipedia.org/wiki/Google_DeepMind",
+      "title": "Google DeepMind - Wikipedia",
+      "snippet": "The start-up was founded by Demis Hassabis, Shane Legg and Mustafa Suleyman in November 2010. Hassabis and Legg first met at the Gatsby Computational Neuroscience Unit at University College London (UCL). The goal of the founders is to create a general-purpose AI that can be useful and effective for ",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S2",
-      "url": "https://en.wikipedia.org/wiki/Google_DeepMind",
-      "title": "Google DeepMind - Wikipedia",
-      "snippet": "The start-up was founded by Demis Hassabis, Shane Legg and Mustafa Suleyman in November 2010.( Hassabis and Legg first met at the Gatsby Computational Neuroscience Unit at University College London (UCL).( The goal of the founders is to create a general-purpose AI that can be useful and effective fo",
+      "url": "https://www.businessinsider.com/what-is-deepmind-2014-1",
+      "title": "What Is Deepmind - Business Insider",
+      "snippet": "Google is buying another pricey startup, Deep Mind, for a reported $400 – 500 million.\n\nThat sounds cheap compared to the $3.2 billion it paid for smart hardware startup, Nest.\n\nHere's what you need to know about DeepMind:\n\nWho founded it: DeepMind was founded by Demis Hassabis, Shane Legg and Musta",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S3",
-      "url": "https://en.wikipedia.org/wiki/Demis_Hassabis",
-      "title": "Demis Hassabis - Wikipedia",
-      "snippet": "### DeepMind\n\n[edit]\n\nHassabis is the CEO and co-founder of DeepMind, a machine learning AI startup, founded in London in 2010 with Shane Legg and Mustafa Suleyman. Hassabis met Legg when both were postdocs at the Gatsby Computational Neuroscience Unit, and he and Suleyman had been friends through f",
+      "url": "https://observer.com/2026/09/google-deepmind-cofounders-ai-leadership",
+      "title": "Google DeepMind Enters a New Era: Where Are Its 3 Founders Now? | Observer",
+      "snippet": "Long before it became an A.I. powerhouse, Google DeepMind was simply DeepMind. Founded in London by machine learning researchers Demis Hassabis, Shane Legg and Mustafa Suleyman, the lab was launched with the goal of achieving artificial general intelligence (AGI). Hassabis and Suleyman met as teenag",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S4",
-      "url": "https://deepmind.google/about",
-      "title": "About Google DeepMind",
-      "snippet": "Demis Hassabis\n\nCo-founder and CEO, Google DeepMind\n\n## Our journey\n\nGoogle DeepMind brings together two of the world’s leading AI labs — Google Brain and DeepMind — into a single, focused team led by our CEO Demis Hassabis. Over the last decade, the two teams were responsible for some of the bigges",
+      "url": "https://www.businessinsider.com/who-is-demis-hassabis-deepmind-founder-ai-google-nobel-prize-2024-10?op=1",
+      "title": "Who Is Demis Hassabis, the DeepMind Founder and Nobel Prize Winner? - Business Insider",
+      "snippet": "DeepMind is a London-based tech company now owned by Google that aims to \"solve intelligence\" and use it to \"make the world a better place.\"\n\nHassabis founded DeepMind alongside his childhood friend, Mustafa Suleyman. Suleyman is now the CEO of Microsoft AI. Shane Legg was also a cofounder. He remai",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S5",
-      "url": "https://uk.linkedin.com/in/demishassabis",
-      "title": "Demis Hassabis - Nobel Laureate | Co-Founder & Chair, Google DeepMind and Chief Scientist, Alphabet | Founder & CEO, Isomorphic Labs",
-      "snippet": "- We started DeepMind back in 2010 because even then we believed Artificial General Intelligence (AGI) would be the most transformative technology ever invented. It has the potential to be the ultimate tool to accelerate science and medicine, and improve productivity. The impact will be profound, bu",
+      "url": "https://www.businessinsider.com/who-is-demis-hassabis-deepmind-founder-ai-google-nobel-prize-2024-10",
+      "title": "Who Is Demis Hassabis, the DeepMind Founder and Nobel Prize Winner? - Business Insider",
+      "snippet": "DeepMind is a London-based tech company now owned by Google that aims to \"solve intelligence\" and use it to \"make the world a better place.\"\n\nHassabis founded DeepMind alongside his childhood friend, Mustafa Suleyman. Suleyman is now the CEO of Microsoft AI. Shane Legg was also a cofounder. He remai",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S6",
-      "url": "https://www.cnbc.com/2020/12/17/deepmind-lost-649-million-and-alphabet-waived-a-1point5-billion-debt-.html",
-      "title": "DeepMind lost $649 million and Alphabet waived a $1.5 billion debt",
-      "snippet": "DeepMind was acquired by Google in 2014 for around $600 million. Today, the company relies on a steady stream of capital from parent firm Alphabet.\n\nIn 2019, Google Ireland waived the repayment of intercompany loans and all accrued interest amounting to £1.1 billion, according to the filing.",
+      "url": "https://www.businessinsider.com/the-10-craziest-projects-google-has-acquired-2015-9",
+      "title": "The 10 Craziest Projects Google Has Acquired - Business Insider",
+      "snippet": "What they do: Founded in 2010, DeepMind Technologies was acquired by Google in 2014 to create Google DeepMind. DeepMind specializes in artificial intelligence, creating algorithms capable of learning games like Space Invader. In this case, the only instructions the algorithm was given was to maximiz",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S7",
-      "url": "https://www.theguardian.com/technology/2014/jan/27/google-acquires-uk-artificial-intelligence-startup-deepmind",
-      "title": "Google buys UK artificial intelligence startup Deepmind for £400m | AI (artificial intelligence) | The Guardian",
-      "snippet": "DeepMind has reportedly competed with Google and other major artificial intelligence companies for talent and Google’s chief executive Larry Page is said to have led the deal himself. Facebook reportedly failed to acquire DeepMind in December 2012, according to Forbes.\n\nPart of the acquisition deal ",
+      "url": "https://www.cnbc.com/2020/12/17/deepmind-lost-649-million-and-alphabet-waived-a-1point5-billion-debt-.html",
+      "title": "DeepMind lost $649 million and Alphabet waived a $1.5 billion debt",
+      "snippet": "DeepMind was acquired by Google in 2014 for around $600 million. Today, the company relies on a steady stream of capital from parent firm Alphabet.\n\nIn 2019, Google Ireland waived the repayment of intercompany loans and all accrued interest amounting to £1.1 billion, according to the filing. [...] \"",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S8",
-      "url": "https://www.wsj.com/tech/ai/deepmind-google-demis-hassabis-5bd6de54",
-      "title": "The Inside Story of the Greatest Deal Google Ever Made: Buying DeepMind - WSJ",
-      "snippet": "Sebastian Mallaby\n\nIn an exclusive excerpt from his upcoming book, “The Infinity Machine: Demis Hassabis, DeepMind and the Quest for Superintelligence,” journalist Sebastian Mallaby illuminates an acquisition race that broke out in 2013 over DeepMind and artificial general intelligence.\n\nOn a June w",
+      "url": "https://www.businessinsider.com/google-deepmind-has-doubled-the-size-of-its-healthcare-team-2016-10",
+      "title": "Google DeepMind Has Doubled the Size of Its Healthcare Team - Business Insider",
+      "snippet": "DeepMind, an AI research lab acquired by Google for £400 million in 2014, has provided an update on how its DeepMind Health unit is doing.\n\nThe London-based company told Business Insider on Tuesday that it has doubled the size of its team from 20 to 40 since launching in February this year, hiring s",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S9",
-      "url": "https://www.ventureatlas.org/company/google-deepmind",
-      "title": "Google DeepMind - Company Profile, Milestones & Funding",
-      "snippet": "2016AlphaGo defeats Lee Sedol\n\nDeepMind's AlphaGo beats world champion Lee Sedol 4–1 at the ancient game of Go - a landmark long thought to be a decade away - demonstrating deep reinforcement learning at superhuman level and catapulting the lab to global prominence.\n\n2014Acquired by Google\n\nGoogle a",
+      "url": "https://www.businessinsider.com/google-deepmind-ai-in-every-company-data-centre-end-of-year-2016-7",
+      "title": "Google DeepMind AI to Be in All of Google's Data Centres by End of 2016 - Business Insider",
+      "snippet": "Google is rolling out artificial intelligence software developed by a UK startup it acquired in 2014 to all of its data centres between now and the end of the year.\n\nGoogle has adopted a DeepMind AI system in several of its data centres over the last few months as a way of reducing the amount of ene",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S10",
-      "url": "https://www.businessinsider.com/googles-400-million-acquisition-of-deepmind-is-looking-good-2016-7",
-      "title": "Google's $500+ Million Acquisition of DeepMind Is Looking Good - Business Insider",
-      "snippet": "Google cofounders Sergey Brin and Larry Page.   Ralph Orlowski/Getty Images\n\n  \n\nGoogle forked out over $500 million for a little-known London startup called DeepMind in 2014 without specifying how the company's artificial-intelligence technology would be used to increase Google's revenues, which al",
+      "url": "https://seedtable.com/exits/google-deepmind",
+      "title": "Google DeepMind acquired by Google — 500.0M USD (Jan 2014) | Seedtable",
+      "snippet": "Seedtable\n\n# Google DeepMindacquired byGoogle\n\n500.0M USD\n\n### The Deal\n\nGoogle acquired DeepMind Technologies in January 2014 for a reported figure between $500 million and $650 million, outbidding Facebook for a four-year-old London company with about 50 employees, no product and no revenue. [...]",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S11",
-      "url": "https://www.linkedin.com/posts/przchojecki_2014-google-acquires-deepmind-for-500m-activity-7405187987845595136-2nE4",
-      "title": "2014: Google acquires Deepmind for $500m \"Google’s hiring of DeepMind will help it compete against other major tech companies as they all try to gain business advantages by focusing on deep… | Przemek Chojecki",
-      "snippet": "2014: Google acquires Deepmind for $500m \"Google’s hiring of DeepMind will help it compete against other major tech companies as they all try to gain business advantages by focusing on deep learning. For example, Facebook recently hired NYU professor Yann LeCunn to lead its new artificial intelligen",
+      "url": "https://www.cbinsights.com/company/deepmind-technologies",
+      "title": "Google DeepMind - Products, Competitors, Financials, Employees, Headquarters Locations",
+      "snippet": "Kingdom. In January 2014, Google DeepMind was acquired by Google. [...] Google DeepMind's latest funding round is Acquired.\n Who are the investors of Google DeepMind?\n\n  Investors of Google DeepMind include Google, Elon Musk, Peter Thiel, Horizons Ventures, Founders Fund and 6 more.\n Who are Google ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S12",
+      "url": "https://www.cbinsights.com/company/deepmind-technologies?__hstc=27520867.fcb617fbd39b1ac4f305242ad9f92fa8.1739750401813.1739750401814.1739750401815.1&__hssc=27520867.1.1739750401816&__hsfp=1152905967",
+      "title": "Google DeepMind - Products, Competitors, Financials, Employees, Headquarters Locations",
+      "snippet": "Google DeepMind engages in artificial intelligence (AI) research and development, with a focus on creating AI systems applicable in various sectors. The company develops AI models and systems for life sciences, climate and sustainability, and weather forecasting. It caters to businesses, researchers",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S13",
+      "url": "https://www.cbinsights.com/investor/deepmind-technologies",
+      "title": "Google DeepMind - Products, Competitors, Financials, Employees, Headquarters Locations",
+      "snippet": "Google DeepMind engages in artificial intelligence (AI) research and development, with a focus on creating AI systems applicable in various sectors. The company develops AI models and systems for life sciences, climate and sustainability, and weather forecasting. It caters to businesses, researchers",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S14",
+      "url": "https://resources.rework.com/libraries/leadership-legends/mustafa-suleyman-leadership",
+      "title": "\"Mustafa Suleyman Leadership Style: From DeepMind to Microsoft AI CEO\"",
+      "snippet": "Key Facts: Mustafa Suleyman (b. 1984, London) co-founded DeepMind in 2010 with Demis Hassabis and Shane Legg after a London School of Economics drop-out and an early career running Muslim Youth Helpline and advising on conflict resolution. He led applied AI and ethics at DeepMind through Google's 20",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S15",
+      "url": "https://www.britannica.com/question/Who-founded-DeepMind",
+      "title": "What were DeepMind’s early breakthroughs in AI?  | Britannica",
+      "snippet": "DeepMind was founded in 2010 by Demis Hassabis, Mustafa Suleyman, and Shane Legg. The founders brought together expertise in neuroscience, computer science, and machine learning with the goal of advancing artificial intelligence. Their shared ambition was to create systems capable of general learnin",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S16",
+      "url": "https://en.wikipedia.org/wiki/Shane_Legg",
+      "title": "Shane Legg - Wikipedia",
+      "snippet": "### DeepMind\n\n[edit]\n\nDemis Hassabis and Shane Legg first met in 2009 at University College London, where Legg was a postdoctoral researcher.\n\nIn 2010, Legg cofounded the start-up DeepMind Technologies along with Demis Hassabis and Mustafa Suleyman. DeepMind Technologies was bought in 2014 by Google",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S17",
+      "url": "https://time.com/collections/time100-ai/6309466/mustafa-suleyman-2",
+      "title": "Mustafa Suleyman: The 100 Most Influential People in AI 2023",
+      "snippet": "Those 20 years have gone by, and Suleyman and Hassabis are now both titans of the AI industry. In 2010, the pair co-founded the AI lab DeepMind together alongside Shane Legg, and the company rose to the top of the industry thanks to their development of AlphaGo, an AI that beat human champions of th",
       "tool": "web_search",
       "first_seen_step": 1
     }
   ],
-  "answer": "DeepMind was founded in 2010 by Demis Hassabis, Shane Legg, and Mustafa Suleyman [S1][S2]. Google acquired DeepMind in 2014 [S1][S2].",
+  "answer": "DeepMind was founded by Demis Hassabis, Shane Legg, and Mustafa Suleyman [S1]. DeepMind was acquired by Google in 2014 [S1][S2].",
   "citations": [
     "S1",
     "S2"
   ],
   "coverage": {
-    "Who founded DeepMind?": false,
+    "Who founded DeepMind (founder name(s))?": false,
     "Which company acquired DeepMind, and in what year?": false
   },
   "outcome": {
@@ -261,65 +336,65 @@
         "model": "gpt-5.4-nano",
         "input_tokens": 224,
         "cached_tokens": 0,
-        "output_tokens": 58,
+        "output_tokens": 81,
         "reasoning_tokens": 0,
-        "cost_usd": 0.0001173,
-        "latency_ms": 1197.8931249905145,
+        "cost_usd": 0.00014605,
+        "latency_ms": 1317.4732080005924,
         "replayed": false
       },
       {
         "purpose": "act",
         "model": "gpt-5.4-nano",
-        "input_tokens": 781,
+        "input_tokens": 865,
         "cached_tokens": 0,
-        "output_tokens": 83,
+        "output_tokens": 115,
         "reasoning_tokens": 0,
-        "cost_usd": 0.00025995000000000006,
-        "latency_ms": 1647.8338749875547,
+        "cost_usd": 0.00031675,
+        "latency_ms": 1561.9052500005637,
         "replayed": false
       },
       {
         "purpose": "finalize",
         "model": "gpt-5.4-nano",
-        "input_tokens": 875,
+        "input_tokens": 1259,
         "cached_tokens": 0,
-        "output_tokens": 48,
+        "output_tokens": 43,
         "reasoning_tokens": 0,
-        "cost_usd": 0.000235,
-        "latency_ms": 1834.0970829885919,
+        "cost_usd": 0.00030555000000000003,
+        "latency_ms": 1497.8786669998954,
         "replayed": false
       }
     ],
     "totals": {
-      "input_tokens": 1880,
+      "input_tokens": 2348,
       "cached_tokens": 0,
-      "output_tokens": 189,
+      "output_tokens": 239,
       "reasoning_tokens": 0,
-      "cost_usd": 0.0006122500000000001,
+      "cost_usd": 0.00076835,
       "cache_hit_rate": 0.0
     },
     "by_purpose": {
       "plan": {
         "calls": 1,
-        "cost_usd": 0.0001173,
-        "output_tokens": 58
+        "cost_usd": 0.00014605,
+        "output_tokens": 81
       },
       "act": {
         "calls": 1,
-        "cost_usd": 0.00025995000000000006,
-        "output_tokens": 83
+        "cost_usd": 0.00031675,
+        "output_tokens": 115
       },
       "finalize": {
         "calls": 1,
-        "cost_usd": 0.000235,
-        "output_tokens": 48
+        "cost_usd": 0.00030555000000000003,
+        "output_tokens": 43
       }
     },
-    "search_credits": 3,
+    "search_credits": 4,
     "steps": 1
   },
   "timings_ms": {
-    "total": 7437.795000005281
+    "total": 7465.212957999029
   },
   "compaction": {
     "count": 0,

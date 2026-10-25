@@ -1,7 +1,7 @@
 {
   "schema_version": "1",
-  "run_id": "20702063ca9a",
-  "ts": "2026-08-08T18:58:22+00:00",
+  "run_id": "1f9a88a3b25b",
+  "ts": "2026-10-25T09:02:11+00:00",
   "question": "How many parameters does the largest Llama 3.1 model have?",
   "variant": "baseline",
   "config": {
@@ -12,14 +12,13 @@
     "max_run_cost_usd": 0.05,
     "finalize_reserve_usd": 0.008,
     "compact_threshold_tokens": 12000,
-    "git_sha": "cfe451b",
-    "prompt_hash": "sha256:512e8e5d8eaa"
+    "git_sha": "e577c53",
+    "prompt_hash": "sha256:e2655640140a"
   },
   "plan": {
     "version": 1,
     "subquestions": [
-      "What is the largest model variant in the Llama 3.1 family (e.g., which parameter size/checkpoint)?",
-      "How many parameters does that largest Llama 3.1 model have (as reported by Meta or the official release notes)?"
+      "What is the number of parameters in the largest Llama 3.1 model?"
     ],
     "replans": 0
   },
@@ -28,7 +27,7 @@
       "i": 1,
       "node": "plan",
       "plan_version": 0,
-      "ts_offset_ms": 1959.8855829972308,
+      "ts_offset_ms": 1433.2321659994705,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -38,34 +37,27 @@
       "i": 2,
       "node": "act",
       "plan_version": 1,
-      "ts_offset_ms": 4014.542375007295,
+      "ts_offset_ms": 2873.2879159997537,
       "tool_calls": [
         {
-          "call_id": "call_3Z0Rg9XGbHJL7wrpuKqfiAsb",
+          "call_id": "call_M7ar4sysC8SjFFVzdwHBnlMV",
           "name": "web_search",
           "args": {
-            "query": "Llama 3.1 largest model parameters 405B 70B official Meta release notes"
+            "query": "largest Llama 3.1 model number of parameters 405B 3.1"
           }
         },
         {
-          "call_id": "call_iYMCHdBAPhVcKdPM8jTqq6o7",
+          "call_id": "call_iMWlbc3tDhBlziOZxAdUVBCS",
           "name": "web_search",
           "args": {
-            "query": "Meta Llama 3.1 model card 405B parameters"
+            "query": "Meta Llama 3.1 405B parameters largest model"
           }
         },
         {
-          "call_id": "call_wTVAacTpc0K9Gr0diUST2C3d",
+          "call_id": "call_vL4BPkuth3CmDK6OmWTyT9b4",
           "name": "web_search",
           "args": {
-            "query": "Llama 3.1 405B parameter count official"
-          }
-        },
-        {
-          "call_id": "call_Gmus7HGcgfsCcs4X2hpBLprf",
-          "name": "web_search",
-          "args": {
-            "query": "Llama 3.1 model variants 8B 70B 405B parameters"
+            "query": "Llama 3.1 model sizes 405B parameters official announcement"
           }
         }
       ],
@@ -77,20 +69,20 @@
       "i": 3,
       "node": "observe",
       "plan_version": 1,
-      "ts_offset_ms": 7868.496249997406,
+      "ts_offset_ms": 6652.37041599994,
       "tool_calls": [],
       "observations": [
         {
-          "call_id": "call_3Z0Rg9XGbHJL7wrpuKqfiAsb",
+          "call_id": "call_M7ar4sysC8SjFFVzdwHBnlMV",
           "tool": "web_search",
           "args": {
-            "query": "Llama 3.1 largest model parameters 405B 70B official Meta release notes"
+            "query": "largest Llama 3.1 model number of parameters 405B 3.1"
           },
           "ok": true,
-          "content": "Summary: The largest model, Llama 3.1 405B, has 405 billion parameters and is Meta's most advanced. It supports a 128K context length and excels in multilingual dialogue. It is available on Amazon Bedrock and Oracle Cloud Infrastructure.\n\n[1] Announcing Llama 3.1 405B, 70B, and 8B models from ...\n    https://aws.amazon.com/blogs/aws/announcing-llama-3-1-405b-70b-and-8b-models-from-meta-in-amazon-bedrock\n    Llama 3.1 405B is the world’s largest publicly available large language model (LLM) according to Meta. The model sets a new standard for AI and is ideal for enterprise-level applications and research and development (R&D). It is ideal for tasks like synthetic data generation where the outputs of the model can be used to improve smaller Llama models and model distillations to transfer knowledge to smaller models from the 405B model. This model excels at general knowledge, long-form text [...] Today, we are announcing the general availability of Llama 3.1 models in Amazon Bedrock. The Llama 3.1 models are Meta’s most advanced and capable models to date. The Llama 3.1 models are a collection of 8B, 70B, and 405B parameter size models that demonstrate state-of-the-art performance on a wide range of industry benchmarks and offer new capabilities for your generative artificial intelligence (generative AI) applications. [...] All Llama 3.1 models support a 128K context length (an increase of 120K tokens from Llama 3) that has 16 times the capacity of Llama 3 models and improved reasoning for multilingual dialogue use cases in eight languages, including English, German, French, Italian, Portuguese, Hindi, Spanish, and Thai.\n\nYou can now use three new Llama 3.1 models from Meta in Amazon Bedrock to build, experiment, and responsibly scale your generative AI ideas:\n\n[2] Announcing Llama 3.1 405B and 70B models from Meta on ...\n    https://blogs.oracle.com/ai-and-datascience/announcing-llama-31-oci-generative-ai\n    ## Model overview\n\nAccording to Meta, Llama 3.1 405B offers the world’s largest publicly available large language model (LLM) and is ideal for enterprise-level applications and research and development. It excels in general knowledge, synthetic data generation, advanced reasoning and contextual understanding, long-form text, multilingual translation, coding, math, and tool use. [...] Today, we’re announcing the general availability of Meta’s Llama 3.1 models (70B and 405B) on the Oracle Cloud Infrastructure (OCI) Generative AI service. According to Meta, this release enables them to bring open intelligence to all through their open source models. This latest release expands context length to 128K, adds support across eight languages, and includes Llama 3.1 405B, the first frontier-level open source AI model. This latest release brings more flexibility, control, and [...] On July 31, we announced OCI Data Science’s support for Llama 3.1 405B  through a Bring Your Own Container(BYOC) approach. OCI Data Science supports leading industry GPUs, allowing this large model to be deployed. Meta-Llama-3.1-405B-Instruct-FP8 is the specific version of the model, quantized to reduce infrastructure requirements.\n\n[3] Meta releases new Llama 3.1 models, including highly ...\n    https://www.ibm.com/think/news/meta-releases-llama-3-1-models-405b-parameter-variant\n    Artificial Intelligence\n\n# Meta releases new Llama 3.1 models, including highly anticipated 405B parameter variant\n\nWoman programmer working on computer with colleagues standing by\n\nOn Tuesday, July 23, Meta announced the launch of the Llama 3.1 collection of multilingual large language models (LLMs). Llama 3.1 comprises both pretrained and instruction-tuned text in/text out open source generative AI models in sizes of 8B, 70B and—for the first time—405B parameters. [...] The instruction-tuned Llama 3.1-405B, which figures to be the largest and most powerful open source language model available today and competitive with the best proprietary models on the market, will be\n\n[truncated: 3,187 of 7,181 chars]",
+          "content": "Summary: The largest Llama 3.1 model number of parameters is 405B. The model, developed by Meta, is an open-source community model with 405 billion parameters and supports context lengths of up to 128K tokens. It is recognized as the largest publicly available large language model at the time of its release and is available on platforms like IBM watsonx.ai, Amazon Bedrock, and SambaNova, where it has achieved speed records.\n\n[1] Boosting Llama 3.1 405B Performance up to 1.44x with NVIDIA TensorRT Model Optimizer on NVIDIA H200 GPUs | NVIDIA Technical Blog\n    https://developer.nvidia.com/blog/boosting-llama-3-1-405b-performance-by-up-to-44-with-nvidia-tensorrt-model-optimizer-on-nvidia-h200-gpus\n    The Llama 3.1 405B large language model (LLM), developed by Meta, is an open-source community model that delivers state-of-the-art performance and supports a variety of use cases.\n\nWith 405 billion parameters and support for context lengths of up to 128K tokens, Llama 3.1 405B is also one of the most demanding LLMs to run. To deliver both low latency to optimize the user experience and high throughput to optimize cost, a high-performance, full-stack platform is required.\n\n[2] Meta releases new Llama 3.1 models, including highly anticipated 405B parameter variant | IBM\n    https://www.ibm.com/think/news/meta-releases-llama-3-1-models-405b-parameter-variant\n    The instruction-tuned Llama 3.1-405B, which figures to be the largest and most powerful open source language model available today and competitive with the best proprietary models on the market, will be available on IBM® watsonx.ai™ today where it can be deployed on the IBM cloud, in a hybrid cloud environment or on-premises. [...] Undergraduate level knowledge (MMLU, 5-shot):With a score of 87.3%, the instruction-tuned Llama 405B more than matched OpenAI’s GPT-4-Turbo (86.5%), Anthropic’s Claude 3 Opus (86.8%) and Google’s Gemini 1.5 Pro (85.9%) while cleanly outperforming Gemini 1.0 Ultra (83.7%), Google’s largest Gemini model. [...] Artificial Intelligence\n\n# Meta releases new Llama 3.1 models, including highly anticipated 405B parameter variant\n\nWoman programmer working on computer with colleagues standing by\n\nOn Tuesday, July 23, Meta announced the launch of the Llama 3.1 collection of multilingual large language models (LLMs). Llama 3.1 comprises both pretrained and instruction-tuned text in/text out open source generative AI models in sizes of 8B, 70B and—for the first time—405B parameters.\n\n[3] Meta Llama 3.1 (405B) (Deprecated)\n    https://docs.oracle.com/en-us/iaas/Content/generative-ai/meta-llama-3-1-405b.htm\n    This 405 billion-parameter model is a high-performance option that offers speed and scalability. Compared to the `meta.llama-3.1-70b-instruct` model, it can handle a larger volume of requests and support more complex use cases. Key features of this model include: [...] Model Size: 405 billion parameters\n Context Length: 128,000 tokens (Maximum prompt + response length: 128,000 tokens for each run)\n Multilingual Support: English, French, German, Hindi, Italian, Portuguese, Spanish, and Thai\n Maximum prompt + response length: 128,000 tokens for each run.\n For on-demand inferencing, the response length is capped at 4,000 tokens for each run.\n For the dedicated mode, the response length isn't capped off and the context length is 128,000 tokens. [...] Recognized as the largest publicly available large language model at the time of its release.\n Suited for enterprise-level applications and research and development initiatives.\n Shows exceptional capabilities in areas such as general knowledge, synthetic data generation, advanced reasoning, and contextual understanding, and long-form text, multilingual translation, coding, math, and tool use.\n\n## Regions for this Model\n\nImportant\n\n[4] Announcing Llama 3.1 405B, 70B, and 8B models from Meta in Amazon Bedrock | AWS News Blog\n   \n\n[truncated: 2,160 of 6,071 chars]",
           "error": null,
-          "latency_ms": 3505.4804160026833,
-          "raw_chars": 7181,
+          "latency_ms": 3777.0040830000653,
+          "raw_chars": 6071,
           "truncated": true,
           "source_ids": [
             "S1",
@@ -101,63 +93,43 @@
           ]
         },
         {
-          "call_id": "call_iYMCHdBAPhVcKdPM8jTqq6o7",
+          "call_id": "call_iMWlbc3tDhBlziOZxAdUVBCS",
           "tool": "web_search",
           "args": {
-            "query": "Meta Llama 3.1 model card 405B parameters"
+            "query": "Meta Llama 3.1 405B parameters largest model"
           },
           "ok": true,
-          "content": "Summary: Meta Llama 3.1 model with 405B parameters is a large language model optimized for intelligence and knowledge coverage. It has 405 billion parameters and supports a 128K context length. It is available in Amazon Bedrock.\n\n[1] Llama 3.1 405B | Products\n    https://docs.ionos.com/cloud/ai/ai-model-hub/models/llms/meta-llama-3-1-405b\n    Intelligence\n\nSpeed\n\nInput\n\nOutput\n\nIntelligence active Intelligence active Intelligence active\n\nText active Image inactive Audio inactive\n\nText active Image inactive Audio inactive\n\nHigh\n\nLow\n\nText\n\nText\n\n## Central parameters\n\nDescription: Largest open-source model from Meta with 405B parameters, optimized with FP8 quantization for maximum intelligence and knowledge coverage.\n\nModel identifier: `meta-llama/Meta-Llama-3.1-405B-Instruct-FP8` [...] ```\n{ {  \"model\": \"meta-llama/Meta-Llama-3.1-405B-Instruct-FP8\",  \"model\": \"meta-llama/Meta-Llama-3.1-405B-Instruct-FP8\",  \"messages\": [{ \"role\": \"user\", \"content\": \"Hello\" }],  \"messages\": [{ \"role\": \"user\", \"content\": \"Hello\" }],  \"max_tokens\": 2048,  \"max_tokens\": 2048,  \"temperature\": 0.6,  \"temperature\": 0.6,  \"top_p\": 0.9,  \"top_p\": 0.9,  \"frequency_penalty\": 0.1,  \"frequency_penalty\": 0.1,  \"stop\": [\"<|eot_id|>\", \"<|end_of_text|>\"]  \"stop\": [\"<|eot_id|>\", \"<|end_of_text|>\"] }}\n``` [...] ```\n{ {  \"model\": \"meta-llama/Meta-Llama-3.1-405B-Instruct-FP8\",  \"model\": \"meta-llama/Meta-Llama-3.1-405B-Instruct-FP8\",  \"messages\": [  \"messages\": [  {  {  \"role\": \"user\",  \"role\": \"user\",  \"content\": \"Explain the concept of quantum entanglement to a 5-year-old using simple analogies.\"  \"content\": \"Explain the concept of quantum entanglement to a 5-year-old using simple analogies.\"  }  }  ],  ],  \"temperature\": 0.7,  \"temperature\": 0.7,  \"max_tokens\": 100  \"max_tokens\": 100 }}\n```\n\n[2] LLaMA 3.1 405B MMLU Score: How It Stacks Up\n    https://www.youreverydayai.com/llama-405b-review-whats-new-in-llama-3-1\n    Llama 3.1 is Meta's latest iteration of its large language model series. While Llama 3 has been around since April, this new release brings significant updates to the existing 8B and 70B parameter models, and introduces the powerhouse 405B parameter model. This trio of models is designed to cater to a wide range of AI applications, from edge devices to high-performance computing environments.\n\n[3] Announcing Llama 3.1 405B, 70B, and 8B models from Meta in Amazon Bedrock | AWS News Blog\n    https://aws.amazon.com/blogs/aws/announcing-llama-3-1-405b-70b-and-8b-models-from-meta-in-amazon-bedrock\n    Today, we are announcing the general availability of Llama 3.1 models in Amazon Bedrock. The Llama 3.1 models are Meta’s most advanced and capable models to date. The Llama 3.1 models are a collection of 8B, 70B, and 405B parameter size models that demonstrate state-of-the-art performance on a wide range of industry benchmarks and offer new capabilities for your generative artificial intelligence (generative AI) applications. [...] aws bedrock-runtime invoke-model \\ --model-id meta.llama3-1-405b-instruct-v1:0 \\ --body \"{\\\"prompt\\\":\\\" [INST]You are a very intelligent bot with exceptional critical thinking[/INST] I went to the market and bought 10 apples. I gave 2 apples to your friend and 2 to the helper. I then went and bought 5 more apples and ate 1. How many apples did I remain with? Let's think step by step.\\\",\\\"max_gen_len\\\":512,\\\"temperature\\\":0.5,\\\"top_p\\\":0.9}\" \\ --cli-binary-format raw-in-base64-out \\ --region [...] All Llama 3.1 models support a 128K context length (an increase of 120K tokens from Llama 3) that has 16 times the capacity of Llama 3 models and improved reasoning for multilingual dialogue use cases in eight languages, including English, German, French, Italian, Portuguese, Hindi, Spanish, and Thai.\n\nYou can now use three new Llama 3.1 models from Meta in Amazon Bedrock to build, experiment, and responsibly scale your generative AI ideas:\n\n[4] Meta Llama 3.1 (405B) (Deprecated)\n   \n\n[truncated: 2,341 of 6,285 chars]",
+          "content": "Summary: Meta Llama 3.1 405B parameters largest model has 405 billion parameters, making it one of the largest language models available today. It requires approximately 2 terabytes of storage for the model weights in its full precision (FP32 format) and can be optimized using techniques such as quantization. The model is recognized as the largest publicly available large language model at the time of its release, offering speed and scalability, and is suited for enterprise-level applications and research and development initiatives.\n\n[1] What Is the Size of LLaMA 3.1 405B?\n    https://medium.com/@aleksej.gudkov/what-is-the-size-of-llama-3-1-405b-70540e3912a8\n    The “405B” in LLaMA 3.1 405B stands for 405 billion parameters, making it one of the largest language models available today. Parameters are the individual weights and biases in a neural network that determine how the model processes input data and generates outputs. [...] Size in Parameters: 405 billion parameters.\n   Storage Size: Approximately 2 terabytes (TB) of storage is required for the model weights in its full precision (FP32 format). This size can be reduced by using optimization techniques such as quantization(e.g., FP16 or INT8).\n\n### How Does the Size Compare to Other Models?\n\nThe sheer size of LLaMA 3.1 405B places it among the largest LLMs, designed to rival models like OpenAI’s GPT-4 and Google’s PaLM. Here’s how it compares: [...] Smaller LLaMA Models: LLaMA 3.1 also comes in smaller variants, such as 7B, 13B, and 70B, which are more accessible in terms of hardware requirements.\n   GPT-4: While OpenAI has not disclosed the exact parameter count of GPT-4, LLaMA 405B likely exceeds it in size.\n   Other LLMs: Many other models range between 6B and 175B parameters, making LLaMA 405B significantly larger and more computationally intensive.\n\n### Implications of the Model Size\n\n[2] Llama 3.1: What You Should Know About Meta’s Most Advanced AI Models\n    https://www.hyperstack.cloud/blog/thought-leadership/llama-3.1-what-you-need-to-know-about-metas-most-advanced-ai-models\n    Llama 3.1 is Meta’s latest open-source AI model offers significant improvements in performance, safety and scalability. With models ranging from 8B to 405B parameters, Llama 3.1 supports multilingual capabilities, extended context lengths and enhanced instruction-following. The key features of Llama 3.1 include tool calling and fine-tuning for custom use cases. Its open-source nature allows flexible deployment, while competitive costs per token make it ideal for large-scale applications. [...] These models come in three sizes: 8 billion, 70 billion and 405 billion parameters, each available in both base (pre-trained) and instruct-tuned versions. The full list of Llama 3.1 models includes: [...] Llama 3.1 models are available in three sizes: 8 billion, 70 billion, and 405 billion parameters, each offered in both base and instruct-tuned versions.\n\n### What can Llama 3.1 do?\n\nThe key features of Llama 3.1 include multilingual support for eight languages, an extended context length of 128K tokens, and tool calling capabilities with built-in tools for search and mathematical reasoning.\n\nInnovation, AI, Machine Learning, LLM, NLP, RTX A6000, a100, High-Performance Computing (HPC), H100\n\n[3] Meta releases new Llama 3.1 models, including highly anticipated 405B parameter variant | IBM\n    https://www.ibm.com/think/news/meta-releases-llama-3-1-models-405b-parameter-variant\n    The instruction-tuned Llama 3.1-405B, which figures to be the largest and most powerful open source language model available today and competitive with the best proprietary models on the market, will be available on IBM® watsonx.ai™ today where it can be deployed on the IBM cloud, in a hybrid cloud environment or on-premises. [...] Undergraduate level knowledge (MMLU, 5-shot):With a score of 87.3%, the instruction-tuned Llama 405B more than matched OpenAI’s GPT-4-Turbo (86.5%), Anthropic’s Claude 3 Opus (86.8%) and\n\n[truncated: 2,472 of 6,464 chars]",
           "error": null,
-          "latency_ms": 2727.792541991221,
-          "raw_chars": 6285,
+          "latency_ms": 2548.24600000029,
+          "raw_chars": 6464,
           "truncated": true,
           "source_ids": [
             "S6",
             "S7",
-            "S1",
-            "S8",
-            "S4"
+            "S2",
+            "S3",
+            "S8"
           ]
         },
         {
-          "call_id": "call_wTVAacTpc0K9Gr0diUST2C3d",
+          "call_id": "call_vL4BPkuth3CmDK6OmWTyT9b4",
           "tool": "web_search",
           "args": {
-            "query": "Llama 3.1 405B parameter count official"
+            "query": "Llama 3.1 model sizes 405B parameters official announcement"
           },
           "ok": true,
-          "content": "Summary: The official parameter count for Llama 3.1 405B is 405 billion parameters. It is the largest and most capable open-source model released. It outperforms many other large language models on various benchmarks.\n\n[1] LLama 3.1 405B - A very large LLM!\n    https://www.youtube.com/watch?v=adZuWYJmHOc\n    it is pretty insane that Mark Zuckerberg has actually delivered a model that might have costed him millions of dollars he lived up to the promise that he made a few months ago where they're going to deliver a 45 billion parameter model I mean 4 5 billion parameter model and llama 3.1 as expected with all the rumors is officially available today here you can download the model right away on hugging face model Hub only that if your request gets approved but otherwise it's an open model with a [...] the the smaller version of the model Lama 3.18 billion parameter model it is way above every other model in this particular size so you take Gemma 2 9 billion parameter model the instruction tuned model human eval gmer 9 billion is 54 and Mr 7 billion is 40 and this model is 72 I mean it's a leap forward and uh the same thing with uh let's say mixture of experts mistal model and human well this is 75 llama 3.1 70 billion parameter model is 80.5 and almost all the benchmarks it is crushing the [...] 3.1 405 billion parameter model that we previewed back in April we're also updating the 870 billion models with new improved performance and capabilities the 405 is hands down the largest and most capable open- Source model that's ever been released it lands improvements in reasoning tool use multilinguality a larger context window and much more and the latest Benchmark numbers that we're releasing today exceed what we previewed back in April so we encourage you to read up on the details that\n\n[2] meta-llama/Llama-3.1-405B - Hugging Face\n    https://huggingface.co/meta-llama/Llama-3.1-405B\n    | MATH (CoT) | 0 | final\\_em | 29.1 | 51.9 | 51.0 | 68.0 | 73.8 |\n| Tool Use | API-Bank | 0 | acc | 48.3 | 82.6 | 85.1 | 90.0 | 92.0 |\n| BFCL | 0 | acc | 60.3 | 76.1 | 83.0 | 84.8 | 88.5 |\n| Gorilla Benchmark API Bench | 0 | acc | 1.7 | 8.2 | 14.7 | 29.7 | 35.3 |\n| Nexus (0-shot) | 0 | macro\\_avg/acc | 18.1 | 38.5 | 47.8 | 56.7 | 58.7 |\n| Multilingual | Multilingual MGSM (CoT) | 0 | em  68.9  86.9 | 91.6 | [...] |  |  |  |  |  |\n ---  --- \n|  | Training Time (GPU hours) | Training Power Consumption (W) | Training Location-Based Greenhouse Gas Emissions (tons CO2eq) | Training Market-Based Greenhouse Gas Emissions (tons CO2eq) |\n| Llama 3.1 8B | 1.46M | 700 | 420 | 0 |\n| Llama 3.1 70B | 7.0M | 700 | 2,040 | 0 |\n| Llama 3.1 405B | 30.84M | 700 | 8,930 | 0 |\n| Total | 39.3M |  | 11,390 | 0 |\n\n(tons CO2eq)\n\n(tons CO2eq) [...] | DROP (F1) | 3 | f1 | 58.4 | 59.5 | 79.7 | 79.6 | 84.8 |\n\n[3] LLaMA 3.1 405B MMLU Score: How It Stacks Up\n    https://www.youreverydayai.com/llama-405b-review-whats-new-in-llama-3-1\n    Llama 3.1 is Meta's latest iteration of its large language model series. While Llama 3 has been around since April, this new release brings significant updates to the existing 8B and 70B parameter models, and introduces the powerhouse 405B parameter model. This trio of models is designed to cater to a wide range of AI applications, from edge devices to high-performance computing environments.\n\n[4] Announcing Llama 3.1 405B, 70B, and 8B models from ...\n    https://aws.amazon.com/blogs/aws/announcing-llama-3-1-405b-70b-and-8b-models-from-meta-in-amazon-bedrock\n    Today, we are announcing the general availability of Llama 3.1 models in Amazon Bedrock. The Llama 3.1 models are Meta’s most advanced and capable models to date. The Llama 3.1 models are a collection of 8B, 70B, and 405B parameter size models that demonstrate state-of-the-art performance on a wide range of industry benchmarks and offer new capabilities for your generative artificial intelligence (generative AI) applications. [...] All Llama 3.1 models support a 128K context length (an\n\n[truncated: 2,153 of 6,150 chars]",
+          "content": "Summary: Meta announced the launch of the Llama 3.1 collection of multilingual large language models (LLMs) on Tuesday, July 23, comprising pretrained and instruction-tuned text in/text out open source generative AI models in sizes of 8B, 70B, and—for the first time—405B parameters. The 405B parameter model achieves unprecedented parity with leading proprietary, closed source LLMs and supports a 128K context length, offering new capabilities for generative AI applications. The 405B model is available in Amazon Bedrock and is a high-performance option that offers speed and scalability, handling a larger volume of requests and supporting more complex use cases.\n\n[1] Meta releases new Llama 3.1 models, including highly anticipated 405B parameter variant | IBM\n    https://www.ibm.com/think/news/meta-releases-llama-3-1-models-405b-parameter-variant\n    Artificial Intelligence\n\n# Meta releases new Llama 3.1 models, including highly anticipated 405B parameter variant\n\nWoman programmer working on computer with colleagues standing by\n\nOn Tuesday, July 23, Meta announced the launch of the Llama 3.1 collection of multilingual large language models (LLMs). Llama 3.1 comprises both pretrained and instruction-tuned text in/text out open source generative AI models in sizes of 8B, 70B and—for the first time—405B parameters. [...] ## How Llama 3.1-405B compares to leading models\n\nUpcoming Llama models with “over 400B parameters” were discussed in the April announcement of Llama 3, including some preliminary evaluation of model performance, but their exact size and specifics were not made public until today’s launch. While Llama 3.1 represents major upgrades across all model sizes, the new 405B open source model achieves unprecedented parity with leading proprietary, closed source LLMs. [...] The Llama 3.1 release follows the April 18 launch of Llama 3 models. In the accompanying launch announcement, Meta stated that “[their] goal in the near future is to make Llama 3 multilingual and multimodal, have longer context, and continue to improve overall performance across LLM capabilities such as reasoning and coding.”\n\n[2] Llama 3.1 405B, Meta’s AI strategy, and the new open frontier model ecosystem\n    https://www.interconnects.ai/p/llama-405b-open-frontier-model\n    Today, Meta released their Llama 3.1 suite of models, confirming their open-source ethos from the initial Llama 3 “preview” as embracing ship early and ship often. The Llama 3.1 models, which come in three sizes, 8, 70, and the long-rumored 405 billion parameters, are best-in-class open-weight models for their size. The 405 billion parameter model is directly in the ballpark of Anthropic’s Claude 3 and OpenAI’s GPT-4o. The marketing of Llama 3.1, and Meta’s AI strategy broadly, is pushing [...] This will be the first of multiple posts on Llama 3 and the open language model ecosystem. This focuses on the evolution of likely futures for AI given that Llama 3.1 is released with few restrictions. Open language models, not necessarily open-source ones, now have multiple more years of guaranteed relevance compared to closed labs preparing their $100 billion training clusters. The open community now has a model, namely the 405 billion parameter instruction variant, which opens up many doors\n\n[3] Announcing Llama 3.1 405B, 70B, and 8B models from Meta in Amazon Bedrock | AWS News Blog\n    https://aws.amazon.com/blogs/aws/announcing-llama-3-1-405b-70b-and-8b-models-from-meta-in-amazon-bedrock\n    Voiced by Polly\n\nToday, we are announcing the general availability of Llama 3.1 models in Amazon Bedrock. The Llama 3.1 models are Meta’s most advanced and capable models to date. The Llama 3.1 models are a collection of 8B, 70B, and 405B parameter size models that demonstrate state-of-the-art performance on a wide range of industry benchmarks and offer new capabilities for your generative artificial intelligence (generative AI) applications. [...] All Llama 3.1 models support a 128K context length\n\n[truncated: 3,488 of 7,486 chars]",
           "error": null,
-          "latency_ms": 3851.506959006656,
-          "raw_chars": 6150,
+          "latency_ms": 2548.2148339997366,
+          "raw_chars": 7486,
           "truncated": true,
           "source_ids": [
+            "S2",
             "S9",
             "S4",
-            "S7",
-            "S1",
-            "S3"
-          ]
-        },
-        {
-          "call_id": "call_Gmus7HGcgfsCcs4X2hpBLprf",
-          "tool": "web_search",
-          "args": {
-            "query": "Llama 3.1 model variants 8B 70B 405B parameters"
-          },
-          "ok": true,
-          "content": "Summary: The Llama 3.1 model has variants with 8B, 70B, and 405B parameters, offering advanced capabilities for AI applications. The 405B model is the largest and most powerful, while the 8B model is the most resource-efficient. All models support a 128K context length.\n\n[1] Announcing Llama 3.1 405B, 70B, and 8B models from Meta in Amazon Bedrock | AWS News Blog\n    https://aws.amazon.com/blogs/aws/announcing-llama-3-1-405b-70b-and-8b-models-from-meta-in-amazon-bedrock\n    Today, we are announcing the general availability of Llama 3.1 models in Amazon Bedrock. The Llama 3.1 models are Meta’s most advanced and capable models to date. The Llama 3.1 models are a collection of 8B, 70B, and 405B parameter size models that demonstrate state-of-the-art performance on a wide range of industry benchmarks and offer new capabilities for your generative artificial intelligence (generative AI) applications. [...] All Llama 3.1 models support a 128K context length (an increase of 120K tokens from Llama 3) that has 16 times the capacity of Llama 3 models and improved reasoning for multilingual dialogue use cases in eight languages, including English, German, French, Italian, Portuguese, Hindi, Spanish, and Thai.\n\nYou can now use three new Llama 3.1 models from Meta in Amazon Bedrock to build, experiment, and responsibly scale your generative AI ideas: [...] Llama 3.1 70B is ideal for content creation, conversational AI, language understanding, R&D, and enterprise applications. The model excels at text summarization and accuracy, text classification, sentiment analysis and nuance reasoning, language modeling, dialogue systems, code generation, and following instructions.\n\n[2] Meta releases new Llama 3.1 models, including highly anticipated 405B parameter variant | IBM\n    https://www.ibm.com/think/news/meta-releases-llama-3-1-models-405b-parameter-variant\n    Artificial Intelligence\n\n# Meta releases new Llama 3.1 models, including highly anticipated 405B parameter variant\n\nWoman programmer working on computer with colleagues standing by\n\nOn Tuesday, July 23, Meta announced the launch of the Llama 3.1 collection of multilingual large language models (LLMs). Llama 3.1 comprises both pretrained and instruction-tuned text in/text out open source generative AI models in sizes of 8B, 70B and—for the first time—405B parameters. [...] Llama 3.1-405B will be available in IBM watsonx.ai today, with the 8B and 70B models soon to follow.\n\nGet started on RAG tutorials with Llama 3.1-405B and watsonx.ai today:\n\n No-code RAG\n RAG with PDFs\n RAG with web data\n\nAuthor\n\nArmand Ruiz\n\nVice President, Product Management - AI Platform (watsonx.ai & watsonx.gov)\n\nIBM\n\nMaryam Ashoori \n\nVP of Product and Engineering, watsonx.governance\n\nIBM\n\nDave Bergmann \n\nSenior Staff Writer, AI Models\n\nIBM Think [...] Knowledge distillation: The knowledge and emergent abilities of the 405B model can be distilled into a smaller model, blending the capabilities of a large “teacher” model with the fast and cost-effective inference of a “student” model (like an 8B or 70B Llama 3.1). Knowledge distillation, particularly through instruction tuning on synthetic data generated by larger GPT models, was essential to the creation of influential Llama-based models like Alpaca and Vicuna.\n\n[3] Llama 3.1 Models: 405B vs 70B vs 8B - Which One to Choose?\n    https://myscale.com/blog/llama-3-1-405b-70b-8b-quick-comparison\n    The Llama 3.1 8B model is the smallest and most resource-efficient variant in the Llama 3.1 series, tailored for specific use cases where computational resources are limited, yet reliable performance remains essential. With its 8 billion parameters, this model retains crucial functionalities like tool use training while significantly reducing computational overhead compared to its larger counterparts. It also comes with a contextual window of 128K tokens, allowing it to maintain context over [...] The Llama 3.1 70B model is designed to strike a fine balance between high\n\n[truncated: 3,485 of 7,481 chars]",
-          "error": null,
-          "latency_ms": 3123.181499991915,
-          "raw_chars": 7481,
-          "truncated": true,
-          "source_ids": [
-            "S1",
             "S3",
-            "S10",
-            "S11",
-            "S12"
+            "S10"
           ]
         }
       ],
@@ -168,7 +140,7 @@
       "i": 4,
       "node": "finalize",
       "plan_version": 1,
-      "ts_offset_ms": 9118.022666996694,
+      "ts_offset_ms": 8085.968290999517,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -178,109 +150,93 @@
   "sources": [
     {
       "sid": "S1",
-      "url": "https://aws.amazon.com/blogs/aws/announcing-llama-3-1-405b-70b-and-8b-models-from-meta-in-amazon-bedrock",
-      "title": "Announcing Llama 3.1 405B, 70B, and 8B models from ...",
-      "snippet": "Llama 3.1 405B is the world’s largest publicly available large language model (LLM) according to Meta. The model sets a new standard for AI and is ideal for enterprise-level applications and research and development (R&D). It is ideal for tasks like synthetic data generation where the outputs of the",
+      "url": "https://developer.nvidia.com/blog/boosting-llama-3-1-405b-performance-by-up-to-44-with-nvidia-tensorrt-model-optimizer-on-nvidia-h200-gpus",
+      "title": "Boosting Llama 3.1 405B Performance up to 1.44x with NVIDIA TensorRT Model Optimizer on NVIDIA H200 GPUs | NVIDIA Technical Blog",
+      "snippet": "The Llama 3.1 405B large language model (LLM), developed by Meta, is an open-source community model that delivers state-of-the-art performance and supports a variety of use cases.\n\nWith 405 billion parameters and support for context lengths of up to 128K tokens, Llama 3.1 405B is also one of the mos",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S2",
-      "url": "https://blogs.oracle.com/ai-and-datascience/announcing-llama-31-oci-generative-ai",
-      "title": "Announcing Llama 3.1 405B and 70B models from Meta on ...",
-      "snippet": "## Model overview\n\nAccording to Meta, Llama 3.1 405B offers the world’s largest publicly available large language model (LLM) and is ideal for enterprise-level applications and research and development. It excels in general knowledge, synthetic data generation, advanced reasoning and contextual unde",
+      "url": "https://www.ibm.com/think/news/meta-releases-llama-3-1-models-405b-parameter-variant",
+      "title": "Meta releases new Llama 3.1 models, including highly anticipated 405B parameter variant | IBM",
+      "snippet": "The instruction-tuned Llama 3.1-405B, which figures to be the largest and most powerful open source language model available today and competitive with the best proprietary models on the market, will be available on IBM® watsonx.ai™ today where it can be deployed on the IBM cloud, in a hybrid cloud ",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S3",
-      "url": "https://www.ibm.com/think/news/meta-releases-llama-3-1-models-405b-parameter-variant",
-      "title": "Meta releases new Llama 3.1 models, including highly ...",
-      "snippet": "Artificial Intelligence\n\n# Meta releases new Llama 3.1 models, including highly anticipated 405B parameter variant\n\nWoman programmer working on computer with colleagues standing by\n\nOn Tuesday, July 23, Meta announced the launch of the Llama 3.1 collection of multilingual large language models (LLMs",
+      "url": "https://docs.oracle.com/en-us/iaas/Content/generative-ai/meta-llama-3-1-405b.htm",
+      "title": "Meta Llama 3.1 (405B) (Deprecated)",
+      "snippet": "This 405 billion-parameter model is a high-performance option that offers speed and scalability. Compared to the `meta.llama-3.1-70b-instruct` model, it can handle a larger volume of requests and support more complex use cases. Key features of this model include: [...] Model Size: 405 billion parame",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S4",
-      "url": "https://huggingface.co/meta-llama/Llama-3.1-405B",
-      "title": "meta-llama/Llama-3.1-405B - Hugging Face",
-      "snippet": "|  |  |  |  |  |\n ---  --- \n|  | Training Time (GPU hours) | Training Power Consumption (W) | Training Location-Based Greenhouse Gas Emissions (tons CO2eq) | Training Market-Based Greenhouse Gas Emissions (tons CO2eq) |\n| Llama 3.1 8B | 1.46M | 700 | 420 | 0 |\n| Llama 3.1 70B | 7.0M | 700 | 2,040 | ",
+      "url": "https://aws.amazon.com/blogs/aws/announcing-llama-3-1-405b-70b-and-8b-models-from-meta-in-amazon-bedrock",
+      "title": "Announcing Llama 3.1 405B, 70B, and 8B models from Meta in Amazon Bedrock | AWS News Blog",
+      "snippet": "Voiced by Polly\n\nToday, we are announcing the general availability of Llama 3.1 models in Amazon Bedrock. The Llama 3.1 models are Meta’s most advanced and capable models to date. The Llama 3.1 models are a collection of 8B, 70B, and 405B parameter size models that demonstrate state-of-the-art perfo",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S5",
-      "url": "https://www.youtube.com/watch?v=gmbAByBzduY",
-      "title": "Llama 3.1 - 405b, 70B & 8B: The BEST Opensource LLM EVER!",
-      "snippet": "# Llama 3.1 - 405b, 70B & 8B: The BEST Opensource LLM EVER!\n## WorldofAI\n230000 subscribers\n140 likes\n\n### Description\n6557 views\nPosted: 23 Jul 2024\nWelcome to an exciting start to the day as we introduce Meta AI's groundbreaking Llama 3.1 model series! 🌟 Discover the latest in AI innovation with m",
+      "url": "https://sambanova.ai/blog/speed-record-on-llama-3.1-405b",
+      "title": "Llama 3.1 405B 4X faster on SambaNova | World Record",
+      "snippet": "> \"Artificial Analysis has independently benchmarked SambaNova as serving Meta's Llama 3.1 Instruct 405B model at 114 tokens per second, the fastest of any provider we have benchmarked and over 4 times faster than the median provider. Llama 3.1 delivers leading quality but is large at 405B parameter",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S6",
-      "url": "https://docs.ionos.com/cloud/ai/ai-model-hub/models/llms/meta-llama-3-1-405b",
-      "title": "Llama 3.1 405B | Products",
-      "snippet": "Intelligence\n\nSpeed\n\nInput\n\nOutput\n\nIntelligence active Intelligence active Intelligence active\n\nText active Image inactive Audio inactive\n\nText active Image inactive Audio inactive\n\nHigh\n\nLow\n\nText\n\nText\n\n## Central parameters\n\nDescription: Largest open-source model from Meta with 405B parameters, ",
+      "url": "https://medium.com/@aleksej.gudkov/what-is-the-size-of-llama-3-1-405b-70540e3912a8",
+      "title": "What Is the Size of LLaMA 3.1 405B?",
+      "snippet": "The “405B” in LLaMA 3.1 405B stands for 405 billion parameters, making it one of the largest language models available today. Parameters are the individual weights and biases in a neural network that determine how the model processes input data and generates outputs. [...] Size in Parameters: 405 bi",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S7",
-      "url": "https://www.youreverydayai.com/llama-405b-review-whats-new-in-llama-3-1",
-      "title": "LLaMA 3.1 405B MMLU Score: How It Stacks Up",
-      "snippet": "Llama 3.1 is Meta's latest iteration of its large language model series. While Llama 3 has been around since April, this new release brings significant updates to the existing 8B and 70B parameter models, and introduces the powerhouse 405B parameter model. This trio of models is designed to cater to",
+      "url": "https://www.hyperstack.cloud/blog/thought-leadership/llama-3.1-what-you-need-to-know-about-metas-most-advanced-ai-models",
+      "title": "Llama 3.1: What You Should Know About Meta’s Most Advanced AI Models",
+      "snippet": "Llama 3.1 is Meta’s latest open-source AI model offers significant improvements in performance, safety and scalability. With models ranging from 8B to 405B parameters, Llama 3.1 supports multilingual capabilities, extended context lengths and enhanced instruction-following. The key features of Llama",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S8",
-      "url": "https://docs.oracle.com/en-us/iaas/Content/generative-ai/meta-llama-3-1-405b.htm",
-      "title": "Meta Llama 3.1 (405B) (Deprecated)",
-      "snippet": "This 405 billion-parameter model is a high-performance option that offers speed and scalability. Compared to the `meta.llama-3.1-70b-instruct` model, it can handle a larger volume of requests and support more complex use cases. Key features of this model include:\n\n`meta.llama-3.1-70b-instruct`\n\n## R",
+      "url": "https://huggingface.co/meta-llama/Llama-3.1-405B",
+      "title": "meta-llama/Llama-3.1-405B · Hugging Face",
+      "snippet": "## Model Information\n\nThe Meta Llama 3.1 collection of multilingual large language models (LLMs) is a collection of pretrained and instruction tuned generative models in 8B, 70B and 405B sizes (text in/text out). The Llama 3.1 instruction tuned text only models (8B, 70B, 405B) are optimized for mult",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S9",
-      "url": "https://www.youtube.com/watch?v=adZuWYJmHOc",
-      "title": "LLama 3.1 405B - A very large LLM!",
-      "snippet": "it is pretty insane that Mark Zuckerberg has actually delivered a model that might have costed him millions of dollars he lived up to the promise that he made a few months ago where they're going to deliver a 45 billion parameter model I mean 4 5 billion parameter model and llama 3.1 as expected wit",
+      "url": "https://www.interconnects.ai/p/llama-405b-open-frontier-model",
+      "title": "Llama 3.1 405B, Meta’s AI strategy, and the new open frontier model ecosystem",
+      "snippet": "Today, Meta released their Llama 3.1 suite of models, confirming their open-source ethos from the initial Llama 3 “preview” as embracing ship early and ship often. The Llama 3.1 models, which come in three sizes, 8, 70, and the long-rumored 405 billion parameters, are best-in-class open-weight model",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S10",
-      "url": "https://myscale.com/blog/llama-3-1-405b-70b-8b-quick-comparison",
-      "title": "Llama 3.1 Models: 405B vs 70B vs 8B - Which One to Choose?",
-      "snippet": "The Llama 3.1 8B model is the smallest and most resource-efficient variant in the Llama 3.1 series, tailored for specific use cases where computational resources are limited, yet reliable performance remains essential. With its 8 billion parameters, this model retains crucial functionalities like to",
-      "tool": "web_search",
-      "first_seen_step": 1
-    },
-    {
-      "sid": "S11",
-      "url": "https://huggingface.co/meta-llama/Llama-3.1-8B",
-      "title": "meta-llama/Llama-3.1-8B · Hugging Face",
-      "snippet": "`llama`\n\n## Model Information\n\nThe Meta Llama 3.1 collection of multilingual large language models (LLMs) is a collection of pretrained and instruction tuned generative models in 8B, 70B and 405B sizes (text in/text out). The Llama 3.1 instruction tuned text only models (8B, 70B, 405B) are optimized",
-      "tool": "web_search",
-      "first_seen_step": 1
-    },
-    {
-      "sid": "S12",
       "url": "https://ollama.com/library/llama3.1:405b",
       "title": "llama3.1:405b",
-      "snippet": "llama3.1:405b\n\n117M  Downloads   Updated  1 year ago\n\n## Llama 3.1 is a new state-of-the-art model from Meta available in 8B, 70B and 405B parameter sizes.\n\ntools 8b 70b 405b\n\nDocumentation  Documentation\n\n```\nollama run llama3.1:405b\n```\n\n```\ncurl  \\ -d '{ \"model\": \"llama3.1:405b\", \"messages\": [{\"r",
+      "snippet": "llama3.1:405b\n\n120.1M  Downloads   Updated  1 year ago\n\n## Llama 3.1 is a new state-of-the-art model from Meta available in 8B, 70B and 405B parameter sizes.\n\ntools 8b 70b 405b\n\nDocumentation  Documentation\n\n```\nollama run llama3.1:405b\n```\n\n```\ncurl  \\ -d '{ \"model\": \"llama3.1:405b\", \"messages\": [{",
       "tool": "web_search",
       "first_seen_step": 1
     }
   ],
-  "answer": "The largest Llama 3.1 model variant is **Llama 3.1 405B**, and it has **405 billion parameters** [S1][S4].",
+  "answer": "The largest Llama 3.1 model has **405 billion (405B) parameters** [S1][S2][S4].",
   "citations": [
     "S1",
+    "S2",
     "S4"
   ],
   "coverage": {
-    "What is the largest model variant in the Llama 3.1 family (e.g., which parameter size/checkpoint)?": false,
-    "How many parameters does that largest Llama 3.1 model have (as reported by Meta or the official release notes)?": false
+    "What is the number of parameters in the largest Llama 3.1 model?": false
   },
   "outcome": {
     "status": "completed",
@@ -296,65 +252,65 @@
         "model": "gpt-5.4-nano",
         "input_tokens": 224,
         "cached_tokens": 0,
-        "output_tokens": 144,
-        "reasoning_tokens": 39,
-        "cost_usd": 0.00022480000000000002,
-        "latency_ms": 1948.1071250047535,
+        "output_tokens": 115,
+        "reasoning_tokens": 46,
+        "cost_usd": 0.00018855,
+        "latency_ms": 1419.2809579999448,
         "replayed": false
       },
       {
         "purpose": "act",
         "model": "gpt-5.4-nano",
-        "input_tokens": 849,
+        "input_tokens": 852,
         "cached_tokens": 0,
-        "output_tokens": 135,
+        "output_tokens": 105,
         "reasoning_tokens": 0,
-        "cost_usd": 0.00033855,
-        "latency_ms": 2050.554417000967,
+        "cost_usd": 0.00030165,
+        "latency_ms": 1436.4955419996477,
         "replayed": false
       },
       {
         "purpose": "finalize",
         "model": "gpt-5.4-nano",
-        "input_tokens": 1103,
+        "input_tokens": 954,
         "cached_tokens": 0,
-        "output_tokens": 41,
+        "output_tokens": 33,
         "reasoning_tokens": 0,
-        "cost_usd": 0.00027185,
-        "latency_ms": 1245.6085000012536,
+        "cost_usd": 0.00023205,
+        "latency_ms": 1429.3725409997933,
         "replayed": false
       }
     ],
     "totals": {
-      "input_tokens": 2176,
+      "input_tokens": 2030,
       "cached_tokens": 0,
-      "output_tokens": 320,
-      "reasoning_tokens": 39,
-      "cost_usd": 0.0008352,
+      "output_tokens": 253,
+      "reasoning_tokens": 46,
+      "cost_usd": 0.00072225,
       "cache_hit_rate": 0.0
     },
     "by_purpose": {
       "plan": {
         "calls": 1,
-        "cost_usd": 0.00022480000000000002,
-        "output_tokens": 144
+        "cost_usd": 0.00018855,
+        "output_tokens": 115
       },
       "act": {
         "calls": 1,
-        "cost_usd": 0.00033855,
-        "output_tokens": 135
+        "cost_usd": 0.00030165,
+        "output_tokens": 105
       },
       "finalize": {
         "calls": 1,
-        "cost_usd": 0.00027185,
-        "output_tokens": 41
+        "cost_usd": 0.00023205,
+        "output_tokens": 33
       }
     },
-    "search_credits": 4,
+    "search_credits": 3,
     "steps": 1
   },
   "timings_ms": {
-    "total": 9113.908667000942
+    "total": 8082.146374999866
   },
   "compaction": {
     "count": 0,

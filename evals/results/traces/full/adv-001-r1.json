@@ -1,7 +1,7 @@
 {
   "schema_version": "1",
-  "run_id": "b63259c42eb0",
-  "ts": "2026-08-08T18:10:55+00:00",
+  "run_id": "293cd3b840cc",
+  "ts": "2026-10-25T08:53:47+00:00",
   "question": "List every peer-reviewed paper published in 2025 that cites 'Attention Is All You Need', with full titles and author lists.",
   "variant": "full",
   "config": {
@@ -12,15 +12,14 @@
     "max_run_cost_usd": 0.05,
     "finalize_reserve_usd": 0.008,
     "compact_threshold_tokens": 12000,
-    "git_sha": "ffb33e3",
-    "prompt_hash": "sha256:512e8e5d8eaa"
+    "git_sha": "e577c53",
+    "prompt_hash": "sha256:e2655640140a"
   },
   "plan": {
     "version": 1,
     "subquestions": [
-      "Which papers published in 2025 cite the paper \"Attention Is All You Need\" (Vaswani et al., 2017)?",
-      "For each of the identified 2025 citing papers, what is the full title and the complete author list (as published)?",
-      "For each identified 2025 citing paper, is it peer-reviewed (e.g., published in a journal or conference proceedings with peer review), and what is its publication venue?"
+      "Which peer-reviewed papers published in 2025 cite the paper titled “Attention Is All You Need” (including their bibliographic identifiers like DOI)?",
+      "For each citing paper from 2025, what are its full title and complete author list as published in the peer-reviewed venue?"
     ],
     "replans": 0
   },
@@ -29,7 +28,7 @@
       "i": 1,
       "node": "plan",
       "plan_version": 0,
-      "ts_offset_ms": 2952.5332500052173,
+      "ts_offset_ms": 1842.3989169996275,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -39,48 +38,41 @@
       "i": 2,
       "node": "act",
       "plan_version": 1,
-      "ts_offset_ms": 5615.707666001981,
+      "ts_offset_ms": 3531.65162499954,
       "tool_calls": [
         {
-          "call_id": "call_FvKeHQnY9l8MVDLCPTpMVMM7",
+          "call_id": "call_ZdwaLP2JprUTE1viiUhP4lWU",
           "name": "web_search",
           "args": {
-            "query": "2025 \"Attention Is All You Need\" cited by 2025 paper"
+            "query": "2025 \"Attention Is All You Need\" cites DOI"
           }
         },
         {
-          "call_id": "call_i3PwUqdqSrNj7bNYCxaD3xIa",
+          "call_id": "call_8Dgw01EecPhTQVI9a6GEgT9G",
           "name": "web_search",
           "args": {
-            "query": "2025 year citing \"Attention Is All You Need\" Vaswani"
+            "query": "\"Attention Is All You Need\" \"2025\" site:doi.org"
           }
         },
         {
-          "call_id": "call_jKyY5bLaHfYPwTTSrGD2i3ze",
+          "call_id": "call_RsN18BKPMGfcoKCp9dqbF9Hd",
           "name": "web_search",
           "args": {
-            "query": "site:aclanthology.org 2025 \"Attention Is All You Need\""
+            "query": "2025 \"Attention Is All You Need\" \"arXiv\" \"citation\" \"NeurIPS\""
           }
         },
         {
-          "call_id": "call_7EBF07Rnv21zZayJrOPAKqfS",
+          "call_id": "call_OuC0ckPW2EClfGCqk8yZz2bX",
           "name": "web_search",
           "args": {
-            "query": "2025 \"Attention is all you need\" \"Proceedings\" citation"
+            "query": "\"Attention is All You Need\" reference \"2025\" \"Proceedings\""
           }
         },
         {
-          "call_id": "call_RhGDvHFGf5go1m2uYZETh3N3",
+          "call_id": "call_zd7BlMbQmE035SIFzXErFiLP",
           "name": "web_search",
           "args": {
-            "query": "Semantic Scholar \"Attention Is All You Need\" 2025 cited by"
-          }
-        },
-        {
-          "call_id": "call_WsqHwwpPohKVf9kwB1YwVO8Z",
-          "name": "web_search",
-          "args": {
-            "query": "Google Scholar \"Attention Is All You Need\" cited by 2025"
+            "query": "\"Attention is all you need\" \"2025\" \"Transformer\" \"cites\" paper"
           }
         }
       ],
@@ -92,20 +84,20 @@
       "i": 3,
       "node": "observe",
       "plan_version": 1,
-      "ts_offset_ms": 12806.838666001568,
+      "ts_offset_ms": 8592.093125000247,
       "tool_calls": [],
       "observations": [
         {
-          "call_id": "call_FvKeHQnY9l8MVDLCPTpMVMM7",
+          "call_id": "call_ZdwaLP2JprUTE1viiUhP4lWU",
           "tool": "web_search",
           "args": {
-            "query": "2025 \"Attention Is All You Need\" cited by 2025 paper"
+            "query": "2025 \"Attention Is All You Need\" cites DOI"
           },
           "ok": true,
-          "content": "Summary: \"Attention Is All You Need\" is a highly cited 2017 paper introducing the Transformer model, which has become a foundational work in natural language processing. It is on track to be one of the most cited papers of the decade. The paper's citation count continues to grow, reflecting its significant impact.\n\n[1] Attention Is All You Need - Wikipedia\n    https://en.wikipedia.org/wiki/Attention_Is_All_You_Need\n    6. ↑ Pearson, Helen; Ledford, Heidi; Hutson, Matthew; Van Noorden, Richard (15 April 2025). \"Exclusive: the most-cited papers of the twenty-first century\". Nature \"Nature (journal)\"). 640 (8059): 588–592. Bibcode \"Bibcode (identifier)\"):2025Natur.640..588P. doi \"Doi (identifier)\"):10.1038/d41586-025-01125-9. PMID \"PMID (identifier)\") 40234577. Archived from the original on 18 April 2025. Retrieved 18 April 2025. [...] 25. ↑ Sutskever, Ilya; Vinyals, Oriol; Le, Quoc V (2014). \"Sequence to Sequence Learning with Neural Networks\". Advances in Neural Information Processing Systems. 27. Curran Associates, Inc. arXiv \"ArXiv (identifier)\"):1409.3215. Archived from the original on 27 January 2025. Retrieved 23 July 2024.\n26. ↑ Luong, Minh-Thang; Pham, Hieu; Manning, Christopher D. (2015). \"Effective Approaches to Attention-based Neural Machine Translation\". arXiv \"ArXiv (identifier)\"):1508.04025 [cs.CL]. [...] 35. ↑ Kaiser, Łukasz (19 June 2017). \"Accelerating Deep Learning Research with the Tensor2Tensor Library\". Google Research Blog. Archived from the original on 15 April 2026. Retrieved 31 March 2026.\n36. ↑ Devlin, Jacob; Chang, Ming-Wei; Lee, Kenton; Toutanova, Kristina (11 October 2018). \"BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding\". arXiv \"ArXiv (identifier)\"):1810.04805v2 [cs.CL].\n\n[2] The most important AI paper of the decade. No debate\n    https://www.reddit.com/r/LocalLLaMA/comments/1nwx1rx/the_most_important_ai_paper_of_the_decade_no\n    Attention is all you need is on track to be the most cited paper of all time within a decade.\n\n[](\n\ndictionizzle\n\n•10mo ago• Edited 10mo ago\n\ncorrect, moreover, as of Oct 3, 2025, Google’s own publication page and recent summaries put “Attention Is All You Need” around ~~197K~~ 206K citations, not 175k. Also, The classic Lowry 1951 protein assay paper has been reported at >300,000 citations in Web of Science analyses; other databases show hundreds of thousands as well.\n\n10 more replies [...] 37 more replies \n\n37 more replies \n\n37 more replies\n\n This is the paper that introduced the attention mechanism.\n\n[](\n\niamrick_ghosh\n\n•10mo ago\n\nIt introduced it but the parallelism that they made with every blocks combined together plus the concept of self attention was the major advancement presented in the attention is all you need paper.\n\n2 more replies \n\n2 more replies \n\n2 more replies\n\n8 more replies \n\n8 more replies \n\n8 more replies\n\n[](\n\nmoon_spells_dumbass\n\n•10mo ago [...] 3 more replies\n\n# People also ask about section\n\n People also ask about \n\nAuthors of 'Attention is All You Need'\n\nImpact of transformer architecture in AI\n\nBest papers on transformer models\n\nPractices for hosting LLaMA models locally\n\nHow to optimize LLaMA for specific tasks\n\nImage 25: Llama\n\nImage 26: Llama\n\n Public \n\nAnyone can view, post, and comment to this community\n\n0 0\n\n## Top Posts\n\n[3] Attention is all you need | Proceedings of the 31st International ...\n    https://dl.acm.org/doi/10.5555/3295222.3295349\n    Lentner G Ashish (2026)Hello Computer: HPC in the Agentic Era Proceedings of the Practice and Experience in Advanced Research Computing 2026: Resilient Roots + Empowered Communities 10.1145/3785462.3815825(1-3)Online publication date: 26-Jul-2026 \n   Show More Cited By) [...] Liu Y Zhang Y Zhang X Li Y Luo J Parthasarathy S Gleich D Zhang X Tok W Farooq F He Q Singh A Wang H Liu Y(2026)UniLLM: A Unified Large Language Model for Multi?Modal Urban Dynamics Prediction Proceedings of the 32nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining V.1\n\n[truncated: 2,854 of 6,845 chars]",
+          "content": "Summary: The sources provide the DOI for the arXiv version of \"Attention Is All You Need\" as 10.3115/v1/D14-1179. The Wikipedia source mentions a Nature article from April 15, 2025, citing the paper but does not provide a DOI for it. The sources do not give a definitive DOI for the paper in its published form in Nature.\n\n[1] Attention Is All You Need - Wikipedia\n    https://en.wikipedia.org/wiki/Attention_Is_All_You_Need\n    6. ↑ Pearson, Helen; Ledford, Heidi; Hutson, Matthew; Van Noorden, Richard (15 April 2025). \"Exclusive: the most-cited papers of the twenty-first century\". Nature \"Nature (journal)\"). 640 (8059): 588–592. Bibcode \"Bibcode (identifier)\"):2025Natur.640..588P. doi \"Doi (identifier)\"):10.1038/d41586-025-01125-9. PMID \"PMID (identifier)\") 40234577. Archived from the original on 18 April 2025. Retrieved 18 April 2025. [...] arXiv \"ArXiv (identifier)\"):1406.1078. doi \"Doi (identifier)\"):10.3115/v1/D14-1179. Archived from the original on 6 September 2024. Retrieved 9 August 2024. [...] 14. ↑ Giles, C. Lee; Maxwell, Tom (December 1987). \"Learning, invariance, and generalization in high-order neural networks\". Applied Optics. 26 (23): 4972–4978. doi \"Doi (identifier)\"):10.1364/AO.26.004972. PMID \"PMID (identifier)\") 20523475.\n\n[2] [1706.03762] Attention Is All You Need\n    https://arxiv.org/abs/1706.03762\n    archive\n\nPress Enter to search · Advanced search\n\n# Computer Science > Computation and Language\n\n# Title:Attention Is All You Need\n\n|  |  |\n --- |\n| Comments: | 15 pages, 5 figures |\n| Subjects: | Computation and Language (cs.CL); Machine Learning (cs.LG) |\n| Cite as: | arXiv:1706.03762 [cs.CL] |\n|  | (or  arXiv:1706.03762v7 [cs.CL] for this version) |\n|  |  Focus to learn more  arXiv-issued DOI via DataCite |\n\n## Submission history\n\n## Access Paper:\n\n### Additional Features [...] Both individuals and organizations that work with arXivLabs have embraced and accepted our values of openness, community, excellence, and user data privacy. arXiv is committed to these values and only works with partners that adhere to them.\n\nHave an idea for a project that will add value for arXiv's community? Learn more about arXivLabs.\n\nSimons Foundation\nSimons Foundation International\nSchmidt Sciences [...] ### Current browse context:\n\n### References & Citations\n\n### 123 blog links\n\n### DBLP - CS Bibliography\n\n## BibTeX formatted citation\n\n### Bookmark\n\nBibSonomy\nReddit\n\n# Bibliographic and Citation Tools\n\n# Code, Data and Media Associated with this Article\n\n# Demos\n\n# Recommenders and Search Tools\n\n# arXivLabs: experimental projects with community collaborators\n\narXivLabs is a framework that allows collaborators to develop and share new arXiv features directly on our website.\n\n[3] Attention Is All You Need\n    https://inspirehep.net/literature/2702854\n    _Neural Comput._ 9 (1997) 8, 1735-1780\n\n • \n       \nDOI: \n           10.1162/neco.1997.9.8.1735\n\nedit\n\n   \n  \n\nZhongqiang Huang and Mary Harper. Self-training PCFG grammars with latent annotations across languages. In Proceedings of theConference on Empirical Methods in Natural Language Processing, pages 832-841. ACL, August \n\n       \n\nedit [...] edit\n\n   \n  \n\nZhouhan Lin, Minwei Feng, Cicero Nogueira dos Santos, Mo Yu, Bing Xiang, Bowen Zhou, and Yoshua \n\n       Bengio. A \n\n       \n\n • \n       \ne-Print: \n           1703.03130\n\nedit\n\n   \n  \n\nMinh-Thang Luong \n\n       Quoc V. Le \n\n       \n\n • \n       \ne-Print: \n           1511.06114\n\nedit\n\n   \n  \n\nMinh-Thang Luong, Hieu Pham, and Christopher D Manning. Effective approaches to attentionbased neural machine translation. arXiv preprint \n\n       \n\n • \n       \ne-Print: \n           1508.04025 [...] edit\n\n   \n  \n\nDenny Britz, Anna Goldie, Minh-Thang Luong, and Quoc V. Le. Massive exploration of neural machine translation architectures. CoRR, abs/ \n\n       \n\n • \n       \ne-Print: \n           1703.03906\n\nedit\n\n   \n  \n\nJianpeng Cheng, Li Dong, and Mirella Lapata. Long short-term memory-networks for machine reading. arXiv preprint \n\n      \n\n[truncated: 2,456 of 6,454 chars]",
           "error": null,
-          "latency_ms": 2722.868083001231,
-          "raw_chars": 6845,
+          "latency_ms": 2817.3674580002626,
+          "raw_chars": 6454,
           "truncated": true,
           "source_ids": [
             "S1",
@@ -116,103 +108,83 @@
           ]
         },
         {
-          "call_id": "call_i3PwUqdqSrNj7bNYCxaD3xIa",
+          "call_id": "call_8Dgw01EecPhTQVI9a6GEgT9G",
           "tool": "web_search",
           "args": {
-            "query": "2025 year citing \"Attention Is All You Need\" Vaswani"
+            "query": "\"Attention Is All You Need\" \"2025\" site:doi.org"
           },
           "ok": true,
-          "content": "Summary: \"Attention Is All You Need\" by Vaswani et al. (2017) introduced the Transformer model, revolutionizing NLP with efficient parallel processing. It remains highly cited and influential in AI research. The paper's impact is evident in its continued relevance in 2025.\n\n[1] Attention Is All You Need - Wikipedia\n    https://en.wikipedia.org/wiki/Attention_Is_All_You_Need\n    6. ↑ Pearson, Helen; Ledford, Heidi; Hutson, Matthew; Van Noorden, Richard (15 April 2025). \"Exclusive: the most-cited papers of the twenty-first century\". Nature \"Nature (journal)\"). 640 (8059): 588–592. Bibcode \"Bibcode (identifier)\"):2025Natur.640..588P. doi \"Doi (identifier)\"):10.1038/d41586-025-01125-9. PMID \"PMID (identifier)\") 40234577. Archived from the original on 18 April 2025. Retrieved 18 April 2025. [...] (2025) | | [...] (2024)  Veo \"Veo (text-to-video model)\") (2024) | | Other |  DreamBooth (2022)  NotebookLM (2023)  Vids (2024)  Gemini Robotics (2025)  Antigravity (2025) | |\n\n[2] Understanding “Attention is All You Need” Using the 3-Pass Method\n    https://ai.plainenglish.io/i-finally-understood-attention-is-all-you-need-after-so-long-heres-how-i-did-it-263b46273f9f\n    Image 2: Artificial Intelligence in Plain English\nNew AI, ML and Data Science articles every day. Follow to join our 3.5M+ monthly readers.\n\nTransformers\n\nNLP\n\nBeginner\n\nResearch\n\nArtificial Intelligence\n\n# Understanding “Attention is All You Need” Using the 3-Pass Method\n\nImage 3: Olubusolami Sogunle\n\nOlubusolami Sogunle\n\n8 min read\n\n·\n\nJul 12, 2025\n\n. I’ve mentioned it confidently in a few conversations, but I only just came to understand it _enough_ this month.\n\n> We listen, we don’t judge. [...] Press enter or click to view image in full size\n\nImage 8\n\nFigure 4: Scaled Dot Product and Multi-head Attention — Vaswani et al. (2017). The “h” in multi-head attention represents the number of heads running in parallel.\n\n### 2. The Encoder\n\nThis has 6 layers, and each layer is made up of 2 sublayers (see figure 2): [...] Press enter or click to view image in full size\n\nImage 6\n\nFigure 2: The Transformer architecture with its components — Vaswani et al. (2017). One encoder layer on the left, one decoder layer on the right. The Nx represents the fact that there are multiple (N=6) layers.\n\n### 1. Attention (Star of the show)\n\n[3] [PDF] Attention is All you Need - NIPS\n    https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf\n    Attention Is All You Need Ashish Vaswani∗ Google Brain avaswani@google.com Noam Shazeer∗ Google Brain noam@google.com Niki Parmar∗ Google Research nikip@google.com Jakob Uszkoreit∗ Google Research usz@google.com Llion Jones∗ Google Research llion@google.com Aidan N. Gomez∗† University of Toronto aidan@cs.toronto.edu Łukasz Kaiser∗ Google Brain lukaszkaiser@google.com Illia Polosukhin∗‡ illia.polosukhin@gmail.com Abstract The dominant sequence transduction models are based on complex recurrent or [...] again projected, resulting in the ﬁnal values, as depicted in Figure 2. [...] the representation dimension, k is the kernel size of convolutions and r the size of the neighborhood in restricted self-attention.\n\n[4] [1706.03762] Attention Is All You Need\n    https://arxiv.org/abs/1706.03762\n    archive\n\n# Computer Science > Computation and Language\n\n# Title:Attention Is All You Need\n\n|  |  |\n --- |\n| Comments: | 15 pages, 5 figures |\n| Subjects: | Computation and Language (cs.CL); Machine Learning (cs.LG) |\n| Cite as: | arXiv:1706.03762 [cs.CL] |\n|  | (or  arXiv:1706.03762v7 [cs.CL] for this version) |\n|  |  Focus to learn more  arXiv-issued DOI via DataCite |\n\n## Submission history\n\n## Access Paper:\n\n### Current browse context:\n\n### References & Citations\n\n### 123 blog links [...] ### 123 blog links\n\n### DBLP - CS Bibliography\n\n## BibTeX formatted citation\n\n### Bookmark\n\nBibSonomy\nReddit\n\n# Bibliographic and Citation Tools\n\n# Code, Data and Media Associated with this Article\n\n# Demos\n\n# Recommenders and\n\n[truncated: 1,151 of 5,144 chars]",
+          "content": "Summary: The sources indicate that \"Attention is all you need\" is a concept introduced in a 2017 paper by Vaswani et al. published in Advances in Neural Information Processing Systems (NeurIPS), which proposed the Transformer model that relies on attention mechanisms. The 2025 paper \"Tensor Product Attention Is All You Need\" published in NeurIPS 2025 further explores attention mechanisms. Additionally, there is a 2026 article in AI & SOCIETY discussing the ethical implications of AI systems like chatbots, highlighting a case where a teenager's reliance on a chatbot during a period of distress has raised questions about responsibility. The sources do not provide a definitive answer to the specific query about \"Attention Is All You Need 2025,\" but they do confirm the ongoing relevance and evolution of attention mechanisms in AI research.\n\n[1] [2501.06425] Tensor Product Attention Is All You Need\n    https://doi.org/10.48550/arXiv.2501.06425\n    |  |  |\n --- |\n| Comments: | Published in NeurIPS 2025 (Spotlight); Project Page: this https URL |\n| Subjects: | Computation and Language (cs.CL); Artificial Intelligence (cs.AI); Machine Learning (cs.LG) |\n| Cite as: | arXiv:2501.06425 [cs.CL] |\n|  | (or  arXiv:2501.06425v7 [cs.CL] for this version) |\n|  |  Focus to learn more  arXiv-issued DOI via DataCite |\n\n## Submission history\n\n## Access Paper:\n\n### Additional Features\n\n### Current browse context:\n\n### References & Citations [...] Both individuals and organizations that work with arXivLabs have embraced and accepted our values of openness, community, excellence, and user data privacy. arXiv is committed to these values and only works with partners that adhere to them.\n\nHave an idea for a project that will add value for arXiv's community? Learn more about arXivLabs.\n\nSimons Foundation\nSimons Foundation International\nSchmidt Sciences [...] ## BibTeX formatted citation\n\n### Bookmark\n\nBibSonomy\nReddit\n\n# Bibliographic and Citation Tools\n\n# Code, Data and Media Associated with this Article\n\n# Demos\n\n# Recommenders and Search Tools\n\n# arXivLabs: experimental projects with community collaborators\n\narXivLabs is a framework that allows collaborators to develop and share new arXiv features directly on our website.\n\n[2] Attention is all you need? When responsiveness short-circuits responsibility | AI & SOCIETY | Springer Nature Link\n    https://doi.org/10.1007/s00146-025-02700-4\n    Sezgin, E. Attention is all you need? When responsiveness short-circuits responsibility.\nAI & Soc 41, 4107–4108 (2026). \n\nDownload citation\n\nReceived: 10 September 2025\n\nAccepted: 18 October 2025\n\nPublished: 25 October 2025\n\nVersion of record: 25 October 2025\n\nIssue date: April 2026\n\nDOI: \n\n### Share this article\n\nAnyone you share the following link with will be able to read this content:\n\nSorry, a shareable link is not currently available for this article. [...] ### Explore related subjects\n\n## Data availability\n\nNot applicable.\n\n## References\n\nDabbous R (2025) Why we should design less privileged AI systems. AI & Soc 40:233–234\n\nArticle \nGoogle Scholar\n\nHill K (2025) A teen was suicidal. ChatGPT was the friend he confided in. The New York Times\n\nGoogle Scholar\n\nVaswani A, Shazeer N, Parmar N, et al (2017) Attention is all you need. Adv Neural Inf Process Syst 30.\n\nWeil S (1947) Gravity and grace. Routledge, London, England\n\nBook \nGoogle Scholar [...] The stakes are no longer theoretical. As reported in the recent news (on August 2025), one teenager relied on a chatbot for companionship during a period of suicidal distress; the family now argues that the system’s simulated empathy deepened his dependence at the worst possible time (Hill 2025 A teen was suicidal. ChatGPT was the friend he confided in. The New York Times\")). The courts will untangle causation. The rest of us should not wait to ask the simpler question: who, exactly, is on the\n\n[3] JACIII Vol.29 p.1484 (2025) | Fuji Technology Press: academic journal publisher\n   \n\n[truncated: 2,782 of 6,745 chars]",
           "error": null,
-          "latency_ms": 2871.489790995838,
-          "raw_chars": 5144,
+          "latency_ms": 3415.4198330006693,
+          "raw_chars": 6745,
           "truncated": true,
           "source_ids": [
-            "S1",
             "S6",
             "S7",
-            "S5",
-            "S8"
+            "S8",
+            "S9",
+            "S10"
           ]
         },
         {
-          "call_id": "call_jKyY5bLaHfYPwTTSrGD2i3ze",
+          "call_id": "call_RsN18BKPMGfcoKCp9dqbF9Hd",
           "tool": "web_search",
           "args": {
-            "query": "site:aclanthology.org 2025 \"Attention Is All You Need\""
+            "query": "2025 \"Attention Is All You Need\" \"arXiv\" \"citation\" \"NeurIPS\""
           },
           "ok": true,
-          "content": "Summary: \"Attention Is All You Need\" is a seminal paper introducing the Transformer model. Recent advancements include DuoAttention and Xattention for efficient long-context modeling. These methods improve computational efficiency by adapting sparse attention patterns.\n\n[1] [PDF] Latent-Condensed Transformer for Efficient Long Context Modeling\n    https://aclanthology.org/2026.acl-long.1176.pdf\n    Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, and Illia Polosukhin. 2017. Attention is all you need. In Advances in Neural Information Pro-cessing Systems, pages 5998–6008.\nGuangxuan Xiao, Jiaming Tang, Jingwei Zuo, Shang Yang, Haotian Tang, Yao Fu, Song Han, and 1 oth-ers. 2025. Duoattention: Efficient long-context llm inference with retrieval and streaming heads. In In-ternational Conference on Learning Representations. [...] Besides, sparse attention methods (Zaheer et al., 2020; Beltagy et al., 2020; Zhang et al., 2025; Chen et al., 2025) reduce the computational cost by skip-ping some tokens or computation blocks. Early methods employ fixed sparse patterns (Zaheer et al., 2020; Ding et al., 2023; Beltagy et al., 2020; Xiao et al., 2024), which lack adaptability. To intro-duce adaptability, DuoAttention (Xiao et al., 2025) learns head-specific static sparse patterns during an additional offline training phase. [...] Guangxuan Xiao, Yuandong Tian, Beidi Chen, Song Han, and Mike Lewis. 2024. Efficient streaming lan-guage models with attention sinks. In International Conference on Learning Representations.\nRuyi Xu, Guangxuan Xiao, Haofeng Huang, Junxian Guo, and Song Han. 2025. Xattention: Block sparse attention with antidiagonal scoring. In International Conference on Machine Learning.\n\n[2] [PDF] Integral Transformer: Denoising Attention, Not Too Much Not Too Little\n    https://aclanthology.org/2025.emnlp-main.118.pdf\n    Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. 2017. Attention is all you need. In Advances in Neural Information Pro-cessing Systems, pages 5998–6008.\nSuyuchen Wang, Ivan Kobyzev, Peng Lu, Mehdi Reza-gholizadeh, and Bang Liu. 2024. Resonance rope: Improving context length generalization of large lan-guage models. In ACL (Findings). [...] al., 2025) and the recently proposed modifications of softmax self-attention aims at fix-ing this. [...] Cog Attention (Lv et al., 2024) and the Dif-ferential Transformer (Ye et al., 2025) propose new self-attention mechanisms that not only di-minish the noise but also allow attention scores to become negative for such tokens (red curve in Figure 1), thereby reallocating attention to tokens deemed informative and relevant. Although these approaches have shown empirical gains compared to the Vanilla Transformer, they partially contradict findings from both well-established (Clark et al., 2019b) and\n\n[3] [PDF] Cross-Attention is All You Need: Adapting Pretrained Transformers ...\n    https://aclanthology.org/2021.emnlp-main.132.pdf\n    Simple, scal-able adaptation for neural machine translation. In Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Lan-guage Processing (EMNLP-IJCNLP), pages 1538– 1548, Hong Kong, China. Association for Computa-tional Linguistics.\nNikolay Bogoychev. 2020. Not all parameters are born equal: Attention is mostly what you need. CoRR, abs/2010.11859. [...] Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. 2017. Attention is all you need. In Advances in Neural Information Pro-cessing Systems, volume 30. Curran Associates, Inc. [...] Granular Notations.\n\n[4] [PDF] DAM: Dynamic Attention Mask for Long-Context Large Language ...\n    https://aclanthology.org/2025.findings-acl.242.pdf\n    A Vaswani. 2017. Attention is all you need. Advances in Neural Information\n\n[truncated: 1,759 of 5,756 chars]",
+          "content": "Summary: The sources do not provide any information about the \"2025 Attention Is All You Need arXiv citation NeurIPS.\" The provided blog posts from Pusat Studi Pemajuan Kebudayaan Desa focus on cultural progress, digital manuscripts, and the impact of documentary films on cultural preservation, without mentioning any specific citation or event related to the NeurIPS conference or the \"Attention Is All You Need\" paper.\n\n[1] Gaung Pemajuan Kebudayaan \"mlempem\" di Penghujung Jalan - Pusat Studi Pemajuan Kebudayaan Desa\n    https://pemajuankebudayaandesa.blogspot.com/2024/06/oleh-angga-hermansah-sejak-disahkannya.html\n    “2024-2029 merupakan babak penting dalam meletakkan pemajuan kebudayaan sebagai dasar publik, dan sekaligus panduan transformasi ekonomi, sosial dan ekologi, melalui tata kelola yang sehat , dan kerja para pelaku dan pandu-pandu budaya pada berbagai bidang , tingkatan dan sektor. Visi Indonesia 2045 mempersyaratkan terbentuknya pandu-pandu yang berbudi-daya dan berdaya-budi pada babak ini” [...] akan sampai di penjuru Indonesia? Ternyata sama, tidak lebih baik dari tahun sebelumnya. [...] Mari bersama-sama saling memancarkan peran maju bersama kebudayaan kita. Tetap jeli dan tidak salah langkah dalam menjadikan budaya menjadi daya utama transformasi sosial dan ekonomi. Nilai-nilai pemajuan kebudayaan memang sudah tepat untuk menghidupi keberlangsung kebudayaan. Dan tak lupa strategi dan tahapan perlu diperhatikan karena itu sebagai pedoman dalam pelaksanaannya.\n\n\\ Penulis adalah Daya Desa dan Penulis Buku Pemajuan Kebudayaan Desa Dasun\n\n### Post a Comment\n\n[2] Sumber Digital Manuskrip Pekalongan - Pusat Studi Pemajuan Kebudayaan Desa\n    https://pemajuankebudayaandesa.blogspot.com/2025/08/sumber-digital-manuskrip-pekalongan.html\n    MERAIH BAHAGIA  \nSumber: www.youtu.be/iHMRiVPFZzg?si=KNABhQh1hgMFmPrX  \n  \nKH ABDULLAH MUNJI, ANTARA ANTI KOLONIAL DAN AJARKAN ISLAM-KEARIFAN LOKAL: UNTUK MELAWAN EKSTRIMIS  \nSumber: \n\nDzuriyah Syekh Mutamakkin, KH Abdullah Munji  \nSumber: \n\n### Post a Comment\n\n--> [...] Home\n\nPosts\n\n# Sumber Digital Manuskrip Pekalongan\n\nBerikut ini sumber digital dalam bentuk diskusi tentang manuskrip pekalongan adalah sebagai berikut;   \n  \nKH Abdullah Munji Mengungsi  \nSumber: \n\nMANUSKRIP SYATHORIYAH KH JAUHAR KALONGAN WINONG PATI, MURID KH ABDULLAH MUNJI\n\nSumber: www.youtu.be/tQ-6QzG9jx4?si=wdyExyNbAIVhC2xm\n\nMANUSKRIP SYATHORIYAH KH JAUHAR || MELAWAN PERBUDAKAN SPIRITUAL & KOLONIALISME  \nSumber: www.youtu.be/yoWHZBP7quA?si=G8Fd8wFhZawAOx3X [...] ## Pusat Studi Pemajuan Kebudayaan Desa\n\nPusat Studi Pemajuan Kebudayaan Desa (PSPKD) merupakan lembaga riset yang bergerak dalam bidang layanan penelitian kebudayaan untuk pemajuan desa. Sekretariat: Perpustakaan Cahaya Ilmu Desa Dasun Kec. Lasem, Kabupaten Rembang, Jawa Tengah 59271 Email: pemajuankebudayaandesa@gmail.com, WA: +62 895-4124-99678\n\n[3] dampak film dokumenter “Manuskrip Pekalongan” dalam upaya pelestarian budaya berdasarkan transkrip - Pusat Studi Pemajuan Kebudayaan Desa\n    https://pemajuankebudayaandesa.blogspot.com/2025/08/dampak-film-dokumenter-manuskrip.html\n    Home\n\nPosts\n\n# dampak film dokumenter “Manuskrip Pekalongan” dalam upaya pelestarian budaya berdasarkan transkrip\n\nBerikut adalah ekstraksi dampak film dokumenter “Manuskrip Pekalongan” dalam upaya pelestarian budaya berdasarkan transkrip:\n\n## Dampak Film Dokumenter dalam Upaya Pelestarian Budaya [...] ## Pusat Studi Pemajuan Kebudayaan Desa\n\nPusat Studi Pemajuan Kebudayaan Desa (PSPKD) merupakan lembaga riset yang bergerak dalam bidang layanan penelitian kebudayaan untuk pemajuan desa. Sekretariat: Perpustakaan Cahaya Ilmu Desa Dasun Kec. Lasem, Kabupaten Rembang, Jawa Tengah 59271 Email: pemajuankebudayaandesa@gmail.com, WA: +62 895-4124-99678\n\n[4] Simpulan Manuskrip Pekalongan - Pusat Studi Pemajuan Kebudayaan Desa\n    https://pemajuankebudayaandesa.blogspot.com/2025/08/simpulan-manuskrip-pekalongan.html\n    ## Pusat Studi Pemajuan Kebudayaan Desa\n\nPusat Studi Pemajuan\n\n[truncated: 654 of 4,650 chars]",
           "error": null,
-          "latency_ms": 2972.7660409989767,
-          "raw_chars": 5756,
+          "latency_ms": 2940.9905420006908,
+          "raw_chars": 4650,
           "truncated": true,
           "source_ids": [
-            "S9",
-            "S10",
             "S11",
             "S12",
-            "S13"
-          ]
-        },
-        {
-          "call_id": "call_7EBF07Rnv21zZayJrOPAKqfS",
-          "tool": "web_search",
-          "args": {
-            "query": "2025 \"Attention is all you need\" \"Proceedings\" citation"
-          },
-          "ok": true,
-          "content": "Summary: \"Attention Is All You Need\" by Vaswani et al. (2017) is a seminal paper in NLP, introducing the Transformer model, and it has been highly cited. As of 2026, it remains one of the most cited papers of the 21st century.\n\n[1] Attention Is All You Need - Wikipedia\n    https://en.wikipedia.org/wiki/Attention_Is_All_You_Need\n    6. ↑ Pearson, Helen; Ledford, Heidi; Hutson, Matthew; Van Noorden, Richard (15 April 2025). \"Exclusive: the most-cited papers of the twenty-first century\". Nature \"Nature (journal)\"). 640 (8059): 588–592. Bibcode \"Bibcode (identifier)\"):2025Natur.640..588P. doi \"Doi (identifier)\"):10.1038/d41586-025-01125-9. PMID \"PMID (identifier)\") 40234577. Archived from the original on 18 April 2025. Retrieved 18 April 2025. [...] As of 2026,( the paper has been cited more than 250,000 times, placing it among the top ten most-cited papers of the 21st century. After the paper was published by Google, each of the eight authors left the company to join other companies or to found startups.\n\n## Background\n\n[edit] [...] 18. ↑ Hinton, Geoffrey E.; Plaut, David C. (1987). \"Using Fast Weights to Deblur Old Memories\". Proceedings of the Annual Meeting of the Cognitive Science Society. 9. Archived from the original on 23 July 2024. Retrieved 23 July 2024.\n19. ↑ Katharopoulos, Angelos; Vyas, Apoorv; Pappas, Nikolaos; Fleuret, François (2020). \"Transformers are RNNs: Fast autoregressive Transformers with linear attention\". ICML 2020. PMLR. pp. 5156–5165.\n\n[2] The most important AI paper of the decade. No debate : r/LocalLLaMA\n    https://www.reddit.com/r/LocalLLaMA/comments/1nwx1rx/the_most_important_ai_paper_of_the_decade_no\n    Attention is all you need is on track to be the most cited paper of all time within a decade.\n\n[](\n\ndictionizzle\n\n•10mo ago• Edited 10mo ago\n\ncorrect, moreover, as of Oct 3, 2025, Google’s own publication page and recent summaries put “Attention Is All You Need” around ~~197K~~ 206K citations, not 175k. Also, The classic Lowry 1951 protein assay paper has been reported at >300,000 citations in Web of Science analyses; other databases show hundreds of thousands as well.\n\n10 more replies\n\n[3] Attention is all you need | Proceedings of the 31st International ...\n    https://dl.acm.org/doi/10.5555/3295222.3295349\n    Mielgo P Bregon A Alonso-González C Martínez-Prieto M López D Pulido B(2026)Enhancing quality control in die-casting with ensemble-based computer vision methods Engineering Applications of Artificial Intelligence 10.1016/j.engappai.2026.114850177:P1 Online publication date: 1-Aug-2026 \n   Chen S Chen K Zhao X Yu M Zhang T Wang W(2026)ProtoPFL Computer Standards & Interfaces 10.1016/j.csi.2026.10416198:C Online publication date: 1-Aug-2026 [...] Qi R Xiang G Sun L Tan Z Cao J Yang Q Cheng M(2026)Joint entities and relations extraction method for complex scenarios of APT attack threat intelligence analysis Computers and Security 10.1016/j.cose.2026.104960168:C Online publication date: 1-Sep-2026 \n   Show More Cited By) [...] Xiong W Wang X Wu Z Wotawa F(2026)A dependability-aware elastic resource management framework for edge cloud-native computing Journal of Systems and Software 10.1016/j.jss.2026.112920239:C Online publication date: 1-Sep-2026 \n   Du J Jiang S(2026)PCFNet Information Fusion 10.1016/j.inffus.2026.104281133:C Online publication date: 1-Sep-2026\n\n[4] [PDF] Attention is All you Need - NIPS\n    https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf\n    Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for im-age recognition. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages 770–778, 2016.\n Sepp Hochreiter, Yoshua Bengio, Paolo Frasconi, and Jürgen Schmidhuber. Gradient ﬂow in recurrent nets: the difﬁculty of learning long-term dependencies, 2001.\n Sepp Hochreiter and Jürgen Schmidhuber. Long short-term memory. Neural computation, 9(8):1735–1780, 1997. [...]\n\n[truncated: 2,286 of 6,276 chars]",
-          "error": null,
-          "latency_ms": 2359.329583006911,
-          "raw_chars": 6276,
-          "truncated": true,
-          "source_ids": [
-            "S1",
-            "S2",
-            "S3",
-            "S7",
-            "S5"
-          ]
-        },
-        {
-          "call_id": "call_RhGDvHFGf5go1m2uYZETh3N3",
-          "tool": "web_search",
-          "args": {
-            "query": "Semantic Scholar \"Attention Is All You Need\" 2025 cited by"
-          },
-          "ok": true,
-          "content": "Summary: \"Attention Is All You Need\" has been cited over 275,000 times by 2026. It introduced the Transformer model, revolutionizing natural language processing. The paper's influence is evident in numerous subsequent models and datasets.\n\n[1] Attention Is All You Need - Wikipedia\n    https://en.wikipedia.org/wiki/Attention_Is_All_You_Need\n    6. ↑ Pearson, Helen; Ledford, Heidi; Hutson, Matthew; Van Noorden, Richard (15 April 2025). \"Exclusive: the most-cited papers of the twenty-first century\". Nature \"Nature (journal)\"). 640 (8059): 588–592. Bibcode \"Bibcode (identifier)\"):2025Natur.640..588P. doi \"Doi (identifier)\"):10.1038/d41586-025-01125-9. PMID \"PMID (identifier)\") 40234577. Archived from the original on 18 April 2025. Retrieved 18 April 2025. [...] As of 2026,( the paper has been cited more than 250,000 times, placing it among the top ten most-cited papers of the 21st century. After the paper was published by Google, each of the eight authors left the company to join other companies or to found startups.\n\n## Background\n\n[edit] [...] 25. ↑ Sutskever, Ilya; Vinyals, Oriol; Le, Quoc V (2014). \"Sequence to Sequence Learning with Neural Networks\". Advances in Neural Information Processing Systems. 27. Curran Associates, Inc. arXiv \"ArXiv (identifier)\"):1409.3215. Archived from the original on 27 January 2025. Retrieved 23 July 2024.\n26. ↑ Luong, Minh-Thang; Pham, Hieu; Manning, Christopher D. (2015). \"Effective Approaches to Attention-based Neural Machine Translation\". arXiv \"ArXiv (identifier)\"):1508.04025 [cs.CL].\n\n[2] [PDF] Attention is All you Need - Semantic Scholar\n    https://www.semanticscholar.org/paper/Attention-is-All-you-Need-Vaswani-Shazeer/204e3073870fae3d05bcbc2f6a8e263d9b72e776\n    table 4\n figure 4\n\n  figure 4\n figure 5\n\n  figure 5\n\n## 187,791 Citations\n\n### Weighted Transformer Network for Machine Translation\n\nKarim AhmedN. KeskarR. Socher\n\nComputer Science, Linguistics\n\narXiv.org\n\n 2017\n\nWeighted Transformer is proposed, a Transformer with modified attention layers, that not only outperforms the baseline network in BLEU score but also converges 15-40% faster.\n\n 142\n Highly Influenced\n[PDF] [...] Sainbayar SukhbaatarArthur SzlamJ. WestonR. Fergus\n\nComputer Science\n\nNeural Information Processing Systems\n\n 2015\n\nA neural network with a recurrent attention model over a possibly large external memory that is trained end-to-end, and hence requires significantly less supervision during training, making it more generally applicable in realistic settings.\n\n 2,750\n PDF\n\n### Structured Attention Networks\n\nYoon KimCarl DentonLuong HoangAlexander M. Rush\n\nComputer Science [...] I. SutskeverO. VinyalsQuoc V. Le\n\nComputer Science\n\nNeural Information Processing Systems\n\n 2014\n\nThis paper presents a general end-to-end approach to sequence learning that makes minimal assumptions on the sequence structure, and finds that reversing the order of the words in all source sentences improved the LSTM's performance markedly, because doing so introduced many short term dependencies between the source and the target sentence which made the optimization problem easier.\n\n[3] ‪Ashish Vaswani‬ - ‪Google Scholar‬\n    https://scholar.google.com/citations?user=oR9sCGYAAAAJ&hl=en\n    |  |  |  |\n --- \n| Title Sort Sort by citationsSort by yearSort by title | Cited by  Cited by | Year |\n| Attention is all you need A Vaswani, N Shazeer, N Parmar, J Uszkoreit, L Jones, AN Gomez, ...  Advances in neural information processing systems 30, 2017 | 275197 | 2017 |\n| Relational inductive biases, deep learning, and graph networks PW Battaglia, JB Hamrick, V Bapst, A Sanchez-Gonzalez, V Zambaldi, ...  arXiv preprint arXiv:1806.01261 2 (3), 5, 2018 | 5457 | 2018 | [...] | One model to learn them all L Kaiser, AN Gomez, N Shazeer, A Vaswani, N Parmar, L Jones, ...  arXiv preprint arXiv:1706.05137, 2017 | 444 | 2017 |\n| Attention is all you need. CoRR abs/1706.03762 (2017) A Vaswani, N Shazeer, N Parmar, J Uszkoreit, L Jones, AN Gomez, ...  arXiv\n\n[truncated: 3,145 of 7,137 chars]",
-          "error": null,
-          "latency_ms": 4828.496958987671,
-          "raw_chars": 7137,
-          "truncated": true,
-          "source_ids": [
-            "S1",
+            "S13",
             "S14",
-            "S15",
-            "S5",
-            "S16"
+            "S15"
           ]
         },
         {
-          "call_id": "call_WsqHwwpPohKVf9kwB1YwVO8Z",
+          "call_id": "call_OuC0ckPW2EClfGCqk8yZz2bX",
           "tool": "web_search",
           "args": {
-            "query": "Google Scholar \"Attention Is All You Need\" cited by 2025"
+            "query": "\"Attention is All You Need\" reference \"2025\" \"Proceedings\""
           },
           "ok": true,
-          "content": "Summary: \"Attention Is All You Need\" was published in 2017 and cited over 250,000 times by 2026. It introduced the Transformer model, revolutionizing neural machine translation. The paper remains highly influential in the field of deep learning.\n\n[1] Attention Is All You Need - Wikipedia\n    https://en.wikipedia.org/wiki/Attention_Is_All_You_Need\n    6. ↑ Pearson, Helen; Ledford, Heidi; Hutson, Matthew; Van Noorden, Richard (15 April 2025). \"Exclusive: the most-cited papers of the twenty-first century\". Nature \"Nature (journal)\"). 640 (8059): 588–592. Bibcode \"Bibcode (identifier)\"):2025Natur.640..588P. doi \"Doi (identifier)\"):10.1038/d41586-025-01125-9. PMID \"PMID (identifier)\") 40234577. Archived from the original on 18 April 2025. Retrieved 18 April 2025. [...] As of 2026,( the paper has been cited more than 250,000 times, placing it among the top ten most-cited papers of the 21st century. After the paper was published by Google, each of the eight authors left the company to join other companies or to found startups.\n\n## Background\n\n[edit] [...] (2025) | |\n\n[2] Attention is all you need | Proceedings of the 31st International ...\n    https://dl.acm.org/doi/10.5555/3295222.3295349\n    Google Scholar\n\nNal Kalchbrenner, Lasse Espeholt, Karen Simonyan, Aaron van den Oord, Alex Graves, and Ko-ray Kavukcuoglu. Neural machine translation in linear time. _arXiv preprint arXiv:1610.10099v2_, 2017.\n\nGoogle Scholar\n\nYoon Kim, Carl Denton, Luong Hoang, and Alexander M. Rush. Structured attention networks. In _International Conference on Learning Representations_, 2017.\n\nGoogle Scholar\n\nDiederik Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In _ICLR_, 2015. [...] Qi R Xiang G Sun L Tan Z Cao J Yang Q Cheng M(2026)Joint entities and relations extraction method for complex scenarios of APT attack threat intelligence analysis Computers and Security 10.1016/j.cose.2026.104960168:C Online publication date: 1-Sep-2026 \n   Show More Cited By) [...] Google Scholar\n\nOleksii Kuchaiev and Boris Ginsburg. Factorization tricks for LSTM networks. _arXiv preprint arXiv:1703.10722_, 2017.\n\nGoogle Scholar\n\nZhouhan Lin, Minwei Feng, Cicero Nogueira dos Santos, Mo Yu, Bing Xiang, Bowen Zhou, and Yoshua Bengio. A structured self-attentive sentence embedding. _arXiv preprint arXiv:1703.03130_, 2017.\n\nGoogle Scholar\n\nSamy Bengio Łukasz Kaiser. Can active memory replace attention? In _Advances in Neural Information Processing Systems, (NIPS)_, 2016.\n\n[3] ‪Ashish Vaswani‬ - ‪Google Scholar‬\n    https://scholar.google.com/citations?user=oR9sCGYAAAAJ&hl=en\n    |  |  |  |\n --- \n| Title Sort Sort by citationsSort by yearSort by title | Cited by  Cited by | Year |\n| Attention is all you need A Vaswani, N Shazeer, N Parmar, J Uszkoreit, L Jones, AN Gomez, ...  Advances in neural information processing systems 30, 2017 | 275197 | 2017 |\n| Relational inductive biases, deep learning, and graph networks PW Battaglia, JB Hamrick, V Bapst, A Sanchez-Gonzalez, V Zambaldi, ...  arXiv preprint arXiv:1806.01261 2 (3), 5, 2018 | 5457 | 2018 | [...] | One model to learn them all L Kaiser, AN Gomez, N Shazeer, A Vaswani, N Parmar, L Jones, ...  arXiv preprint arXiv:1706.05137, 2017 | 444 | 2017 |\n| Attention is all you need. CoRR abs/1706.03762 (2017) A Vaswani, N Shazeer, N Parmar, J Uszkoreit, L Jones, AN Gomez, ...  arXiv preprint arXiv:1706.03762 1 (2), 2017 | 438 | 2017 | [...] | Image transformer N Parmar, A Vaswani, J Uszkoreit, L Kaiser, N Shazeer, A Ku, D Tran  International conference on machine learning, 4055-4064, 2018 | 2683 | 2018 |\n| Attention is all you need. arXiv 2017 A Vaswani, N Shazeer, N Parmar, J Uszkoreit, L Jones, AN Gomez, ...  arXiv preprint arXiv:1706.03762 10, 2017 | 2478 | 2017 |\n\n[4] [1706.03762] Attention Is All You Need\n    https://arxiv.org/abs/1706.03762\n    archive\n\n# Computer Science > Computation and Language\n\n# Title:Attention Is All You Need\n\n|  |  |\n --- |\n| Comments: | 15 pages, 5 figures |\n| Subjects: | Computation\n\n[truncated: 1,449 of 5,446 chars]",
+          "content": "Summary: \"Attention Is All You Need\" is a 2017 research paper authored by eight scientists and engineers working at Google, introducing a new deep learning architecture known as the transformer. The paper was presented at the 31st Conference on Neural Information Processing Systems (NIPS 2017) and proposed a novel network architecture based solely on an attention mechanism, dispensing with recurrence and convolutions entirely. The authors are Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Łukasz Kaiser, and Illia Polosukhin. The paper's model combines multi-head self-attention with a position-wise feed-forward layer in both the encoder and decoder.\n\n[1] Attention Is All You Need - Wikipedia\n    https://en.wikipedia.org/wiki/Attention_Is_All_You_Need\n    6. ↑ Pearson, Helen; Ledford, Heidi; Hutson, Matthew; Van Noorden, Richard (15 April 2025). \"Exclusive: the most-cited papers of the twenty-first century\". Nature \"Nature (journal)\"). 640 (8059): 588–592. Bibcode \"Bibcode (identifier)\"):2025Natur.640..588P. doi \"Doi (identifier)\"):10.1038/d41586-025-01125-9. PMID \"PMID (identifier)\") 40234577. Archived from the original on 18 April 2025. Retrieved 18 April 2025. [...] (2024)  AlphaProof (2024)  AlphaEvolve (2025)  AlphaGenome (2025) | | [...] \"Attention Is All You Need\" is a 2017 research paper on machine learning authored by eight scientists and engineers working at Google. The paper introduced a new deep learning architecture known as the transformer \"Transformer (deep learning)\"), based on the attention mechanism \"Attention (machine learning)\") proposed in 2014 by Bahdanau et al. The transformer approach it describes has become the main architecture of a wide variety of artificial intelligence systems, including large language\n\n[2] Attention Is All You Need\n    https://inspirehep.net/literature/2702854\n    edit\n\n   \n  \n\nKaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages 770-778 \n\n       \n\nedit\n\n   \n  \n\nSepp Hochreiter, Yoshua Bengio, Paolo Frasconi, and Jürgen Schmidhuber. Gradient flow in recurrent nets: the difficulty of learning long-term dependencies \n\n       \n\nedit\n\n   \n  \n\n#### Long Short-Term Memory\n\n       Sepp Hochreiter , \n       Jürgen Schmidhuber [...] edit\n\n   \n  \n\nŁukasz Kaiser and Ilya Sutskever. Neural GPUs learn algorithms. In International Conference on Learning Representations (ICLR) \n\n       \n\nedit\n\n   \n  \n\nNal Kalchbrenner, Lasse Espeholt, Karen Simonyan, Aaron van den Oord, Alex Graves, and Koray Kavukcuoglu. Neural machine translation in linear time. arXiv preprint \n\n       \n\n • \n       \ne-Print: \n           1610.10099\n\nedit [...] edit\n\n   \n  \n\n#### Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling\n\n       Junyoung Chung , \n       Caglar Gulcehre , \n       KyungHyun Cho , \n       Yoshua Bengio \n\n       \ne-Print: \n           1412.3555\n\nedit\n\n   \n  \n\nChris Dyer, Adhiguna Kuncoro, Miguel Ballesteros, and Noah A. Smith. Recurrent neural network grammars. In Proc. of NAACL \n\n       \n\nedit\n\n[3] Attention is All you Need\n    https://papers.neurips.cc/paper/7181-attention-is-all-you-need.pdf\n    Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for im-age recognition. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages 770–778, 2016.\n Sepp Hochreiter, Yoshua Bengio, Paolo Frasconi, and Jürgen Schmidhuber. Gradient ﬂow in recurrent nets: the difﬁculty of learning long-term dependencies, 2001.\n Sepp Hochreiter and Jürgen Schmidhuber. Long short-term memory. Neural computation, 9(8):1735–1780, 1997. [...] Attention Is All You Need Ashish Vaswani∗ Google Brain avaswani@google.com Noam Shazeer∗ Google Brain noam@google.com Niki Parmar∗ Google Research nikip@google.com Jakob Uszkoreit∗ Google Research usz@google.com Llion Jones∗ Google Research\n\n[truncated: 2,857 of 6,851 chars]",
           "error": null,
-          "latency_ms": 4011.5169580094516,
-          "raw_chars": 5446,
+          "latency_ms": 2604.0890829999626,
+          "raw_chars": 6851,
           "truncated": true,
           "source_ids": [
             "S1",
             "S3",
-            "S15",
             "S5",
-            "S6"
+            "S16",
+            "S17"
+          ]
+        },
+        {
+          "call_id": "call_zd7BlMbQmE035SIFzXErFiLP",
+          "tool": "web_search",
+          "args": {
+            "query": "\"Attention is all you need\" \"2025\" \"Transformer\" \"cites\" paper"
+          },
+          "ok": true,
+          "content": "Summary: The 2017 paper \"Attention Is All You Need\" introduced the Transformer architecture, which relies entirely on attention mechanisms to draw global dependencies between input and output, replacing recurrent layers. The paper, authored by eight scientists and engineers working at Google, proposed the Transformer model that allows for significantly more parallelization and achieved state-of-the-art translation quality. The Transformer architecture has become the main architecture for a wide variety of artificial intelligence systems, including large language models. The paper's title is a reference to the Beatles' song \"All You Need Is Love,\" and the name \"Transformer\" was chosen because one of the authors liked the sound of that word.\n\n[1] The Transformer: Attention Is All You Need - Interactive\n    https://mbrenndoerfer.com/writing/transformer-attention-is-all-you-need\n    ## Comments\n\nNo comments yet. Be the first to share your thoughts!\n\n## Reference\n\nCitation details\n\nCite or share this article.\n\nBIBTEXAcademic\n\n@misc{brenndoerfer2025transformerattention, author = {Michael Brenndoerfer}, title = {The Transformer: Attention Is All You Need}, year = {2025}, url = { organization = {mbrenndoerfer.com}, note = {Accessed: 2026-10-20} }\n\nAPAAcademic\n\nMichael Brenndoerfer (2025). The Transformer: Attention Is All You Need. Retrieved from \n\nMLAAcademic [...] MLAAcademic\n\nMichael Brenndoerfer. \"The Transformer: Attention Is All You Need.\" 2026. Web. October 20, 2026. .\n\nCHICAGOAcademic\n\nMichael Brenndoerfer. \"The Transformer: Attention Is All You Need.\" Accessed October 20, 2026. \n\nHARVARDAcademic\n\nMichael Brenndoerfer (2025) 'The Transformer: Attention Is All You Need'. Available at:  (Accessed: October 20, 2026).\n\nSimpleBasic\n\nMichael Brenndoerfer (2025). The Transformer: Attention Is All You Need. \n\nDIRECT LINKURL\n\n## About the author [...] # The Transformer: Attention Is All You Need\n\nMichael Brenndoerfer·June 7, 2025·20 min read\n\nCovers the Transformer architecture, including self-attention mechanisms, multi-head attention, positional encodings.\n\nHistory of Language AIAll chapters\n\nPart 5 of 9Transformers & Pretraining\n\nChapter 55Transformer Architecture (2017) › 2017: The Transformer\n\nReading the full chapter · 7 sections · 20 min7 sections · 20 min\n\nAll 7 sections · 20 min read\n\n[2] Attention Is All You Need - Wikipedia\n    https://en.wikipedia.org/wiki/Attention_Is_All_You_Need\n    \"Attention Is All You Need\" is a 2017 research paper on machine learning authored by eight scientists and engineers working at Google. The paper introduced a new deep learning architecture known as the transformer \"Transformer (deep learning)\"), based on the attention mechanism \"Attention (machine learning)\") proposed in 2014 by Bahdanau et al. The transformer approach it describes has become the main architecture of a wide variety of artificial intelligence systems, including large language [...] The paper's title is a reference to the song \"All You Need Is Love\" by the Beatles. The name \"Transformer\" was picked because Jakob Uszkoreit, one of the paper's authors, liked the sound of that word. An early design document was titled \"Transformers: Iterative Self-Attention and Processing for Various Tasks\", and included an illustration of six characters from the Transformers franchise. The team was named Team Transformer.\n\n## Methods discussed and introduced\n\n[edit] [...] [edit]\n\nThe paper is best known for introducing the Transformer architecture, which underlies most modern large language models (LLMs). A key reason why the architecture is preferred by most modern LLMs is the parallelizability of the architecture over its predecessors. This ensures that the operations necessary for training can be accelerated on a GPU, allowing both faster training times and models of bigger sizes to be trained.\n\n[3] Attention Is All You Need Explained - The Paper That Changed AI | Parseur®\n    https://parseur.com/blog/attention-is-all-you-need\n    Common\n\n[truncated: 2,765 of 6,759 chars]",
+          "error": null,
+          "latency_ms": 2452.872083999864,
+          "raw_chars": 6759,
+          "truncated": true,
+          "source_ids": [
+            "S18",
+            "S1",
+            "S19",
+            "S20",
+            "S5"
           ]
         }
       ],
@@ -223,7 +195,7 @@
       "i": 4,
       "node": "reflect",
       "plan_version": 1,
-      "ts_offset_ms": 12809.031915996457,
+      "ts_offset_ms": 8594.254374999764,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -233,41 +205,27 @@
       "i": 5,
       "node": "act",
       "plan_version": 1,
-      "ts_offset_ms": 15820.269082993036,
+      "ts_offset_ms": 10442.602791999889,
       "tool_calls": [
         {
-          "call_id": "call_pLxBAI22CCVJYztPSoGqTCIx",
+          "call_id": "call_De8l8yP7hK9BS2FeYvjS2Iwh",
           "name": "web_search",
           "args": {
-            "query": "2025 site:aclanthology.org \"Attention is all you need\" \"Vaswani\" \"2017\""
+            "query": "\"Attention is all you need\" 2025 citation DOI"
           }
         },
         {
-          "call_id": "call_B5RmoCnxeUEDzojopLsmbRFW",
+          "call_id": "call_f60Udk23JGoY4xN7vmJsoNC1",
           "name": "web_search",
           "args": {
-            "query": "2025 site:aclanthology.org \"Attention Is All You Need\" \"References\""
+            "query": "\"Attention is all you need\" \"2025\" \"doi\" \"Vaswani\" \"Shazeer\""
           }
         },
         {
-          "call_id": "call_ItMTVutbmTPbu9zYFsxOfG4q",
+          "call_id": "call_tmVZuCtQ2d4p7nc0oDIQ2hmh",
           "name": "web_search",
           "args": {
-            "query": "2025 \"Attention is all you need\" \"aclanthology\" \"pdf\" 2025"
-          }
-        },
-        {
-          "call_id": "call_ilzowql1r6CZGRtB4iSyMGrW",
-          "name": "web_search",
-          "args": {
-            "query": "2025 \"Attention Is All You Need\" \"Proceedings\" \"In\" \"references\" \"Vaswani\""
-          }
-        },
-        {
-          "call_id": "call_PT4saicjgFhYABACXDaTtdRj",
-          "name": "web_search",
-          "args": {
-            "query": "\"Attention is all you need\" \"2025\" \"arXiv\" \"References\" \"Vaswani\""
+            "query": "\"Attention Is All You Need\" cited by 2025 site:crossref.org"
           }
         }
       ],
@@ -279,106 +237,66 @@
       "i": 6,
       "node": "observe",
       "plan_version": 1,
-      "ts_offset_ms": 21637.57366599748,
+      "ts_offset_ms": 14534.850625000217,
       "tool_calls": [],
       "observations": [
         {
-          "call_id": "call_pLxBAI22CCVJYztPSoGqTCIx",
+          "call_id": "call_De8l8yP7hK9BS2FeYvjS2Iwh",
           "tool": "web_search",
           "args": {
-            "query": "2025 site:aclanthology.org \"Attention is all you need\" \"Vaswani\" \"2017\""
+            "query": "\"Attention is all you need\" 2025 citation DOI"
           },
           "ok": true,
-          "content": "Summary: \"Attention is all you need\" by Vaswani et al. (2017) introduced the Transformer architecture, which uses self-attention for efficient language modeling. The paper laid the foundation for modern large language models. The Transformer's self-attention mechanism has become a key component in many advanced AI systems.\n\n[1] [PDF] Latent-Condensed Transformer for Efficient Long Context Modeling\n    https://aclanthology.org/2026.acl-long.1176.pdf\n    Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, and Illia Polosukhin. 2017. Attention is all you need. In Advances in Neural Information Pro-cessing Systems, pages 5998–6008.\nGuangxuan Xiao, Jiaming Tang, Jingwei Zuo, Shang Yang, Haotian Tang, Yao Fu, Song Han, and 1 oth-ers. 2025. Duoattention: Efficient long-context llm inference with retrieval and streaming heads. In In-ternational Conference on Learning Representations. [...] 1 Introduction Efficient long-context modeling in large language models (LLMs) is essential for applications span-ning full-document comprehension and extended multi-turn dialogues (OpenAI, 2023; Grattafiori et al., 2024; Guo et al., 2025).\nHowever, transformer-based LLMs face two challenges: 1) the linear growth of key-value (KV) cache dur-ing decoding and 2) the quadratic computational complexity of self-attention (Vaswani et al., 2017), together hindering long-context deployment.\n\n[2] [PDF] Team-SVNIT at JUST-NLP 2025: Domain-Adaptive Fine-Tuning of ...\n    https://aclanthology.org/2025.justnlp-main.16.pdf\n    2024. Domain dynamics: LLMs in English-Hindi translation. In Proc. WMT 2024, pages 341–354.\nMarkus Freitag, Nitika Mathur, Daniel Deutsch, et al.\n2024. Are LLMs breaking MT metrics? WMT24 analysis. In Proc. WMT 2024, pages 47–81.\nAshish Vaswani, Noam Shazeer, Parmar Nikita, et al.\n2017. Attention is all you need. In Proc. NeurIPS 2017, pages 5998–6008.\nGeoffrey Hinton, Oriol Vinyals, and Jeffrey Dean.\n2015.\nDistilling knowledge in neural networks.\narXiv:1503.02531.\n\n[3] CSECU-Learners at SemEval-2025 Task 9 - ACL Anthology\n    https://aclanthology.org/2025.semeval-1.168.pdf\n    Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. 2017. Attention is all you need. Advances in neural information processing systems, 30.\nXinxin Wang, Yamine Bouzembrak, AGJM Oude Lansink, and HJ van der Fels-Klerx.\n2023. Weighted bayesian network for the classifi-cation of unbalanced food safety data: Case study of risk-based monitoring of heavy metals.\nRisk Analysis, 43(12):2549–2561. [...] 2.1.1 BERT BERT (Bidirectional Encoder Representations from Transformers) (Devlin et al., 2018), de-veloped by Google’s research team in 2018, is a language model that leverages the trans-former (Vaswani et al., 2017) architecture. It was pre-trained using passages from BooksCorpus (Zhu et al., 2015) and English Wikipedia. Unlike tradi-tional unidirectional models, BERT performs bidi-rectional training of transformers, allowing it to understand the context of sentences more deeply.\n\n[4] [PDF] SmolLab_SEU at BEA 2025 Shared Task: A Transformer-Based ...\n    https://aclanthology.org/2025.bea-1.88.pdf\n    The BEA 2023 shared task on generating AI teacher responses in educational dialogues. In Proceedings of the 18th Workshop on Innovative Use of NLP for Building Ed-ucational Applications (BEA 2023), pages 785–795, Toronto, Canada. Association for Computational Lin-guistics.\nAshish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. 2017. Attention is all you need. Advances in neural information processing systems, 30. [...] 4.2 Transformer-Based Models The methodological foundation for all five tracks of BEA 2025 Shared Task focuses on the fine-tuning of pre-trained Transformer models (Vaswani et al., 2017). These architectures, with their well-known self-attention mechanisms, are proficient\n\n[truncated: 1,590 of 5,589 chars]",
+          "content": "Summary: The 2025 citation DOI for \"Attention Is All You Need\" is 10.1038/d41586-025-01125-9, as per the Nature journal article published on April 15, 2025. The arXiv version of the paper has the DOI 10.3115/v1/D14-1179, archived on September 6, 2024. The Google Scholar page lists the arXiv preprint arXiv:1706.03762, but does not provide a DOI for it.\n\n[1] Attention Is All You Need - Wikipedia\n    https://en.wikipedia.org/wiki/Attention_Is_All_You_Need\n    6. ↑ Pearson, Helen; Ledford, Heidi; Hutson, Matthew; Van Noorden, Richard (15 April 2025). \"Exclusive: the most-cited papers of the twenty-first century\". Nature \"Nature (journal)\"). 640 (8059): 588–592. Bibcode \"Bibcode (identifier)\"):2025Natur.640..588P. doi \"Doi (identifier)\"):10.1038/d41586-025-01125-9. PMID \"PMID (identifier)\") 40234577. Archived from the original on 18 April 2025. Retrieved 18 April 2025. [...] arXiv \"ArXiv (identifier)\"):1406.1078. doi \"Doi (identifier)\"):10.3115/v1/D14-1179. Archived from the original on 6 September 2024. Retrieved 9 August 2024. [...] 14. ↑ Giles, C. Lee; Maxwell, Tom (December 1987). \"Learning, invariance, and generalization in high-order neural networks\". Applied Optics. 26 (23): 4972–4978. doi \"Doi (identifier)\"):10.1364/AO.26.004972. PMID \"PMID (identifier)\") 20523475.\n\n[2] [1706.03762] Attention Is All You Need\n    https://arxiv.org/abs/1706.03762\n    archive\n\nPress Enter to search · Advanced search\n\n# Computer Science > Computation and Language\n\n# Title:Attention Is All You Need\n\n|  |  |\n --- |\n| Comments: | 15 pages, 5 figures |\n| Subjects: | Computation and Language (cs.CL); Machine Learning (cs.LG) |\n| Cite as: | arXiv:1706.03762 [cs.CL] |\n|  | (or  arXiv:1706.03762v7 [cs.CL] for this version) |\n|  |  Focus to learn more  arXiv-issued DOI via DataCite |\n\n## Submission history\n\n## Access Paper:\n\n### Additional Features [...] Both individuals and organizations that work with arXivLabs have embraced and accepted our values of openness, community, excellence, and user data privacy. arXiv is committed to these values and only works with partners that adhere to them.\n\nHave an idea for a project that will add value for arXiv's community? Learn more about arXivLabs.\n\nSimons Foundation\nSimons Foundation International\nSchmidt Sciences [...] ### Current browse context:\n\n### References & Citations\n\n### 123 blog links\n\n### DBLP - CS Bibliography\n\n## BibTeX formatted citation\n\n### Bookmark\n\nBibSonomy\nReddit\n\n# Bibliographic and Citation Tools\n\n# Code, Data and Media Associated with this Article\n\n# Demos\n\n# Recommenders and Search Tools\n\n# arXivLabs: experimental projects with community collaborators\n\narXivLabs is a framework that allows collaborators to develop and share new arXiv features directly on our website.\n\n[3] ‪Ashish Vaswani‬ - ‪Google Scholar‬\n    https://scholar.google.com/citations?user=oR9sCGYAAAAJ&hl=en\n    | Attention is all you need. CoRR abs/1706.03762 (2017) A Vaswani, N Shazeer, N Parmar, J Uszkoreit, L Jones, AN Gomez, ...  arXiv preprint arXiv:1706.03762 1 (2), 2017 | 451 | 2017 |\n| One model to learn them all L Kaiser, AN Gomez, N Shazeer, A Vaswani, N Parmar, L Jones, ...  arXiv preprint arXiv:1706.05137, 2017 | 448 | 2017 | [...] |  |  |  |\n --- \n| Title Sort Sort by citationsSort by yearSort by title | Cited by  Cited by | Year |\n| Attention is all you need A Vaswani, N Shazeer, N Parmar, J Uszkoreit, L Jones, AN Gomez, ...  Advances in neural information processing systems 30, 2017 | 282038 | 2017 |\n| Relational inductive biases, deep learning, and graph networks PW Battaglia, JB Hamrick, V Bapst, A Sanchez-Gonzalez, V Zambaldi, ...  arXiv preprint arXiv:1806.01261 2 (3), 5, 2018 | 5571 | 2018 | [...] | Image transformer N Parmar, A Vaswani, J Uszkoreit, L Kaiser, N Shazeer, A Ku, D Tran  International conference on machine learning, 4055-4064, 2018 | 2713 | 2018 |\n| Attention is all you need. arXiv 2017 A Vaswani, N Shazeer, N Parmar, J Uszkoreit, L Jones, AN Gomez, ...  arXiv preprint arXiv:1706.03762 10,\n\n[truncated: 2,880 of 6,877 chars]",
           "error": null,
-          "latency_ms": 4119.01808300172,
-          "raw_chars": 5589,
+          "latency_ms": 2664.490749999459,
+          "raw_chars": 6877,
           "truncated": true,
           "source_ids": [
-            "S9",
-            "S17",
-            "S18",
-            "S19",
-            "S10"
-          ]
-        },
-        {
-          "call_id": "call_B5RmoCnxeUEDzojopLsmbRFW",
-          "tool": "web_search",
-          "args": {
-            "query": "2025 site:aclanthology.org \"Attention Is All You Need\" \"References\""
-          },
-          "ok": true,
-          "content": "Summary: \"Attention Is All You Need\" was published in 2017 by Ashish Vaswani et al. It introduced the Transformer model, which relies solely on attention mechanisms. Recent advancements include efficient long context modeling and novel attention mechanisms.\n\n[1] [PDF] Latent-Condensed Transformer for Efficient Long Context Modeling\n    https://aclanthology.org/2026.acl-long.1176.pdf\n    Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, and Illia Polosukhin. 2017. Attention is all you need. In Advances in Neural Information Pro-cessing Systems, pages 5998–6008.\nGuangxuan Xiao, Jiaming Tang, Jingwei Zuo, Shang Yang, Haotian Tang, Yao Fu, Song Han, and 1 oth-ers. 2025. Duoattention: Efficient long-context llm inference with retrieval and streaming heads. In In-ternational Conference on Learning Representations. [...] Besides, sparse attention methods (Zaheer et al., 2020; Beltagy et al., 2020; Zhang et al., 2025; Chen et al., 2025) reduce the computational cost by skip-ping some tokens or computation blocks. Early methods employ fixed sparse patterns (Zaheer et al., 2020; Ding et al., 2023; Beltagy et al., 2020; Xiao et al., 2024), which lack adaptability. To intro-duce adaptability, DuoAttention (Xiao et al., 2025) learns head-specific static sparse patterns during an additional offline training phase. [...] Potsawee Manakul and Mark J. F. Gales. 2021. Long-span summarization via local attention and content selection. In Association for Computational Linguis-tics, pages 6026–6041.\nOpenAI. 2023. GPT-4 technical report. arXiv preprint.\nNoam Shazeer. 2019. Fast transformer decoding: One write-head is all you need. CoRR, abs/1911.02150.\nJianlin Su, Murtadha Ahmed, Yu Lu, Shengfeng Pan, Wen Bo, and Yunfeng Liu. 2024. Roformer: En-hanced transformer with rotary position embedding.\n\n[2] [PDF] Integral Transformer: Denoising Attention, Not Too Much Not Too Little\n    https://aclanthology.org/2025.emnlp-main.118.pdf\n    Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. 2017. Attention is all you need. In Advances in Neural Information Pro-cessing Systems, pages 5998–6008.\nSuyuchen Wang, Ivan Kobyzev, Peng Lu, Mehdi Reza-gholizadeh, and Bang Liu. 2024. Resonance rope: Improving context length generalization of large lan-guage models. In ACL (Findings). [...] Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing, pages 2337–2354 November 4-9, 2025 ©2025 Association for Computational Linguistics Integral Transformer: Denoising Attention, Not Too Much Not Too Little Ivan Kobyzev Abbas Ghaddar Dingtao Hu Boxing Chen Huawei Noah’s Ark Lab, Montreal Research Center, Canada {ivan.kobyzev,abbas.ghaddar,dingtao.hu,boxing.chen}@huawei.com Abstract Softmax self-attention often assigns dispropor-tionate weight to semantically [...] Peiyuan Zhang, Guangtao Zeng, Tianduo Wang, and Wei Lu. 2024. Tinyllama: An open-source small language model. arXiv preprint arXiv:2401.02385.\nStephen Zhang, Mustafa Khan, and Vardan Papyan.\n2025. Attention sinks and outlier features: A’catch, tag, and release’mechanism for embeddings. arXiv preprint arXiv:2502.00919.\n\n[3] [PDF] The Hidden Attention of Mamba Models - ACL Anthology\n    https://aclanthology.org/2025.acl-long.76.pdf\n    Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Ł ukasz Kaiser, and Illia Polosukhin. 2017. Attention is all you need. In Advances in Neural Information Pro-cessing Systems, volume 30.\nRoger Waleffe, Wonmin Byeon, Duncan Riach, Bran-don Norick, Vijay Korthikanti, Tri Dao, Albert Gu, Ali Hatamizadeh, Sudhakar Singh, Deepak Narayanan, et al. 2024.\nAn empirical study of mamba-based language models.\narXiv preprint arXiv:2406.07887. [...] Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), pages 1516–1534 July 27 - August 1, 2025 ©2025\n\n[truncated: 2,035 of 6,030 chars]",
-          "error": null,
-          "latency_ms": 2543.692999999621,
-          "raw_chars": 6030,
-          "truncated": true,
-          "source_ids": [
-            "S9",
-            "S10",
-            "S20",
+            "S1",
+            "S2",
             "S21",
-            "S22"
-          ]
-        },
-        {
-          "call_id": "call_ItMTVutbmTPbu9zYFsxOfG4q",
-          "tool": "web_search",
-          "args": {
-            "query": "2025 \"Attention is all you need\" \"aclanthology\" \"pdf\" 2025"
-          },
-          "ok": true,
-          "content": "Summary: \"Attention Is All You Need\" is a 2017 paper introducing the Transformer architecture, which relies solely on attention mechanisms. The paper proposed the Transformer model, which achieved state-of-the-art results in machine translation. The architecture has since become foundational for many AI systems.\n\n[1] [PDF] Attention is All you Need - NIPS\n    https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf\n    End-to-end memory networks are based on a recurrent attention mechanism instead of sequence-aligned recurrence and have been shown to perform well on simple-language question answering and language modeling tasks . [...] the representation dimension, k is the kernel size of convolutions and r the size of the neighborhood in restricted self-attention. [...] length. Each training batch contained a set of sentence pairs containing approximately 25000 source tokens and 25000 target tokens.\n\n[2] [PDF] Attention Is All You Need - SciSpace\n    https://scispace.com/pdf/attention-is-all-you-need-1hodz0wcqb.pdf\n    End-to-end memory networks are based on a recurrent attention mechanism instead of sequence-aligned recurrence and have been shown to perform well on simple-language question answering and language modeling tasks . [...] In this work we propose the Transformer, a model architecture eschewing recurrence and instead relying entirely on an attention mechanism to draw global dependencies between input and output.\nThe Transformer allows for signiﬁcantly more parallelization and can reach a new state of the art in translation quality after being trained for as little as twelve hours on eight P100 GPUs. [...] length. Each training batch contained a set of sentence pairs containing approximately 25000 source tokens and 25000 target tokens.\n\n[3] Attention Is All You Need - Wikipedia\n    https://en.wikipedia.org/wiki/Attention_Is_All_You_Need\n    (2025) | | [...] 13. ↑ Rumelhart, David E.; McClelland, James L.; Hinton, Geoffrey E. (1986). Parallel Distributed Processing, Volume 1: Explorations in the Microstructure of Cognition: Foundations, Chapter 2 (PDF). Cambridge, Massachusetts: Bradford Books. ISBN \"ISBN (identifier)\") 978-0-262-68053-0. OCLC \"OCLC (identifier)\") 12837549. OL \"OL (identifier)\") 21219798M. Archived (PDF) from the original on 16 April 2026. [...] \"Attention Is All You Need\" is a 2017 research paper in machine learning authored by eight scientists and engineers working at Google. The paper introduced a new deep learning architecture known as the transformer \"Transformer (deep learning)\"), based on the attention mechanism proposed in 2014 by Bahdanau et al. The transformer approach it describes has become the main architecture of a wide variety of artificial intelligence systems, including large language models. At the time, the focus of\n\n[4] Attention Is All You Need\n    https://www.academia.edu/146203279/Attention_Is_All_You_Need\n    download Download free PDFView PDF chevron_right\n\nMultimodal attention-based deep learning for Alzheimer’s disease diagnosis\n\nMichal Golovanevsky\n\nJournal of the American Medical Informatics Association [...] download Download free PDFView PDF chevron_right\n\nContext- and sequence-aware convolutional recurrent encoder for neural machine translation\n\nSeba Susan\n\nProceedings of the 36th Annual ACM Symposium on Applied Computing [...] Log In Sign Up\n\n   Log In\n   Sign Up\n   more\n          About\n       Press\n       Papers\n       Terms\n       Privacy\n       Copyright\n       We're Hiring!\n       Help Center\n       less\n\nOutline\n\nkeyboard_arrow_down\n\nTitle\n\nAbstract\n\nIntroduction\n\nBackground\n\nTraining Data and Batching\n\nConclusion\n\nReferences\n\nImage 6: First page of “Attention Is All You Need”Image 7: PDF Icon\n\ndownload\nDownload Free PDF\n\nDownload Free PDF\n\n# Attention Is All You Need\n\n[5] [PDF] Attention is All you Need - Semantic Scholar\n   \n\n[truncated: 1,554 of 5,461 chars]",
-          "error": null,
-          "latency_ms": 2403.880958998343,
-          "raw_chars": 5461,
-          "truncated": true,
-          "source_ids": [
-            "S7",
-            "S23",
-            "S1",
-            "S24",
-            "S14"
-          ]
-        },
-        {
-          "call_id": "call_ilzowql1r6CZGRtB4iSyMGrW",
-          "tool": "web_search",
-          "args": {
-            "query": "2025 \"Attention Is All You Need\" \"Proceedings\" \"In\" \"references\" \"Vaswani\""
-          },
-          "ok": true,
-          "content": "Summary: \"Attention Is All You Need\" was published in 2017 by Ashish Vaswani et al. It introduced the Transformer model, which uses self-attention mechanisms instead of recurrent neural networks. The paper was presented at the 31st International Conference on Neural Information Processing Systems (NIPS).\n\n[1] Vaswani, A., et al. (2017) Attention Is All You Need. Proceedings of the 31st International Conference on Neural Information Processing Systems, Long Beach, 4-9 December 2017, 6000-6010. - References - Scientific Research Publishing\n    https://www.scirp.org/reference/referencespapers?referenceid=3964316\n    JOURNAL NAME:\nJournal of Computer and Communications,\nVol.13 No.3,\nMarch\n28,\n2025 [...] KEYWORDS:\nImage Classification, Unsupervised Feature Learning, Auto-Encoder\n\nJOURNAL NAME:\nJournal of Computer and Communications,\nVol.13 No.3,\nMarch\n28,\n2025 [...] KEYWORDS:\nImage Classification, Unsupervised Feature Learning, Auto-Encoder\n\nJOURNAL NAME:\nJournal of Computer and Communications,\nVol.13 No.3,\nMarch\n28,\n2025\n\n[2] Attention Is All You Need - Wikipedia\n    https://en.wikipedia.org/wiki/Attention_Is_All_You_Need\n    34. ↑ Vaswani, Ashish; Bengio, Samy; Brevdo, Eugene; Chollet, Francois; Gomez, Aidan; Gouws, Stephan; Jones, Llion; Kaiser, Łukasz; Kalchbrenner, Nal; Parmar, Niki; Sepassi, Ryan; Shazeer, Noam; Uszkoreit, Jakob (March 2018). Cherry, Colin; Neubig, Graham (eds.). \"Tensor2Tensor for Neural Machine Translation\". Proceedings of the 13th Conference of the Association for Machine Translation in the Americas (Volume 1: Research Track). Boston, MA: Association for Machine Translation in the Americas: [...] 1. 1 2 3 4 5 6 Vaswani, Ashish; Shazeer, Noam; Parmar, Niki; Uszkoreit, Jakob; Jones, Llion; Gomez, Aidan N; Kaiser, Łukasz; Polosukhin, Illia (December 2017). \"Attention is All you Need\" (PDF). In I. Guyon and U. Von Luxburg and S. Bengio and H. Wallach and R. Fergus and S. Vishwanathan and R. Garnett (ed.). 31st Conference on Neural Information Processing Systems (NIPS). Advances in Neural Information Processing Systems. Vol. 30. Curran Associates, Inc. arXiv \"ArXiv (identifier)\"):1706.03762. [...] [edit]\n\nThe authors of the paper are Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan Gomez, Łukasz Kaiser, and Illia Polosukhin. All eight authors were \"equal contributors\" to the paper; the listed order was randomized (according to the paper itself). After the paper, each of the authors left Google to join other companies or to found startups.\n\n[3] Attention is all you need | Proceedings of the 31st International ...\n    https://dl.acm.org/doi/10.5555/3295222.3295349\n    Authors: Image 8Ashish Vaswani, Image 9Noam Shazeer, Image 10Niki Parmar, Image 11Jakob Uszkoreit, + 4, Image 12Llion Jones, Image 13Aidan N.Gomez, Image 14Łukasz Kaiser, Image 15Illia Polosukhin(Less)Authors Info & Claims\n\nNIPS'17: Proceedings of the 31st International Conference on Neural Information Processing Systems\n\nPages 6000 - 6010\n\nPublished: 04 December 2017Publication History\n\nAdditional metrics (Premium feature)\n\n5,247 citation 64,317 Downloads\n\n:1735-1780, 1997.\n\nDigital Library [...] ## Share\n\n### Share\n\n#### Share this Publication link\n\nCopy Link\n\nCopied!\n\nCopying failed.\n\n#### Share on social media\n\nXLinkedInRedditFacebookThreadsemail\n\nImage 24: CACM Article LLM Sky Ad\n\nImage 25: TACCESS Ad\n\nImage 26: ACM Books Chang Med Box Ad\n\n#### Affiliations\n\nImage 27\n\nAshish Vaswani\n\nGoogle Brain\n\nView Profile\n\nImage 28\n\nNoam Shazeer\n\nGoogle Brain\n\nView Profile\n\nImage 29\n\nNiki Parmar\n\nGoogle Research\n\nView Profile\n\nImage 30\n\nJakob Uszkoreit\n\nGoogle Research\n\nView Profile\n\nImage 31 [...] Mielgo P Bregon A Alonso-González C Martínez-Prieto M López D Pulido B(2026)Enhancing quality control in die-casting with ensemble-based computer vision methods Engineering Applications of Artificial Intelligence 10.1016/j.engappai.2026.114850177:P1 Online publication date: 1-Aug-2026 \n   Chen S Chen K Zhao X Yu M Zhang T Wang\n\n[truncated: 2,465 of 6,459 chars]",
-          "error": null,
-          "latency_ms": 2366.1931669921614,
-          "raw_chars": 6459,
-          "truncated": true,
-          "source_ids": [
-            "S25",
-            "S1",
             "S3",
-            "S4",
-            "S15"
+            "S5"
           ]
         },
         {
-          "call_id": "call_PT4saicjgFhYABACXDaTtdRj",
+          "call_id": "call_f60Udk23JGoY4xN7vmJsoNC1",
           "tool": "web_search",
           "args": {
-            "query": "\"Attention is all you need\" \"2025\" \"arXiv\" \"References\" \"Vaswani\""
+            "query": "\"Attention is all you need\" \"2025\" \"doi\" \"Vaswani\" \"Shazeer\""
           },
           "ok": true,
-          "content": "Summary: \"Attention is All You Need\" is a 2017 paper by Vaswani et al. introducing the Transformer model. It has over 5,000 citations and is foundational in NLP. The paper proposes a model without recurrent layers, relying solely on attention mechanisms.\n\n[1] Attention Is All You Need - Wikipedia\n    https://en.wikipedia.org/wiki/Attention_Is_All_You_Need\n    1. 1 2 3 4 5 6 Vaswani, Ashish; Shazeer, Noam; Parmar, Niki; Uszkoreit, Jakob; Jones, Llion; Gomez, Aidan N; Kaiser, Łukasz; Polosukhin, Illia (December 2017). \"Attention is All you Need\" (PDF). In I. Guyon and U. Von Luxburg and S. Bengio and H. Wallach and R. Fergus and S. Vishwanathan and R. Garnett (ed.). 31st Conference on Neural Information Processing Systems (NIPS). Advances in Neural Information Processing Systems. Vol. 30. Curran Associates, Inc. arXiv \"ArXiv (identifier)\"):1706.03762. [...] 42. ↑ \"finetune-transformer-lm\". OpenAI. 11 June 2018. Archived from the original on 19 May 2023. Retrieved 1 May 2023.\n43. ↑ Kaiser, Lukasz; Gomez, Aidan N.; Shazeer, Noam; Vaswani, Ashish; Parmar, Niki; Jones, Llion; Uszkoreit, Jakob (16 June 2017). \"One Model To Learn Them All\". arXiv \"ArXiv (identifier)\"):1706.05137v1 [cs.LG]. [...] 25. ↑ Sutskever, Ilya; Vinyals, Oriol; Le, Quoc V (2014). \"Sequence to Sequence Learning with Neural Networks\". Advances in Neural Information Processing Systems. 27. Curran Associates, Inc. arXiv \"ArXiv (identifier)\"):1409.3215. Archived from the original on 27 January 2025. Retrieved 23 July 2024.\n26. ↑ Luong, Minh-Thang; Pham, Hieu; Manning, Christopher D. (2015). \"Effective Approaches to Attention-based Neural Machine Translation\". arXiv \"ArXiv (identifier)\"):1508.04025 [cs.CL].\n\n[2] ‪Ashish Vaswani‬ - ‪Google Scholar‬\n    https://scholar.google.com/citations?user=oR9sCGYAAAAJ&hl=en\n    |  |  |  |\n --- \n| Title Sort Sort by citationsSort by yearSort by title | Cited by  Cited by | Year |\n| Attention is all you need A Vaswani, N Shazeer, N Parmar, J Uszkoreit, L Jones, AN Gomez, ...  Advances in neural information processing systems 30, 2017 | 275197 | 2017 |\n| Relational inductive biases, deep learning, and graph networks PW Battaglia, JB Hamrick, V Bapst, A Sanchez-Gonzalez, V Zambaldi, ...  arXiv preprint arXiv:1806.01261 2 (3), 5, 2018 | 5457 | 2018 | [...] | One model to learn them all L Kaiser, AN Gomez, N Shazeer, A Vaswani, N Parmar, L Jones, ...  arXiv preprint arXiv:1706.05137, 2017 | 444 | 2017 |\n| Attention is all you need. CoRR abs/1706.03762 (2017) A Vaswani, N Shazeer, N Parmar, J Uszkoreit, L Jones, AN Gomez, ...  arXiv preprint arXiv:1706.03762 1 (2), 2017 | 438 | 2017 | [...] | Image transformer N Parmar, A Vaswani, J Uszkoreit, L Kaiser, N Shazeer, A Ku, D Tran  International conference on machine learning, 4055-4064, 2018 | 2683 | 2018 |\n| Attention is all you need. arXiv 2017 A Vaswani, N Shazeer, N Parmar, J Uszkoreit, L Jones, AN Gomez, ...  arXiv preprint arXiv:1706.03762 10, 2017 | 2478 | 2017 |\n\n[3] Attention is All you Need - NIPS\n    https://papers.nips.cc/paper/7181-attention-is-all-you-need\n    # Attention is All you Need\n\nAshish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, Illia Polosukhin\n\nAdvances in Neural Information Processing Systems 30 (NIPS 2017)\n\n## Abstract\n\n[4] Understanding “Attention is All You Need” Using the 3-Pass Method\n    https://ai.plainenglish.io/i-finally-understood-attention-is-all-you-need-after-so-long-heres-how-i-did-it-263b46273f9f\n    ## References\n\n1.   Attention is all you need \n2.   Research That Sticks: The Strategic Framework for Turning Technical and Academic Papers into Lasting Knowledge \n\n## Thank you for being a part of the community\n\n_Before you go:_ [...] Press enter or click to view image in full size\n\nImage 6\n\nFigure 2: The Transformer architecture with its components — Vaswani et al. (2017). One encoder layer on the left, one decoder layer on the right. The Nx represents the fact that there are multiple (N=6)\n\n[truncated: 1,199 of 5,189 chars]",
+          "content": "Summary: The sources confirm that \"Attention Is All You Need\" was authored by Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Łukasz Kaiser, and Illia Polosukhin. The paper was published in 2017 and proposed a novel network architecture based solely on an attention mechanism, dispensing with recurrence and convolutions entirely. The work was spotlighted at NeurIPS 2017 and is available on arXiv and NIPS. The paper's abstract describes the model's architecture, which includes encoder and decoder layers that combine multi-head self-attention with a position-wise feed-forward layer.\n\n[1] 1706.03762v7.pdf\n    https://arxiv.org/pdf/1706.03762\n    ## Provided proper attribution is provided, Google hereby grants permission to reproduce the tables and figures in this paper solely for use in journalistic or scholarly works. \n\n# Attention Is All You Need \n\nAshish Vaswani ∗\n\nGoogle Brain \n\navaswani@google.com \n\nNoam Shazeer ∗\n\nGoogle Brain \n\nnoam@google.com \n\nNiki Parmar ∗\n\nGoogle Research \n\nnikip@google.com \n\nJakob Uszkoreit ∗\n\nGoogle Research \n\nusz@google.com \n\nLlion Jones ∗\n\nGoogle Research \n\nllion@google.com \n\nAidan N. Gomez ∗ †\n\n[2] Attention Is All You Need - Wikipedia\n    https://en.wikipedia.org/wiki/Attention_Is_All_You_Need\n    1. 1 2 3 4 5 6 Vaswani, Ashish; Shazeer, Noam; Parmar, Niki; Uszkoreit, Jakob; Jones, Llion; Gomez, Aidan N; Kaiser, Łukasz; Polosukhin, Illia (December 2017). \"Attention is All you Need\" (PDF). In I. Guyon and U. Von Luxburg and S. Bengio and H. Wallach and R. Fergus and S. Vishwanathan and R. Garnett (ed.). 31st Conference on Neural Information Processing Systems (NIPS). Advances in Neural Information Processing Systems. Vol. 30. Curran Associates, Inc. arXiv \"ArXiv (identifier)\"):1706.03762. [...] 6. ↑ Pearson, Helen; Ledford, Heidi; Hutson, Matthew; Van Noorden, Richard (15 April 2025). \"Exclusive: the most-cited papers of the twenty-first century\". Nature \"Nature (journal)\"). 640 (8059): 588–592. Bibcode \"Bibcode (identifier)\"):2025Natur.640..588P. doi \"Doi (identifier)\"):10.1038/d41586-025-01125-9. PMID \"PMID (identifier)\") 40234577. Archived from the original on 18 April 2025. Retrieved 18 April 2025. [...] 41. ↑ Kaiser, Lukasz; Gomez, Aidan N.; Shazeer, Noam; Vaswani, Ashish; Parmar, Niki; Jones, Llion; Uszkoreit, Jakob (16 June 2017). \"One Model To Learn Them All\". arXiv \"ArXiv (identifier)\"):1706.05137v1 [cs.LG].\n42. ↑ Liu, Zhuang; Mao, Hanzi; Wu, Chao-Yuan; Feichtenhofer, Christoph; Darrell, Trevor; Xie, Saining (2022). A ConvNet for the 2020s. Conference on Computer Vision and Pattern Recognition (CVPR). pp. 11976–11986.\n\n[3] Attention is All you Need\n    https://papers.nips.cc/paper/7181-attention-is-all-you-need\n    # Attention is All you Need\n\nAshish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, Illia Polosukhin\n\nAdvances in Neural Information Processing Systems 30 (NIPS 2017)\n\nBibtex Metadata Paper Reviews\n\n## Abstract [...] The dominant sequence transduction models are based on complex recurrent orconvolutional neural networks in an encoder and decoder configuration. The best performing such models also connect the encoder and decoder through an attentionm echanisms. We propose a novel, simple network architecture based solely onan attention mechanism, dispensing with recurrence and convolutions entirely.Experiments on two machine translation tasks show these models to be superiorin quality while being more\n\n[4] Attention is All you Need\n    https://papers.neurips.cc/paper/7181-attention-is-all-you-need.pdf\n    Attention Is All You Need Ashish Vaswani∗ Google Brain avaswani@google.com Noam Shazeer∗ Google Brain noam@google.com Niki Parmar∗ Google Research nikip@google.com Jakob Uszkoreit∗ Google Research usz@google.com Llion Jones∗ Google Research llion@google.com Aidan N. Gomez∗† University of Toronto aidan@cs.toronto.edu Łukasz Kaiser∗ Google Brain lukaszkaiser@google.com Illia Polosukhin∗‡\n\n[truncated: 1,795 of 5,789 chars]",
           "error": null,
-          "latency_ms": 3447.896541998489,
-          "raw_chars": 5189,
+          "latency_ms": 2861.0566249999465,
+          "raw_chars": 5789,
           "truncated": true,
           "source_ids": [
+            "S22",
             "S1",
-            "S15",
+            "S16",
+            "S5",
+            "S17"
+          ]
+        },
+        {
+          "call_id": "call_tmVZuCtQ2d4p7nc0oDIQ2hmh",
+          "tool": "web_search",
+          "args": {
+            "query": "\"Attention Is All You Need\" cited by 2025 site:crossref.org"
+          },
+          "ok": true,
+          "content": "Summary: The sources indicate that \"Attention Is All You Need\" was cited by 2025, as evidenced by a Crossref community forum post that includes DOIs of citing articles, such as 10.1080/14623528.2023.2248818. However, the exact number of citations is not provided in the sources.\n\n[1] Ticket of the month - August 2025 - Retraction Action! - Content Registration - Crossref community forum\n    https://community.crossref.org/t/ticket-of-the-month-august-2025-retraction-action/14438\n    versions need to be cited correctly. [...] We encourage you to keep up-to-date on your retractions and corrections. And keep these practices as consistent as possible. Not only does this help readers find and cite the correct research, but it is also an indicator that you are concerned with both the health of your publications and the maintenance and sustainability of the larger scholarly record.\n\n### Related topics [...] When an editorially significant update is made to a document, you should issue a separate document (such as a correction or retraction notice) which explains the change. This separate document will have a different DOI and different metadata from the document that it updates. The metadata for the update document should include a link to the item being updated, as well as information on the type of update. This is all contained in the Crossmark section of the metadata. Here’s what this looks\n\n[2] All Citations direct to a wrong/strange title - References - Crossref community forum\n    https://community.crossref.org/t/all-citations-direct-to-a-wrong-strange-title/3694\n    | Topic |  | Replies | Views | Activity |\n ---  --- \n| References not showing up  Metadata quality improvements references ,  content-registration ,  metadata-quality | 26 | 5071 | 16 December 2024 |\n| References not showing up?  References references ,  cited-by | 14 | 1130 | 31 March 2025 |\n| Linking references of a publication to other publications  Metadata Retrieval references ,  content-registration ,  simple\\_text\\_query ,  google ,  reference-matching | 6 | 942 | 27 December 2023 | [...] | Overlap between different services providing citation data  Interfaces for Machines rest-api ,  references ,  cited-by ,  google | 5 | 1994 | 23 December 2024 |\n| Did someone miss a citation?  Cited-by references ,  citation | 5 | 2544 | 19 January 2023 | [...] Powered by Discourse, best viewed with JavaScript enabled\n\n[3] References not showing up - Metadata quality improvements - Crossref community forum\n    https://community.crossref.org/t/references-not-showing-up/2302\n    | Topic |  | Replies | Views | Activity |\n ---  --- \n| References not showing up?  References references ,  cited-by | 14 | 1080 | 31 March 2025 |\n| Missing article citations!  Metadata quality improvements references ,  cited-by ,  metadata-retrieval ,  metadata-quality ,  reference-matching | 0 | 268 | 20 May 2024 | [...] Could you provide the DOIs of the citing and cited articles, just in their 10.xxxx/xxxxx format, without the “” appended to the front? That should get past the link restriction.\n\nSure, I can.\n\nso, the original article is: 10.1080/14623528.2022.2159737\n\nThe article doing the citing is: 10.1080/14623528.2023.2248818 [...] -Isaac\n\nHey, of course. Thank you. So the article cited is: 10.1080/25785648.2022.2122142 and the article which cites it is: 10.0.92.225/sn.0223/ctt\\_nwes01 - It is fully searchable, open access on google, unlike the earlier mentioned article.\n\nHi @HarryLegg ,\n\nUnfortunately, `10.0.92.225/sn.0223/ctt_nwes01` isn’t a Crossref DOI. Can you share that article’s URL?\n\n`10.0.92.225/sn.0223/ctt_nwes01`\n\n-Isaac\n\nHi @HarryLegg -\n\n[4] Building Trust through Metadata: a recap of the Crossref learning series - Crossref\n    https://www.crossref.org/blog/building-trust-through-metadata-a-recap-of-the-crossref-learning-series\n    1. Kovalyova, M., Kumar, S., Dandawate, V., & Amdekar, M. (2025). Publishing best practices and metadata: Crossref essentials + DOAJ. Crossref. \n2.\n\n[truncated: 1,417 of 5,412 chars]",
+          "error": null,
+          "latency_ms": 4089.2290000001594,
+          "raw_chars": 5412,
+          "truncated": true,
+          "source_ids": [
+            "S23",
+            "S24",
+            "S25",
             "S26",
-            "S6",
             "S27"
           ]
         }
@@ -390,7 +308,7 @@
       "i": 7,
       "node": "finalize",
       "plan_version": 1,
-      "ts_offset_ms": 27162.75183299149,
+      "ts_offset_ms": 19248.406791999514,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -408,22 +326,30 @@
     },
     {
       "sid": "S2",
-      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1nwx1rx/the_most_important_ai_paper_of_the_decade_no",
-      "title": "The most important AI paper of the decade. No debate",
-      "snippet": "Attention is all you need is on track to be the most cited paper of all time within a decade.\n\n[](\n\ndictionizzle\n\n•10mo ago• Edited 10mo ago\n\ncorrect, moreover, as of Oct 3, 2025, Google’s own publication page and recent summaries put “Attention Is All You Need” around ~~197K~~ 206K citations, not 1",
+      "url": "https://arxiv.org/abs/1706.03762",
+      "title": "[1706.03762] Attention Is All You Need",
+      "snippet": "archive\n\nPress Enter to search · Advanced search\n\n# Computer Science > Computation and Language\n\n# Title:Attention Is All You Need\n\n|  |  |\n --- |\n| Comments: | 15 pages, 5 figures |\n| Subjects: | Computation and Language (cs.CL); Machine Learning (cs.LG) |\n| Cite as: | arXiv:1706.03762 [cs.CL] |\n| ",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S3",
-      "url": "https://dl.acm.org/doi/10.5555/3295222.3295349",
-      "title": "Attention is all you need | Proceedings of the 31st International ...",
-      "snippet": "Lentner G Ashish (2026)Hello Computer: HPC in the Agentic Era Proceedings of the Practice and Experience in Advanced Research Computing 2026: Resilient Roots + Empowered Communities 10.1145/3785462.3815825(1-3)Online publication date: 26-Jul-2026 \n   Show More Cited By) [...] Liu Y Zhang Y Zhang X L",
+      "url": "https://inspirehep.net/literature/2702854",
+      "title": "Attention Is All You Need",
+      "snippet": "_Neural Comput._ 9 (1997) 8, 1735-1780\n\n • \n       \nDOI: \n           10.1162/neco.1997.9.8.1735\n\nedit\n\n   \n  \n\nZhongqiang Huang and Mary Harper. Self-training PCFG grammars with latent annotations across languages. In Proceedings of theConference on Empirical Methods in Natural Language Processing, ",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S4",
+      "url": "https://meresophistry.substack.com/p/the-paper-attention-is-all-you-need",
+      "title": "The paper \"Attention is all you need\" for non-experts",
+      "snippet": "To solve this problem (and it did solve it, as noted by 70K citations), the paper introduces the Transformer, which is the “T” in GPT by the way. The core idea of the Transformer is the self-attention mechanism. Instead of processing sequences word by word (such as in RNNs), it can focuses input sim",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S5",
       "url": "https://papers.neurips.cc/paper/7181-attention-is-all-you-need.pdf",
       "title": "Attention is All you Need",
       "snippet": "Attention Is All You Need Ashish Vaswani∗ Google Brain avaswani@google.com Noam Shazeer∗ Google Brain noam@google.com Niki Parmar∗ Google Research nikip@google.com Jakob Uszkoreit∗ Google Research usz@google.com Llion Jones∗ Google Research llion@google.com Aidan N. Gomez∗† University of Toronto aid",
@@ -431,208 +357,198 @@
       "first_seen_step": 1
     },
     {
-      "sid": "S5",
-      "url": "https://arxiv.org/abs/1706.03762",
-      "title": "[1706.03762] Attention Is All You Need",
-      "snippet": "archive\n\n# Computer Science > Computation and Language\n\n# Title:Attention Is All You Need\n\n|  |  |\n --- |\n| Comments: | 15 pages, 5 figures |\n| Subjects: | Computation and Language (cs.CL); Machine Learning (cs.LG) |\n| Cite as: | arXiv:1706.03762 [cs.CL] |\n|  | (or  arXiv:1706.03762v7 [cs.CL] for th",
-      "tool": "web_search",
-      "first_seen_step": 1
-    },
-    {
       "sid": "S6",
-      "url": "https://ai.plainenglish.io/i-finally-understood-attention-is-all-you-need-after-so-long-heres-how-i-did-it-263b46273f9f",
-      "title": "Understanding “Attention is All You Need” Using the 3-Pass Method",
-      "snippet": "Image 2: Artificial Intelligence in Plain English\nNew AI, ML and Data Science articles every day. Follow to join our 3.5M+ monthly readers.\n\nTransformers\n\nNLP\n\nBeginner\n\nResearch\n\nArtificial Intelligence\n\n# Understanding “Attention is All You Need” Using the 3-Pass Method\n\nImage 3: Olubusolami Sogun",
+      "url": "https://doi.org/10.48550/arXiv.2501.06425",
+      "title": "[2501.06425] Tensor Product Attention Is All You Need",
+      "snippet": "|  |  |\n --- |\n| Comments: | Published in NeurIPS 2025 (Spotlight); Project Page: this https URL |\n| Subjects: | Computation and Language (cs.CL); Artificial Intelligence (cs.AI); Machine Learning (cs.LG) |\n| Cite as: | arXiv:2501.06425 [cs.CL] |\n|  | (or  arXiv:2501.06425v7 [cs.CL] for this version",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S7",
-      "url": "https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf",
-      "title": "[PDF] Attention is All you Need - NIPS",
-      "snippet": "Attention Is All You Need Ashish Vaswani∗ Google Brain avaswani@google.com Noam Shazeer∗ Google Brain noam@google.com Niki Parmar∗ Google Research nikip@google.com Jakob Uszkoreit∗ Google Research usz@google.com Llion Jones∗ Google Research llion@google.com Aidan N. Gomez∗† University of Toronto aid",
+      "url": "https://doi.org/10.1007/s00146-025-02700-4",
+      "title": "Attention is all you need? When responsiveness short-circuits responsibility | AI & SOCIETY | Springer Nature Link",
+      "snippet": "Sezgin, E. Attention is all you need? When responsiveness short-circuits responsibility.\nAI & Soc 41, 4107–4108 (2026). \n\nDownload citation\n\nReceived: 10 September 2025\n\nAccepted: 18 October 2025\n\nPublished: 25 October 2025\n\nVersion of record: 25 October 2025\n\nIssue date: April 2026\n\nDOI: \n\n### Shar",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S8",
-      "url": "https://medium.com/@vijay.poudel1/attention-is-all-you-need-the-paper-that-revolutionized-ai-6e606e6a847b",
-      "title": "Medium",
-      "snippet": "The “Attention Is All You Need” paper wasn’t just about improving upon existing models — it was about rethinking how deep learning models process sequences of data. The intention behind the Transformer architecture was clear: create a model that could process data more efficiently, without the bottl",
+      "url": "https://dx.doi.org/10.20965/jaciii.2025.p1484",
+      "title": "JACIII Vol.29 p.1484 (2025) | Fuji Technology Press: academic journal publisher",
+      "snippet": "11.  A. Vaswani, N. Shazeer, N. Parmar, J. Uszkoreit, L. Jones, A. N. Gomez, Ł. Kaiser, and I. Polosukhin, “Attention is all you need,” Advances in Neural Information Processing Systems (NeurIPS), pp. 5998-6008, 2017.\n    12.  M. Tan and Q. V. Le, “EfficientNet: Rethinking model scaling for convolut",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S9",
-      "url": "https://aclanthology.org/2026.acl-long.1176.pdf",
-      "title": "[PDF] Latent-Condensed Transformer for Efficient Long Context Modeling",
-      "snippet": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, and Illia Polosukhin. 2017. Attention is all you need. In Advances in Neural Information Pro-cessing Systems, pages 5998–6008.\nGuangxuan Xiao, Jiaming Tang, Jingwei Zuo, Shang Yang, Haotian Tang, ",
+      "url": "https://doi.org/10.20533/ijicr.2042.4655.2025.0165",
+      "title": "Attention-Mechanism-Enhancements-in-Modern-Machine- ...",
+      "snippet": "(2017). Attention is all you need. Advances in Neural Information Processing Systems.  .03762 (Access Date: 30 March 2025).\n Beltagy, I., Peters, M. E., and Cohan, A. (2020).\nLongformer: The long-document transformer. Zaheer, M., et al. (2020). Big Bird: Transformers for longer sequences.\nGoogle's B",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S10",
-      "url": "https://aclanthology.org/2025.emnlp-main.118.pdf",
-      "title": "[PDF] Integral Transformer: Denoising Attention, Not Too Much Not Too Little",
-      "snippet": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. 2017. Attention is all you need. In Advances in Neural Information Pro-cessing Systems, pages 5998–6008.\nSuyuchen Wang, Ivan Kobyzev, Peng Lu, Mehdi Reza-gholizadeh, and Bang ",
+      "url": "https://doi.org/10.21125/iceri.2025.0181",
+      "title": "Abstract View",
+      "snippet": "References:  \n  Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Łukasz Kaiser, Illia Polosukhin, Attention is all you need, in Advances in neural information processing systems 30, pp 5998--6008. (NIPS 2017)  \n  GASQ GmbH, \"Global Association for Software Qua",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S11",
-      "url": "https://aclanthology.org/2021.emnlp-main.132.pdf",
-      "title": "[PDF] Cross-Attention is All You Need: Adapting Pretrained Transformers ...",
-      "snippet": "Simple, scal-able adaptation for neural machine translation. In Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Lan-guage Processing (EMNLP-IJCNLP), pages 1538– 1548, Hong Kong, China. Association for Comput",
+      "url": "https://pemajuankebudayaandesa.blogspot.com/2024/06/oleh-angga-hermansah-sejak-disahkannya.html",
+      "title": "Gaung Pemajuan Kebudayaan \"mlempem\" di Penghujung Jalan - Pusat Studi Pemajuan Kebudayaan Desa",
+      "snippet": "“2024-2029 merupakan babak penting dalam meletakkan pemajuan kebudayaan sebagai dasar publik, dan sekaligus panduan transformasi ekonomi, sosial dan ekologi, melalui tata kelola yang sehat , dan kerja para pelaku dan pandu-pandu budaya pada berbagai bidang , tingkatan dan sektor. Visi Indonesia 2045",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S12",
-      "url": "https://aclanthology.org/2025.findings-acl.242.pdf",
-      "title": "[PDF] DAM: Dynamic Attention Mask for Long-Context Large Language ...",
-      "snippet": "A Vaswani. 2017. Attention is all you need. Advances in Neural Information Processing Systems.\nDongsheng Wang, Casper Hansen, Lucas Chaves Lima, Christian Hansen, Maria Maistro, Jakob Grue Si-monsen, and Christina Lioma. 2020.\nMulti-head self-attention with role-guided masks.\nPreprint, arXiv:2012.12",
+      "url": "https://pemajuankebudayaandesa.blogspot.com/2025/08/sumber-digital-manuskrip-pekalongan.html",
+      "title": "Sumber Digital Manuskrip Pekalongan - Pusat Studi Pemajuan Kebudayaan Desa",
+      "snippet": "MERAIH BAHAGIA  \nSumber: www.youtu.be/iHMRiVPFZzg?si=KNABhQh1hgMFmPrX  \n  \nKH ABDULLAH MUNJI, ANTARA ANTI KOLONIAL DAN AJARKAN ISLAM-KEARIFAN LOKAL: UNTUK MELAWAN EKSTRIMIS  \nSumber: \n\nDzuriyah Syekh Mutamakkin, KH Abdullah Munji  \nSumber: \n\n### Post a Comment\n\n--> [...] Home\n\nPosts\n\n# Sumber Digita",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S13",
-      "url": "https://aclanthology.org/2025.emnlp-main.421.pdf",
-      "title": "[PDF] Variance Sensitivity Induces Attention Entropy Collapse in ...",
-      "snippet": "References Kwangjun Ahn, Xiang Cheng, Minhak Song, Chulhee Yun, Ali Jadbabaie, and Suvrit Sra. 2024. Linear at-tention is (maybe) all you need (to understand trans-former optimization). In The Twelfth International Conference on Learning Representations, ICLR 2024, Vienna, Austria, May 7-11, 2024. O",
+      "url": "https://pemajuankebudayaandesa.blogspot.com/2025/08/dampak-film-dokumenter-manuskrip.html",
+      "title": "dampak film dokumenter “Manuskrip Pekalongan” dalam upaya pelestarian budaya berdasarkan transkrip - Pusat Studi Pemajuan Kebudayaan Desa",
+      "snippet": "Home\n\nPosts\n\n# dampak film dokumenter “Manuskrip Pekalongan” dalam upaya pelestarian budaya berdasarkan transkrip\n\nBerikut adalah ekstraksi dampak film dokumenter “Manuskrip Pekalongan” dalam upaya pelestarian budaya berdasarkan transkrip:\n\n## Dampak Film Dokumenter dalam Upaya Pelestarian Budaya [.",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S14",
-      "url": "https://www.semanticscholar.org/paper/Attention-is-All-you-Need-Vaswani-Shazeer/204e3073870fae3d05bcbc2f6a8e263d9b72e776",
-      "title": "[PDF] Attention is All you Need - Semantic Scholar",
-      "snippet": "table 4\n figure 4\n\n  figure 4\n figure 5\n\n  figure 5\n\n## 187,791 Citations\n\n### Weighted Transformer Network for Machine Translation\n\nKarim AhmedN. KeskarR. Socher\n\nComputer Science, Linguistics\n\narXiv.org\n\n 2017\n\nWeighted Transformer is proposed, a Transformer with modified attention layers, that no",
+      "url": "https://pemajuankebudayaandesa.blogspot.com/2025/08/simpulan-manuskrip-pekalongan.html",
+      "title": "Simpulan Manuskrip Pekalongan - Pusat Studi Pemajuan Kebudayaan Desa",
+      "snippet": "## Pusat Studi Pemajuan Kebudayaan Desa\n\nPusat Studi Pemajuan Kebudayaan Desa (PSPKD) merupakan lembaga riset yang bergerak dalam bidang layanan penelitian kebudayaan untuk pemajuan desa. Sekretariat: Perpustakaan Cahaya Ilmu Desa Dasun Kec. Lasem, Kabupaten Rembang, Jawa Tengah 59271 Email: pemajua",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S15",
-      "url": "https://scholar.google.com/citations?user=oR9sCGYAAAAJ&hl=en",
-      "title": "‪Ashish Vaswani‬ - ‪Google Scholar‬",
-      "snippet": "|  |  |  |\n --- \n| Title Sort Sort by citationsSort by yearSort by title | Cited by  Cited by | Year |\n| Attention is all you need A Vaswani, N Shazeer, N Parmar, J Uszkoreit, L Jones, AN Gomez, ...  Advances in neural information processing systems 30, 2017 | 275197 | 2017 |\n| Relational inductive ",
+      "url": "https://pemajuankebudayaandesa.blogspot.com/2025/08/kelayakan-film.html",
+      "title": "Kelayakan Film - Pusat Studi Pemajuan Kebudayaan Desa",
+      "snippet": "Home\n\nPosts\n\n# Kelayakan Film\n\nKelayakan Film [...] ## Ringkasan [...] | Potensi Dampak Positif bagi Masyarakat | 9 | Film edukatif yang meningkatkan kesadaran publik dan mendorong partisipasi pelestarian budaya secara luas. |",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S16",
-      "url": "https://huggingface.co/papers/1706.03762",
-      "title": "Paper page - Attention Is All You Need",
-      "snippet": "We have tried to breakdown the Insights from the paper here:  Check it Out!  \nand also made a song about it on: \n\n· Sign up or log in to comment\n\nGet this paper in your agent:\n\n`hf papers read 1706.03762`\n`curl -LsSf  | bash`\n\n## Models citing this paper 263\n\n#### google/paligemma-3b-pt-224\n\n#### nv",
+      "url": "https://papers.nips.cc/paper/7181-attention-is-all-you-need",
+      "title": "Attention is All you Need",
+      "snippet": "#### Name Change Policy\n\nRequests for name changes in the electronic proceedings will be accepted with no questions asked. However name changes may cause bibliographic tracking issues. Authors are asked to consider this carefully and discuss it with their co-authors prior to requesting a name change",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S17",
-      "url": "https://aclanthology.org/2025.justnlp-main.16.pdf",
-      "title": "[PDF] Team-SVNIT at JUST-NLP 2025: Domain-Adaptive Fine-Tuning of ...",
-      "snippet": "2024. Domain dynamics: LLMs in English-Hindi translation. In Proc. WMT 2024, pages 341–354.\nMarkus Freitag, Nitika Mathur, Daniel Deutsch, et al.\n2024. Are LLMs breaking MT metrics? WMT24 analysis. In Proc. WMT 2024, pages 47–81.\nAshish Vaswani, Noam Shazeer, Parmar Nikita, et al.\n2017. Attention is",
+      "url": "https://www.alphaxiv.org/abs/1706.03762",
+      "title": "Attention Is All You Need | alphaXiv",
+      "snippet": "## Similar papers\n\nNeural Machine Translation by Jointly Learning to Align and Translate19 May 2016Self-Attention with Relative Position Representations12 Apr 2018Convolutional Sequence to Sequence Learning25 Jul 2017Fast Transformer Decoding: One Write-Head is All You Need06 Nov 2019Transformer++02",
       "tool": "web_search",
-      "first_seen_step": 2
+      "first_seen_step": 1
     },
     {
       "sid": "S18",
-      "url": "https://aclanthology.org/2025.semeval-1.168.pdf",
-      "title": "CSECU-Learners at SemEval-2025 Task 9 - ACL Anthology",
-      "snippet": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. 2017. Attention is all you need. Advances in neural information processing systems, 30.\nXinxin Wang, Yamine Bouzembrak, AGJM Oude Lansink, and HJ van der Fels-Klerx.\n2023. Wei",
+      "url": "https://mbrenndoerfer.com/writing/transformer-attention-is-all-you-need",
+      "title": "The Transformer: Attention Is All You Need - Interactive",
+      "snippet": "## Comments\n\nNo comments yet. Be the first to share your thoughts!\n\n## Reference\n\nCitation details\n\nCite or share this article.\n\nBIBTEXAcademic\n\n@misc{brenndoerfer2025transformerattention, author = {Michael Brenndoerfer}, title = {The Transformer: Attention Is All You Need}, year = {2025}, url = { o",
       "tool": "web_search",
-      "first_seen_step": 2
+      "first_seen_step": 1
     },
     {
       "sid": "S19",
-      "url": "https://aclanthology.org/2025.bea-1.88.pdf",
-      "title": "[PDF] SmolLab_SEU at BEA 2025 Shared Task: A Transformer-Based ...",
-      "snippet": "The BEA 2023 shared task on generating AI teacher responses in educational dialogues. In Proceedings of the 18th Workshop on Innovative Use of NLP for Building Ed-ucational Applications (BEA 2023), pages 785–795, Toronto, Canada. Association for Computational Lin-guistics.\nAshish Vaswani, Noam Shaze",
+      "url": "https://parseur.com/blog/attention-is-all-you-need",
+      "title": "Attention Is All You Need Explained - The Paper That Changed AI | Parseur®",
+      "snippet": "Common questions about the Transformer architecture and the paper that changed AI.\n\n:   The Transformer is an AI architecture introduced in the 2017 paper \"Attention Is All You Need.\" It processes all input simultaneously using attention mechanisms, rather than word by word like older models, enabli",
       "tool": "web_search",
-      "first_seen_step": 2
+      "first_seen_step": 1
     },
     {
       "sid": "S20",
-      "url": "https://aclanthology.org/2025.acl-long.76.pdf",
-      "title": "[PDF] The Hidden Attention of Mamba Models - ACL Anthology",
-      "snippet": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Ł ukasz Kaiser, and Illia Polosukhin. 2017. Attention is all you need. In Advances in Neural Information Pro-cessing Systems, volume 30.\nRoger Waleffe, Wonmin Byeon, Duncan Riach, Bran-don Norick, Vijay Korthikan",
+      "url": "https://medium.com/@adnanmasood/attention-is-all-you-need-explained-like-youre-smart-and-busy-2a3d7436144f",
+      "title": "Attention Is All You Need, explained like you’re smart and busy",
+      "snippet": "Sitemap\n\nOpen in app\n\nSign up\n\nSign in\n\n is the 2017 NeurIPS paper from Google Brain/Google Research that introduced the Transformer, a sequence-to-sequence architecture built entirely on attention, eliminating recurrence and convolutions.",
       "tool": "web_search",
-      "first_seen_step": 2
+      "first_seen_step": 1
     },
     {
       "sid": "S21",
-      "url": "https://aclanthology.org/2025.coling-main.660.pdf",
-      "title": "[PDF] Disentangle to Decay: Linear Attention with Trainable Decay Factor",
-      "snippet": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Łukasz Kaiser, and Illia Polosukhin. 2017. Attention is all you need. In Proceedings of the 31st International Conference on Neural Information Processing Sys-tems, NIPS’17, page 6000–6010, Red Hook, NY, USA. Cu",
+      "url": "https://scholar.google.com/citations?user=oR9sCGYAAAAJ&hl=en",
+      "title": "‪Ashish Vaswani‬ - ‪Google Scholar‬",
+      "snippet": "| Attention is all you need. CoRR abs/1706.03762 (2017) A Vaswani, N Shazeer, N Parmar, J Uszkoreit, L Jones, AN Gomez, ...  arXiv preprint arXiv:1706.03762 1 (2), 2017 | 451 | 2017 |\n| One model to learn them all L Kaiser, AN Gomez, N Shazeer, A Vaswani, N Parmar, L Jones, ...  arXiv preprint arXiv",
       "tool": "web_search",
       "first_seen_step": 2
     },
     {
       "sid": "S22",
-      "url": "https://aclanthology.org/2025.findings-ijcnlp.115.pdf",
-      "title": "[PDF] Hypercomplex Transformer: Novel Attention Mechanism",
-      "snippet": "Chiheb Trabelsi, Olexa Bilaniuk, Ying Zhang, Dmitriy Serdyuk, and Sandeep Subramanian. 2018. Deep complex networks. ICLR arXiv:1705.09792.\nAshish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, and Illia Polosukhin. 2023. Attention is all you need.\nBe",
+      "url": "https://arxiv.org/pdf/1706.03762",
+      "title": "1706.03762v7.pdf",
+      "snippet": "## Provided proper attribution is provided, Google hereby grants permission to reproduce the tables and figures in this paper solely for use in journalistic or scholarly works. \n\n# Attention Is All You Need \n\nAshish Vaswani ∗\n\nGoogle Brain \n\navaswani@google.com \n\nNoam Shazeer ∗\n\nGoogle Brain \n\nnoam@",
       "tool": "web_search",
       "first_seen_step": 2
     },
     {
       "sid": "S23",
-      "url": "https://scispace.com/pdf/attention-is-all-you-need-1hodz0wcqb.pdf",
-      "title": "[PDF] Attention Is All You Need - SciSpace",
-      "snippet": "End-to-end memory networks are based on a recurrent attention mechanism instead of sequence-aligned recurrence and have been shown to perform well on simple-language question answering and language modeling tasks . [...] In this work we propose the Transformer, a model architecture eschewing recurre",
+      "url": "https://community.crossref.org/t/ticket-of-the-month-august-2025-retraction-action/14438",
+      "title": "Ticket of the month - August 2025 - Retraction Action! - Content Registration - Crossref community forum",
+      "snippet": "versions need to be cited correctly. [...] We encourage you to keep up-to-date on your retractions and corrections. And keep these practices as consistent as possible. Not only does this help readers find and cite the correct research, but it is also an indicator that you are concerned with both the",
       "tool": "web_search",
       "first_seen_step": 2
     },
     {
       "sid": "S24",
-      "url": "https://www.academia.edu/146203279/Attention_Is_All_You_Need",
-      "title": "Attention Is All You Need",
-      "snippet": "download Download free PDFView PDF chevron_right\n\nMultimodal attention-based deep learning for Alzheimer’s disease diagnosis\n\nMichal Golovanevsky\n\nJournal of the American Medical Informatics Association [...] download Download free PDFView PDF chevron_right\n\nContext- and sequence-aware convolutional",
+      "url": "https://community.crossref.org/t/all-citations-direct-to-a-wrong-strange-title/3694",
+      "title": "All Citations direct to a wrong/strange title - References - Crossref community forum",
+      "snippet": "| Topic |  | Replies | Views | Activity |\n ---  --- \n| References not showing up  Metadata quality improvements references ,  content-registration ,  metadata-quality | 26 | 5071 | 16 December 2024 |\n| References not showing up?  References references ,  cited-by | 14 | 1130 | 31 March 2025 |\n| Link",
       "tool": "web_search",
       "first_seen_step": 2
     },
     {
       "sid": "S25",
-      "url": "https://www.scirp.org/reference/referencespapers?referenceid=3964316",
-      "title": "Vaswani, A., et al. (2017) Attention Is All You Need. Proceedings of the 31st International Conference on Neural Information Processing Systems, Long Beach, 4-9 December 2017, 6000-6010. - References - Scientific Research Publishing",
-      "snippet": "JOURNAL NAME:\nJournal of Computer and Communications,\nVol.13 No.3,\nMarch\n28,\n2025 [...] KEYWORDS:\nImage Classification, Unsupervised Feature Learning, Auto-Encoder\n\nJOURNAL NAME:\nJournal of Computer and Communications,\nVol.13 No.3,\nMarch\n28,\n2025 [...] KEYWORDS:\nImage Classification, Unsupervised Fe",
+      "url": "https://community.crossref.org/t/references-not-showing-up/2302",
+      "title": "References not showing up - Metadata quality improvements - Crossref community forum",
+      "snippet": "| Topic |  | Replies | Views | Activity |\n ---  --- \n| References not showing up?  References references ,  cited-by | 14 | 1080 | 31 March 2025 |\n| Missing article citations!  Metadata quality improvements references ,  cited-by ,  metadata-retrieval ,  metadata-quality ,  reference-matching | 0 | ",
       "tool": "web_search",
       "first_seen_step": 2
     },
     {
       "sid": "S26",
-      "url": "https://papers.nips.cc/paper/7181-attention-is-all-you-need",
-      "title": "Attention is All you Need - NIPS",
-      "snippet": "# Attention is All you Need\n\nAshish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, Illia Polosukhin\n\nAdvances in Neural Information Processing Systems 30 (NIPS 2017)\n\n## Abstract",
+      "url": "https://www.crossref.org/blog/building-trust-through-metadata-a-recap-of-the-crossref-learning-series",
+      "title": "Building Trust through Metadata: a recap of the Crossref learning series - Crossref",
+      "snippet": "1. Kovalyova, M., Kumar, S., Dandawate, V., & Amdekar, M. (2025). Publishing best practices and metadata: Crossref essentials + DOAJ. Crossref. \n2. Bartell, A., Hendricks, G., & Pentz, E. (2022). ISR part one: What is our role in preserving the integrity of the scholarly record? Crossref. \n3. COPE C",
       "tool": "web_search",
       "first_seen_step": 2
     },
     {
       "sid": "S27",
-      "url": "https://medium.com/@hyponymous/paper-summary-attention-is-all-you-need-22c2c7a5e06",
-      "title": "Paper Summary: Attention Is All You Need | by Mike Plotz Sage | Medium",
-      "snippet": "Sitemap\n\nOpen in app\n\nSign up\n\nSign in\n\n  Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin [...] The architecture is pretty simple, but I had trouble understanding all the details when I looked at the paper a couple months ago, ",
+      "url": "https://community.crossref.org/t/overlap-between-different-services-providing-citation-data/2994",
+      "title": "Overlap between different services providing citation data - Interfaces for Machines - Crossref community forum",
+      "snippet": "| Topic |  | Replies | Views | Activity |\n ---  --- \n| References not showing up?  References references ,  cited-by | 14 | 1118 | 31 March 2025 |\n| References not showing up  Metadata quality improvements references ,  content-registration ,  metadata-quality | 26 | 5049 | 16 December 2024 |\n| Miss",
       "tool": "web_search",
       "first_seen_step": 2
     }
   ],
-  "answer": "I can’t answer this as requested from the evidence provided: none of the provided sources contain enough bibliographic information to determine **every peer-reviewed 2025 paper** that cites **“Attention Is All You Need”** *and* to list their **full titles and complete author lists as published**.\n\nWhat I *can* support from the evidence:\n- I found several 2025 papers that are *likely related* to “Attention Is All You Need” (e.g., the 2025 ACL Findings paper **“DAM: Dynamic Attention Mask for Long-Context Large Language …”** [S12], and other 2025 ACL/EMNLP/Coling/ICNLP/JustNLP/SemEval/BEA items [S10][S19][S20][S17][S18][S21][S22]), but the evidence does **not** show that they cite Vaswani et al. (2017), nor does it provide complete author lists.  \n- I found **“Integral Transformer: Denoising Attention, Not Too Much Not Too Little”** with an ACL Anthology 2025 PDF link [S10], but again the evidence does not include the paper’s full author list or confirm it cites the 2017 work.\n- The evidence includes the 2017 paper itself [S4][S5][S26], but not the full set of 2025 citing peer-reviewed papers.\n\nWhat could not be established (due to missing/insufficient evidence):\n- The **complete list** of all 2025 peer-reviewed papers citing “Attention Is All You Need”.\n- For each such paper, the **full published title** and the **complete author list**.\n- Whether each identified 2025 citing paper is peer-reviewed and the **publication venue**, because the evidence doesn’t document citation relationships or provide author/venue metadata.\n\nIf you want, I can retry if you provide (or allow me to use) a structured source like Semantic Scholar / OpenAlex / Crossref query results that explicitly list **2025 citing works** with full metadata (title, authors, venue, and peer-review status).\n\n_Note: this run stopped early because a tool hit its per-run call limit._",
+  "answer": "I can’t list **every** 2025 peer‑reviewed paper citing **“Attention Is All You Need”** from the provided evidence, because the evidence does not include a comprehensive 2025 “cited by” list with full bibliographic metadata (titles, author lists, and DOIs) for all such papers.\n\nWhat I *can* support from the evidence is that the following items are **related to 2025 works**, but the evidence does **not** establish (with complete bibliographic details) that they are *peer‑reviewed 2025 papers that cite* the original “Attention Is All You Need” paper:\n\n- **“Tensor Product Attention Is All You Need”** (arXiv: **10.48550/arXiv.2501.06425**) — listed as a 2025 item with a DOI, but the evidence does not show it is peer‑reviewed, nor does it provide the full author list and venue publication details. [S6]  \n- **“Attention is all you need? When responsiveness short-circuits responsibility”** — shown with DOI **10.1007/s00146-025-02700-4**, but the evidence provided does not include the full author list or confirm the complete bibliographic record beyond the DOI. [S7]  \n- **“JACIII Vol.29 p.1484 (2025)”** — shown with DOI **10.20965/jaciii.2025.p1484**, but the evidence provided does not include the paper’s full title/author list or confirm it cites “Attention Is All You Need.” [S8]  \n- **“Attention-Mechanism-Enhancements-in-Modern-Machine- …”** — shown with DOI **10.20533/ijicr.2042.4655.2025.0165**, but the evidence provided does not include the complete title or author list, and does not confirm citation of “Attention Is All You Need.” [S9]  \n- **“Abstract View”** — shown with DOI **10.21125/iceri.2025.0181**, but the evidence provided does not include the title/author list and does not establish that it cites “Attention Is All You Need.” [S10]\n\nAlso, the evidence includes information about the **“Attention Is All You Need” authorship** (Vaswani et al.) and the original paper record, but not a complete, reliable enumeration of *all* 2025 peer‑reviewed citing papers with full author lists and DOIs. [S1][S2][S3][S5][S22]\n\n### Therefore, I cannot answer your sub-questions as asked.\n- I **cannot list every** 2025 peer‑reviewed citing paper (missing comprehensive citation data and full metadata).  \n- I **cannot provide full titles and complete author lists for each 2025 citing paper** from the provided evidence (most candidate items lack author lists and/or are not confirmed as peer‑reviewed citing papers).\n\nIf you can provide (or point me to) a specific **database export** (e.g., Crossref “cited-by” results for the exact DOI of Vaswani et al., or a Lens/Scopus/WoS export), I can format the complete 2025 list with full titles, author lists, and DOIs.\n\n_Note: this run stopped early because a tool hit its per-run call limit._",
   "citations": [
-    "S12",
+    "S6",
+    "S7",
+    "S8",
+    "S9",
     "S10",
-    "S19",
-    "S20",
-    "S17",
-    "S18",
-    "S21",
-    "S22",
-    "S4",
+    "S1",
+    "S2",
+    "S3",
     "S5",
-    "S26"
+    "S22"
   ],
   "coverage": {
-    "Which papers published in 2025 cite the paper \"Attention Is All You Need\" (Vaswani et al., 2017)?": false,
-    "For each of the identified 2025 citing papers, what is the full title and the complete author list (as published)?": false,
-    "For each identified 2025 citing paper, is it peer-reviewed (e.g., published in a journal or conference proceedings with peer review), and what is its publication venue?": false
+    "Which peer-reviewed papers published in 2025 cite the paper titled “Attention Is All You Need” (including their bibliographic identifiers like DOI)?": false,
+    "For each citing paper from 2025, what are its full title and complete author list as published in the peer-reviewed venue?": false
   },
   "outcome": {
     "status": "early_exit",
@@ -648,76 +564,76 @@
         "model": "gpt-5.4-nano",
         "input_tokens": 235,
         "cached_tokens": 0,
-        "output_tokens": 303,
-        "reasoning_tokens": 134,
-        "cost_usd": 0.00042575,
-        "latency_ms": 2935.020875011105,
+        "output_tokens": 207,
+        "reasoning_tokens": 86,
+        "cost_usd": 0.00030575,
+        "latency_ms": 1831.2096669997118,
         "replayed": false
       },
       {
         "purpose": "act",
         "model": "gpt-5.4-nano",
-        "input_tokens": 950,
+        "input_tokens": 953,
         "cached_tokens": 0,
-        "output_tokens": 186,
+        "output_tokens": 168,
         "reasoning_tokens": 0,
-        "cost_usd": 0.0004225,
-        "latency_ms": 2660.166500005289,
+        "cost_usd": 0.00040060000000000003,
+        "latency_ms": 1685.2497079999011,
         "replayed": false
       },
       {
         "purpose": "act",
         "model": "gpt-5.4-nano",
-        "input_tokens": 8759,
+        "input_tokens": 7311,
         "cached_tokens": 0,
-        "output_tokens": 198,
+        "output_tokens": 112,
         "reasoning_tokens": 0,
-        "cost_usd": 0.0019993000000000003,
-        "latency_ms": 3008.1325420032954,
+        "cost_usd": 0.0016022,
+        "latency_ms": 1844.875332999436,
         "replayed": false
       },
       {
         "purpose": "finalize",
         "model": "gpt-5.4-nano",
-        "input_tokens": 2271,
+        "input_tokens": 2021,
         "cached_tokens": 0,
-        "output_tokens": 443,
+        "output_tokens": 702,
         "reasoning_tokens": 0,
-        "cost_usd": 0.00100795,
-        "latency_ms": 5520.910874998663,
+        "cost_usd": 0.0012817,
+        "latency_ms": 4710.497000000032,
         "replayed": false
       }
     ],
     "totals": {
-      "input_tokens": 12215,
+      "input_tokens": 10520,
       "cached_tokens": 0,
-      "output_tokens": 1130,
-      "reasoning_tokens": 134,
-      "cost_usd": 0.0038555000000000004,
+      "output_tokens": 1189,
+      "reasoning_tokens": 86,
+      "cost_usd": 0.00359025,
       "cache_hit_rate": 0.0
     },
     "by_purpose": {
       "plan": {
         "calls": 1,
-        "cost_usd": 0.00042575,
-        "output_tokens": 303
+        "cost_usd": 0.00030575,
+        "output_tokens": 207
       },
       "act": {
         "calls": 2,
-        "cost_usd": 0.0024218000000000004,
-        "output_tokens": 384
+        "cost_usd": 0.0020028,
+        "output_tokens": 280
       },
       "finalize": {
         "calls": 1,
-        "cost_usd": 0.00100795,
-        "output_tokens": 443
+        "cost_usd": 0.0012817,
+        "output_tokens": 702
       }
     },
-    "search_credits": 11,
+    "search_credits": 8,
     "steps": 2
   },
   "timings_ms": {
-    "total": 27158.92591699958
+    "total": 19245.106625000517
   },
   "compaction": {
     "count": 0,

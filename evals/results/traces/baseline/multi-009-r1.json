@@ -1,7 +1,7 @@
 {
   "schema_version": "1",
-  "run_id": "97b14780b1ed",
-  "ts": "2026-08-08T19:09:48+00:00",
+  "run_id": "0301444b14a7",
+  "ts": "2026-10-25T09:11:49+00:00",
   "question": "Who wrote the novel 'Snow Crash', what year was it published, and how many years later was the film 'The Matrix' released?",
   "variant": "baseline",
   "config": {
@@ -12,14 +12,15 @@
     "max_run_cost_usd": 0.05,
     "finalize_reserve_usd": 0.008,
     "compact_threshold_tokens": 12000,
-    "git_sha": "a4216f3",
-    "prompt_hash": "sha256:512e8e5d8eaa"
+    "git_sha": "e577c53",
+    "prompt_hash": "sha256:e2655640140a"
   },
   "plan": {
     "version": 1,
     "subquestions": [
-      "Who wrote the novel *Snow Crash*, and what year was it published?",
-      "What year was the film *The Matrix* released?"
+      "Who is the author of the novel *Snow Crash*?",
+      "In what year was *Snow Crash* first published?",
+      "In what year was the film *The Matrix* released?"
     ],
     "replans": 0
   },
@@ -28,7 +29,7 @@
       "i": 1,
       "node": "plan",
       "plan_version": 0,
-      "ts_offset_ms": 2019.7332499956246,
+      "ts_offset_ms": 2152.969832999588,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -38,20 +39,27 @@
       "i": 2,
       "node": "act",
       "plan_version": 1,
-      "ts_offset_ms": 3448.3939579949947,
+      "ts_offset_ms": 3789.310124999247,
       "tool_calls": [
         {
-          "call_id": "call_CasJD6BJ9cEx5i7bu8c02rdl",
+          "call_id": "call_dKtVYcNq5LwAMQdY53YYXBLG",
           "name": "web_search",
           "args": {
-            "query": "Snow Crash novel published year author Neal Stephenson 1992"
+            "query": "Snow Crash novel author year first published"
           }
         },
         {
-          "call_id": "call_Qd1fh2NxvvypbkSL5jI6wD42",
+          "call_id": "call_npRxWMNmwhxgSMCdOPK34D7l",
           "name": "web_search",
           "args": {
             "query": "The Matrix film release year 1999"
+          }
+        },
+        {
+          "call_id": "call_wRnpRPSIGMgziI5lmgCirjXy",
+          "name": "web_search",
+          "args": {
+            "query": "Snow Crash first published 1992"
           }
         }
       ],
@@ -63,20 +71,20 @@
       "i": 3,
       "node": "observe",
       "plan_version": 1,
-      "ts_offset_ms": 5877.4195830046665,
+      "ts_offset_ms": 7165.316124999663,
       "tool_calls": [],
       "observations": [
         {
-          "call_id": "call_CasJD6BJ9cEx5i7bu8c02rdl",
+          "call_id": "call_dKtVYcNq5LwAMQdY53YYXBLG",
           "tool": "web_search",
           "args": {
-            "query": "Snow Crash novel published year author Neal Stephenson 1992"
+            "query": "Snow Crash novel author year first published"
           },
           "ok": true,
-          "content": "Summary: Snow Crash is a science fiction novel by Neal Stephenson, published in 1992. It blends cyberpunk and dystopian themes. The book coined the term \"Metaverse.\"\n\n[1] Snow Crash by Neal Stephenson Review — Bill McNamee | The Art of the Create\n    https://www.billmcnamee.com/blog/snow-crash\n    Snow Crash is a science fiction novel written by Neal Stephenson. It was published in 1992 and broke new ground as post-cyberpunk tour de force that became an immediate modern science fiction classic. Due to it's original lexicon, Snow Crash is not the easiest of reads initially, but is well worth the investment. The characters are well developed and complex. The story is unique and unfolds as a classic mystery with lots of discovery. As pure escapism, Snow Crashcompletely transports the reader\n\n[2] Snow Crash - Wikipedia\n    https://en.wikipedia.org/wiki/Snow_Crash\n    Snow Crash is a 1992 science fiction novel by Neal Stephenson. Like many of Stephenson's novels, its themes include history, linguistics, anthropology, archaeology, religion, computer science, politics, cryptography, memetics, and philosophy. [...] | US paperback cover |\n| Author | Neal Stephenson |\n| Cover artist | Jean-François Podevin |\n| Language | English |\n| Genre | Science fiction, cyberpunk, Postcyberpunk |\n| Publisher | Bantam Books (US) |\n| Publication date | June 1992 |\n| Publication place | United States |\n| Media type | Print (hardback & paperback) |\n| Pages | 480 |\n| ISBN \"ISBN (identifier)\") | 0-553-08853-X (first edition, hardback) |\n| OCLC \"OCLC (identifier)\") | 25026617 |\n| Dewey Decimal | 813/.54 20 | [...] 8. 1 2 3 4 5 6 7 8 9 10 11 12 13 14 Stephenson, Neal (1992). Snow Crash (2003 paperback ed.). New York: Bantam Books. ISBN \"ISBN (identifier)\") 9780553898194.\n9. ↑ Lewis, Jonathan P., ed. (2006). Tomorrow Through the Past: Neal Stephenson and the Project of Global Modernization. Cambridge Scholars Press. pp. xvi. ISBN \"ISBN (identifier)\") 1-84718-061-2. Retrieved June 3, 2021.\n\n[3] Neal Stephenson's Snow Crash\n    https://www.lithoguru.com/gentleman/essays/SnowCrash.html\n    January 8, 2022\n\nSnow Crash, published in 1992, is a science fiction novel that is part cyber punk, part satire, and a dystopian depiction of a near future. I was alternately engrossed and irritated by this thought-provoking and deeply flawed novel.\n\n[4] Snow Crash by Neal Stephenson | Goodreads\n    https://www.goodreads.com/en/book/show/61240297-snow-crash\n    First published in 1992, Snow Crash is considered one of the seminal cyber-punk novels. I wasn’t even sure what that meant when I picked it up; I plucked it from the stacks at the used bookstore with the vague feeling this was one of those classics I’m supposed to have read. For once, the inside voice was right–this was a book I didn’t want to miss. [...] GenresScience FictionFictionCyberpunkFantasyDystopiaScience Fiction FantasyAudiobook\n\n576 pages, Hardcover\n\nFirst published June 1, 1992\n\n---\n\n### About the author\n\nProfile Image for Neal Stephenson.\n\n#### Neal Stephenson\n\n90 books29.2k followers [...] I LOVED the blend of futuristic tech, a dystopian world, Sumerion mythology (Tower of Babel) and more. It seems the author is very good at and interested in blending history with linguistics, politics, philosophy and - here - computer science. I mean, this book was published in 1992 and he coined the word Metaverse. Take THAT, Zuckerberg!\n\n[5] Snow Crash, by Neal Stephenson - Mountain Beltway\n    https://mountainbeltway.all-geo.org/2017/09/01/snow-crash-neal-stephenson\n    explicit science and relevance to the survival of the human race. There was something essential about that which really appealed to me. But Snow Crash is clever and hip and fascinating and feels current in spite of the fact that it’s actually 25 years old (first published in 1992). This book envisioned massively-multiplayer video games, popularized the term avatar, and envisioned a sort of virtual reality Google Earth almost a decade before Keyhole\n\n[truncated: 602 of 4,599 chars]",
+          "content": "Summary: Snow Crash is a 1992 science fiction novel by Neal Stephenson. The novel was first published in June 1992 by Bantam Books. It is a work of science fiction, cyberpunk, and postcyberpunk that explores themes including history, linguistics, anthropology, archaeology, religion, computer science, politics, cryptography, memetics, and philosophy.\n\n[1] Snow Crash - Wikipedia\n    https://en.wikipedia.org/wiki/Snow_Crash\n    Snow Crash is a 1992 science fiction novel by Neal Stephenson. Like many of Stephenson's novels, its themes include history, linguistics, anthropology, archaeology, religion, computer science, politics, cryptography, memetics, and philosophy. [...] | US paperback cover |\n| Author | Neal Stephenson |\n| Cover artist | Jean-François Podevin |\n| Language | English |\n| Genre | Science fiction, cyberpunk, Postcyberpunk |\n| Publisher | Bantam Books (US) |\n| Publication date | June 1992 |\n| Publication place | United States |\n| Media type | Print (hardback & paperback) |\n| Pages | 480 |\n| ISBN \"ISBN (identifier)\") | 0-553-08853-X (first edition, hardback) |\n| OCLC \"OCLC (identifier)\") | 25026617 |\n| Dewey Decimal | 813/.54 20 | [...] General\n\n What links here\n Related changes\n Upload file\n Permanent link\n Page information\n Cite this page\n Get shortened URL\n Switch to legacy parser\n\nPrint/export\n\n Download as PDF\n Printable version; \"Printable version of this page [p]\")\n\nIn other projects\n\n Wikiquote\n Wikidata item\n\nAppearance\n\nFrom Wikipedia, the free encyclopedia\n\n1992 novel by Neal Stephenson\n\nSnow Crash\n\n[2] Snow Crash - Neal Stephenson - Google Books\n    https://books.google.com/books/about/Snow_Crash.html?id=B0xbAAAAMAAJ\n    Neal Stephenson, the science fiction author, was born on October 31, 1959 in Maryland. He graduated from Boston University in 1981 with a B.A. in Geography with a minor in physics. His first novel, The Big U, was published in 1984. It received little attention and stayed out of print until Stephenson allowed it to be reprinted in 2001. His second novel was Zodiac: The Eco-Thriller was published in 1988, but it was his novel Snow Crash (1992) that brought him popularity. It fused memetics, [...] |  |\n\n| Snow Crash Front Cover  Neal Stephenson  Bantam Books, 1992 - Fiction - 440 pages  First arriving on the scene in 1992 to critical acclaim, this definitive novel of the information age weaves virtual reality, Sumerian myth, and just about everything in between. Stephenson is author of the bestselling \"Cryptonomicon\" and \"The Diamond Age\". Copyright © Libri GmbH. All rights reserved. |\n\n### From inside the book\n\n### Contents\n\n|  |  |\n --- |\n| Section 1 | 1 |\n|  |\n| Section 2 | 19 |\n|  | [...] ### Bibliographic information\n\n|  |  |\n --- |\n| Title | Snow Crash Bantam spectra book |\n| Author | Neal Stephenson |\n| Publisher | Bantam Books, 1992 |\n| Original from | the University of Michigan |\n| Digitized | 12 Mar 2008 |\n| ISBN | 055308853X, 9780553088533 |\n| Length | 440 pages |\n| Subjects | › Science Fiction  ›    Fiction / Science Fiction / General Fiction / Science Fiction / Hard Science Fiction |\n|  |  |\n| Export Citation | BiBTeX EndNote RefMan |\n\n[3] Book review of Snow Crash by Neal Stephenson\n    https://sfbook.com/snow-crash.htm\n    Neal Stephenson\n\n# Snow Crash\n\nBy Neal Stephenson\n\nScience Fiction\n\nPost Cyberpunk\n\nSnow Crash, a novel by Neal Stephenson\n\nBook details\n\n Snow Crash\n Author:  Neal Stephenson\n Publisher:  Penguin\n ISBN:\n Published: June 1992\n Pages: 448\n Format reviewed: Paperback\n Review date: 01/05/2000\n Language: English\n Age Range: N/A\n\nAbout the author\n\n##### Authors books reviewed\n\n Cryptonomicon\n Quicksilver\n The Big U\n The Diamond Age\n The System of the World\n View authors Bibliography\n\nReview by TC [...] Snow Crash is funny, witty and highly intelligent reading. It is a bit dated already (it's from 1992), but that is the prize you pay when you try to be hip and try to describe the near future. And in this case it actually added something interesting to the story,\n\n[truncated: 2,760 of 6,758 chars]",
           "error": null,
-          "latency_ms": 2390.7525410031667,
-          "raw_chars": 4599,
+          "latency_ms": 1019.2522920006013,
+          "raw_chars": 6758,
           "truncated": true,
           "source_ids": [
             "S1",
@@ -87,16 +95,16 @@
           ]
         },
         {
-          "call_id": "call_Qd1fh2NxvvypbkSL5jI6wD42",
+          "call_id": "call_npRxWMNmwhxgSMCdOPK34D7l",
           "tool": "web_search",
           "args": {
             "query": "The Matrix film release year 1999"
           },
           "ok": true,
-          "content": "Summary: The Matrix was released in theaters on March 31, 1999, in the United States. It was a box office success, grossing over $460 million worldwide. The film received critical acclaim and won several Academy Awards.\n\n[1] The Matrix - Wikipedia\n    https://en.wikipedia.org/wiki/The_Matrix\n    The Matrix was released in theaters in the United States on March 31, 1999, to widespread critical acclaim. Critics praised its innovative visual effects, action sequences, cinematography, and entertainment value. The film was a box office success, grossing over $460 million on a $63 million budget. It became the highest-grossing Warner Bros. film of 1999 and the fourth-highest-grossing film of that year. The Matrix received Academy Awards for Best Visual Effects, Best Film Editing, Best Sound [...] | Release dates |  March 24, 1999 (1999-03-24) (Mann Village Theater)  March 31, 1999 (1999-03-31) (United States)  April 8, 1999 (1999-04-08) (Australia) |\n| Running time | 136 minutes |\n| Countries |  United States  Australia |\n| Language | English |\n| Budget | $63 million |\n| Box office | $473.3 million | [...] The Matrix was released on DVD and Laserdisc in its original aspect ratio of 2.39:1 on September 21, 1999, in the US from Warner Home Video as well as in 1.33:1 \"Aspect ratio (image)\") aspect ratio in Hong Kong from ERA Home Entertainment. It was also released on VHS in both full screen \"Fullscreen (filmmaking)\") and widescreen formats on December 7, 1999. After its DVD release, it was the first DVD to sell more than one million copies in the US, alongside Titanic \"Titanic (1997 film)\"). By\n\n[2] The Matrix | Matrix Wiki | Fandom\n    https://matrix.fandom.com/wiki/The_Matrix\n    The Matrix is a 1999 epic science fiction action film written and directed by the Wachowskis, starring Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss, Joe Pantoliano, and Hugo Weaving. It was first released in the USA on March 31, 1999, and is the first entry in The Matrix series of films, comics, video games and animation. The film received four Academy Awards in the technical categories. [...] ## Release[]\n\nThe Matrix was first released in the U.S. on 31 March 1999. It earned $171 million in the U.S. and $460 million worldwide, and later became the first DVD to sell more than three million copies in the U.S. The Ultimate Matrix Collection was released on HD DVD on May 22 2007.\n\n### Critical reception[] [...] ### Awards and nominations[]\n\nThe Matrix received Oscars for film editing, sound effects editing, visual effects, and sound. In 1999, it won Saturn Awards for Best Science Fiction Film and Best Direction. The Matrix also received BAFTA awards for Best Sound and Best Achievement in Special Visual Effects, in addition to nominations in the cinematography, production design and editing categories.\n\n## Influences and interpretations[]\n\n:   See also: Cultural references in The Matrix franchise\n\n[3] \"The Matrix\" released in theaters | March 31, 1999 | HISTORY\n    https://www.history.com/this-day-in-history/march-31/the-matrix-released\n    March\n\n|  |  |  |  |  |  |  |\n ---  ---  --- \n|  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |\n\nBy: HISTORY.com Editors\n\n1999\n\n# “The Matrix” released in theaters\n\nHISTORY.com Editors\n\nPublished: November 13, 2009Last Updated: May 27, 2025\n\nOn March 31, 1999, the writing and directing sibling team of Lana and Lilly Wachowski release their second film, the mind-blowing science-fiction blockbuster The Matrix. [...] As a follow-up to their phenomenal success, the Wachowskis wrote and produced for Animatrix, a series of short films based on The Matrix, and wrote and produced the provocative action thriller V for Vendetta (2006). In 2008, the Wachowskis returned to directing (as well as writing and producing) with Speed Racer, a film adaptation of the Japanese anime series by the same name. Later films include Cloud Atlas (2012) and\n\n[truncated: 2,557 of 6,553 chars]",
+          "content": "Summary: The Matrix was released in theaters in the United States on March 31, 1999, to widespread critical acclaim. The film was a box office success, grossing over $460 million on a $63 million budget. It became the highest-grossing Warner Bros. film of 1999 and the fourth-highest-grossing film of that year. The Matrix received Academy Awards for Best Visual Effects, Best Film Editing, and Best Sound. The film was released on DVD and Laserdisc in its original aspect ratio of 2.39:1 on September 21, 1999, in the US from Warner Home Video.\n\n[1] The Matrix - Wikipedia\n    https://en.wikipedia.org/wiki/The_Matrix\n    The Matrix was released in theaters in the United States on March 31, 1999, to widespread critical acclaim. Critics praised its innovative visual effects, action sequences, cinematography, and entertainment value. The film was a box office success, grossing over $460 million on a $63 million budget. It became the highest-grossing Warner Bros. film of 1999 and the fourth-highest-grossing film of that year. The Matrix received Academy Awards for Best Visual Effects, Best Film Editing, Best Sound [...] | Release dates |  March 24, 1999 (1999-03-24) (Mann Village Theater)  March 31, 1999 (1999-03-31) (United States)  April 8, 1999 (1999-04-08) (Australia) |\n| Running time | 136 minutes |\n| Countries |  United States  Australia |\n| Language | English |\n| Budget | $63 million |\n| Box office | $473.3 million | [...] The Matrix was released on DVD and Laserdisc in its original aspect ratio of 2.39:1 on September 21, 1999, in the US from Warner Home Video as well as in 1.33:1 \"Aspect ratio (image)\") aspect ratio in Hong Kong from ERA Home Entertainment. It was also released on VHS in both full screen \"Fullscreen (filmmaking)\") and widescreen formats on December 7, 1999. After its DVD release, it was the first DVD to sell more than one million copies in the US, alongside Titanic \"Titanic (1997 film)\"). By\n\n[2] The Matrix (franchise) - Wikipedia\n    https://en.wikipedia.org/wiki/The_Matrix_(franchise)\n    | Film | U.S. release date | Directed by | Written by | Produced by |\n ---  --- \n| The Matrix | March 31, 1999 (1999-03-31) | The Wachowskis | Joel Silver |\n| The Matrix Reloaded | May 15, 2003 (2003-05-15) |\n| The Matrix Revolutions | November 5, 2003 (2003-11-05) |\n| The Matrix Resurrections | December 22, 2021 (2021-12-22) | Lana Wachowski | Lana Wachowski, David Mitchell \"David Mitchell (author)\") & Aleksandar Hemon | Grant Hill \"Grant Hill (producer)\"), Lana Wachowski & James McTeigue | [...] | Film | U.S. release date | Box office gross (Domestic) | Box office gross (International) | Box office gross (Worldwide) | Budget | Ref(s) |\n ---  ---  --- \n| The Matrix | March 31, 1999 | $172,076,928 | $295,145,800 | $467,222,728 | $63 million |  |\n| The Matrix Reloaded | May 15, 2003 | $281,576,461 | $460,271,476 | $741,847,937 | $150 million |  |\n| The Matrix Revolutions | November 5, 2003 | $139,313,948 | $288,030,377 | $427,344,325 | $150 million |  | [...] | Film(s) |  The Matrix (1999)  The Matrix Reloaded (2003)  The Matrix Revolutions (2003)  The Matrix Resurrections (2021) |\n| Direct-to-video |  The Matrix Revisited (2001)  The Animatrix (2003) |\n| Games |\n| Video game(s) |  Enter the Matrix (2003)  The Matrix Online (2005–2009)  The Matrix: Path of Neo (2005)  The Matrix Awakens (2021) |\n| Audio |\n\n[3] \"The Matrix\" released in theaters | March 31, 1999 | HISTORY\n    https://www.history.com/this-day-in-history/march-31/the-matrix-released\n    March\n\n|  |  |  |  |  |  |  |\n ---  ---  --- \n|  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |\n\nBy: HISTORY.com Editors\n\n1999\n\n# “The Matrix” released in theaters\n\nHISTORY.com Editors\n\nPublished: November 13, 2009Last Updated: May 27, 2025\n\nOn March 31, 1999, the writing and directing sibling team of Lana and Lilly Wachowski release their second film, the mind-blowing science-fiction\n\n[truncated: 3,399 of 7,388 chars]",
           "error": null,
-          "latency_ms": 2426.352041991777,
-          "raw_chars": 6553,
+          "latency_ms": 3373.0312079987925,
+          "raw_chars": 7388,
           "truncated": true,
           "source_ids": [
             "S6",
@@ -104,6 +112,26 @@
             "S8",
             "S9",
             "S10"
+          ]
+        },
+        {
+          "call_id": "call_wRnpRPSIGMgziI5lmgCirjXy",
+          "tool": "web_search",
+          "args": {
+            "query": "Snow Crash first published 1992"
+          },
+          "ok": true,
+          "content": "Summary: Snow Crash first published in 1992. The sources do not provide a definitive answer to the specific question about the publication date of \"Snow Crash,\" but they do confirm that the novel was published in 1992.\n\n[1] Snow - Wikipedia\n    https://en.wikipedia.org/wiki/Snow\n    99. ↑ Colbeck, Samuel C. (April 1992), \"A Review of the Processes That Control Snow Friction\", CRREL Monograph, 92 (2): 49, archived from the original on January 26, 2016, retrieved January 19, 2016\n100. ↑  Hudson, Simon (2000). Snow Business: A Study of the International Ski Industry. Tourism (Cassell). Cengage Learning EMEA. p. 180. ISBN \"ISBN (identifier)\") 978-0-304-70471-2.\n101. ↑ US patent 2676471, W. M. Pierce Jr., \"Method for Making and Distributing Snow\", issued December 14, 1950 [...] # Snow [...] is a rapid flow of snow down a sloping surface. Avalanches are typically triggered in a starting zone from a mechanical failure in the snowpack (slab avalanche) when the forces on the snow exceed its strength but sometimes only with gradually widening (loose snow avalanche). After initiation, avalanches usually accelerate rapidly and grow in mass and volume as they entrain \"Entrainment (physical geography)\") more snow. If the avalanche moves fast enough some of the snow may mix with the air\n\n[2] Snow\n    https://wmo.int/themes/snow\n    In 2022, the WMO published the first globally coordinated guide to the Measurement of Key Snow Variables, within the WMO Guide to Instruments and methods of Observation (WMO-No 8, Volume II), available in its six official languages. It provides an extensive assessment of current practices on monitoring and reporting glacier data, and it supports the definition of standards for data reporting. [...] ## Related publications\n\nA person stands near a tripod by a reflective mountain lake with snow-covered peaks in the background.  \n\nState of Global Water Resources 2023 A large, billowing cloud in a blue sky over a landscape with dark treetops at the bottom.  \n\nGlobal Seasonal Climate Update for March-April-May 2025\n\nLast updated: 16 July 2026 [...] Snow is an important store of freshwater, which is released during the snowmelt season each year, providing water resources to downstream populations. As global temperatures rise, snow seasons are shortening and the quantity of water stored in the snowpack is declining. This has consequences for the timing and quantity of meltwater release, with knock-on impacts on drinking water availability, irrigation for agriculture and hydropower generation. Additionally, changing snowmelt patterns impact\n\n[3] SNOW Definition & Meaning - Merriam-Webster\n    https://www.merriam-webster.com/dictionary/snow\n    2\n\nslang\n\na\n\n: cocaine\n\nb\n\n: heroin\n\n## Biographical Definition\n\nSnow\n\n## biographical name\n\nˈsnō\")\n\nC(harles) P(ercy) 1905–1980 Baron Snow English novelist and physicist\n\n## More from Merriam-Webster on snow\n\nBritannica.com: Encyclopedia article about snow\n\nLove words? Need even more definitions?\n\nSubscribe to America's largest dictionary and get thousands more definitions and advanced search—ad free!\n\nMerriam-Webster unabridged\n\nLast Updated:\n - Updated example sentences [...] often attributive\n\na\n\n: precipitation in the form of small white ice crystals formed directly from the water vapor of the air at a temperature of less than 32°F (0°C)\n\nb(1)\n\n: a descent or shower of snow crystals\n\n(2)\n\n: a mass of fallen snow crystals\n\n: something resembling snow: such as\n\na\n\n: a dessert made of stiffly beaten whites of eggs, sugar, and fruit pulp\n\napple snow\n\nb\n\n: a usually white crystalline substance that condenses from a fluid phase as snow does\n\nammonia snow\n\nc\nslang\n\n(1) [...] 2 of 2\nverb\n\n1\n\n: to fall or cause to fall in or as snow\n\nit had been snowing all day\n\n2\n\n: to cover, shut in, or imprison with or as if with snow\n\nwe were snowed in for two days\n\nthe desk was snowed under by papers\n\n3\n\n: to deceive, persuade, or charm with insincere or flattering talk\n\ncouldn't snow her with his\n\n[truncated: 2,423 of 6,421 chars]",
+          "error": null,
+          "latency_ms": 2443.9530839990766,
+          "raw_chars": 6421,
+          "truncated": true,
+          "source_ids": [
+            "S11",
+            "S12",
+            "S13",
+            "S14",
+            "S15"
           ]
         }
       ],
@@ -114,7 +142,7 @@
       "i": 4,
       "node": "finalize",
       "plan_version": 1,
-      "ts_offset_ms": 8434.162290999666,
+      "ts_offset_ms": 8497.117499999149,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -124,14 +152,6 @@
   "sources": [
     {
       "sid": "S1",
-      "url": "https://www.billmcnamee.com/blog/snow-crash",
-      "title": "Snow Crash by Neal Stephenson Review — Bill McNamee | The Art of the Create",
-      "snippet": "Snow Crash is a science fiction novel written by Neal Stephenson. It was published in 1992 and broke new ground as post-cyberpunk tour de force that became an immediate modern science fiction classic. Due to it's original lexicon, Snow Crash is not the easiest of reads initially, but is well worth t",
-      "tool": "web_search",
-      "first_seen_step": 1
-    },
-    {
-      "sid": "S2",
       "url": "https://en.wikipedia.org/wiki/Snow_Crash",
       "title": "Snow Crash - Wikipedia",
       "snippet": "Snow Crash is a 1992 science fiction novel by Neal Stephenson. Like many of Stephenson's novels, its themes include history, linguistics, anthropology, archaeology, religion, computer science, politics, cryptography, memetics, and philosophy. [...] | US paperback cover |\n| Author | Neal Stephenson |",
@@ -139,26 +159,34 @@
       "first_seen_step": 1
     },
     {
+      "sid": "S2",
+      "url": "https://books.google.com/books/about/Snow_Crash.html?id=B0xbAAAAMAAJ",
+      "title": "Snow Crash - Neal Stephenson - Google Books",
+      "snippet": "Neal Stephenson, the science fiction author, was born on October 31, 1959 in Maryland. He graduated from Boston University in 1981 with a B.A. in Geography with a minor in physics. His first novel, The Big U, was published in 1984. It received little attention and stayed out of print until Stephenso",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
       "sid": "S3",
-      "url": "https://www.lithoguru.com/gentleman/essays/SnowCrash.html",
-      "title": "Neal Stephenson's Snow Crash",
-      "snippet": "January 8, 2022\n\nSnow Crash, published in 1992, is a science fiction novel that is part cyber punk, part satire, and a dystopian depiction of a near future. I was alternately engrossed and irritated by this thought-provoking and deeply flawed novel.",
+      "url": "https://sfbook.com/snow-crash.htm",
+      "title": "Book review of Snow Crash by Neal Stephenson",
+      "snippet": "Neal Stephenson\n\n# Snow Crash\n\nBy Neal Stephenson\n\nScience Fiction\n\nPost Cyberpunk\n\nSnow Crash, a novel by Neal Stephenson\n\nBook details\n\n Snow Crash\n Author:  Neal Stephenson\n Publisher:  Penguin\n ISBN:\n Published: June 1992\n Pages: 448\n Format reviewed: Paperback\n Review date: 01/05/2000\n Language",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S4",
-      "url": "https://www.goodreads.com/en/book/show/61240297-snow-crash",
-      "title": "Snow Crash by Neal Stephenson | Goodreads",
-      "snippet": "First published in 1992, Snow Crash is considered one of the seminal cyber-punk novels. I wasn’t even sure what that meant when I picked it up; I plucked it from the stacks at the used bookstore with the vague feeling this was one of those classics I’m supposed to have read. For once, the inside voi",
+      "url": "https://mountainbeltway.all-geo.org/2017/09/01/snow-crash-neal-stephenson",
+      "title": "Snow Crash, by Neal Stephenson - Mountain Beltway",
+      "snippet": "explicit science and relevance to the survival of the human race. There was something essential about that which really appealed to me. But Snow Crash is clever and hip and fascinating and feels current in spite of the fact that it’s actually 25 years old (first published in 1992). This book envisio",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S5",
-      "url": "https://mountainbeltway.all-geo.org/2017/09/01/snow-crash-neal-stephenson",
-      "title": "Snow Crash, by Neal Stephenson - Mountain Beltway",
-      "snippet": "explicit science and relevance to the survival of the human race. There was something essential about that which really appealed to me. But Snow Crash is clever and hip and fascinating and feels current in spite of the fact that it’s actually 25 years old (first published in 1992). This book envisio",
+      "url": "https://www.goodreads.com/work/editions/493634-snow-crash",
+      "title": "Editions of Snow Crash by Neal Stephenson",
+      "snippet": "Snow Crash\n\nSnow Crash (Mass Market Paperback)\n\nPublished April 1st 1993 by Bantam Books\n\nBantam spectra book, Mass Market Paperback, 470 pages\n\nAuthor(s):\n\nNeal Stephenson (Goodreads Author)\n\nISBN:\n\n9780553562613  (ISBN10: 0553562614)\n\nASIN:\n\n0553562614\n\nEdition language:\n\nEnglish\n\nAverage rating:\n",
       "tool": "web_search",
       "first_seen_step": 1
     },
@@ -172,9 +200,9 @@
     },
     {
       "sid": "S7",
-      "url": "https://matrix.fandom.com/wiki/The_Matrix",
-      "title": "The Matrix | Matrix Wiki | Fandom",
-      "snippet": "The Matrix is a 1999 epic science fiction action film written and directed by the Wachowskis, starring Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss, Joe Pantoliano, and Hugo Weaving. It was first released in the USA on March 31, 1999, and is the first entry in The Matrix series of films, comic",
+      "url": "https://en.wikipedia.org/wiki/The_Matrix_(franchise)",
+      "title": "The Matrix (franchise) - Wikipedia",
+      "snippet": "| Film | U.S. release date | Directed by | Written by | Produced by |\n ---  --- \n| The Matrix | March 31, 1999 (1999-03-31) | The Wachowskis | Joel Silver |\n| The Matrix Reloaded | May 15, 2003 (2003-05-15) |\n| The Matrix Revolutions | November 5, 2003 (2003-11-05) |\n| The Matrix Resurrections | Dec",
       "tool": "web_search",
       "first_seen_step": 1
     },
@@ -196,21 +224,62 @@
     },
     {
       "sid": "S10",
-      "url": "https://m.imdb.com/title/tt0133093",
-      "title": "The Matrix (1999) - IMDb",
-      "snippet": "Sign in\n\n## FAQ 19\n\n What exactly is Oracle?\n Why does the crew of the Nebuchadnezzar have to answer payphones to get back from the Matrix? Why can't they use their cell phones?\n What is \"The Matrix\" about?\n\n## Details\n\n Release date\n\n  + March 31, 1999 (United States)\n Country of origin\n\n  + United",
+      "url": "https://letterboxd.com/film/the-matrix",
+      "title": "‎The Matrix (1999) directed by Lana Wachowski, Lilly Wachowski • Reviews, film + cast • Letterboxd",
+      "snippet": "###### 05 Jun 1999\n\n PremiereK-16 Night Visions Film Festival\n\n###### 09 Jul 1999\n\n TheatricalK-16\n\n##### Flag for France France\n\n###### 23 Jun 1999\n\n TheatricalTP\n\n###### 23 Mar 2000\n\n PhysicalTP DVD / VHS\n\n###### 19 Mar 2001\n\n TV Canal+\n\n###### 18 May 2003\n\n TV France 2\n\n###### 04 Apr 2026\n\n TV Ca",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S11",
+      "url": "https://en.wikipedia.org/wiki/Snow",
+      "title": "Snow - Wikipedia",
+      "snippet": "99. ↑ Colbeck, Samuel C. (April 1992), \"A Review of the Processes That Control Snow Friction\", CRREL Monograph, 92 (2): 49, archived from the original on January 26, 2016, retrieved January 19, 2016\n100. ↑  Hudson, Simon (2000). Snow Business: A Study of the International Ski Industry. Tourism (Cass",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S12",
+      "url": "https://wmo.int/themes/snow",
+      "title": "Snow",
+      "snippet": "In 2022, the WMO published the first globally coordinated guide to the Measurement of Key Snow Variables, within the WMO Guide to Instruments and methods of Observation (WMO-No 8, Volume II), available in its six official languages. It provides an extensive assessment of current practices on monitor",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S13",
+      "url": "https://www.merriam-webster.com/dictionary/snow",
+      "title": "SNOW Definition & Meaning - Merriam-Webster",
+      "snippet": "2\n\nslang\n\na\n\n: cocaine\n\nb\n\n: heroin\n\n## Biographical Definition\n\nSnow\n\n## biographical name\n\nˈsnō\")\n\nC(harles) P(ercy) 1905–1980 Baron Snow English novelist and physicist\n\n## More from Merriam-Webster on snow\n\nBritannica.com: Encyclopedia article about snow\n\nLove words? Need even more definitions?\n\n",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S14",
+      "url": "https://www.britannica.com/science/snow-weather",
+      "title": "Snow | Causes, Types & Effects | Britannica",
+      "snippet": "Quick Facts\n\nRelated Topics:\n:   calendar\n:   polar vortex\n:   volcanic winter\n:   Today in History—January 5: A Winter So Cold It Rewrote History\n:   Why Is Summer Warmer Than Winter?\n\nSee all related content\n\nBritannica AI Icon\n\nAdding us as a Preferred Source tells Google you trust our content, s",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S15",
+      "url": "https://www.farmersalmanac.com/first-snowfall-where-i-live",
+      "title": "First Snowfall Where I Live: When to Expect Snow",
+      "snippet": "may not occur at all in a given winter. [...] Home & Living\n\nToday is the Best Day to … Food and Recipes Pets and Farm Animals Hints and Tips\n\nHolidays & Events [...] For this reason, when someone asks “When is the first snowfall where I live?”, it helps to know whether they mean the first flakes or",
       "tool": "web_search",
       "first_seen_step": 1
     }
   ],
-  "answer": "Neal Stephenson wrote *Snow Crash*, published in **1992**, and *The Matrix* was released **7 years later** in **1999** [S2][S6].",
+  "answer": "The novel **_Snow Crash_** was written by **Neal Stephenson** and first published in **1992** [S1]. The film **_The Matrix_** was released in **1999** [S6], which is **7 years later**.",
   "citations": [
-    "S2",
+    "S1",
     "S6"
   ],
   "coverage": {
-    "Who wrote the novel *Snow Crash*, and what year was it published?": false,
-    "What year was the film *The Matrix* released?": false
+    "Who is the author of the novel *Snow Crash*?": false,
+    "In what year was *Snow Crash* first published?": false,
+    "In what year was the film *The Matrix* released?": false
   },
   "outcome": {
     "status": "completed",
@@ -226,65 +295,65 @@
         "model": "gpt-5.4-nano",
         "input_tokens": 237,
         "cached_tokens": 0,
-        "output_tokens": 166,
-        "reasoning_tokens": 69,
-        "cost_usd": 0.0002549,
-        "latency_ms": 2009.241000007023,
+        "output_tokens": 143,
+        "reasoning_tokens": 45,
+        "cost_usd": 0.00022615,
+        "latency_ms": 2136.898624999958,
         "replayed": false
       },
       {
         "purpose": "act",
         "model": "gpt-5.4-nano",
-        "input_tokens": 827,
+        "input_tokens": 920,
         "cached_tokens": 0,
-        "output_tokens": 67,
+        "output_tokens": 82,
         "reasoning_tokens": 0,
-        "cost_usd": 0.00024915,
-        "latency_ms": 1425.4011250013718,
+        "cost_usd": 0.0002865,
+        "latency_ms": 1633.0111250008486,
         "replayed": false
       },
       {
         "purpose": "finalize",
         "model": "gpt-5.4-nano",
-        "input_tokens": 654,
+        "input_tokens": 866,
         "cached_tokens": 0,
-        "output_tokens": 43,
+        "output_tokens": 60,
         "reasoning_tokens": 0,
-        "cost_usd": 0.00018455,
-        "latency_ms": 2551.966707993415,
+        "cost_usd": 0.0002482,
+        "latency_ms": 1327.5719590001245,
         "replayed": false
       }
     ],
     "totals": {
-      "input_tokens": 1718,
+      "input_tokens": 2023,
       "cached_tokens": 0,
-      "output_tokens": 276,
-      "reasoning_tokens": 69,
-      "cost_usd": 0.0006886,
+      "output_tokens": 285,
+      "reasoning_tokens": 45,
+      "cost_usd": 0.00076085,
       "cache_hit_rate": 0.0
     },
     "by_purpose": {
       "plan": {
         "calls": 1,
-        "cost_usd": 0.0002549,
-        "output_tokens": 166
+        "cost_usd": 0.00022615,
+        "output_tokens": 143
       },
       "act": {
         "calls": 1,
-        "cost_usd": 0.00024915,
-        "output_tokens": 67
+        "cost_usd": 0.0002865,
+        "output_tokens": 82
       },
       "finalize": {
         "calls": 1,
-        "cost_usd": 0.00018455,
-        "output_tokens": 43
+        "cost_usd": 0.0002482,
+        "output_tokens": 60
       }
     },
-    "search_credits": 2,
+    "search_credits": 3,
     "steps": 1
   },
   "timings_ms": {
-    "total": 8432.33333301032
+    "total": 8493.225791000441
   },
   "compaction": {
     "count": 0,

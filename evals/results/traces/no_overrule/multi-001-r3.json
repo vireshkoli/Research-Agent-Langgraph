@@ -1,7 +1,7 @@
 {
   "schema_version": "1",
-  "run_id": "ef21d1c21e76",
-  "ts": "2026-08-09T10:52:24+00:00",
+  "run_id": "6772cb47b1b8",
+  "ts": "2026-10-25T09:27:03+00:00",
   "question": "Which is larger: the number of parameters in the largest Llama 3.1 model, or in GPT-3? Give both figures and the difference in billions.",
   "variant": "no_overrule",
   "config": {
@@ -12,14 +12,14 @@
     "max_run_cost_usd": 0.05,
     "finalize_reserve_usd": 0.008,
     "compact_threshold_tokens": 12000,
-    "git_sha": "a4216f3",
-    "prompt_hash": "sha256:512e8e5d8eaa"
+    "git_sha": "e577c53",
+    "prompt_hash": "sha256:e2655640140a"
   },
   "plan": {
     "version": 1,
     "subquestions": [
-      "What is the number of parameters in the largest Llama 3.1 model (e.g., the 405B variant)\u2014according to the official model card or Meta documentation?",
-      "What is the number of parameters in the largest GPT-3 model (e.g., GPT-3 175B)\u2014according to OpenAI documentation or the original GPT-3 paper?"
+      "How many parameters does the largest Llama 3.1 model have (e.g., the 405B variant)—what is the official parameter count?",
+      "How many parameters does the largest GPT-3 model have (the maximum-size model)—what is the officially reported parameter count?"
     ],
     "replans": 0
   },
@@ -28,7 +28,7 @@
       "i": 1,
       "node": "plan",
       "plan_version": 0,
-      "ts_offset_ms": 2172.81862499658,
+      "ts_offset_ms": 2482.721041998957,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -38,34 +38,34 @@
       "i": 2,
       "node": "act",
       "plan_version": 1,
-      "ts_offset_ms": 4248.47416600096,
+      "ts_offset_ms": 4405.295208000098,
       "tool_calls": [
         {
-          "call_id": "call_2FNOAauxX0MtinIsdBGZHvRZ",
+          "call_id": "call_tfzpU6Q7lPj79LUIg8ReFe1x",
           "name": "web_search",
           "args": {
-            "query": "Llama 3.1 405B number of parameters official model card 405B parameters"
+            "query": "Llama 3.1 405B parameter count official 405B parameters"
           }
         },
         {
-          "call_id": "call_7ocnPwWRm207dk2pXMsaQYrr",
+          "call_id": "call_J2yAxs3vynrgZ3I94zxygCnK",
           "name": "web_search",
           "args": {
-            "query": "Llama 3.1 405B model card parameters count 405 billion"
+            "query": "Meta Llama 3.1 405B parameters 405 billion official model card"
           }
         },
         {
-          "call_id": "call_PjdoO8JjGbpWLkPLYiPxplGf",
+          "call_id": "call_5yFstUm7x7Q65itKv6UgpbTf",
           "name": "web_search",
           "args": {
-            "query": "GPT-3 largest model 175B parameters paper \"175 billion\""
+            "query": "GPT-3 largest model parameter count 175 billion official paper 175B"
           }
         },
         {
-          "call_id": "call_I4Gw1VO9ODwpJQmCaV9aIPNH",
+          "call_id": "call_r3TJzMZmppy2rdeq0eKZoKDN",
           "name": "web_search",
           "args": {
-            "query": "OpenAI GPT-3 paper 175B parameters \"175 billion\""
+            "query": "\"Language Models are Few-Shot Learners\" GPT-3 175B parameters"
           }
         }
       ],
@@ -77,21 +77,21 @@
       "i": 3,
       "node": "observe",
       "plan_version": 1,
-      "ts_offset_ms": 7831.632957997499,
+      "ts_offset_ms": 9423.093332999997,
       "tool_calls": [],
       "observations": [
         {
-          "call_id": "call_2FNOAauxX0MtinIsdBGZHvRZ",
+          "call_id": "call_tfzpU6Q7lPj79LUIg8ReFe1x",
           "tool": "web_search",
           "args": {
-            "query": "Llama 3.1 405B number of parameters official model card 405B parameters"
+            "query": "Llama 3.1 405B parameter count official 405B parameters"
           },
           "ok": true,
-          "content": "Summary: The official model card confirms that the Llama 3.1 405B model has 405 billion parameters. It was released by Meta in July 2024.\n\n[1] Llama 3.1 - 405B, 70B & 8B with multilinguality and long context\n    https://huggingface.co/blog/llama31\n    The Llama 3.1 release introduces six new open LLM models based on the Llama 3 architecture. They come in three sizes: 8B, 70B, and 405B parameters, each with base (pre-trained) and instruct-tuned versions. All the variants support a context length of 128K tokens and 8 languages, including English, German, French, Italian, Portuguese, Hindi, Spanish, and Thai. Llama 3.1 continues to use Grouped-Query Attention (GQA), an efficient representation that should help with longer contexts. [...] |  |  |  |  |\n ---  --- |\n| Model Size | FP16 | FP8 | INT4 |\n| 8B | 16 GB | 8 GB | 4 GB |\n| 70B | 140 GB | 70 GB | 35 GB |\n| 405B | 810 GB | 405 GB | 203 GB |\n\nNote: The above-quoted numbers indicate the GPU VRAM required just to load the model checkpoint. They don\u2019t include torch reserved space for kernels or CUDA graphs. [...] |  |  |  |  |\n ---  --- |\n| Model Size | Full Fine-tuning | LoRA | Q-LoRA |\n| 8B | 60 GB | 16 GB | 6 GB |\n| 70B | 500 GB | 160 GB | 48 GB |\n| 405B | 3.25 TB | 950 GB | 250 GB |\n\nNote: These are estimated values and may vary based on specific implementation details and optimizations.\n\n## Llama 3.1 evaluation\n\n[2] Meta releases new Llama 3.1 models, including highly anticipated 405B parameter variant\n    https://www.ibm.com/think/news/meta-releases-llama-3-1-models-405b-parameter-variant\n    Graduate level reasoning (GPQA, 0-shot): Llama 405B Instruct\u2019s GPQA score (50.7%) matched Claude 3 Opus (50.4%), edged GPT-4T (48.0%) and significantly exceeded that of Claude 3 Sonnet (40.4%), Claude 3 Haiku (33.3%) and GPT-4 (35.7%). [...] Reading comprehension (DROP, F1): The base pre-trainedLlama 405B (84.8) outperformed GPT-4o (83.4), Claude 3 Opus (83.1), Gemini 1.0 Ultra (82.4) and Gemini 1.5 Pro (78.9). It was outmatched only by GPT-4T (86.0) and Claude 3.5 Sonnet (87.1).\n Knowledge Q&A (ARC-Challenge, 25-shot):The pre-trained Llama 400B+ (96.1%) matched the performance of GPT-4 (96.3%) and Claude 3 Opus (96.4%). [...] Math problem solving (MATH, 0-shot CoT): Llama 405B Instruct (73.8%) was beaten only by GPT-4o (76.6%). It edged GPT-4T (72.6%) and Anthropic\u2019s newest model, Claude 3.5 Sonnet (71.1%) and significantly beat Claude 3 Opus (60.1%). Even when comparing Llama\u2019s 0-shot MATH score to 4-shot MATH scores of other models, Llama dramatically outperformed GPT-4 (42.5%), Gemini Ultra 1.0 (53.2%) and Gemini Pro 1.5 (58.5%).\n\n[3] Llama 3.1 405B | Products\n    https://docs.ionos.com/cloud/ai/ai-model-hub/models/llms/meta-llama-3-1-405b\n    ```\n\"stop\": [\"<|eot_id|>\", \"<|end_of_text|>\"]\"stop\": [\"<|eot_id|>\", \"<|end_of_text|>\"]\n```\n\n```\n\"temperature\": 0.6, \"temperature\": 0.6, \"top_p\": 0.9\"top_p\": 0.9\n```\n\n```\n\"frequency_penalty\": 0.1\"frequency_penalty\": 0.1\n``` [...] Intelligence\n\nSpeed\n\nInput\n\nOutput\n\nIntelligence active Intelligence active Intelligence active\n\nText active Image inactive Audio inactive\n\nText active Image inactive Audio inactive\n\nHigh\n\nLow\n\nText\n\nText\n\n## Central parameters\n\nDescription: Largest open-source model from Meta with 405B parameters, optimized with FP8 quantization for maximum intelligence and knowledge coverage.\n\nModel identifier: `meta-llama/Meta-Llama-3.1-405B-Instruct-FP8` [...] ```\n{ {  \"model\": \"meta-llama/Meta-Llama-3.1-405B-Instruct-FP8\",  \"model\": \"meta-llama/Meta-Llama-3.1-405B-Instruct-FP8\",  \"messages\": [{ \"role\": \"user\", \"content\": \"Hello\" }],  \"messages\": [{ \"role\": \"user\", \"content\": \"Hello\" }],  \"max_tokens\": 2048,  \"max_tokens\": 2048,  \"temperature\": 0.6,  \"temperature\": 0.6,  \"top_p\": 0.9,  \"top_p\": 0.9,  \"frequency_penalty\": 0.1,  \"frequency_penalty\": 0.1,  \"stop\": [\"<|eot_id|>\", \"<|end_of_text|>\"]  \"stop\": [\"<|eot_id|>\", \"<|end_of_text|>\"] }}\n```\n\n[4] meta-llama/Llama-3.1-405B \u00b7 Hugging Face\n   \n\n[truncated: 1,651 of 5,611 chars]",
+          "content": "[1] meta-llama (Meta Llama)\n    https://huggingface.co/meta-llama\n    Llama 3.1: a collection of pretrained and fine-tuned text models with sizes ranging from 8 billion to 405 billion parameters pre-trained on ~15 trillion tokens.\n\n[2] Meta Llama 3.1: Open-Source AI Model Takes on GPT-4o mini\n    https://www.analyticsvidhya.com/blog/2024/07/meta-llama-3-1/\n    Unboxing Llama 3.1 and its Architecture. In this section, let’s try to understand all the details about Meta’s new Llama 3 model. Based on their recent announcement, their flagship open-source model has a massive 405 Billion parameters.\n\n[3] Llama 3.1 is a new state-of-the-art model from Meta available in 8B, 70...\n    https://ollama.com/library/llama3.1:latest\n    Llama 3.1 405B is the first openly available model that rivals the top AI models when it comes to state-of-the-art capabilities in general knowledge, steerability, math, tool use, and multilingual translation.\n\n[4] Why Meta’s Llama 3.1 is a boon for enterprises and a bane... | InfoWorld\n    https://www.infoworld.com/article/3477234/why-metas-llama-3-1-is-a-boon-for-enterprises-and-a-bane-for-other-llm-vendors.html\n    The Llama 3.1 405B variant is extremely expensive to run due to requiring two Nvidia H100 servers (16 GPUs) to run the unmodified model, Dylan Patel, chief analyst at semiconductor research firm SemiAnalysis said.\n\n[5] Meta Llama 3.1 is out now — here’s how to try it for free | Tom's Guide\n    https://www.tomsguide.com/ai/meta-llama-31-is-one-of-the-most-important-ai-releases-of-the-year-heres-how-to-try-it\n    However, as good as the smaller models are becoming, size does matter when it comes to frontier-level intelligence and with Llama 3.1 405b Meta has found a compromise and managed to pack a trillion parameter quality model into one half the size. Tom's Guide: Direct to Your Inbox.",
           "error": null,
-          "latency_ms": 3562.6929170102812,
-          "raw_chars": 5611,
-          "truncated": true,
+          "latency_ms": 1673.143957999855,
+          "raw_chars": 1848,
+          "truncated": false,
           "source_ids": [
             "S1",
             "S2",
@@ -101,63 +101,63 @@
           ]
         },
         {
-          "call_id": "call_7ocnPwWRm207dk2pXMsaQYrr",
+          "call_id": "call_J2yAxs3vynrgZ3I94zxygCnK",
           "tool": "web_search",
           "args": {
-            "query": "Llama 3.1 405B model card parameters count 405 billion"
+            "query": "Meta Llama 3.1 405B parameters 405 billion official model card"
           },
           "ok": true,
-          "content": "Summary: The Meta Llama 3.1 405B model has 405 billion parameters and is known for its high performance and scalability. It outperforms many competitors in various benchmarks. It was released in December 2023.\n\n[1] Meta Llama 3.1 (405B) (Deprecated)\n    https://docs.oracle.com/en-us/iaas/Content/generative-ai/meta-llama-3-1-405b.htm\n    This 405 billion-parameter model is a high-performance option that offers speed and scalability. Compared to the `meta.llama-3.1-70b-instruct` model, it can handle a larger volume of requests and support more complex use cases. Key features of this model include:\n\n`meta.llama-3.1-70b-instruct`\n\n## Regions for this Model\n\n[2] Meta releases new Llama 3.1 models, including highly anticipated 405B parameter variant\n    https://www.ibm.com/think/news/meta-releases-llama-3-1-models-405b-parameter-variant\n    Graduate level reasoning (GPQA, 0-shot): Llama 405B Instruct\u2019s GPQA score (50.7%) matched Claude 3 Opus (50.4%), edged GPT-4T (48.0%) and significantly exceeded that of Claude 3 Sonnet (40.4%), Claude 3 Haiku (33.3%) and GPT-4 (35.7%). [...] Reading comprehension (DROP, F1): The base pre-trainedLlama 405B (84.8) outperformed GPT-4o (83.4), Claude 3 Opus (83.1), Gemini 1.0 Ultra (82.4) and Gemini 1.5 Pro (78.9). It was outmatched only by GPT-4T (86.0) and Claude 3.5 Sonnet (87.1).\n Knowledge Q&A (ARC-Challenge, 25-shot):The pre-trained Llama 400B+ (96.1%) matched the performance of GPT-4 (96.3%) and Claude 3 Opus (96.4%). [...] Undergraduate level knowledge (MMLU, 5-shot):With a score of 87.3%, the instruction-tuned Llama 405B more than matched OpenAI\u2019s GPT-4-Turbo (86.5%), Anthropic\u2019s Claude 3 Opus (86.8%) and Google\u2019s Gemini 1.5 Pro (85.9%) while cleanly outperforming Gemini 1.0 Ultra (83.7%), Google\u2019s largest Gemini model.\n\n[3] LLaMA 3.1 405B MMLU Score: How It Stacks Up\n    https://www.youreverydayai.com/llama-405b-review-whats-new-in-llama-3-1\n    Llama 3.1 is Meta's latest iteration of its large language model series. While Llama 3 has been around since April, this new release brings significant updates to the existing 8B and 70B parameter models, and introduces the powerhouse 405B parameter model. This trio of models is designed to cater to a wide range of AI applications, from edge devices to high-performance computing environments.\n\n[4] Llama 405b: Full 92 page Analysis, and Uncontaminated SIMPLE Benchmark Results\n    https://www.youtube.com/watch?v=Tf1nooXtUHE\n    the Llama herd has left the building and is roaming the streets more specifically the Llama 3.1 405 billion parameter language model is out but I thought the former expression would be a bit more dramatic the 92 page paper that came with the model was released less than 24 hours ago and yes I've read it in full and have benchmarked the model comparing it to four competitors on over a 100 private questions with 74 notes to touch on the model is impressive and the paper is revealing so let's get [...] so let's get started there are three sizes of text only llama 3 models but this video will focus almost entirely on the biggest and best the 405 billion parameter model and no meta weren't exaggerating when they say that it delivers comparable quality to Leading language models such as gpc4 and in case you're new to the Channel I'm not just relying on those traditional benchmarks to assess that comparison meta's Innovations in a nutshell were higher quality data that's filtered for quality and [...] four orders of magnitude so are pretty reliable in case you're wondering that's where they got the quirky 45 billion parameter number from they had the compute budget looked at those Benchmark scaling laws and assigned that number of parameters on the right is the sigmoidal scaling LW curve that they anticipated and that followed on the ark challenge that's not by the way the ark AGI challenge that I've talked about on this channel recently but it is legit questions like this that you can see\n\n[5] meta-llama/Llama-3.1-405B \u00b7 Hugging\n\n[truncated: 1,458 of 5,453 chars]",
+          "content": "[1] meta-llama/Llama-3.1-405B · Hugging Face\n    https://huggingface.co/meta-llama/Llama-3.1-405B\n    Jul 23, 2024 · \"Llama 3.1\" means the foundational large language models and software and algorithms, including machine-learning model code, trained model weights, inference-enabling code, training-enabling code, fine-tuning enabling code and other elements of the foregoing distributed by Meta at https://llama.meta.com/llama-downloads.\n\n[2] Introducing Llama 3.1: Our most capable models to date - Meta AI\n    https://ai.meta.com/blog/meta-llama-3-1/\n    Jul 23, 2024 · Bringing open intelligence to all, our latest models expand context length, add support across eight languages, and include Meta Llama 3.1 405B— the first frontier-level open source AI model.\n\n[3] llama-models/models/llama3_1/MODEL_CARD.md at main · meta ...\n    https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md\n    Jul 23, 2024 · The Meta Llama 3.1 collection of multilingual large language models (LLMs) is a collection of pretrained and instruction tuned generative models in 8B, 70B and 405B sizes (text in/text out).\n\n[4] Llama 3.1 | Model Cards and Prompt formats - dev.meta.ai\n    https://dev.meta.ai/llama/docs/model-cards-and-prompt-formats/llama3_1\n    The first few sections of this page-- Prompt Template, Base Model Prompt, and Instruct Model Prompt --are applicable across all the models released in both Llama 3.1 and Llama 3.2. Please leverage this guidance in order to take full advantage of the new Llama models.\n\n[5] Llama 3.1 | meta-llama/llama-models | DeepWiki\n    https://deepwiki.com/meta-llama/llama-models/10.1-llama-3.1\n    Jul 30, 2025 · This document provides detailed technical documentation of the Llama 3.1 model family, including model specifications, evaluation methodology, and performance benchmarks.",
           "error": null,
-          "latency_ms": 3581.7061670095427,
-          "raw_chars": 5453,
-          "truncated": true,
+          "latency_ms": 1796.857583000019,
+          "raw_chars": 1843,
+          "truncated": false,
           "source_ids": [
             "S6",
-            "S2",
             "S7",
             "S8",
-            "S4"
+            "S9",
+            "S10"
           ]
         },
         {
-          "call_id": "call_PjdoO8JjGbpWLkPLYiPxplGf",
+          "call_id": "call_5yFstUm7x7Q65itKv6UgpbTf",
           "tool": "web_search",
           "args": {
-            "query": "GPT-3 largest model 175B parameters paper \"175 billion\""
+            "query": "GPT-3 largest model parameter count 175 billion official paper 175B"
           },
           "ok": true,
-          "content": "Summary: GPT-3 is a 175 billion parameter language model developed by OpenAI, significantly larger than its predecessor GPT-2. It achieved strong performance on various natural language tasks. The model's training required substantial computational resources.\n\n[1] OpenAI Presents GPT-3, a 175 Billion Parameters ...\n    https://developer.nvidia.com/blog/openai-presents-gpt-3-a-175-billion-parameters-language-model\n    OpenAI researchers have developed GPT-3, a language model with 175 billion parameters, significantly larger than its predecessor GPT-2, which had 1.5 billion parameters.\n GPT-3 has achieved strong performance on various natural language processing tasks, including translation, question-answering, and generating news articles that are difficult to distinguish from those written by humans. [...] AI-generated content may summarize information incompletely. Verify important information. Learn more\n\nOpenAI researchers recently released a paper describing the development of GPT-3, a state-of-the-art language model made up of 175 billion parameters.\n\nFor comparison, the previous version, GPT-2, was made up of 1.5 billion parameters. The largest Transformer-based language model was released by Microsoft earlier this month and is made up of 17 billion parameters. [...] \u201cGPT-3 achieves strong performance on many NLP datasets, including translation, question-answering, and cloze tasks, as well as several tasks that require on-the-fly reasoning or domain adaptation, such as unscrambling words, using a novel word in a sentence, or performing 3-digit arithmetic,\u201d the researchers stated in their paper. \u201cWe find that GPT-3 can generate samples of news articles which human evaluators have difficulty distinguishing from articles written by humans.\u201d\n\n[2] OpenAI's GPT-3 Language Model: A Technical Overview\n    https://lambda.ai/blog/demystifying-gpt-3\n    OpenAI recently published GPT-3, the largest language model ever trained. GPT-3 has 175 billion parameters and would require 355 years and $4,600,000 to train - even with the lowest priced GPU cloud on the market.\n\n## GPT-3 Key Takeaways [...] ## Diving into the Model\n\nGPT-3 comes in eight sizes, ranging from 125M to 175B parameters. The largest GPT-3 model is an order of magnitude larger than the previous record holder, T5-11B. The smallest GPT-3 model is roughly the size of BERT-Base and RoBERTa-Base. [...] Time is not the only enemy. The 175 Billion parameters needs 175\u00d74=700GB memory to store in FP32 (each parameter needs 4 Bytes). This is one order of magnitude larger than the maximum memory in a single GPU (48 GB of Quadro RTX 8000). To train the larger models without running out of memory, the OpenAI team uses a mixture of model parallelism within each matrix multiply and model parallelism across the layers of the network. All models were trained on V100 GPU\u2019s on the part of a high-bandwidth\n\n[3] The Evolution of GPT Models - From 117M Parameters to 175B and Beyond\n    https://bonjoy.com/articles/gpt-models-evolution-history\n    GPT-3's 175 billion parameters represented a 117x jump from GPT-2. Trained on 300 billion tokens, it demonstrated few-shot learning - solving new tasks with just examples in the prompt, no additional training required.\n\nThe model required 355 years of compute time and cost $4.6 million to train. OpenAI restricted access through an API rather than releasing the model weights, marking a shift from open research to controlled deployment. [...] These parameters grew from 117 million in GPT-1 to 175 billion in GPT-3 - a 1,495x increase in just two years. Each increase brought dramatic improvements in capability, from simple text completion to complex reasoning and problem-solving.\n\nFor those wanting deeper technical understanding, 3Blue1Brown's visual explanation breaks down transformer architecture for beginners, while Jay Alammar's illustrated guides show how attention mechanisms work at a technical level. [...] Parameters are mathematical weights that\n\n[truncated: 2,917 of 6,915 chars]",
+          "content": "[1] GPT-3 - Wikipedia\n    https://en.wikipedia.org/wiki/GPT-3\n    GPT-3 has 175 billion parameters, [1] each with 16-bit precision, requiring 350GB of storage since each parameter occupies 2 bytes. It has a context window size of 2,048 tokens, [1]: 43 and has demonstrated strong \"zero-shot\" and \"few-shot\" learning abilities on many tasks. [2]\n\n[2] OpenAI Presents GPT-3, a 175 Billion Parameters Language Model\n    https://developer.nvidia.com/blog/openai-presents-gpt-3-a-175-billion-parameters-language-model/\n    OpenAI researchers recently released a paper describing the development of GPT-3, a state-of-the-art language model made up of 175 billion parameters. For comparison, the previous version, GPT-2, was made up of 1.5 billion parameters. The largest Transformer-based language model was released by Microsoft earlier this month and is made up of 17 billion parameters. \"GPT-3 achieves strong ...\n\n[3] Model Architecture and Training | openai/gpt-3 | DeepWiki\n    https://deepwiki.com/openai/gpt-3/1.1-model-architecture-and-training\n    The repository includes samples generated by the 175 billion parameter GPT-3 model in the 175b_samples.jsonl file. These samples demonstrate the model's text generation capabilities with temperature=1 and p=0.85 sampling parameters.\n\n[4] GPT-3 - AI Wiki\n    https://aiwiki.ai/wiki/gpt-3\n    GPT-3 (Generative Pre-trained Transformer 3) is a family of decoder-only, autoregressive large language models developed by OpenAI. OpenAI first described the family in a May 2020 preprint; a peer-reviewed version appeared at NeurIPS 2020. The largest model contained 175 billion trainable parameters. The central experiment was not simply a larger text generator: it tested whether one ...\n\n[5] GPT-3 (2020) Paper Notes | MartianLee's Dev Blog\n    https://martianlee.github.io/posts/2026-06-21-gpt-3-paper-note\n    Paper notes on GPT-3 covering its core ideas: 175B scaling, in-context learning (zero/one/few-shot), weighted-sampling training data, headline benchmark numbers, and the data-contamination and bias limitations.",
           "error": null,
-          "latency_ms": 2532.626041007461,
-          "raw_chars": 6915,
-          "truncated": true,
+          "latency_ms": 5015.4981249997945,
+          "raw_chars": 2069,
+          "truncated": false,
           "source_ids": [
-            "S9",
-            "S10",
             "S11",
             "S12",
-            "S13"
+            "S13",
+            "S14",
+            "S15"
           ]
         },
         {
-          "call_id": "call_I4Gw1VO9ODwpJQmCaV9aIPNH",
+          "call_id": "call_r3TJzMZmppy2rdeq0eKZoKDN",
           "tool": "web_search",
           "args": {
-            "query": "OpenAI GPT-3 paper 175B parameters \"175 billion\""
+            "query": "\"Language Models are Few-Shot Learners\" GPT-3 175B parameters"
           },
           "ok": true,
-          "content": "Summary: GPT-3 is a 175 billion parameter language model developed by OpenAI, significantly larger than its predecessor GPT-2, and known for its advanced natural language processing capabilities. It uses a transformer architecture and requires substantial computational resources for training and storage.\n\n[1] OpenAI Presents GPT-3, a 175 Billion Parameters ...\n    https://developer.nvidia.com/blog/openai-presents-gpt-3-a-175-billion-parameters-language-model\n    OpenAI researchers have developed GPT-3, a language model with 175 billion parameters, significantly larger than its predecessor GPT-2, which had 1.5 billion parameters.\n GPT-3 has achieved strong performance on various natural language processing tasks, including translation, question-answering, and generating news articles that are difficult to distinguish from those written by humans. [...] AI-generated content may summarize information incompletely. Verify important information. Learn more\n\nOpenAI researchers recently released a paper describing the development of GPT-3, a state-of-the-art language model made up of 175 billion parameters.\n\nFor comparison, the previous version, GPT-2, was made up of 1.5 billion parameters. The largest Transformer-based language model was released by Microsoft earlier this month and is made up of 17 billion parameters. [...] \u201cGPT-3 achieves strong performance on many NLP datasets, including translation, question-answering, and cloze tasks, as well as several tasks that require on-the-fly reasoning or domain adaptation, such as unscrambling words, using a novel word in a sentence, or performing 3-digit arithmetic,\u201d the researchers stated in their paper. \u201cWe find that GPT-3 can generate samples of news articles which human evaluators have difficulty distinguishing from articles written by humans.\u201d\n\n[2] OpenAI GPT-3: Everything You Need to Know [Updated]\n    https://www.springboard.com/blog/data-science/machine-learning-gpt-3-open-ai\n    GPT-3 was introduced by Open AI earlier in May 2020 as a successor to their previous language model (LM) GPT-2. It is considered to be better and bigger than GPT-2. In fact, with around 175 Billion trainable parameters, OpenAI GPT-3\u2019s full version is the largest model trained so far when compared to other language models. This 72-page research paper\\\\ describes in great detail the features, capabilities, performance and limitations of the model. [...] In fact, the OpenAI GPT-3 family of models is based on the same transformer-based architecture of the GPT-2 model including the modified initialisation, pre-normalisation, reverse tokenisation, with the exception that it uses alternating dense and sparse attention patterns.\n\nThe largest version GPT-3 175B or \u201cGPT-3\u201d has 175 B Parameters, 96 attention layers and 3.2 M batch size.\n\nOpenAI GPT-3 [...] The above image shows the accuracy of the OpenAI GPT-3 model while performing the Zero-shot, One-shot and Few-shots tasks along with the number of parameters and shots for a simple task to remove random symbols from a word. Now, let\u2019s have a look at how the models (175B params to 125M params) perform at some well known (benchmarked) tasks. All results cited (quoted) from the paper.\n\n### OpenAI GPT-3 Language Modelling\n\n[3] OpenAI's GPT-3 Language Model: A Technical Overview\n    https://lambda.ai/blog/demystifying-gpt-3\n    OpenAI recently published GPT-3, the largest language model ever trained. GPT-3 has 175 billion parameters and would require 355 years and $4,600,000 to train - even with the lowest priced GPU cloud on the market.\n\n## GPT-3 Key Takeaways [...] Time is not the only enemy. The 175 Billion parameters needs 175\u00d74=700GB memory to store in FP32 (each parameter needs 4 Bytes). This is one order of magnitude larger than the maximum memory in a single GPU (48 GB of Quadro RTX 8000). To train the larger models without running out of memory, the OpenAI team uses a mixture of model parallelism within each matrix multiply and model parallelism across the\n\n[truncated: 2,752 of 6,750 chars]",
+          "content": "[1] [2005.14165] Language Models are Few-Shot Learners - arXiv.org\n    https://arxiv.org/abs/2005.14165\n    May 28, 2020 · Specifically, we train GPT-3, an autoregressive language model with 175 billion parameters, 10x more than any previous non-sparse language model, and test its performance in the few-shot setting.\n\n[2] Language models are few-shot learners | Proceedings of the ...\n    https://dl.acm.org/doi/abs/10.5555/3495724.3495883\n    Dec 6, 2020 · Specifically, we train GPT-3, an autoregressive language model with 175 billion parameters, 10x more than any previous non-sparse language model, and test its performance in the few-shot setting.\n\n[3] Language Models are Few-Shot Learners - NeurIPS\n    https://proceedings.neurips.cc/paper_files/paper/2020/file/1457c0d6bfcb4967418bfb8ac142f64a-Paper.pdf\n    Specifically, we train GPT-3, an autoregressive language model with 175 billion parameters, 10x more than any previous non-sparse language model, and test its performance in the few-shot setting.\n\n[4] Language models are few-shot learners - OpenAI\n    https://openai.com/index/language-models-are-few-shot-learners/\n    May 28, 2020 · Specifically, we train GPT‑3, an autoregressive language model with 175 billion parameters, 10x more than any previous non-sparse language model, and test its performance in the few-shot setting.\n\n[5] Language Models are Few-Shot Learners - arXiv.org\n    https://arxiv.org/html/2005.14165v4\n    Specifically, we train GPT-3, an autoregressive language model with 175 billion parameters, 10x more than any previous non-sparse language model, and test its performance in the few-shot setting.",
           "error": null,
-          "latency_ms": 2408.7463750038296,
-          "raw_chars": 6750,
-          "truncated": true,
+          "latency_ms": 1560.6517500000336,
+          "raw_chars": 1644,
+          "truncated": false,
           "source_ids": [
-            "S9",
-            "S14",
-            "S10",
-            "S13",
-            "S12"
+            "S16",
+            "S17",
+            "S18",
+            "S19",
+            "S20"
           ]
         }
       ],
@@ -168,7 +168,7 @@
       "i": 4,
       "node": "reflect",
       "plan_version": 1,
-      "ts_offset_ms": 7832.664499990642,
+      "ts_offset_ms": 9424.817207998785,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -178,13 +178,34 @@
       "i": 5,
       "node": "act",
       "plan_version": 1,
-      "ts_offset_ms": 11483.936207994702,
+      "ts_offset_ms": 11466.632124998796,
       "tool_calls": [
         {
-          "call_id": "call_TIUG7LO9gQsd2E1dLYkeSsN3",
+          "call_id": "call_j3NPIXFL8TOzIObhktJlg9QY",
           "name": "fetch_page",
           "args": {
-            "url": "https://huggingface.co/blog/llama31"
+            "url": "https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md"
+          }
+        },
+        {
+          "call_id": "call_UmR9OANQaH0men8MkBLExqKA",
+          "name": "fetch_page",
+          "args": {
+            "url": "https://huggingface.co/meta-llama/Llama-3.1-405B"
+          }
+        },
+        {
+          "call_id": "call_bot7Y5JaO0GqMz9ES3Z5H4vh",
+          "name": "fetch_page",
+          "args": {
+            "url": "https://openai.com/index/language-models-are-few-shot-learners/"
+          }
+        },
+        {
+          "call_id": "call_XCoAESJ0tzfU1OULzLiVttZo",
+          "name": "fetch_page",
+          "args": {
+            "url": "https://en.wikipedia.org/wiki/GPT-3"
           }
         }
       ],
@@ -196,23 +217,71 @@
       "i": 6,
       "node": "observe",
       "plan_version": 1,
-      "ts_offset_ms": 12311.839707996114,
+      "ts_offset_ms": 12120.030999998562,
       "tool_calls": [],
       "observations": [
         {
-          "call_id": "call_TIUG7LO9gQsd2E1dLYkeSsN3",
+          "call_id": "call_j3NPIXFL8TOzIObhktJlg9QY",
           "tool": "fetch_page",
           "args": {
-            "url": "https://huggingface.co/blog/llama31"
+            "url": "https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md"
           },
           "ok": true,
-          "content": "Llama 3.1 - 405B, 70B & 8B with multilinguality and long context\nhttps://huggingface.co/blog/llama31\n\nLlama 3.1 - 405B, 70B & 8B with multilinguality and long context\n\nBack to Articles\na]:hidden\">\n\nLlama 3.1 - 405B, 70B & 8B with multilinguality and long context\n\nPublished\nJuly 23, 2024\n\nUpdate on GitHub\nUpvote 241\n\n+235\n\nPhilipp Schmid philschmid Follow\n\nOmar Sanseviero osanseviero Follow\n\nAlvaro Bartolome alvarobartt Follow\n\nLeandro von Werra lvwerra Follow\n\nDaniel Vila dvilasuero Follow\n\nVaibhav Srivastav reach-vb Follow\n\nMarc Sun marcsun13 Follow\n\nPedro Cuenca pcuenq Follow\n\nLlama 3.1 is out! Today we welcome the next iteration of the Llama family to Hugging Face. We are excited to collaborate with Meta to ensure the best integration in the Hugging Face ecosystem. Eight open-weight models (3 base models and 5 fine-tuned ones) are available on the Hub.\n\nLlama 3.1 comes in three sizes: 8B for efficient deployment and development on consumer-size GPU, 70B for large-scale AI native applications, and 405B for synthetic data, LLM as a Judge or distillation. All three come in base and instruction-tuned variants.\n\nIn addition to the six generative models, Meta released two new models: Llama Guard 3 and Prompt Guard. Prompt Guard is a small classifier that detects prompt injections and jailbreaks. Llama Guard 3 is a safeguard model that can classify LLM inputs and generations.\n\nAmong the features and integrations being released, we have:\n\nModels on the Hub\n\nHugging Face Transformers and TGI integration\n\nHugging Chat integration for Meta Llama 3.1 405B Instruct\n\nInference & Deployment Integration with Inference Endpoints, Google Cloud, Amazon SageMaker & DELL Enterprise Hub\n\nQuantization for FP8, AWQ and GPTQ for easier inference\n\nFine-tuning Llama 3.1 8B on a single GPU with \ud83e\udd17 TRL\n\nGenerate synthetic data using Llama 3.1 70B and 405B with Distilabel\n\nTable of contents\n\nWhat\u2019s new with Llama 3.1?\n\nHow much memory does Llama 3.1 need?\nInference Memory Requirements\n\nTraining Memory Requirements\n\nLlama 3.1 evaluation\n\nUsing Hugging Face Transformers\n\nHow to prompt Llama 3.1\nBuilt-in Tool calling\n\nCustom Tool calling\n\nDemo\n\nLlama 3.1 405B quantization with FP8, AWQ, and GPTQ\n\nInference Integrations\nHugging Face Inference API\n\nHugging Face Inference Endpoints\n\nHugging Face Partner Integrations\n\nFine-tuning with Hugging Face TRL\n\nSynthetic data generation with distilabel\n\nAdditional Resources\n\nAcknowledgments\n\nWhat\u2019s new with Llama 3.1?\n\nWhy is Llama 3.1 so exciting? On top of the features the predecessor offers, Llama 3.1 has some key new features:\n\nA large context length of 128K tokens (vs original 8K)\n\nMultilingual capabilities\n\nTool usage capabilities\n\nA very large dense model of 405 billion parameters\n\nA more permissive license\n\nLet\u2019s dive into these!\n\nThe Llama 3.1 release introduces six new open LLM models based on the Llama 3 architecture. They come in three sizes: 8B, 70B, and 405B parameters, each with base (pre-trained) and instruct-tuned versions. All the variants support a context length o f 128K tokens and 8 languages, including English, German, French, Italian, Portuguese, Hindi, Spanish, and Thai. Llama 3.1 continues to use Grouped-Query Attention (GQA), an efficient representation that should help with longer contexts.\n\nMeta-Llama-3.1-8B : Base 8B model\n\nMeta-Llama-3.1-8B-Instruct : Instruct fine-tuned version of the base 8B model\n\nMeta-Llama-3.1-70B : Base 70B model\n\nMeta-Llama-3.1-70B-Instruct : Instruct fine-tuned version of the base 70B model\n\nMeta-Llama-3.1-405B : Base 405B model\n\nMeta-Llama-3.1-405B-Instruct : Instruct fine-tuned version of the base 405B model\n\nIn addition to these 6 language models, Llama Guard 3 and Prompt Guard were released.\n\nLlama Guard 3 is the latest iteration in the Llama Guard family, fine-tuned on Llama 3.1 8B. It is built for production use cases, with a 128k context length and multilingual capabilities. Llama Guard 3 can classify LLM inputs (prompts) and responses to detect content that would be considered unsafe in a risk taxonomy.\n\nPrompt Guard , on the other hand, is a small 279M parameter BERT-based classifier that can detect prompt injection and jailbreaking. It was trained on a large corpus of attacks and is suggested to be further fine-tuned with application-specific data.\n\nNew in Llama 3.1 compared to Llama 3 is that the instruct models are fine-tuned on tool calling for agentic use cases. There are two built-in tools (search, mathematical reasoning with Wolfram Alpha) that can be expanded with custom JSON functions.\n\nThe Llama 3.1 models were trained on over 15 trillion tokens on a custom-built GPU cluster with a total of 39.3M GPU hours (1.46M for 8B, 7.0M for 70B, 30.84M for 405B). We don\u2019t know the exact details of the training dataset mix, and we can only guess it has a more diverse curation for multilingualism. Llama 3.1 Instruct has been optimized for instruction following and was trained on publicly available instruction datasets, as well as over 25M synthetically generated examples with supervised fine-tuning (SFT) and reinforcement learning with human feedback (RLHF). Meta developed LLM-based classifiers to filter and curate high-quality prompts and responses during the creation of the data mix.\n\nRegarding the licensing terms, Llama 3.1 comes with a very similar license with one key difference: it enables using model outputs that can be used to improve other LLMs . This means that synthetic data generation and distillation are allowed, even with different models! This is especially important for the 405B model, as discussed later. The license allows for redistribution, fine-tuning, and creation of derivative work and still requires derived models to include \"Llama\" at the beginning of their name, and any derivative works or services must mention \"Built with Llama\". For full details, please make sure to read the official license .\n\nHow much memory does Llama 3.1 need?\n\nLlama 3.1 brings exciting advancements. However, running it requires careful consideration of your hardware resources. We broke down the memory requirements for\n\n[truncated: 28,495 of 34,490 chars]",
+          "content": "llama-models/models/llama3_1/MODEL_CARD.md at main · meta-llama/llama-models · GitHub\nhttps://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md\n\nllama-models/models/llama3_1/MODEL_CARD.md at main · meta-llama/llama-models · GitHub\n\nSkip to content\n\nYou signed in with another tab or window. Reload to refresh your session.\nYou signed out in another tab or window. Reload to refresh your session.\nYou switched accounts on another tab or window. Reload to refresh your session.\n\nDismiss alert\n\n{{ message }}\n\nFiles Expand file tree\n\nmain\n\n/ MODEL_CARD.md\n\nCopy path\n\nBlame\nMore file actions\n\nBlame\nMore file actions\n\nLatest commit\n\nHistory\nHistory\nHistory\n\n977 lines (877 loc) · 26.1 KB\n\nmain\n\n/ MODEL_CARD.md\n\nCopy path\n\nTop\n\nFile metadata and controls\nPreview\n\nCode\n\nBlame\n\n977 lines (877 loc) · 26.1 KB\n\nRaw\nCopy raw file\nDownload raw file\n\nOutline Edit and raw actions\n\nModel Information\n\nThe Meta Llama 3.1 collection of multilingual large language models (LLMs) is a collection of pretrained and instruction tuned generative models in 8B, 70B and 405B sizes (text in/text out). The Llama 3.1 instruction tuned text only models (8B, 70B, 405B) are optimized for multilingual dialogue use cases and outperform many of the available open source and closed chat models on common industry benchmarks.\n\nModel developer: Meta\n\nModel Architecture: Llama 3.1 is an auto-regressive language model that uses an optimized transformer architecture. The tuned versions use supervised fine-tuning (SFT) and reinforcement learning with human feedback (RLHF) to align with human preferences for helpfulness and safety.\n\nTraining Data\n\nParams\n\nInput modalities\n\nOutput modalities\n\nContext length\n\nGQA\n\nToken count\n\nKnowledge cutoff\n\nLlama 3.1 (text only)\n\nA new mix of publicly available online data.\n\n8B\n\nMultilingual Text\n\nMultilingual Text and code\n\n128k\n\nYes\n\n15T+\n\nDecember 2023\n\n70B\n\nMultilingual Text\n\nMultilingual Text and code\n\n128k\n\nYes\n\n405B\n\nMultilingual Text\n\nMultilingual Text and code\n\n128k\n\nYes\n\nSupported languages: English, German, French, Italian, Portuguese, Hindi, Spanish, and Thai.\n\nLlama 3.1 family of models . Token counts refer to pretraining data only. All model versions use Grouped-Query Attention (GQA) for improved inference scalability.\n\nModel Release Date: July 23, 2024.\n\nStatus: This is a static model trained on an offline dataset. Future versions of the tuned models will be released as we improve model safety with community feedback.\n\nLicense: A custom commercial license, the Llama 3.1 Community License, is available at: https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/LICENSE\n\nFeedback: Instructions on how to provide feedback or comments on the model can be found in the Llama Models README . For more technical information about generation parameters and recipes for how to use Llama 3.1 in applications, please go here .\n\nIntended Use\n\nIntended Use Cases Llama 3.1 is intended for commercial and research use in multiple languages. Instruction tuned text only models are intended for assistant-like chat, whereas pretrained models can be adapted for a variety of natural language generation tasks. The Llama 3.1 model collection also supports the ability to leverage the outputs of its models to improve other models including synthetic data generation and distillation. The Llama 3.1 Community License allows for these use cases.\n\nOut-of-scope Use in any manner that violates applicable laws or regulations (including trade compliance laws). Use in any other way that is prohibited by the Acceptable Use Policy and Llama 3.1 Community License. Use in languages beyond those explicitly referenced as supported in this model card.\n\nNote : Llama 3.1 has been trained on a broader collection of languages than the 8 supported languages. Developers may fine-tune Llama 3.1 models for languages beyond the 8 supported languages provided they comply with the Llama 3.1 Community License and the Acceptable Use Policy and in such cases are responsible for ensuring that any uses of Llama 3.1 in additional languages is done in a safe and responsible manner.\n\nHardware and Software\n\nTraining Factors We used custom training libraries, Meta's custom built GPU cluster, and production infrastructure for pretraining. Fine-tuning, annotation, and evaluation were also performed on production infrastructure.\n\nTraining Energy Use Training utilized a cumulative of 39.3 M GPU hours of computation on H100-80GB (TDP of 700W) type hardware, per the table below. Training time is the total GPU time required for training each model and power consumption is the peak power capacity per GPU device used, adjusted for power usage efficiency.\n\nTraining Greenhouse Gas Emissions Estimated total location-based greenhouse gas emissions were 11,390 tons CO2eq for training. Since 2020, Meta has maintained net zero greenhouse gas emissions in its global operations and matched 100% of its electricity use with renewable energy, therefore the total market-based greenhouse gas emissions for training were 0 tons CO2eq.\n\nTraining Time (GPU hours)\n\nTraining Power Consumption (W)\n\nTraining Location-Based Greenhouse Gas Emissions\n\n(tons CO2eq)\n\nTraining Market-Based Greenhouse Gas Emissions\n\n(tons CO2eq)\n\nLlama 3.1 8B\n\n1.46M\n\n700\n\n420\n\n0\n\nLlama 3.1 70B\n\n7.0M\n\n700\n\n2,040\n\n0\n\nLlama 3.1 405B\n\n30.84M\n\n700\n\n8,930\n\n0\n\nTotal\n\n39.3M\n\n11,390\n\n0\n\nThe methodology used to determine training energy use and greenhouse gas emissions can be found here . Since Meta is openly releasing these models, the training energy use and greenhouse gas emissions will not be incurred by others.\n\nTraining Data\n\nOverview: Llama 3.1 was pretrained on ~15 trillion tokens of data from publicly available sources. The fine-tuning data includes publicly available instruction datasets, as well as over 25M synthetically generated examples.\n\nData Freshness: The pretraining data has a cutoff of December 2023.\n\nBenchmark scores\n\nIn this section, we report the results for Llama 3.1 models on standard automatic benchmarks. For all the evaluations, we use our internal evaluations library. Details of our evals can be found here . We are also\n\n[truncated: 13,436 of 19,431 chars]",
           "error": null,
-          "latency_ms": 826.7655410018051,
-          "raw_chars": 34490,
+          "latency_ms": 635.1397500002349,
+          "raw_chars": 19431,
           "truncated": true,
           "source_ids": [
-            "S1"
+            "S8"
+          ]
+        },
+        {
+          "call_id": "call_UmR9OANQaH0men8MkBLExqKA",
+          "tool": "fetch_page",
+          "args": {
+            "url": "https://huggingface.co/meta-llama/Llama-3.1-405B"
+          },
+          "ok": true,
+          "content": "meta-llama/Llama-3.1-405B · Hugging Face\nhttps://huggingface.co/meta-llama/Llama-3.1-405B\n\nmeta-llama/Llama-3.1-405B · Hugging Face\n\n\",\"eos_token\":\"<|end_of_text|>\"}},\"createdAt\":\"2024-07-16T01:29:54.000Z\",\"discussionsDisabled\":false,\"discussionsSorting\":\"recently-created\",\"downloads\":28921,\"downloadsAllTime\":21355743,\"id\":\"meta-llama/Llama-3.1-405B\",\"isLikedByUser\":false,\"availableInferenceProviders\":[],\"showHuggingChatEntry\":false,\"inference\":\"\",\"lastModified\":\"2024-09-25T17:01:49.000Z\",\"likes\":992,\"pipeline_tag\":\"text-generation\",\"library_name\":\"transformers\",\"librariesOther\":[],\"trackDownloads\":true,\"model-index\":null,\"evalResults\":[{\"dataset\":{\"id\":\"TIGER-Lab/MMLU-Pro\",\"isBenchmark\":true,\"task_id\":\"mmlu_pro\"},\"value\":61.6,\"source\":{\"url\":\"https://huggingface.co/datasets/evaleval/EEE_datastore/blob/192329fb7d6b15b7b0936a1a58ae862aa7e8ba24/flat/objects/50/a3/50a33ec6-cf9b-4acc-9f45-61cd8356207c.json\",\"name\":\"EvalEval\",\"isExternal\":true},\"filename\":\".eval_results/mmlu_pro.yaml\",\"verified\":false,\"pullRequest\":38,\"rank\":61,\"label\":\"Mmlu Pro\"},{\"dataset\":{\"id\":\"openai/gsm8k\",\"isBenchmark\":true,\"task_id\":\"gsm8k\"},\"value\":96.8,\"source\":{\"url\":\"https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md\",\"name\":\"Model Card\",\"isExternal\":true},\"filename\":\".eval_results/gsm8k.yaml\",\"verified\":false,\"pullRequest\":37,\"rank\":2,\"sizeRank\":{\"rank\":1,\"value\":500000000000,\"id\":\"500B\",\"label\":\"< 500B\"},\"label\":\"Gsm8k\",\"notes\":\"8-shot CoT\"}],\"private\":false,\"repoType\":\"model\",\"gated\":\"manual\",\"gatedProfileSharing\":{\"username\":true,\"email\":true},\"tags\":[\"transformers\",\"safetensors\",\"llama\",\"text-generation\",\"facebook\",\"meta\",\"pytorch\",\"llama-3\",\"en\",\"de\",\"fr\",\"it\",\"pt\",\"hi\",\"es\",\"th\",\"arxiv:2204.05149\",\"license:llama3.1\",\"eval-results\",\"text-generation-inference\",\"endpoints_compatible\",\"region:us\"],\"tag_objs\":[{\"id\":\"text-generation\",\"label\":\"Text Generation\",\"type\":\"pipeline_tag\",\"subType\":\"nlp\"},{\"id\":\"transformers\",\"label\":\"Transformers\",\"type\":\"library\"},{\"id\":\"safetensors\",\"label\":\"Safetensors\",\"type\":\"library\"},{\"id\":\"pytorch\",\"label\":\"PyTorch\",\"type\":\"library\"},{\"id\":\"en\",\"label\":\"English\",\"type\":\"language\"},{\"id\":\"de\",\"label\":\"German\",\"type\":\"language\"},{\"id\":\"fr\",\"label\":\"French\",\"type\":\"language\"},{\"id\":\"it\",\"label\":\"Italian\",\"type\":\"language\"},{\"id\":\"pt\",\"label\":\"Portuguese\",\"type\":\"language\"},{\"id\":\"hi\",\"label\":\"Hindi\",\"type\":\"language\"},{\"id\":\"es\",\"label\":\"Spanish\",\"type\":\"language\"},{\"id\":\"th\",\"label\":\"Thai\",\"type\":\"language\"},{\"id\":\"llama\",\"label\":\"llama\",\"type\":\"other\",\"clickable\":true},{\"id\":\"facebook\",\"label\":\"facebook\",\"type\":\"other\",\"clickable\":true},{\"id\":\"meta\",\"label\":\"meta\",\"type\":\"other\",\"clickable\":true},{\"id\":\"llama-3\",\"label\":\"llama-3\",\"type\":\"other\",\"clickable\":true},{\"id\":\"eval-results\",\"label\":\"Eval Results\",\"type\":\"other\",\"clickable\":true},{\"id\":\"text-generation-inference\",\"label\":\"text-generation-inference\",\"type\":\"other\",\"clickable\":true},{\"id\":\"endpoints_compatible\",\"label\":\"Inference Endpoints\",\"type\":\"other\",\"clickable\":true},{\"id\":\"arxiv:2204.05149\",\"label\":\"arxiv:2204.05149\",\"type\":\"arxiv\",\"extra\":{\"paperTitle\":\"The Carbon Footprint of Machine Learning Training Will Plateau, Then\\n Shrink\"}},{\"id\":\"license:llama3.1\",\"label\":\"llama3.1\",\"type\":\"license\"},{\"type\":\"region\",\"label\":\"🇺🇸 Region: US\",\"id\":\"region:us\"}],\"transformersInfo\":{\"auto_model\":\"AutoModelForCausalLM\",\"pipeline_tag\":\"text-generation\",\"processor\":\"AutoTokenizer\"},\"widgetData\":[{\"text\":\"Hi, what can you help me with?\"},{\"text\":\"What is 84 * 3 / 2?\"},{\"text\":\"Tell me an interesting fact about the universe!\"},{\"text\":\"Explain quantum computing in simple terms.\"}],\"safetensors\":{\"parameters\":{\"BF16\":405853388800},\"total\":405853388800,\"sharded\":true,\"totalFileSize\":811707006260},\"hasBlockedOids\":false,\"region\":\"us\",\"isQuantized\":false,\"licenseFilePath\":\"LICENSE\"},\"discussionsStats\":{\"closed\":13,\"open\":26,\"total\":39},\"query\":{},\"inferenceContextData\":{\"billableEntities\":[],\"entityName2Providers\":{}},\"hasQuantizations\":true,\"copyToBucketNamespaces\":[]}\">\n\nLLAMA 3.1 COMMUNITY LICENSE AGREEMENT</h3>\\n<p>Llama 3.1 Version Release Date: July 23, 2024<br>\\\"Agreement\\\" means the terms and conditions for use, reproduction, distribution and modification of the Llama Materials set forth herein.<br>\\\"Documentation\\\" means the specifications, manuals and documentation accompanying Llama 3.1 distributed by Meta at <a href=\\\"https://llama.meta.com/doc/overview\\\" rel=\\\"nofollow\\\">https://llama.meta.com/doc/overview</a>.<br>\\\"Licensee\\\" or \\\"you\\\" means you, or your employer or any other person or entity (if you are entering into this Agreement on such person or entity’s behalf), of the age required under applicable laws, rules or regulations to provide legal consent and that has legal authority to bind your employer or such other person or entity if you are entering in this Agreement on their behalf.<br>\\\"Llama 3.1\\\" means the foundational large language models and software and algorithms, including machine-learning model code, trained model weights, inference-enabling code, training-enabling code, fine-tuning enabling code and other elements of the foregoing distributed by Meta at <a href=\\\"https://llama.meta.com/llama-downloads\\\" rel=\\\"nofollow\\\">https://llama.meta.com/llama-downloads</a>.<br>\\\"Llama Materials\\\" means, collectively, Meta’s proprietary Llama 3.1 and Documentation (and any portion thereof) made available under this Agreement.<br>\\\"Meta\\\" or \\\"we\\\" means Meta Platforms Ireland Limited (if you are located in or, if you are an entity, your principal place of business is in the EEA or Switzerland) and Meta Platforms, Inc. (if you are located outside of the EEA or Switzerland).</p>\\n<ol>\\n<li>License Rights and Redistribution.<br>a. Grant of Rights. You are granted a non-exclusive, worldwide, non-transferable and royalty-free limited license under Meta’s intellectual property or other rights owned by Meta embodied in the Llama Materials to use, reproduce, distribute, copy, create derivative works of, and make modifications to the Llama Materials.<br>b. Redistribution and\n\n[truncated: 54,274 of 60,268 chars]",
+          "error": null,
+          "latency_ms": 519.4239159991412,
+          "raw_chars": 60268,
+          "truncated": true,
+          "source_ids": [
+            "S6"
+          ]
+        },
+        {
+          "call_id": "call_bot7Y5JaO0GqMz9ES3Z5H4vh",
+          "tool": "fetch_page",
+          "args": {
+            "url": "https://openai.com/index/language-models-are-few-shot-learners/"
+          },
+          "ok": true,
+          "content": "Language models are few-shot learners | OpenAI\nhttps://openai.com/index/language-models-are-few-shot-learners/\n\nLanguage models are few-shot learners | OpenAI\n\nOpenAI May 28, 2020\nMilestone\nLanguage models are few-shot learners\n\nRead paper (opens in a new window)\n\nLoading…\n\nShare\n\nRecent work has demonstrated substantial gains on many NLP tasks and benchmarks by pre-training on a large corpus of text followed by fine-tuning on a specific task. While typically task-agnostic in architecture, this method still requires task-specific fine-tuning datasets of thousands or tens of thousands of examples. By contrast, humans can generally perform a new language task from only a few examples or from simple instructions - something which current NLP systems still largely struggle to do. Here we show that scaling up language models greatly improves task-agnostic, few-shot performance, sometimes even reaching competitiveness with prior state-of-the-art fine-tuning approaches. Specifically, we train GPT‑3, an autoregressive language model with 175 billion parameters, 10x more than any previous non-sparse language model, and test its performance in the few-shot setting. For all tasks, GPT‑3 is applied without any gradient updates or fine-tuning, with tasks and few-shot demonstrations specified purely via text interaction with the model. GPT‑3 achieves strong performance on many NLP datasets, including translation, question-answering, and cloze tasks, as well as several tasks that require on-the-fly reasoning or domain adaptation, such as unscrambling words, using a novel word in a sentence, or performing 3-digit arithmetic. At the same time, we also identify some datasets where GPT‑3&#x27;s few-shot learning still struggles, as well as some datasets where GPT‑3 faces methodological issues related to training on large web corpora. Finally, we find that GPT‑3 can generate samples of news articles which human evaluators have difficulty distinguishing from articles written by humans. We discuss broader societal impacts of this finding and of GPT‑3 in general.\n\nGPT\nLanguage\nLearning Paradigms\nTransformers\n\nAuthors\nTom Brown, Benjamin Mann, Nick Ryder, Melanie Subbiah, Jared Kaplan, Prafulla Dhariwal, Arvind Neelakantan, Pranav Shyam, Girish Sastry, Amanda Askell, Sandhini Agarwal, Ariel Herbert-Voss, Gretchen Krueger, Tom Henighan, Rewon Child, Aditya Ramesh\n\nAuthors\nDaniel Ziegler, Jeffrey Wu, Clemens Winter, Christopher Hesse, Mark Chen, Eric Sigler, Mateusz Litwin, Scott Gray, Benjamin Chess, Jack Clark, Christopher Berner, Sam McCandlish, Alec Radford, Ilya Sutskever, Dario Amodei\n\nRelated articles\n\nView all\n\nBuilding agricultural database for farmers\nJan 12, 2024\n\nCreating websites in minutes with AI Website Builder\nMay 29, 2025\n\nDelivering LLM-powered health solutions\nJan 4, 2024",
+          "error": null,
+          "latency_ms": 650.9606250001525,
+          "raw_chars": 2704,
+          "truncated": false,
+          "source_ids": [
+            "S19"
+          ]
+        },
+        {
+          "call_id": "call_XCoAESJ0tzfU1OULzLiVttZo",
+          "tool": "fetch_page",
+          "args": {
+            "url": "https://en.wikipedia.org/wiki/GPT-3"
+          },
+          "ok": true,
+          "content": "GPT-3 - Wikipedia\nhttps://en.wikipedia.org/wiki/GPT-3\n\nGPT-3 - Wikipedia\n\nJump to content\n\nFrom Wikipedia, the free encyclopedia\n\n2020 text-generating language model\n\nSee also: Generative pre-trained transformer §   Foundation models\n\n\"},\"developer\":{\"wt\":\"\"},\"released\":{\"wt\":\"May 29, 2020 (publication); June 11, 2020 (OA API beta)\"},\"discontinued\":{\"wt\":\"yes\"},\"latest release version\":{\"wt\":\"davinci-002\"},\"latest release date\":{\"wt\":\"{{Start date and age|2023|08|22}}\"},\"repo\":{\"wt\":\"\"},\"programming language\":{\"wt\":\"\"},\"operating system\":{\"wt\":\"\"},\"replaces\":{\"wt\":\"[[GPT-2]]\"},\"replaced_by\":{\"wt\":\"[[GPT-4|GPT-4-early]]\"},\"genre\":{\"wt\":\"{{ indented plainlist |\\n*[[Large language model]]\\n*[[Generative pre-trained transformer]]\\n*[[Foundation model]]\\n}}\"},\"license\":{\"wt\":\"Proprietary\"},\"website\":{\"wt\":\"{{URL|https://openai.com/blog/openai-api}}\"}},\"i\":0}}]}'> Generative Pre-trained Transformer 3 (GPT-3)\n\nOriginal author OpenAI [ 1 ]\nRelease May 29, 2020 (publication); June 11, 2020 (OA API beta)\n\nFinal release davinci-002\n/ August   22, 2023 ; 3 years ago   ( 2023-08-22 )\n\nPredecessor GPT-2\nSuccessor GPT-4-early\nType\nLarge language model\n\nGenerative pre-trained transformer\n\nFoundation model\n\nLicense Proprietary\nWebsite openai .com /blog /openai-api\nRepository github .com /openai /gpt-3\n\nPart of a series on\nOpenAI\n\nProducts\n\nChatGPT\nSearch\n\nDeep Research\n\nGPTs\n\nDALL-E\n\nSora\n\nWhisper\n\nModels\n\nGPT-1\n\nGPT-2\n\nGPT-3\n\nGPT-4\n\nGPT-4o\n\nGPT-4.5\n\nGPT-4.1\n\nGPT-5\n\nGPT-5.1\n\nGPT-5.2\n\nGPT-5.4\n\nGPT-5.5\n\nGPT-5.6\n\nGPT-6\n\nGPT-6.1\n\no1\n\no3\n\no4-mini\n\nIncidents\n\nRemoval of Sam Altman\n\n2026 cyberattacks\n\nHugging Face breach\n\nMedicare breach\n\nNavier–Stokes priority controversy\n\nOpenAI bulk release of mathematical papers\n\nPeople\n\nSam Altman\n\nGreg Brockman\n\nJessica Livingston\n\nPeter Thiel\n\nElon Musk\n\nAndrej Karpathy\n\nConcepts\n\nHallucination\n\nLarge language model\n\nWord embedding\n\nTraining\n\nv\nt\ne\n\nPart of a series on\nMachine learning and\ndata mining\n\nParadigms\n\nSupervised learning\n\nUnsupervised learning\n\nSemi-supervised learning\n\nSelf-supervised learning\n\nReinforcement learning\n\nTransfer learning\n\nMeta-learning\n\nFew-shot learning\n\nZero-shot learning\n\nOnline learning\n\nBatch learning\n\nCurriculum learning\n\nRule-based learning\n\nNeuro-symbolic AI\n\nNeuromorphic engineering\n\nQuantum machine learning\n\nProblems\n\nClassification\n\nGenerative modeling\n\nRegression\n\nClustering\n\nDimensionality reduction\n\nDensity estimation\n\nAnomaly detection\n\nData cleaning\n\nAutoML\n\nAssociation rules\n\nSemantic analysis\n\nStructured prediction\n\nFeature engineering\n\nFeature learning\n\nLearning to rank\n\nGrammar induction\n\nOntology learning\n\nMultimodal learning\n\nSupervised learning ( classification   • regression )\n\nApprenticeship learning\n\nDecision trees\n\nEnsembles\nBagging\n\nBoosting\n\nRandom forest\n\nk -NN\n\nLinear regression\n\nNaive Bayes\n\nArtificial neural networks\n\nLogistic regression\n\nPerceptron\n\nRelevance vector machine (RVM)\n\nSupport vector machine (SVM)\n\nClustering\n\nBIRCH\n\nCURE\n\nHierarchical\n\nk -means\n\nFuzzy\n\nExpectation–maximization (EM)\n\nDBSCAN\n\nOPTICS\n\nMean shift\n\nDimensionality reduction\n\nFactor analysis\nExploratory\n\nCCA\n\nICA\n\nLDA\n\nNMF\n\nPCA\n\nPGD\n\nt-SNE\n\nSDL\n\nStructured prediction\n\nGraphical models\nBayes net\n\nConditional random field\n\nHidden Markov\n\nAnomaly detection\n\nRANSAC\n\nk -NN\n\nLocal outlier factor\n\nIsolation forest\n\nNeural networks\n\nAutoencoder\n\nDeep learning\n\nFeedforward neural network\n\nRecurrent neural network\nLSTM\n\nGRU\n\nESN\n\nreservoir computing\n\nBoltzmann machine\nRestricted\n\nGAN\n\nDiffusion model\n\nSOM\n\nConvolutional neural network\nU-Net\n\nLeNet\n\nAlexNet\n\nDeepDream\n\nNeural field\nNeural radiance field\n\nPhysics-informed neural networks\n\nTransformer\nVision\n\nMamba\n\nSpiking neural network\n\nMemtransistor\n\nElectrochemical RAM (ECRAM)\n\nReinforcement learning\n\nQ-learning\n\nPolicy gradient\n\nSARSA\n\nTemporal difference (TD)\n\nMulti-agent\nSelf-play\n\nLearning with humans\n\nActive learning\n\nCrowdsourcing\n\nHuman-in-the-loop\n\nMechanistic interpretability\n\nRLHF\n\nModel diagnostics\n\nCoefficient of determination\n\nConfusion matrix\n\nLearning curve\n\nROC curve\n\nMathematical foundations\n\nKernel machines\n\nBias–variance tradeoff\n\nComputational learning theory\n\nEmpirical risk minimization\n\nOccam learning\n\nPAC learning\n\nStatistical learning\n\nVC theory\n\nTopological deep learning\n\nJournals and conferences\n\nAAAI\n\nCVPR\n\nECCV\n\nECML PKDD\n\nEMNLP\n\nICCV\n\nNeurIPS\n\nICML\n\nICLR\n\nIJCAI\n\nML\n\nJMLR\n\nRelated articles\n\nGlossary of artificial intelligence\n\nList of datasets for machine-learning research\nList of datasets in computer vision and image processing\n\nOutline of machine learning\n\nv\nt\ne\n\nGenerative Pre-trained Transformer 3 ( GPT-3 ) was a large language model released by OpenAI in 2020 as part of the company's GPT series of models.\n\nLike its predecessor, GPT-2 , it is a decoder-only [ 2 ] transformer model of deep neural network, which supersedes recurrence and convolution-based architectures with a technique known as \" attention \". [ 3 ] This attention mechanism allows the model to focus selectively on segments of input text it predicts to be most relevant. [ 4 ] GPT-3 has 175 billion parameters , [ 1 ] each with 16-bit precision, requiring 350GB of storage since each parameter occupies 2 bytes. It has a context window size of 2,048 tokens , [ 1 ] :   43   and has demonstrated strong \" zero-shot \" and \" few-shot \" learning abilities on many tasks. [ 2 ]\n\nOn September 22, 2020, Microsoft announced that it had licensed GPT-3 exclusively. Others can still receive output from its public API, but only Microsoft has access to the underlying model. [ 5 ]\n\nBackground\n[ edit ]\n\nAccording to The Economist , improved algorithms, more powerful computers, and a recent increase in the amount of digitized material have fueled a revolution in machine learning . New techniques in the 2010s resulted in \"rapid improvements in tasks\", including manipulating language. [ 6 ]\n\nSoftware models are trained to learn by using thousands or millions of examples in a \"structure   ... loosely based on the neural architecture of the brain\". [ 6 ] One architecture used in\n\n[truncated: 38,275 of 44,272 chars]",
+          "error": null,
+          "latency_ms": 440.3654170000664,
+          "raw_chars": 44272,
+          "truncated": true,
+          "source_ids": [
+            "S11"
           ]
         }
       ],
@@ -223,26 +292,114 @@
       "i": 7,
       "node": "reflect",
       "plan_version": 1,
-      "ts_offset_ms": 14511.439290989074,
+      "ts_offset_ms": 14318.80991700018,
       "tool_calls": [],
       "observations": [],
       "reflection": {
-        "decision": "finalize",
-        "reasoning": "The observations already provide parameter counts for both the largest Llama 3.1 model (405B) and the largest GPT-3 model (175B). No further searching seems likely to add new facts needed for the comparison or compute the difference.",
+        "decision": "continue",
+        "reasoning": "GPT-3’s official maximum parameter count is supported (175B), but the evidence for Llama 3.1’s largest model is incomplete: the observations mainly show the model name “Llama-3.1-405B” rather than quoting the official parameter count from an authoritative source/page.",
         "covered": {
-          "What is the number of parameters in the largest Llama 3.1 model (e.g., the 405B variant)\u2014according to the official model card or Meta documentation?": true,
-          "What is the number of parameters in the largest GPT-3 model (e.g., GPT-3 175B)\u2014according to OpenAI documentation or the original GPT-3 paper?": true
+          "How many parameters does the largest Llama 3.1 model have (e.g., the 405B variant)—what is the official parameter count?": false,
+          "How many parameters does the largest GPT-3 model have (the maximum-size model)—what is the officially reported parameter count?": false
         },
-        "open_gaps": [],
+        "open_gaps": [
+          "How many parameters does the largest Llama 3.1 model have (e.g., the 405B variant)—what is the official parameter count?",
+          "How many parameters does the largest GPT-3 model have (the maximum-size model)—what is the officially reported parameter count?"
+        ],
         "overruled_stop": false
       },
       "note": null
     },
     {
       "i": 8,
+      "node": "act",
+      "plan_version": 1,
+      "ts_offset_ms": 16282.237374998658,
+      "tool_calls": [
+        {
+          "call_id": "call_NhibFIPRxb1Z6c6cpbgLm4kG",
+          "name": "calculator",
+          "args": {
+            "expression": "405 - 175"
+          }
+        }
+      ],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 9,
+      "node": "observe",
+      "plan_version": 1,
+      "ts_offset_ms": 16283.552999999301,
+      "tool_calls": [],
+      "observations": [
+        {
+          "call_id": "call_NhibFIPRxb1Z6c6cpbgLm4kG",
+          "tool": "calculator",
+          "args": {
+            "expression": "405 - 175"
+          },
+          "ok": true,
+          "content": "405 - 175 = 230",
+          "error": null,
+          "latency_ms": 0.1667079995968379,
+          "raw_chars": 0,
+          "truncated": false,
+          "source_ids": []
+        }
+      ],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 10,
+      "node": "reflect",
+      "plan_version": 1,
+      "ts_offset_ms": 18670.190957998784,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": {
+        "decision": "continue",
+        "reasoning": "GPT-3’s largest model parameter count is supported (175B). Llama 3.1’s “official” parameter count for the 405B variant is not explicitly evidenced in the observations (only the presence of a 405B page/mentions), so one more tool call to extract the exact stated parameter number is plausibly needed.",
+        "covered": {
+          "How many parameters does the largest Llama 3.1 model have (e.g., the 405B variant)—what is the official parameter count?": false,
+          "How many parameters does the largest GPT-3 model have (the maximum-size model)—what is the officially reported parameter count?": false
+        },
+        "open_gaps": [
+          "How many parameters does the largest Llama 3.1 model have (e.g., the 405B variant)—what is the official parameter count?",
+          "How many parameters does the largest GPT-3 model have (the maximum-size model)—what is the officially reported parameter count?"
+        ],
+        "overruled_stop": false
+      },
+      "note": null
+    },
+    {
+      "i": 11,
+      "node": "act",
+      "plan_version": 1,
+      "ts_offset_ms": 20286.3725419993,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": "- **Largest Llama 3.1 (405B): 405 billion parameters** (officially listed as the “405B” model size) [S8].  \n- **GPT-3 (largest model): 175 billion parameters** [S19].\n\n**Which is larger?** Llama 3.1 ("
+    },
+    {
+      "i": 12,
+      "node": "observe",
+      "plan_version": 1,
+      "ts_offset_ms": 20287.947291999444,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": "no tool calls"
+    },
+    {
+      "i": 13,
       "node": "finalize",
       "plan_version": 1,
-      "ts_offset_ms": 16063.112457995885,
+      "ts_offset_ms": 21708.802791999915,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -252,125 +409,173 @@
   "sources": [
     {
       "sid": "S1",
-      "url": "https://huggingface.co/blog/llama31",
-      "title": "Llama 3.1 - 405B, 70B & 8B with multilinguality and long context",
-      "snippet": "The Llama 3.1 release introduces six new open LLM models based on the Llama 3 architecture. They come in three sizes: 8B, 70B, and 405B parameters, each with base (pre-trained) and instruct-tuned versions. All the variants support a context length of 128K tokens and 8 languages, including English, G",
+      "url": "https://huggingface.co/meta-llama",
+      "title": "meta-llama (Meta Llama)",
+      "snippet": "Llama 3.1: a collection of pretrained and fine-tuned text models with sizes ranging from 8 billion to 405 billion parameters pre-trained on ~15 trillion tokens.",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S2",
-      "url": "https://www.ibm.com/think/news/meta-releases-llama-3-1-models-405b-parameter-variant",
-      "title": "Meta releases new Llama 3.1 models, including highly anticipated 405B parameter variant",
-      "snippet": "Graduate level reasoning (GPQA, 0-shot): Llama 405B Instruct\u2019s GPQA score (50.7%) matched Claude 3 Opus (50.4%), edged GPT-4T (48.0%) and significantly exceeded that of Claude 3 Sonnet (40.4%), Claude 3 Haiku (33.3%) and GPT-4 (35.7%). [...] Reading comprehension (DROP, F1): The base pre-trainedLlam",
+      "url": "https://www.analyticsvidhya.com/blog/2024/07/meta-llama-3-1/",
+      "title": "Meta Llama 3.1: Open-Source AI Model Takes on GPT-4o mini",
+      "snippet": "Unboxing Llama 3.1 and its Architecture. In this section, let’s try to understand all the details about Meta’s new Llama 3 model. Based on their recent announcement, their flagship open-source model has a massive 405 Billion parameters.",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S3",
-      "url": "https://docs.ionos.com/cloud/ai/ai-model-hub/models/llms/meta-llama-3-1-405b",
-      "title": "Llama 3.1 405B | Products",
-      "snippet": "```\n\"stop\": [\"<|eot_id|>\", \"<|end_of_text|>\"]\"stop\": [\"<|eot_id|>\", \"<|end_of_text|>\"]\n```\n\n```\n\"temperature\": 0.6, \"temperature\": 0.6, \"top_p\": 0.9\"top_p\": 0.9\n```\n\n```\n\"frequency_penalty\": 0.1\"frequency_penalty\": 0.1\n``` [...] Intelligence\n\nSpeed\n\nInput\n\nOutput\n\nIntelligence active Intelligence ac",
+      "url": "https://ollama.com/library/llama3.1:latest",
+      "title": "Llama 3.1 is a new state-of-the-art model from Meta available in 8B, 70...",
+      "snippet": "Llama 3.1 405B is the first openly available model that rivals the top AI models when it comes to state-of-the-art capabilities in general knowledge, steerability, math, tool use, and multilingual translation.",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S4",
-      "url": "https://huggingface.co/meta-llama/Llama-3.1-405B",
-      "title": "meta-llama/Llama-3.1-405B \u00b7 Hugging Face",
-      "snippet": "| DROP (F1) | 3 | f1 | 58.4 | 59.5 | 79.7 | 79.6 | 84.8 | [...] 2. Child Safety",
+      "url": "https://www.infoworld.com/article/3477234/why-metas-llama-3-1-is-a-boon-for-enterprises-and-a-bane-for-other-llm-vendors.html",
+      "title": "Why Meta’s Llama 3.1 is a boon for enterprises and a bane... | InfoWorld",
+      "snippet": "The Llama 3.1 405B variant is extremely expensive to run due to requiring two Nvidia H100 servers (16 GPUs) to run the unmodified model, Dylan Patel, chief analyst at semiconductor research firm SemiAnalysis said.",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S5",
-      "url": "https://www.prompthub.us/models/llama-3-1-405b",
-      "title": "Llama 3.1 405B Model Card",
-      "snippet": "Sonar Reasoning\n\nSonar Reasoning Pro\n\nGrok Beta\n\nGrok Vision Beta\n\nGrok Vision 2\n\nGrok 2\n\nGrok 3\n\nGrok 3 Fast\n\nGrok 3 Mini\n\nGrok 4\n\n## Llama 3.1 405B overview\n\n### Provider\n\nThe company that provides the model\n\nMeta\n\n### Context window\n\nThe number of tokens you can send in a prompt\n\n128k tokens\n\n###",
+      "url": "https://www.tomsguide.com/ai/meta-llama-31-is-one-of-the-most-important-ai-releases-of-the-year-heres-how-to-try-it",
+      "title": "Meta Llama 3.1 is out now — here’s how to try it for free | Tom's Guide",
+      "snippet": "However, as good as the smaller models are becoming, size does matter when it comes to frontier-level intelligence and with Llama 3.1 405b Meta has found a compromise and managed to pack a trillion parameter quality model into one half the size. Tom's Guide: Direct to Your Inbox.",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S6",
-      "url": "https://docs.oracle.com/en-us/iaas/Content/generative-ai/meta-llama-3-1-405b.htm",
-      "title": "Meta Llama 3.1 (405B) (Deprecated)",
-      "snippet": "This 405 billion-parameter model is a high-performance option that offers speed and scalability. Compared to the `meta.llama-3.1-70b-instruct` model, it can handle a larger volume of requests and support more complex use cases. Key features of this model include:\n\n`meta.llama-3.1-70b-instruct`\n\n## R",
+      "url": "https://huggingface.co/meta-llama/Llama-3.1-405B",
+      "title": "meta-llama/Llama-3.1-405B · Hugging Face",
+      "snippet": "Jul 23, 2024 · \"Llama 3.1\" means the foundational large language models and software and algorithms, including machine-learning model code, trained model weights, inference-enabling code, training-enabling code, fine-tuning enabling code and other elements of the foregoing distributed by Meta at htt",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S7",
-      "url": "https://www.youreverydayai.com/llama-405b-review-whats-new-in-llama-3-1",
-      "title": "LLaMA 3.1 405B MMLU Score: How It Stacks Up",
-      "snippet": "Llama 3.1 is Meta's latest iteration of its large language model series. While Llama 3 has been around since April, this new release brings significant updates to the existing 8B and 70B parameter models, and introduces the powerhouse 405B parameter model. This trio of models is designed to cater to",
+      "url": "https://ai.meta.com/blog/meta-llama-3-1/",
+      "title": "Introducing Llama 3.1: Our most capable models to date - Meta AI",
+      "snippet": "Jul 23, 2024 · Bringing open intelligence to all, our latest models expand context length, add support across eight languages, and include Meta Llama 3.1 405B— the first frontier-level open source AI model.",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S8",
-      "url": "https://www.youtube.com/watch?v=Tf1nooXtUHE",
-      "title": "Llama 405b: Full 92 page Analysis, and Uncontaminated SIMPLE Benchmark Results",
-      "snippet": "the Llama herd has left the building and is roaming the streets more specifically the Llama 3.1 405 billion parameter language model is out but I thought the former expression would be a bit more dramatic the 92 page paper that came with the model was released less than 24 hours ago and yes I've rea",
+      "url": "https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md",
+      "title": "llama-models/models/llama3_1/MODEL_CARD.md at main · meta ...",
+      "snippet": "Jul 23, 2024 · The Meta Llama 3.1 collection of multilingual large language models (LLMs) is a collection of pretrained and instruction tuned generative models in 8B, 70B and 405B sizes (text in/text out).",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S9",
-      "url": "https://developer.nvidia.com/blog/openai-presents-gpt-3-a-175-billion-parameters-language-model",
-      "title": "OpenAI Presents GPT-3, a 175 Billion Parameters ...",
-      "snippet": "OpenAI researchers have developed GPT-3, a language model with 175 billion parameters, significantly larger than its predecessor GPT-2, which had 1.5 billion parameters.\n GPT-3 has achieved strong performance on various natural language processing tasks, including translation, question-answering, an",
+      "url": "https://dev.meta.ai/llama/docs/model-cards-and-prompt-formats/llama3_1",
+      "title": "Llama 3.1 | Model Cards and Prompt formats - dev.meta.ai",
+      "snippet": "The first few sections of this page-- Prompt Template, Base Model Prompt, and Instruct Model Prompt --are applicable across all the models released in both Llama 3.1 and Llama 3.2. Please leverage this guidance in order to take full advantage of the new Llama models.",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S10",
-      "url": "https://lambda.ai/blog/demystifying-gpt-3",
-      "title": "OpenAI's GPT-3 Language Model: A Technical Overview",
-      "snippet": "OpenAI recently published GPT-3, the largest language model ever trained. GPT-3 has 175 billion parameters and would require 355 years and $4,600,000 to train - even with the lowest priced GPU cloud on the market.\n\n## GPT-3 Key Takeaways [...] ## Diving into the Model\n\nGPT-3 comes in eight sizes, ra",
+      "url": "https://deepwiki.com/meta-llama/llama-models/10.1-llama-3.1",
+      "title": "Llama 3.1 | meta-llama/llama-models | DeepWiki",
+      "snippet": "Jul 30, 2025 · This document provides detailed technical documentation of the Llama 3.1 model family, including model specifications, evaluation methodology, and performance benchmarks.",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S11",
-      "url": "https://bonjoy.com/articles/gpt-models-evolution-history",
-      "title": "The Evolution of GPT Models - From 117M Parameters to 175B and Beyond",
-      "snippet": "GPT-3's 175 billion parameters represented a 117x jump from GPT-2. Trained on 300 billion tokens, it demonstrated few-shot learning - solving new tasks with just examples in the prompt, no additional training required.\n\nThe model required 355 years of compute time and cost $4.6 million to train. Ope",
+      "url": "https://en.wikipedia.org/wiki/GPT-3",
+      "title": "GPT-3 - Wikipedia",
+      "snippet": "GPT-3 has 175 billion parameters, [1] each with 16-bit precision, requiring 350GB of storage since each parameter occupies 2 bytes. It has a context window size of 2,048 tokens, [1]: 43 and has demonstrated strong \"zero-shot\" and \"few-shot\" learning abilities on many tasks. [2]",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S12",
-      "url": "https://en.wikipedia.org/wiki/GPT-3",
-      "title": "GPT-3",
-      "snippet": "Like its predecessor, GPT-2, it is a decoder-only transformer model of deep neural network, which supersedes recurrence and convolution-based architectures with a technique known as \"attention \"Attention (machine learning)\")\". This attention mechanism allows the model to focus selectively on segment",
+      "url": "https://developer.nvidia.com/blog/openai-presents-gpt-3-a-175-billion-parameters-language-model/",
+      "title": "OpenAI Presents GPT-3, a 175 Billion Parameters Language Model",
+      "snippet": "OpenAI researchers recently released a paper describing the development of GPT-3, a state-of-the-art language model made up of 175 billion parameters. For comparison, the previous version, GPT-2, was made up of 1.5 billion parameters. The largest Transformer-based language model was released by Micr",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S13",
-      "url": "https://www.youtube.com/watch?v=VEmrEo0ZDw8",
-      "title": "Let us hand-calculate how GPT-3 has a total of 175B ...",
-      "snippet": "Parameters from Q, K, V, O projections and FFN projections dominate here\nRepeated 96 times \u2192 accounts for the bulk of the 175B parameters\n\nFinally, the output block:\nLayerNorm + Output projection to vocab size\nParameters = 12,288 \u00d7 50,257 \u2248 617.55M (mirrors input embeddings)\n\nWhen you add all these ",
+      "url": "https://deepwiki.com/openai/gpt-3/1.1-model-architecture-and-training",
+      "title": "Model Architecture and Training | openai/gpt-3 | DeepWiki",
+      "snippet": "The repository includes samples generated by the 175 billion parameter GPT-3 model in the 175b_samples.jsonl file. These samples demonstrate the model's text generation capabilities with temperature=1 and p=0.85 sampling parameters.",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S14",
-      "url": "https://www.springboard.com/blog/data-science/machine-learning-gpt-3-open-ai",
-      "title": "OpenAI GPT-3: Everything You Need to Know [Updated]",
-      "snippet": "GPT-3 was introduced by Open AI earlier in May 2020 as a successor to their previous language model (LM) GPT-2. It is considered to be better and bigger than GPT-2. In fact, with around 175 Billion trainable parameters, OpenAI GPT-3\u2019s full version is the largest model trained so far when compared to",
+      "url": "https://aiwiki.ai/wiki/gpt-3",
+      "title": "GPT-3 - AI Wiki",
+      "snippet": "GPT-3 (Generative Pre-trained Transformer 3) is a family of decoder-only, autoregressive large language models developed by OpenAI. OpenAI first described the family in a May 2020 preprint; a peer-reviewed version appeared at NeurIPS 2020. The largest model contained 175 billion trainable parameters",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S15",
+      "url": "https://martianlee.github.io/posts/2026-06-21-gpt-3-paper-note",
+      "title": "GPT-3 (2020) Paper Notes | MartianLee's Dev Blog",
+      "snippet": "Paper notes on GPT-3 covering its core ideas: 175B scaling, in-context learning (zero/one/few-shot), weighted-sampling training data, headline benchmark numbers, and the data-contamination and bias limitations.",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S16",
+      "url": "https://arxiv.org/abs/2005.14165",
+      "title": "[2005.14165] Language Models are Few-Shot Learners - arXiv.org",
+      "snippet": "May 28, 2020 · Specifically, we train GPT-3, an autoregressive language model with 175 billion parameters, 10x more than any previous non-sparse language model, and test its performance in the few-shot setting.",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S17",
+      "url": "https://dl.acm.org/doi/abs/10.5555/3495724.3495883",
+      "title": "Language models are few-shot learners | Proceedings of the ...",
+      "snippet": "Dec 6, 2020 · Specifically, we train GPT-3, an autoregressive language model with 175 billion parameters, 10x more than any previous non-sparse language model, and test its performance in the few-shot setting.",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S18",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2020/file/1457c0d6bfcb4967418bfb8ac142f64a-Paper.pdf",
+      "title": "Language Models are Few-Shot Learners - NeurIPS",
+      "snippet": "Specifically, we train GPT-3, an autoregressive language model with 175 billion parameters, 10x more than any previous non-sparse language model, and test its performance in the few-shot setting.",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S19",
+      "url": "https://openai.com/index/language-models-are-few-shot-learners/",
+      "title": "Language models are few-shot learners - OpenAI",
+      "snippet": "May 28, 2020 · Specifically, we train GPT‑3, an autoregressive language model with 175 billion parameters, 10x more than any previous non-sparse language model, and test its performance in the few-shot setting.",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S20",
+      "url": "https://arxiv.org/html/2005.14165v4",
+      "title": "Language Models are Few-Shot Learners - arXiv.org",
+      "snippet": "Specifically, we train GPT-3, an autoregressive language model with 175 billion parameters, 10x more than any previous non-sparse language model, and test its performance in the few-shot setting.",
       "tool": "web_search",
       "first_seen_step": 1
     }
   ],
-  "answer": "The largest Llama 3.1 model has more parameters than GPT-3: **Llama 3.1 405B has 405 billion parameters** [S1], while **GPT-3 has 175 billion parameters** [S9]. **Difference: 405B \u2212 175B = 230 billion parameters**. [S1][S9]",
+  "answer": "The largest Llama 3.1 model (405B) has **405 billion parameters**, while the largest GPT-3 model has **175 billion parameters**; the Llama 3.1 model is larger by **230 billion parameters**. [S6][S11]",
   "citations": [
-    "S1",
-    "S9"
+    "S6",
+    "S11"
   ],
   "coverage": {
-    "What is the number of parameters in the largest Llama 3.1 model (e.g., the 405B variant)\u2014according to the official model card or Meta documentation?": true,
-    "What is the number of parameters in the largest GPT-3 model (e.g., GPT-3 175B)\u2014according to OpenAI documentation or the original GPT-3 paper?": true
+    "How many parameters does the largest Llama 3.1 model have (e.g., the 405B variant)—what is the official parameter count?": false,
+    "How many parameters does the largest GPT-3 model have (the maximum-size model)—what is the officially reported parameter count?": false
   },
   "outcome": {
     "status": "completed",
@@ -386,92 +591,125 @@
         "model": "gpt-5.4-nano",
         "input_tokens": 243,
         "cached_tokens": 0,
-        "output_tokens": 217,
-        "reasoning_tokens": 79,
-        "cost_usd": 0.00031985000000000005,
-        "latency_ms": 2163.171042004251,
+        "output_tokens": 188,
+        "reasoning_tokens": 62,
+        "cost_usd": 0.0002836,
+        "latency_ms": 2473.8304160000553,
         "replayed": false
       },
       {
         "purpose": "act",
         "model": "gpt-5.4-nano",
-        "input_tokens": 933,
+        "input_tokens": 971,
         "cached_tokens": 0,
-        "output_tokens": 136,
+        "output_tokens": 138,
         "reasoning_tokens": 0,
-        "cost_usd": 0.00035660000000000005,
-        "latency_ms": 2073.271333996672,
+        "cost_usd": 0.0003667,
+        "latency_ms": 1918.274499999825,
         "replayed": false
       },
       {
         "purpose": "act",
         "model": "gpt-5.4-nano",
-        "input_tokens": 5892,
+        "input_tokens": 4036,
         "cached_tokens": 0,
-        "output_tokens": 28,
+        "output_tokens": 147,
         "reasoning_tokens": 0,
-        "cost_usd": 0.0012134000000000001,
-        "latency_ms": 3647.530458998517,
+        "cost_usd": 0.00099095,
+        "latency_ms": 2039.0349999997852,
         "replayed": false
       },
       {
         "purpose": "reflect",
         "model": "gpt-5.4-nano",
-        "input_tokens": 894,
+        "input_tokens": 1287,
         "cached_tokens": 0,
-        "output_tokens": 203,
-        "reasoning_tokens": 52,
-        "cost_usd": 0.00043255,
-        "latency_ms": 2196.5477500052657,
+        "output_tokens": 247,
+        "reasoning_tokens": 87,
+        "cost_usd": 0.0005661500000000001,
+        "latency_ms": 2194.969542000763,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 9556,
+        "cached_tokens": 2560,
+        "output_tokens": 21,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.0014766500000000001,
+        "latency_ms": 1959.5409169996856,
+        "replayed": false
+      },
+      {
+        "purpose": "reflect",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 1306,
+        "cached_tokens": 0,
+        "output_tokens": 266,
+        "reasoning_tokens": 95,
+        "cost_usd": 0.0005937000000000001,
+        "latency_ms": 2382.9759169984754,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 9595,
+        "cached_tokens": 7680,
+        "output_tokens": 107,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.00067035,
+        "latency_ms": 1612.6326659996266,
         "replayed": false
       },
       {
         "purpose": "finalize",
         "model": "gpt-5.4-nano",
-        "input_tokens": 1239,
+        "input_tokens": 1850,
         "cached_tokens": 0,
-        "output_tokens": 80,
+        "output_tokens": 61,
         "reasoning_tokens": 0,
-        "cost_usd": 0.0003478,
-        "latency_ms": 1548.7287500000093,
+        "cost_usd": 0.00044625,
+        "latency_ms": 1418.1248330005474,
         "replayed": false
       }
     ],
     "totals": {
-      "input_tokens": 9201,
-      "cached_tokens": 0,
-      "output_tokens": 664,
-      "reasoning_tokens": 131,
-      "cost_usd": 0.0026702,
-      "cache_hit_rate": 0.0
+      "input_tokens": 28844,
+      "cached_tokens": 10240,
+      "output_tokens": 1175,
+      "reasoning_tokens": 244,
+      "cost_usd": 0.00539435,
+      "cache_hit_rate": 0.3550131743170157
     },
     "by_purpose": {
       "plan": {
         "calls": 1,
-        "cost_usd": 0.00031985000000000005,
-        "output_tokens": 217
+        "cost_usd": 0.0002836,
+        "output_tokens": 188
       },
       "act": {
-        "calls": 2,
-        "cost_usd": 0.0015700000000000002,
-        "output_tokens": 164
+        "calls": 4,
+        "cost_usd": 0.00350465,
+        "output_tokens": 413
       },
       "reflect": {
-        "calls": 1,
-        "cost_usd": 0.00043255,
-        "output_tokens": 203
+        "calls": 2,
+        "cost_usd": 0.00115985,
+        "output_tokens": 513
       },
       "finalize": {
         "calls": 1,
-        "cost_usd": 0.0003478,
-        "output_tokens": 80
+        "cost_usd": 0.00044625,
+        "output_tokens": 61
       }
     },
-    "search_credits": 4,
-    "steps": 2
+    "search_credits": 0,
+    "steps": 4
   },
   "timings_ms": {
-    "total": 16058.910332998494
+    "total": 21706.157665999854
   },
   "compaction": {
     "count": 0,

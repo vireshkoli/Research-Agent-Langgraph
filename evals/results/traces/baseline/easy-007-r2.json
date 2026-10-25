@@ -1,7 +1,7 @@
 {
   "schema_version": "1",
-  "run_id": "41b1d42bd97e",
-  "ts": "2026-08-08T19:02:13+00:00",
+  "run_id": "67f4d4cd6b68",
+  "ts": "2026-10-25T09:04:42+00:00",
   "question": "What is the speed of light in a vacuum, in metres per second, to the exact defined value?",
   "variant": "baseline",
   "config": {
@@ -12,13 +12,13 @@
     "max_run_cost_usd": 0.05,
     "finalize_reserve_usd": 0.008,
     "compact_threshold_tokens": 12000,
-    "git_sha": "a4216f3",
-    "prompt_hash": "sha256:512e8e5d8eaa"
+    "git_sha": "e577c53",
+    "prompt_hash": "sha256:e2655640140a"
   },
   "plan": {
     "version": 1,
     "subquestions": [
-      "What is the exact defined value of the speed of light in vacuum (m/s) according to SI definitions?"
+      "What is the exact defined value of the speed of light in vacuum (c) expressed in metres per second?"
     ],
     "replans": 0
   },
@@ -27,7 +27,7 @@
       "i": 1,
       "node": "plan",
       "plan_version": 0,
-      "ts_offset_ms": 1432.6779580005677,
+      "ts_offset_ms": 1263.1565420006154,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -37,13 +37,27 @@
       "i": 2,
       "node": "act",
       "plan_version": 1,
-      "ts_offset_ms": 3123.391790999449,
+      "ts_offset_ms": 2885.6654580004033,
       "tool_calls": [
         {
-          "call_id": "call_Cdvxl4m3wZ15HQ5a5ICbbfzC",
+          "call_id": "call_imat7xV4lwMQC9Llx5A7Dc8v",
           "name": "web_search",
           "args": {
-            "query": "SI definition speed of light exact value 299 792 458 m/s BIPM"
+            "query": "exact defined value of speed of light in vacuum c metres per second 299 792 458 definition"
+          }
+        },
+        {
+          "call_id": "call_us3dZHTZKAMgiSNAukOu9YFs",
+          "name": "web_search",
+          "args": {
+            "query": "BIPM definition of metre speed of light exact 299792458 m/s"
+          }
+        },
+        {
+          "call_id": "call_yFP4KnB0qK3OF56Vokdpw1rC",
+          "name": "web_search",
+          "args": {
+            "query": "SI exact value of speed of light in vacuum c 299 792 458 m/s"
           }
         }
       ],
@@ -55,26 +69,66 @@
       "i": 3,
       "node": "observe",
       "plan_version": 1,
-      "ts_offset_ms": 7427.243041005568,
+      "ts_offset_ms": 6363.939958000628,
       "tool_calls": [],
       "observations": [
         {
-          "call_id": "call_Cdvxl4m3wZ15HQ5a5ICbbfzC",
+          "call_id": "call_imat7xV4lwMQC9Llx5A7Dc8v",
           "tool": "web_search",
           "args": {
-            "query": "SI definition speed of light exact value 299 792 458 m/s BIPM"
+            "query": "exact defined value of speed of light in vacuum c metres per second 299 792 458 definition"
           },
           "ok": true,
-          "content": "Summary: The exact value of the speed of light in SI units is 299,792,458 meters per second. This value is defined by fixing the meter's length based on the speed of light. The speed of light is a fundamental constant in physics.\n\n[1] Why is the speed of light a random finite number?\n    https://wtamu.edu/~cbaird/sq/2024/02/07/why-is-the-speed-of-light-a-random-finite-number\n    If you instead define speed in terms of rapidity, then all speeds are possible. However, this statement could be misleading. A rapidity value approaching infinity is equivalent to a traditional speed approaching c = 299,792,458 m/s. In other words, the rapidity being allowed to have any value between zero and infinity is equivalent to the traditional speed being allowed to have any value between zero and c = 299,792,458 m/s. Using the rapidity does not magically make the universal speed limit [...] of speed, the fundamental nature of space and time requires there to be an absolute, universal speed limit at exactly c = 299,792,458 m/s. [...] The first thing to note is that the speed of light in vacuum only has the value of exactly 299,792,458 if you are using meters to measure lengths and seconds to measure time (using the post-1983 definition of the meter). If you instead use miles to measure lengths and hours to measure time, the speed of light in vacuum is approximately 670,616,629 mph. If you instead use miles per second, it is approximately 186,282 mi/s.\n\n[2] This Is How the Speed of Light Is Calculated - Instagram\n    https://www.instagram.com/reel/DHeSspYKcs5?hl=en\n    299,792,458 m/s, and the meter is based on how far light travels in 1/299,792,458 of a second.\nWhy? Because light in a vacuum always travels at the same speed, making it a perfect natural constant to base other measurements on. [...] 4. Final Thought 💭\nFrom planetary motions to high-tech lasers, scientists have used clever experiments and cosmic timing to calculate the speed of light—a number that shapes all of modern physics. 🌌✨\n#SpeedOfLight #PhysicsExplained #QuranAndScience #FizeauExperiment #LightSpeed\". \" name=\"description\"> 299,792,458 m/s, and the meter is based on how far light travels in 1/299,792,458 of a second. [...] 4. Final Thought 💭\nFrom planetary motions to high-tech lasers, scientists have used clever experiments and cosmic timing to calculate the speed of light—a number that shapes all of modern physics. 🌌✨\n#SpeedOfLight #PhysicsExplained #QuranAndScience #FizeauExperiment #LightSpeed\"\" property=\"og:title\"> 299,792,458 m/s, and the meter is based on how far light travels in 1/299,792,458 of a second.\n\n[3] Why is the speed of light defined as 299792458 m/s?\n    https://physics.stackexchange.com/questions/9314/why-is-the-speed-of-light-defined-as-299792458-m-s\n    2  \\begingroup One meter is just defined in such a way that the speed of light in SI is totally accurately known, 299 792 458. Now, with this well-defined meter (assuming that you are OK with the definition of 1 second and you can reconstruct it), one may measure distances. The question is how accurately we may measure distances in terms of 1 meter as it is currently defined. The accuracy is amazingly good because when we switched to the new definition, the accuracy of c was already good - [...] Because the speed of light is so fundamental - adult physicists use units in which c=1, anyway - physicists decided in the 1980s to redefine the units so that both 1 meter and 1 second use the same type of electromagnetic wave to be defined. 1 meter was defined as 1/299,792,458 of light seconds which, once again, agreed with the previous definition based on two different electromagnetic waves within the accuracy. [...] The advantage is that the speed of light is known to be accurately, by definition, today. Up to the inconvenient numerical factor of 299,792,458 - which is otherwise convenient to communicate with ordinary and not so ordinary people, especially those who have been trained to use meters and seconds\n\n[truncated: 2,914 of 6,912 chars]",
+          "content": "Summary: The speed of light in vacuum is exactly 299,792,458 m/s, as defined by the International System of Units (SI) since 1983. This exact value is used to define the metre, which is the distance light travels in vacuum in 1/299,792,458 of a second. This definition ensures that the speed of light is a constant and does not vary based on experimental measurements.\n\n[1] Speed of light - Wikipedia\n    https://en.wikipedia.org/wiki/Speed_of_light\n    The speed of light is the speed of electromagnetic waves. Light travels at slower speed inside materials like glass or water; its highest speed is in a vacuum. The speed of light in vacuum is a universal physical constant denoted c (in ISO and IEC standards {\\displaystyle c_{0}}), exactly equal to 299792458 m⋅s−1. It is exact because, by international agreement, a metre is defined as the length of the path travelled by light in vacuum during a time interval of 1⁄299792458 second. The value [...] The constant c is defined in the International System of Units (SI) as exactly 299792458 m/s. This fixed value is used to define the metre as exactly the distance that light travels in vacuum in 1⁄299792458 of a second. The second is, in turn, defined to be the length of time occupied by 9192631770 cycles of the radiation emitted by a caesium-133 atom in a transition between two specified energy states. By using the fixed value of c and an accurate measurement of the second, the value for the [...] As a result of this definition, the value of the speed of light in vacuum is exactly 299792458 m/s and has become a defined constant in the SI system of units. Improved experimental techniques that, prior to 1983, would have measured the speed of light no longer affect the known value of the speed of light in SI units, but instead allow a more precise realization of the metre by more accurately measuring the wavelength of krypton-86 and other light sources.\n\n[2] speed of light – Metric System\n    https://metricsystem.net/si/defining-constants/speed-of-light\n    |  |  |  |\n --- \n| Name | Symbol | Base units |\n| speed of light in vacuum | c | m s-1 |\n| The speed of light in vacuum, symbol c, is a fundamental physical constant. It is the speed at which all electromagnetic radiation travels in vacuum.     The numerical value of the speed of light in vacuum, symbol c, is defined to be exactly 299 792 458 when expressed in the unit metre per second, m s−1. |\n|\n\n### Relativity [...] ### Relativity\n\nThe speed of light in vacuum is constant, regardless of the motion of the source or the inertial reference frame of the observer.\n\n### Speed\n\nThe speed of light in vacuum, c, forms the basis for the definition of the unit of speed, the metre per second.\n\nThe fixed numerical value of the speed of light in vacuum, c, is defined exactly:\n\nc \\mspace{4mu} = 299 \\mspace{4mu} 792 \\mspace{4mu} 458 \\ \\text{m} \\ \\text{s}^{-1} [...] Inverting this relation gives an exact expression for the metre per second in terms of the speed of light in vacuum, c :\n\n1 \\mspace{4mu} \\text{m} \\mspace{4mu} \\text{s}^{-1} \\mspace{4mu} = \\dfrac{1}{299 \\mspace{4mu} 792 \\mspace{4mu} 458} \\mspace{4mu} c\\\\  \n\n### Length or distance\n\nThe speed of light in vacuum, c, together with the hyperfine transition frequency of the caesium 133 atom, ΔνCs, forms the basis for the definition of the unit of length, the metre.\n\n[3] How Fast Is the Speed of Light, and How Was It First Measured?\n    https://physicsfundamentals.org/blog/speed-of-light\n    The speed of light in a vacuum is exactly c = 299,792,458 m/s. This is not a measured approximation — since 1983, the General Conference on Weights and Measures fixed c at this exact value and redefined the metre accordingly. One metre is now defined as the distance light travels in exactly 1/299,792,458 of a second. [...] What is the speed of light in m/s?\n\nThe speed of light in a vacuum is exactly c = 299,792,458 m/s — not an approximation, but a defined value. Since 1983, the metre has been defined so that c\n\n[truncated: 2,845 of 6,844 chars]",
           "error": null,
-          "latency_ms": 4302.506958003505,
-          "raw_chars": 6912,
+          "latency_ms": 2554.5703329999014,
+          "raw_chars": 6844,
           "truncated": true,
           "source_ids": [
             "S1",
             "S2",
             "S3",
             "S4",
+            "S5"
+          ]
+        },
+        {
+          "call_id": "call_us3dZHTZKAMgiSNAukOu9YFs",
+          "tool": "web_search",
+          "args": {
+            "query": "BIPM definition of metre speed of light exact 299792458 m/s"
+          },
+          "ok": true,
+          "content": "Summary: The BIPM defines the metre as the length of the path travelled by light in vacuum during a time interval of 1/299 792 458 of a second, which implies the exact relation c = 299 792 458 m/s. This definition was adopted in 1983 by the General Conference on Weights and Measures, fixing the speed of light in a vacuum at exactly 299 792 458 m/s. This exact value is used to define the metre, making it a fundamental constant in the International System of Units (SI).\n\n[1] - metre - BIPM\n    https://www.bipm.org/en/si-base-units/metre\n    - metre\n\n## SI unit - metre\n\n# SI base unit: metre (m)\n\nThe metre, symbol m, is the SI unit of length. It is defined by taking the fixed numerical value of the speed of light in vacuum c to be 299 792 458 when expressed in the unit m s–1, where the second is defined in terms of the caesium frequency ΔνCs.\n\nThis definition implies the exact relation c = 299 792 458 m s–1. Inverting this relation gives an exact expression for the metre in terms of the defining constants c and ΔνCs: [...] The effect of this definition is that one metre is the length of the path travelled by light in vacuum during a time interval with duration of 1/299 792 458 of a second.\n\n## SI units - See also\n\n### See:\n\nPractical realization of the definitions of the SI units \n\nSI Brochure - Appendix 2\n\nHistorical evolution of the SI units\n\nSI Brochure - excerpts from Appendix 4\n\n## Menu Display\n\n[2] Speed of light - Wikipedia\n    https://en.wikipedia.org/wiki/Speed_of_light\n    The speed of light is the speed of electromagnetic waves. Light travels at slower speed inside materials like glass or water; its highest speed is in a vacuum. The speed of light in vacuum is a universal physical constant denoted c (in ISO and IEC standards {\\displaystyle c_{0}}), exactly equal to 299792458 m⋅s−1. It is exact because, by international agreement, a metre is defined as the length of the path travelled by light in vacuum during a time interval of 1⁄299792458 second. The value [...] The constant c is defined in the International System of Units (SI) as exactly 299792458 m/s. This fixed value is used to define the metre as exactly the distance that light travels in vacuum in 1⁄299792458 of a second. The second is, in turn, defined to be the length of time occupied by 9192631770 cycles of the radiation emitted by a caesium-133 atom in a transition between two specified energy states. By using the fixed value of c and an accurate measurement of the second, the value for the [...] In 1983 the metre was defined as \"the length of the path travelled by light in vacuum during a time interval of 1⁄299792458 of a second\", fixing the value of the speed of light at 299792458 m/s by definition, as described below. Consequently, accurate measurements of the speed of light yield an accurate realization of the metre rather than an accurate value of c.\n\n### Astronomical measurements\n\n[3] How Fast Is the Speed of Light, and How Was It First Measured?\n    https://physicsfundamentals.org/blog/speed-of-light\n    The speed of light in a vacuum is exactly c = 299,792,458 m/s. This is not a measured approximation — since 1983, the General Conference on Weights and Measures fixed c at this exact value and redefined the metre accordingly. One metre is now defined as the distance light travels in exactly 1/299,792,458 of a second. [...] What is the speed of light in m/s?\n\nThe speed of light in a vacuum is exactly c = 299,792,458 m/s — not an approximation, but a defined value. Since 1983, the metre has been defined so that c is precisely this number. For calculations, c ≈ 3 × 10⁸ m/s (accurate to 0.07%) is sufficient for most physics problems at GCSE, A-Level, or AP Physics level.\n\n What is the speed of light in km/h? [...] The speed of light is c = 299,792,458 m/s — exactly, not approximately. In round numbers: 3 × 10⁸ m/s, or about 300,000 km/s. In imperial units that is about 186,282 miles per second, or roughly 670.6 million miles per hour (mph). Since 1983\n\n[truncated: 3,363 of 7,359 chars]",
+          "error": null,
+          "latency_ms": 2650.060124999982,
+          "raw_chars": 7359,
+          "truncated": true,
+          "source_ids": [
+            "S6",
+            "S1",
+            "S3",
+            "S5",
+            "S7"
+          ]
+        },
+        {
+          "call_id": "call_yFP4KnB0qK3OF56Vokdpw1rC",
+          "tool": "web_search",
+          "args": {
+            "query": "SI exact value of speed of light in vacuum c 299 792 458 m/s"
+          },
+          "ok": true,
+          "content": "Summary: The SI exact value of the speed of light in vacuum c is defined as exactly 299,792,458 m/s. This fixed value is used to define the metre as the distance that light travels in vacuum in 1/299,792,458 of a second. This definition was adopted at the 1983 Conference Generale des Poids et Mesures, making the speed of light in vacuum a defined constant in the SI system of units.\n\n[1] Speed of light - Wikipedia\n    https://en.wikipedia.org/wiki/Speed_of_light\n    The constant c is defined in the International System of Units (SI) as exactly 299792458 m/s. This fixed value is used to define the metre as exactly the distance that light travels in vacuum in 1⁄299792458 of a second. The second is, in turn, defined to be the length of time occupied by 9192631770 cycles of the radiation emitted by a caesium-133 atom in a transition between two specified energy states. By using the fixed value of c and an accurate measurement of the second, the value for the [...] As a result of this definition, the value of the speed of light in vacuum is exactly 299792458 m/s and has become a defined constant in the SI system of units. Improved experimental techniques that, prior to 1983, would have measured the speed of light no longer affect the known value of the speed of light in SI units, but instead allow a more precise realization of the metre by more accurately measuring the wavelength of krypton-86 and other light sources. [...] The speed of light is the speed of electromagnetic waves. Light travels at slower speed inside materials like glass or water; its highest speed is in a vacuum. The speed of light in vacuum is a universal physical constant denoted c (in ISO and IEC standards {\\displaystyle c_{0}}), exactly equal to 299792458 m⋅s−1. It is exact because, by international agreement, a metre is defined as the length of the path travelled by light in vacuum during a time interval of 1⁄299792458 second. The value\n\n[2] Speed of light\n    https://byjus.com/physics/value-of-c\n    The speed of light is defined as the speed with which a light photon travels in the vacuum. It is denoted by the alphabet c and measured using SI unit m/s. The value of velocity of light or value of c is a constant at any part of the universe. This physical constant has multiple applications at various disciplines of physics.\n\n## Speed of Light\n\nThe velocity of the light in the vacuum or air:\n\nThe speed of light c = 299792458 m/s ≅ 3 × 108 m/s. [...] Yes, the value of velocity of light is constant.\n\nQ4\n\n### What is the velocity of the light in the vacuum?\n\nVelocity of the light in the vacuum is = 299792458 m/s ≅ 3 × 108 m/s\n\nQ5\n\n### What is the speed of light in air?\n\nThe speed of light in air is 299792 km/s.\n\nTest Your Knowledge On Value Of C!\n\nQ5\n\nQuiz Image\n\nPut your understanding of this concept to test by answering a few MCQs. Click ‘Start Quiz’ to begin! [...] The velocity of light can be expressed in terms of mph or km/s. That is-\n\n The speed of light in mph 186,000 miles per hour.\n The speed of light in air is 299792 km/s.\n\nHope you have learned the value of c or the value of the speed of light in vacuum along with units of velocity.\n\nPhysics Related Topics:\n\n|  |\n\n| Mu Naught Value |\n| Epsilon Naught Value |\n| Value Of Electron |\n| Value Of Planck’s Constant |\n\n[3] Is The Speed of Light Constant?\n    https://www.desy.de/user/projects/Physics/Relativity/SpeedOfLight/speed_of_light.html\n    At the 1983 Conference Generale des Poids et Mesures, the following SI (Systeme International) definition of the metre was adopted:\n\n> The metre is the length of the path travelled by light in vacuum during a time interval of 1/299 792 458 of a second.\n\nThis defines the speed of light in vacuum to be exactly 299,792,458 m/s.  This provides a very short answer to the question \"Is c constant\": Yes, c is constant by definition! [...] would then take c to be the upper limit of the speed of light in vacuum so that we can continue to ask whether c is constant. [...] If\n\n[truncated: 3,279 of 7,271 chars]",
+          "error": null,
+          "latency_ms": 3474.9969160002365,
+          "raw_chars": 7271,
+          "truncated": true,
+          "source_ids": [
+            "S1",
+            "S8",
+            "S9",
+            "S10",
             "S5"
           ]
         }
@@ -86,7 +140,7 @@
       "i": 4,
       "node": "finalize",
       "plan_version": 1,
-      "ts_offset_ms": 9168.62941600266,
+      "ts_offset_ms": 7943.030500000532,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -96,51 +150,93 @@
   "sources": [
     {
       "sid": "S1",
-      "url": "https://wtamu.edu/~cbaird/sq/2024/02/07/why-is-the-speed-of-light-a-random-finite-number",
-      "title": "Why is the speed of light a random finite number?",
-      "snippet": "If you instead define speed in terms of rapidity, then all speeds are possible. However, this statement could be misleading. A rapidity value approaching infinity is equivalent to a traditional speed approaching c = 299,792,458 m/s. In other words, the rapidity being allowed to have any value betwee",
+      "url": "https://en.wikipedia.org/wiki/Speed_of_light",
+      "title": "Speed of light - Wikipedia",
+      "snippet": "The speed of light is the speed of electromagnetic waves. Light travels at slower speed inside materials like glass or water; its highest speed is in a vacuum. The speed of light in vacuum is a universal physical constant denoted c (in ISO and IEC standards {\\displaystyle c_{0}}), exactly equal to 2",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S2",
-      "url": "https://www.instagram.com/reel/DHeSspYKcs5?hl=en",
-      "title": "This Is How the Speed of Light Is Calculated - Instagram",
-      "snippet": "299,792,458 m/s, and the meter is based on how far light travels in 1/299,792,458 of a second.\nWhy? Because light in a vacuum always travels at the same speed, making it a perfect natural constant to base other measurements on. [...] 4. Final Thought 💭\nFrom planetary motions to high-tech lasers, sci",
+      "url": "https://metricsystem.net/si/defining-constants/speed-of-light",
+      "title": "speed of light – Metric System",
+      "snippet": "|  |  |  |\n --- \n| Name | Symbol | Base units |\n| speed of light in vacuum | c | m s-1 |\n| The speed of light in vacuum, symbol c, is a fundamental physical constant. It is the speed at which all electromagnetic radiation travels in vacuum.     The numerical value of the speed of light in vacuum, sy",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S3",
-      "url": "https://physics.stackexchange.com/questions/9314/why-is-the-speed-of-light-defined-as-299792458-m-s",
-      "title": "Why is the speed of light defined as 299792458 m/s?",
-      "snippet": "2  \\begingroup One meter is just defined in such a way that the speed of light in SI is totally accurately known, 299 792 458. Now, with this well-defined meter (assuming that you are OK with the definition of 1 second and you can reconstruct it), one may measure distances. The question is how accur",
+      "url": "https://physicsfundamentals.org/blog/speed-of-light",
+      "title": "How Fast Is the Speed of Light, and How Was It First Measured?",
+      "snippet": "The speed of light in a vacuum is exactly c = 299,792,458 m/s. This is not a measured approximation — since 1983, the General Conference on Weights and Measures fixed c at this exact value and redefined the metre accordingly. One metre is now defined as the distance light travels in exactly 1/299,79",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S4",
-      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5286973",
-      "title": "The Continuity of the Meter: The Redefinition of the Meter and the Speed Of Visible Light",
-      "snippet": "that there is an advantage, notably for astronomy and geodesy, in maintaining unchanged the value of the speed of light recommended in 1975 by the 15th CGPM in its Resolution 2 (_c_ =299 792 458 m/s), [...] _recommends_ the use of the resulting value for the speed of propagation of electromagnetic w",
+      "url": "https://wtamu.edu/~cbaird/sq/2024/02/07/why-is-the-speed-of-light-a-random-finite-number",
+      "title": "Why is the speed of light a random finite number? | Science Questions with Surprising Answers",
+      "snippet": "The first thing to note is that the speed of light in vacuum only has the value of exactly 299,792,458 if you are using meters to measure lengths and seconds to measure time (using the post-1983 definition of the meter). If you instead use miles to measure lengths and hours to measure time, the spee",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S5",
-      "url": "https://en.wikipedia.org/wiki/Speed_of_light",
-      "title": "Speed of light - Wikipedia",
-      "snippet": "second. The value 299,792,458 metres per second is approximately 1 billion kilometres per hour; 700 million miles per hour. For other approximations of c, valid for various units and size scales see the infobox. The shorter form, speed of light, means speed of light in vacuum in any context where th",
+      "url": "https://www.youtube.com/watch?v=ZbGxXyqlhbU",
+      "title": "Why is the speed of light 299,792,458 m/s? (and not 300,000 km/s)",
+      "snippet": "[3:54] vacuum is a fundamental constant speed of light in vacuum does not depend upon any reference frames which is awesome which means anybody who does this\n[4:02] experiment will always get the same value and therefore tomorrow if we lost our meter sticks anyone can refine recreate our meter stick",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S6",
+      "url": "https://www.bipm.org/en/si-base-units/metre",
+      "title": "- metre - BIPM",
+      "snippet": "- metre\n\n## SI unit - metre\n\n# SI base unit: metre (m)\n\nThe metre, symbol m, is the SI unit of length. It is defined by taking the fixed numerical value of the speed of light in vacuum c to be 299 792 458 when expressed in the unit m s–1, where the second is defined in terms of the caesium frequency",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S7",
+      "url": "https://www.bipm.org/documents/20126/28426656/working-document-ID-7006/ffd4e30b-2bad-f401-2910-551b65b179ee",
+      "title": "1 Introduction",
+      "snippet": "a significantly smaller uncertainty. 2.4.2 The SI unit of length, the metre The metre, symbol m, is the SI unit of length; its magnitude is set by fixing the numerical value of the speed of light in vacuum to be exactly 299 792 458 when it is expressed in the SI unit for speed m s1. Thus we have th",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S8",
+      "url": "https://byjus.com/physics/value-of-c",
+      "title": "Speed of light",
+      "snippet": "The speed of light is defined as the speed with which a light photon travels in the vacuum. It is denoted by the alphabet c and measured using SI unit m/s. The value of velocity of light or value of c is a constant at any part of the universe. This physical constant has multiple applications at vari",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S9",
+      "url": "https://www.desy.de/user/projects/Physics/Relativity/SpeedOfLight/speed_of_light.html",
+      "title": "Is The Speed of Light Constant?",
+      "snippet": "At the 1983 Conference Generale des Poids et Mesures, the following SI (Systeme International) definition of the metre was adopted:\n\n> The metre is the length of the path travelled by light in vacuum during a time interval of 1/299 792 458 of a second.\n\nThis defines the speed of light in vacuum to b",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S10",
+      "url": "https://math.ucr.edu/home/baez/physics/Relativity/SpeedOfLight/speed_of_light.html",
+      "title": "Is The Speed of Light Everywhere the Same?",
+      "snippet": "> The metre is the length of the path travelled by light in vacuum during a time interval of 1/299,792,458 of a second.\n\nThis defines the speed of light in vacuum to be exactly 299,792,458 m/s.  Unfortunately, it doesn't mention anything about inertial frames, but you can consider a measurement in a",
       "tool": "web_search",
       "first_seen_step": 1
     }
   ],
-  "answer": "The exact defined speed of light in a vacuum in SI units is **299,792,458 metres per second** [S5]. This is the defined value used in the SI system (with the metre defined such that the speed of light takes this exact value), but the evidence provided does not include the full SI definition wording beyond this stated value [S5].",
+  "answer": "The exact defined value of the speed of light in a vacuum is **299,792,458 metres per second (m/s)** [S1][S2][S6].",
   "citations": [
-    "S5"
+    "S1",
+    "S2",
+    "S6"
   ],
   "coverage": {
-    "What is the exact defined value of the speed of light in vacuum (m/s) according to SI definitions?": false
+    "What is the exact defined value of the speed of light in vacuum (c) expressed in metres per second?": false
   },
   "outcome": {
     "status": "completed",
@@ -156,65 +252,65 @@
         "model": "gpt-5.4-nano",
         "input_tokens": 230,
         "cached_tokens": 0,
-        "output_tokens": 58,
+        "output_tokens": 69,
         "reasoning_tokens": 0,
-        "cost_usd": 0.0001185,
-        "latency_ms": 1421.3653750048252,
+        "cost_usd": 0.00013225,
+        "latency_ms": 1250.3859999997076,
         "replayed": false
       },
       {
         "purpose": "act",
         "model": "gpt-5.4-nano",
-        "input_tokens": 802,
+        "input_tokens": 874,
         "cached_tokens": 0,
-        "output_tokens": 35,
+        "output_tokens": 114,
         "reasoning_tokens": 0,
-        "cost_usd": 0.00020415,
-        "latency_ms": 1686.7061669909162,
+        "cost_usd": 0.0003173,
+        "latency_ms": 1619.393083000432,
         "replayed": false
       },
       {
         "purpose": "finalize",
         "model": "gpt-5.4-nano",
-        "input_tokens": 465,
+        "input_tokens": 804,
         "cached_tokens": 0,
-        "output_tokens": 77,
+        "output_tokens": 40,
         "reasoning_tokens": 0,
-        "cost_usd": 0.00018925,
-        "latency_ms": 1736.8496669951128,
+        "cost_usd": 0.0002108,
+        "latency_ms": 1575.5189159999645,
         "replayed": false
       }
     ],
     "totals": {
-      "input_tokens": 1497,
+      "input_tokens": 1908,
       "cached_tokens": 0,
-      "output_tokens": 170,
+      "output_tokens": 223,
       "reasoning_tokens": 0,
-      "cost_usd": 0.0005119,
+      "cost_usd": 0.00066035,
       "cache_hit_rate": 0.0
     },
     "by_purpose": {
       "plan": {
         "calls": 1,
-        "cost_usd": 0.0001185,
-        "output_tokens": 58
+        "cost_usd": 0.00013225,
+        "output_tokens": 69
       },
       "act": {
         "calls": 1,
-        "cost_usd": 0.00020415,
-        "output_tokens": 35
+        "cost_usd": 0.0003173,
+        "output_tokens": 114
       },
       "finalize": {
         "calls": 1,
-        "cost_usd": 0.00018925,
-        "output_tokens": 77
+        "cost_usd": 0.0002108,
+        "output_tokens": 40
       }
     },
-    "search_credits": 1,
+    "search_credits": 3,
     "steps": 1
   },
   "timings_ms": {
-    "total": 9164.688042001217
+    "total": 7939.488042000448
   },
   "compaction": {
     "count": 0,

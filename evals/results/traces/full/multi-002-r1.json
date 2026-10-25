@@ -1,7 +1,7 @@
 {
   "schema_version": "1",
-  "run_id": "cf89ab8ba765",
-  "ts": "2026-08-08T17:57:54+00:00",
+  "run_id": "06a389ce58a7",
+  "ts": "2026-10-25T08:46:26+00:00",
   "question": "How many years passed between the publication of 'Attention Is All You Need' and the 2024 Nobel Prize in Physics being awarded for neural network research?",
   "variant": "full",
   "config": {
@@ -12,14 +12,14 @@
     "max_run_cost_usd": 0.05,
     "finalize_reserve_usd": 0.008,
     "compact_threshold_tokens": 12000,
-    "git_sha": "ffb33e3",
-    "prompt_hash": "sha256:512e8e5d8eaa"
+    "git_sha": "e577c53",
+    "prompt_hash": "sha256:e2655640140a"
   },
   "plan": {
     "version": 1,
     "subquestions": [
-      "In what year was the paper \"Attention Is All You Need\" published?",
-      "In what year was the 2024 Nobel Prize in Physics awarded for neural network research?"
+      "What year was the paper 'Attention Is All You Need' published?",
+      "In what year was the Nobel Prize in Physics awarded for research on neural networks?"
     ],
     "replans": 0
   },
@@ -28,7 +28,7 @@
       "i": 1,
       "node": "plan",
       "plan_version": 0,
-      "ts_offset_ms": 1830.8700420020614,
+      "ts_offset_ms": 1733.940375000202,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -38,20 +38,34 @@
       "i": 2,
       "node": "act",
       "plan_version": 1,
-      "ts_offset_ms": 3372.814542002743,
+      "ts_offset_ms": 3481.512625000505,
       "tool_calls": [
         {
-          "call_id": "call_F9DrZI3nfDP2SS3GhLX5g0ZH",
+          "call_id": "call_5SvOqIVshArtQmnW24MbpCcj",
           "name": "web_search",
           "args": {
-            "query": "Attention Is All You Need publication year 2017 paper"
+            "query": "Attention Is All You Need paper published year 2017 Vaswani Shazeer Parmar Uszkoreit Jones Gomez Kaiser Polosukhin"
           }
         },
         {
-          "call_id": "call_5mWrSQCM7xUMNpGdwHujGPyi",
+          "call_id": "call_yPTvpPgPWFE1MZVBd5JQ9uf7",
           "name": "web_search",
           "args": {
-            "query": "2024 Nobel Prize in Physics awarded for neural network research year awarded neural networks"
+            "query": "2024 Nobel Prize in Physics awarded for neural networks year neural network research"
+          }
+        },
+        {
+          "call_id": "call_f7GI5cgqAEEc2ymfv60rzJbX",
+          "name": "web_search",
+          "args": {
+            "query": "2024 Nobel Prize in Physics press release neural networks"
+          }
+        },
+        {
+          "call_id": "call_KXAW9Vdvzsne5dfdTvNCc7FO",
+          "name": "web_search",
+          "args": {
+            "query": "Nobel Prize in Physics 2024 awarded year 2024 neural network"
           }
         }
       ],
@@ -63,20 +77,20 @@
       "i": 3,
       "node": "observe",
       "plan_version": 1,
-      "ts_offset_ms": 6641.244500002358,
+      "ts_offset_ms": 7368.333207999967,
       "tool_calls": [],
       "observations": [
         {
-          "call_id": "call_F9DrZI3nfDP2SS3GhLX5g0ZH",
+          "call_id": "call_5SvOqIVshArtQmnW24MbpCcj",
           "tool": "web_search",
           "args": {
-            "query": "Attention Is All You Need publication year 2017 paper"
+            "query": "Attention Is All You Need paper published year 2017 Vaswani Shazeer Parmar Uszkoreit Jones Gomez Kaiser Polosukhin"
           },
           "ok": true,
-          "content": "Summary: \"Attention Is All You Need\" was published in 2017 by Google researchers. It introduced the Transformer architecture. This architecture uses attention mechanisms instead of recurrence and convolutions.\n\n[1] Attention Is All You Need - Wikipedia\n    https://en.wikipedia.org/wiki/Attention_Is_All_You_Need\n    \"Attention Is All You Need\" is a 2017 research paper in machine learning authored by eight scientists and engineers working at Google. The paper introduced a new deep learning architecture known as the transformer \"Transformer (deep learning)\"), based on the attention mechanism proposed in 2014 by Bahdanau et al. The transformer approach it describes has become the main architecture of a wide variety of artificial intelligence systems, including large language models. At the time, the focus of [...] On 2017-06-12, the original (100M-parameter) encoder–decoder transformer model was published in the \"Attention is all you need\" paper. At the time, the focus of the research was on improving seq2seq for machine translation, by removing its recurrence to process all tokens in parallel, but preserving its dot-product attention mechanism to keep its text processing performance. This led to the introduction of a multi-head attention model that was easier to parallelize due to the use of independent [...] Appearance\n\nFrom Wikipedia, the free encyclopedia\n\n2017 research paper by Google\n\n| Attention Is All You Need |\n\n| An illustration of main components of the transformer model from the paper |\n| Project type | Artificial intelligence research |\n| Sponsors | Google |\n| Objective | Provide a novel approach to train AI |\n| Duration | June 12, 2017; 9 years ago (2017-06-12) – |\n| Website | proceedings.neurips.cc/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html |\n\n[2] Attention Is All You Need Explained - The Paper That Changed AI - Parseur\n    https://parseur.com/blog/attention-is-all-you-need\n    In 2017, a team of eight researchers at Google published a research paper with a bold title: \"Attention Is All You Need.\" At the time, it sounded almost provocative. Most AI systems still relied on older approaches that processed language step by step, one word at a time.\n\nBut this paper introduced something entirely new: the Transformer architecture. [...] The 2017 paper Attention Is All You Need introduced the Transformer architecture, the breakthrough behind modern AI systems like ChatGPT, Claude, and Gemini. By replacing slow sequential processing with attention mechanisms, Transformers made AI faster, more parallelizable, and far better at understanding language, images, and documents.\n\nKey Takeaways: [...] ## The Foundation of Modern AI\n\nWhen the Google researchers published Attention Is All You Need in 2017, they introduced a new architecture for machine translation research. Today, it powers nearly every major AI system we use.\n\nTransformers became the foundation for language models that write and reason, vision models that analyze images, speech systems that transcribe audio, document AI that extracts structured data, and multimodal AI systems that combine text, images, and audio.\n\n[3] Attention Is All You Need, explained like you're smart and busy - Medium\n    https://medium.com/@adnanmasood/attention-is-all-you-need-explained-like-youre-smart-and-busy-2a3d7436144f\n    Sitemap\n\nOpen in app\n\nSign up\n\nSign in\n\n is the 2017 NeurIPS paper from Google Brain/Google Research that introduced the Transformer, a sequence-to-sequence architecture built entirely on attention, eliminating recurrence and convolutions.\n\n[4] [PDF] Attention is All you Need - NIPS\n    https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf\n    Yoon Kim, Carl Denton, Luong Hoang, and Alexander M. Rush. Structured attention networks.\nIn International Conference on Learning Representations, 2017.\n Diederik Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In ICLR, 2015.\n Oleksii Kuchaiev\n\n[truncated: 2,225 of 6,223 chars]",
+          "content": "Summary: The \"Attention Is All You Need\" paper was published in 2017 and introduced the Transformer architecture, a novel deep learning model based solely on attention mechanisms. The paper, authored by Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin, was presented at the 31st Conference on Neural Information Processing Systems (NIPS) and has since become foundational in the field of natural language processing and machine learning. The Transformer architecture has been instrumental in advancing the state-of-the-art in translation and other sequence-to-sequence tasks.\n\n[1] Attention Is All You Need - Wikipedia\n    https://en.wikipedia.org/wiki/Attention_Is_All_You_Need\n    \"Attention Is All You Need\" is a 2017 research paper on machine learning authored by eight scientists and engineers working at Google. The paper introduced a new deep learning architecture known as the transformer \"Transformer (deep learning)\"), based on the attention mechanism \"Attention (machine learning)\") proposed in 2014 by Bahdanau et al. The transformer approach it describes has become the main architecture of a wide variety of artificial intelligence systems, including large language [...] 1. 1 2 3 4 5 6 Vaswani, Ashish; Shazeer, Noam; Parmar, Niki; Uszkoreit, Jakob; Jones, Llion; Gomez, Aidan N; Kaiser, Łukasz; Polosukhin, Illia (December 2017). \"Attention is All you Need\" (PDF). In I. Guyon and U. Von Luxburg and S. Bengio and H. Wallach and R. Fergus and S. Vishwanathan and R. Garnett (ed.). 31st Conference on Neural Information Processing Systems (NIPS). Advances in Neural Information Processing Systems. Vol. 30. Curran Associates, Inc. arXiv \"ArXiv (identifier)\"):1706.03762. [...] 41. ↑ Kaiser, Lukasz; Gomez, Aidan N.; Shazeer, Noam; Vaswani, Ashish; Parmar, Niki; Jones, Llion; Uszkoreit, Jakob (16 June 2017). \"One Model To Learn Them All\". arXiv \"ArXiv (identifier)\"):1706.05137v1 [cs.LG].\n42. ↑ Liu, Zhuang; Mao, Hanzi; Wu, Chao-Yuan; Feichtenhofer, Christoph; Darrell, Trevor; Xie, Saining (2022). A ConvNet for the 2020s. Conference on Computer Vision and Pattern Recognition (CVPR). pp. 11976–11986.\n\n[2] Attention is All you Need\n    https://papers.nips.cc/paper/7181-attention-is-all-you-need\n    # Attention is All you Need\n\nAshish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, Illia Polosukhin\n\nAdvances in Neural Information Processing Systems 30 (NIPS 2017)\n\nBibtex Metadata Paper Reviews\n\n## Abstract [...] The dominant sequence transduction models are based on complex recurrent orconvolutional neural networks in an encoder and decoder configuration. The best performing such models also connect the encoder and decoder through an attentionm echanisms. We propose a novel, simple network architecture based solely onan attention mechanism, dispensing with recurrence and convolutions entirely.Experiments on two machine translation tasks show these models to be superiorin quality while being more\n\n[3] Attention Is All You Need | alphaXiv\n    https://www.alphaxiv.org/abs/1706.03762\n    AbstractPaper\n\nSubmitted 02 Aug 2023\n\n# Attention Is All You Need\n\nSpotlight at NeurIPS 2017\n\nDeepMindGoogle ResearchUniversity of Toronto\nAshish VaswaniAshish VaswaniNoam ShazeerNoam ShazeerNiki ParmarNiki ParmarJakob UszkoreitJakob UszkoreitLlion JonesLlion JonesAidan N. GomezAidan N. GomezLukasz KaiserŁukasz KaiserIllia PolosukhinIllia Polosukhin\n\n## Abstract [...] ### # The Dot Product Is Scaffolding\n\n谢苹果\n\n谢苹果9 months ago\n\n我用自己的话总结了一下：transformer，从NLP领域开启的生成式AI的革命。它的核心就是注意力，最知名的就是论文中的注意力公式。运用注意力机制，建立自然语言的句子/段落的全局视野。获取某token和任意一个token的关联的时间复杂度永远是O（1）。该论文一开始是作为seq2seq，处理自然语言的。它的架构是编码器-解码器架构，然后，采用多头注意力机制，其实就是一个注意力机制做n次，理解的更深更多角度。同时它支持并行。相比于RNN的串行，它的速度并行效率极佳。相比于CNN的视野局限，它直接拥有全局视野，上帝视角。于是，革命开始了。在2017年。\n\n谢苹果\n\n谢苹果9 months ago\n\n如果只需要一个凭证和自己的IP，通行所有的平台。或者让自己的agent通行所有的平台，那多好呀。\n\nJiada Li\n\nJiada Li11 months ago [...] ## Similar papers\n\nNeural Machine\n\n[truncated: 2,665 of 6,661 chars]",
           "error": null,
-          "latency_ms": 3266.4040840027155,
-          "raw_chars": 6223,
+          "latency_ms": 3884.897040999931,
+          "raw_chars": 6661,
           "truncated": true,
           "source_ids": [
             "S1",
@@ -87,16 +101,16 @@
           ]
         },
         {
-          "call_id": "call_5mWrSQCM7xUMNpGdwHujGPyi",
+          "call_id": "call_yPTvpPgPWFE1MZVBd5JQ9uf7",
           "tool": "web_search",
           "args": {
-            "query": "2024 Nobel Prize in Physics awarded for neural network research year awarded neural networks"
+            "query": "2024 Nobel Prize in Physics awarded for neural networks year neural network research"
           },
           "ok": true,
-          "content": "Summary: The 2024 Nobel Prize in Physics was awarded to John J. Hopfield and Geoffrey E. Hinton for their foundational work in developing artificial neural networks that enable machine learning. Their discoveries laid the groundwork for modern AI technologies.\n\n[1] Press release: The Nobel Prize in Physics 2024\n    https://www.nobelprize.org/prizes/physics/2024/press-release\n    # Nobel Prize\n\n### Enhanced Page Navigation\n\n## Nobel Prize in Physics 2024\n\n## Share this\n\n# Press release\n\nEnglish  \nEnglish (pdf)  \nSwedish  \nSwedish (pdf)\n\nLogo\n\n8 October 2024\n\nThe Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJohn J. Hopfield  \nPrinceton University, NJ, USA\n\nGeoffrey Hinton  \nUniversity of Toronto, Canada\n\n“for foundational discoveries and inventions that enable machine learning with artificial neural networks” [...] ## They trained artificial neural networks using physics\n\nThis year’s two Nobel Laureates in Physics have used tools from physics to develop methods that are the foundation of today’s powerful machine learning. John Hopfield created an associative memory that can store and reconstruct images and other types of patterns in data. Geoffrey Hinton invented a method that can autonomously find properties in data, and so perform tasks such as identifying specific elements in pictures. [...] between nodes with simultaneously high values. This year’s laureates have conducted important work with artificial neural networks from the 1980s onward.\n\n[2] The Nobel Prize in Physics 2024 - Popular science ...\n    https://www.nobelprize.org/prizes/physics/2024/popular-information\n    ### The Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJOHN J. HOPFIELD  \nBorn 1933 in Chicago, IL, USA. PhD 1958 from Cornell University, Ithaca, NY, USA. Professor at Princeton University, NJ, USA.\n\nGEOFFREY HINTON  \nBorn 1947 in London, UK. PhD 1978 from The University of Edinburgh, UK. Professor at University of Toronto, Canada.\n\n“for foundational discoveries and inventions that enable machine learning with artificial neural networks” [...] Because physics has contributed tools for the development of machine learning, it is interesting to see how physics, as a research field, is also benefitting from artificial neural networks. Machine learning has long been used in areas we may be familiar with from previous Nobel Prizes in Physics. These include the use of machine learning to sift through and process the vast amounts of data necessary to discover the Higgs particle. Other applications include reducing noise in measurements of [...] This year’s laureates used tools from physics to construct methods that helped lay the foundation for today’s powerful machine learning. John Hopfield created a structure that can store and reconstruct information. Geoffrey Hinton invented a method that can independently discover properties in data and which has become important for the large artificial neural networks now in use.\n\n## They used physics to find patterns in information\n\nIllustration\n\n[3] Artificial Intelligence awarded two Nobel Prizes for innovations that will shape the future of medicine | npj Digital Medicine\n    https://www.nature.com/articles/s41746-024-01345-9\n    Metrics details\n\nJohn J. Hopfield and Geoffrey E. Hinton were awarded the 2024 Nobel Prize in Physics for developing machine learning technology using artificial neural networks. In Chemistry it was awarded to Demis Hassabis and John M. Jumper for developing an AI algorithm that solved the 50-year protein structure prediction challenge. This highlights AI’s impact on science, medicine and society; however, the winners acknowledge ethical aspects of AI that must be considered. [...] In October 2024, the Nobel Committees in Stockholm announced that the prizes in Physics and Chemistry were awarded to work related to artificial intelligence (AI)1,2. The prize in Physics was awarded to John J. Hopfield and\n\n[truncated: 3,395 of 7,392 chars]",
+          "content": "Summary: The 2024 Nobel Prize in Physics was awarded to John J. Hopfield and Geoffrey E. Hinton for their foundational discoveries and inventions that enable machine learning with artificial neural networks. The sources confirm this specific award and its connection to neural network research.\n\n[1] 2024 - Wikipedia\n    https://en.wikipedia.org/wiki/2024\n    Peace – Nihon Hidankyo, for its efforts to achieve a world free of nuclear weapons and for demonstrating through witness testimony that nuclear weapons must never be used again.(\n   Physics – John J. Hopfield and Geoffrey E. Hinton, for their foundational discoveries and inventions that enable machine learning with artificial neural networks.(\n   Physiology or Medicine – Victor Ambros and Gary Ruvkun, for their discovery of microRNA and its role in post-transcriptional gene regulation.( [...] 299.   ↑\"The Nobel Prize in Physics 2024\". The Nobel Prize. October 8, 2024. Archived from the original on October 8, 2024. Retrieved October 8, 2024.\n300.   ↑\"The Nobel Prize in Physiology or Medicine 2024\". The Nobel Prize. October 7, 2024. Archived from the original on October 7, 2024. Retrieved October 7, 2024. [...] 2024 (MMXXIV) was a leap year starting on Monday of the Gregorian calendar, the 2024th year of the Common Era (CE) and _Anno Domini_ (AD) designations, the 24th year of the 3rd millenniumand the 21st century, and the 5th year of the 2020s decade.\n\nCalendar year\n\n[2] 2024 - Simple English Wikipedia, the free encyclopedia\n    https://simple.wikipedia.org/wiki/2024\n    Image 5\n\nWikimedia Commons has media related to _2024_.\n\n2024 (MMXXIV) was a leap yearstarting on Monday of the Gregorian calendar, the 2024th year of the Common Era (CE) and _Anno Domini_ (AD) designations, the 24th year of the 3rd millennium, the 24th year of the 21st century, and the 5th year of the 2020s decade. [...] 49.   ↑\"Three US service members killed in Jordan drone attack, Biden says\". Al Jazeera. 28 January 2024. Archived from the original on 28 January 2024. Retrieved 28 January 2024.\n50.   ↑\"Imran Khan: Pakistan former PM jailed in state secrets case as election looms\". 2024-01-30. Retrieved 2024-01-30.\n51.   ↑\"Sultan Ibrahim takes oath as 17th Yang di-Pertuan Agong\". _The Star_. 31 January 2024. Retrieved 7 February 2024. [...] 59.   ↑\"'The blood was everywhere': Inside Israel's Flour Massacre in Gaza\". _Al Jazeera_. Retrieved 4 April 2024.\n60.   ↑NATO. \"Sweden officially joins NATO\". _NATO_. Retrieved 2024-07-23.\n61.   ↑\"Voting under way in Portugal general elections amid populist surge\". _Al Jazeera_. Retrieved 12 March 2024.\n62.   ↑\"Haitian PM Ariel Henry Resigns After Jamaica Talks\". _NDTV_. Retrieved 12 March 2024.\n63.   ↑\"Putin wins with 87.3% votes after 99.83% ballots counted\". _Daily Nigerian_. 18 March 2024.\n\n[3] 2024: Facts & Events That Happened in This Year - The Fact Site\n    https://www.thefactsite.com/year/2024\n    The 68th edition of the Eurovision Song Contest took place in Malmö, Sweden, in 2024.\n\nSwitzerland emerged victorious with the song “The Code,” performed by Nemo, who became the first non-binary winner in the contest’s history.\n\n## 2024 In Numbers\n\nLet’s explore the world of numbers! In Roman numerals, 2024 is MMXXIV, and in binary, it’s 11111101000.\n\n### Leap Year [...] ### Sep 24\n\nI call again for an immediate ceasefire in Gaza, the return of the sausages… the hostages.\n\nImage 20: Keir Starmer\n\nKeir Starmer\n\nBritish Politician\n\n## 2024 in Music\n\nIn 2024, the music scene was ablaze with unforgettable hits that had us grooving to the rhythm!\n\nFrom Sabrina Carpenter’s chart-topping anthem “Espresso” to Kendrick Lamar’s powerful hit “Not Like Us,” these tracks not only dominated playlists but also became the defining soundtrack of the year. [...] Trump's win shocked the Democrats, who were sure Kamala Harris would be the nation's next President.\n\nShareRead More\n\n#### Nov 9\n\n#### Beyoncé received her 99th Grammy nomination, becoming the most nominated artist in\n\n[truncated: 2,938 of 6,931 chars]",
           "error": null,
-          "latency_ms": 3266.2522500031628,
-          "raw_chars": 7392,
+          "latency_ms": 3167.9107090003527,
+          "raw_chars": 6931,
           "truncated": true,
           "source_ids": [
             "S6",
@@ -104,6 +118,46 @@
             "S8",
             "S9",
             "S10"
+          ]
+        },
+        {
+          "call_id": "call_f7GI5cgqAEEc2ymfv60rzJbX",
+          "tool": "web_search",
+          "args": {
+            "query": "2024 Nobel Prize in Physics press release neural networks"
+          },
+          "ok": true,
+          "content": "Summary: The 2024 Nobel Prize in Physics was awarded to John J. Hopfield and Geoffrey Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural networks.\" The Royal Swedish Academy of Sciences highlighted the laureates' work in developing artificial neural networks, which have been beneficial in physics, including developing new materials with specific properties. The press release from NobelPrize.org and the NSF's congratulatory message both emphasized the importance of their contributions to machine learning and artificial intelligence.\n\n[1] Press release: The Nobel Prize in Physics 2024 - NobelPrize.org\n    https://www.nobelprize.org/prizes/physics/2024/press-release\n    Skip to content \n\n# Nobel Prize\n\n# Press release\n\nEnglish  \nEnglish (pdf)  \nSwedish  \nSwedish (pdf)\n\n8 October 2024\n\nThe Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJohn J. Hopfield  \nPrinceton University, NJ, USA\n\nGeoffrey Hinton  \nUniversity of Toronto, Canada\n\n“for foundational discoveries and inventions that enable machine learning with artificial neural networks”\n\n## They trained artificial neural networks using physics [...] “The laureates’ work has already been of the greatest benefit. In physics we use artificial neural networks in a vast range of areas, such as developing new materials with specific properties,” says Ellen Moons, Chair of the Nobel Committee for Physics.\n\n### Illustrations\n\nThe illustrations are free to use for non-commercial purposes. Attribute ”©Johan Jarnestad/The Royal Swedish Academy of Sciences”. [...] When we talk about artificial intelligence, we often mean machine learning using artificial neural networks. This technology was originally inspired by the structure of the brain. In an artificial neural network, the brain’s neurons are represented by nodes that have different values. These nodes influence each other through con­nections that can be likened to synapses and which can be made stronger or weaker. The network is trained, for example by developing stronger connections between nodes\n\n[2] Thoughts about the Nobel Prize in Physics 2024 … ML Blog\n    https://lamarr-institute.org/blog/thoughts-physics-nobel-prize-2024\n    If you are reading this blog, you likely already know that the 2024 Nobel Prize in Physics has been awarded to John Hopfield and Geoffrey Hinton. To see why, let me just quote from the press release of the Nobel Committee for Physics: “When we talk about artificial intelligence, we often mean machine learning using artificial neural networks. This technology was originally inspired by the structure of the brain. In an artificial neural network, the brain’s neurons are represented by nodes that [...] When elaborating on the scientific background to this year’s Nobel Prize, the Nobel Committee cited a wide range of application areas for artificial neural networks in physics and other scientific disciplines. In this context, the IceCube neutrino detector project at the South Pole was mentioned . The project resulted in the first neutrino image of the Milky Way, a breakthrough which was achieved by TU Dortmund University educated scientist Mirco Hünnefeld in collaboration with the research\n\n[3] Neural Networks and the 2024 Nobel Prize in Physics - Sixty Symbols\n    https://www.youtube.com/watch?v=itywoDU3sL8\n    # Neural Networks and the 2024 Nobel Prize in Physics - Sixty Symbols\n## Channel: Sixty Symbols (verified)\n888K subscribers\n2.3K likes\n\n### Description\n59,026 views\nPosted: 2024-10-18\nThis video features Juan Garrahan, Phil Moriarty and Mike Pound... More links and info below  ↓ ↓ ↓\n\nThe 2024 Nobel Prize in Physics is awarded to John Hopfield and Geoffrey Hinton “for foundational discoveries and inventions that enable machine learning with artificial neural networks”. [...] Nobel Prize press release - \n\nPhil Moriarty blog (and vintage rant) on the prize - \n\nMore Physics Nobel Prize videos -    • Nobel Prize\n\n[truncated: 3,549 of 7,548 chars]",
+          "error": null,
+          "latency_ms": 2452.6179160002357,
+          "raw_chars": 7548,
+          "truncated": true,
+          "source_ids": [
+            "S11",
+            "S12",
+            "S13",
+            "S14",
+            "S15"
+          ]
+        },
+        {
+          "call_id": "call_KXAW9Vdvzsne5dfdTvNCc7FO",
+          "tool": "web_search",
+          "args": {
+            "query": "Nobel Prize in Physics 2024 awarded year 2024 neural network"
+          },
+          "ok": true,
+          "content": "Summary: The 2024 Nobel Prize in Physics was awarded to John J. Hopfield and Geoffrey Hinton for their foundational discoveries and inventions that enable machine learning with artificial neural networks. The Royal Swedish Academy of Sciences recognized their seminal papers from the 1980s that described rudimentary neural networks, laying the groundwork for modern generative AI. The prize highlighted the impact of AI on science and society, emphasizing the ethical considerations that must accompany such innovations.\n\n[1] Neural Networks and the 2024 Nobel Prize in Physics - Sixty Symbols\n    https://www.youtube.com/watch?v=itywoDU3sL8\n    # Neural Networks and the 2024 Nobel Prize in Physics - Sixty Symbols\n## Channel: Sixty Symbols (verified)\n888K subscribers\n2.3K likes\n\n### Description\n59,026 views\nPosted: 2024-10-18\nThis video features Juan Garrahan, Phil Moriarty and Mike Pound... More links and info below  ↓ ↓ ↓\n\nThe 2024 Nobel Prize in Physics is awarded to John Hopfield and Geoffrey Hinton “for foundational discoveries and inventions that enable machine learning with artificial neural networks”. [...] Nobel Prize press release - \n\nPhil Moriarty blog (and vintage rant) on the prize - \n\nMore Physics Nobel Prize videos -    • Nobel Prize Videos - Sixty Symbols  \nChemistry Nobel Prize videos -    • Nobel Prize - Periodic Videos  \nThe 2024 Nobel Prize in Chemistry (also AI related) -    • Protein Folding and AI (Nobel Prize 2024) ...  \n\nComputerphile -    / computerphile  \n\nHow AI Image Generators Work -    • How AI Image Generators Work (Stable Diffu... [...] [14:28] this year's which was also awarded for some AI type research and if you liked this video you're probably going to like our Channel computer file do you watch\n[14:36] those videos there will be a link to computer file as well\n\n[2] Press release: The Nobel Prize in Physics 2024 - NobelPrize.org\n    https://www.nobelprize.org/prizes/physics/2024/press-release\n    Skip to content \n\n# Nobel Prize\n\n# Press release\n\nEnglish  \nEnglish (pdf)  \nSwedish  \nSwedish (pdf)\n\n8 October 2024\n\nThe Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJohn J. Hopfield  \nPrinceton University, NJ, USA\n\nGeoffrey Hinton  \nUniversity of Toronto, Canada\n\n“for foundational discoveries and inventions that enable machine learning with artificial neural networks”\n\n## They trained artificial neural networks using physics [...] When we talk about artificial intelligence, we often mean machine learning using artificial neural networks. This technology was originally inspired by the structure of the brain. In an artificial neural network, the brain’s neurons are represented by nodes that have different values. These nodes influence each other through con­nections that can be likened to synapses and which can be made stronger or weaker. The network is trained, for example by developing stronger connections between nodes [...] John Hopfield invented a network that uses a method for saving and recreating patterns. We can imagine the nodes as pixels. The Hopfield network utilises physics that describes a material’s characteristics due to its atomic spin – a property that makes each atom a tiny magnet. The network as a whole is described in a manner equivalent to the energy in the spin system found in physics, and is trained by finding values for the connections between the nodes so that the saved images have low\n\n[3] Nobel Prize in Physics: Why It Went to AI Researchers - IEEE Spectrum\n    https://spectrum.ieee.org/nobel-prize-in-physics\n    The Nobel Prize Committee for Physics caught the academic community off-guard by handing the 2024 award to John J. Hopfield and Geoffrey E. Hinton for their foundational work in neural networks.\n\nThe pair won the prize for their seminal papers, both published in the 1980s, that described rudimentary neural networks. Though much simpler than the networks used for modern generative AI like ChatGPT or Stable Diffusion, their\n\n[truncated: 3,305 of 7,302 chars]",
+          "error": null,
+          "latency_ms": 2525.232375000087,
+          "raw_chars": 7302,
+          "truncated": true,
+          "source_ids": [
+            "S13",
+            "S11",
+            "S16",
+            "S17",
+            "S18"
           ]
         }
       ],
@@ -114,7 +168,7 @@
       "i": 4,
       "node": "reflect",
       "plan_version": 1,
-      "ts_offset_ms": 6642.326708999462,
+      "ts_offset_ms": 7370.6402910002,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -124,13 +178,13 @@
       "i": 5,
       "node": "act",
       "plan_version": 1,
-      "ts_offset_ms": 8689.194709004369,
+      "ts_offset_ms": 8345.546166000531,
       "tool_calls": [
         {
-          "call_id": "call_AmuJ8IrRgt8pA03xHSVcJvMo",
-          "name": "web_search",
+          "call_id": "call_hGyvgr61EjbqQul9iGn5PCEt",
+          "name": "calculator",
           "args": {
-            "query": "Attention Is All You Need published 2017 June 12"
+            "expression": "2024-2017"
           }
         }
       ],
@@ -142,28 +196,22 @@
       "i": 6,
       "node": "observe",
       "plan_version": 1,
-      "ts_offset_ms": 11158.776084004785,
+      "ts_offset_ms": 8347.016540999903,
       "tool_calls": [],
       "observations": [
         {
-          "call_id": "call_AmuJ8IrRgt8pA03xHSVcJvMo",
-          "tool": "web_search",
+          "call_id": "call_hGyvgr61EjbqQul9iGn5PCEt",
+          "tool": "calculator",
           "args": {
-            "query": "Attention Is All You Need published 2017 June 12"
+            "expression": "2024-2017"
           },
           "ok": true,
-          "content": "Summary: \"Attention Is All You Need,\" published in June 2017, introduced the Transformer architecture, revolutionizing machine learning by replacing traditional RNNs with attention mechanisms. This paper, authored by researchers at Google, laid the foundation for modern AI systems.\n\n[1] Revolutionizing AI with the Transformer Model: “Attention Is All You Need” - AI Blog\n    https://www.artificial-intelligence.blog/ai-news/attention-is-all-you-need\n    The article correctly identifies the “Attention Is All You Need” paper as a watershed moment in AI research. Published in June 2017 by eight Google Brain researchers, this paper introduced the Transformer architecture that fundamentally reshaped the AI landscape. The authors: Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Łukasz Kaiser, and Illia Polosukhin, are accurately listed. The post rightly emphasizes the paper’s revolutionary impact, noting [...] Skip to Content \n\nArtificial Intelligence Blog\n\nArtificial Intelligence Blog\n\n# Revolutionizing AI with the Transformer Model: “Attention Is All You Need”\n\neducationhistorytechnology\n\nWritten By Artificial Intelligence Blog\n\nOn this day in AI history: June 12, 2017  \n\nTL;DR The 2017 “Attention Is All You Need” paper introduced the Transformer and self-attention, supplanting RNNs and enabling modern LLMs like ChatGPT, along with broad advances across AI. [...] Every revolution in science begins with a group of visionaries who see beyond current limitations. The 2017 paper “Attention Is All You Need” was no exception. Authored by eight researchers from Google Brain and Google Research, it introduced the world to the Transformer architecture, a concept that would redefine artificial intelligence.\n\n[2] [PDF] Attention is All you Need - Semantic Scholar\n    https://www.semanticscholar.org/paper/Attention-is-All-you-Need-Vaswani-Shazeer/204e3073870fae3d05bcbc2f6a8e263d9b72e776\n    Corpus ID: 13756489\n\n# Attention is All you Need\n\n```\n@inproceedings{Vaswani2017AttentionIA,\n  title={Attention is All you Need},\n  author={Ashish Vaswani and Noam Shazeer and Niki Parmar and Jakob Uszkoreit and Llion Jones and Aidan N. Gomez and Lukasz Kaiser and Illia Polosukhin},\n  booktitle={Neural Information Processing Systems},\n  year={2017},\n  url={\n}\n```\n\n Ashish Vaswani, Noam Shazeer,  I. Polosukhin\n Published in Neural Information Processing… 12 June 2017\n Computer Science [...] Jonas GehringMichael AuliDavid GrangierDenis YaratsYann Dauphin\n\nComputer Science\n\nInternational Conference on Machine Learning\n\n 2017\n\nThis work introduces an architecture based entirely on convolutional neural networks, which outperform the accuracy of the deep LSTM setup of Wu et al. (2016) on both WMT'14 English-German and WMT-French translation at an order of magnitude faster speed, both on GPU and CPU.\n\n Highly Influential\n[PDF]\n\n...\n\n... [...] Computer Science\n\nInternational Conference on Learning…\n\n 2017\n\nThis work shows that structured attention networks are simple extensions of the basic attention procedure, and that they allow for extending attention beyond the standard soft-selection approach, such as attending to partial segmentations or to subtrees.\n\n 496\n[PDF]\n\n### Multi-task Sequence to Sequence Learning\n\nMinh-Thang LuongQuoc V. LeI. SutskeverO. VinyalsLukasz Kaiser\n\nComputer Science\n\nInternational Conference on Learning…\n\n[3] Attention Is All You Need Explained - The Paper That Changed AI - Parseur\n    https://parseur.com/blog/attention-is-all-you-need\n    In 2017, a team of eight researchers at Google published a research paper with a bold title: \"Attention Is All You Need.\" At the time, it sounded almost provocative. Most AI systems still relied on older approaches that processed language step by step, one word at a time.\n\nBut this paper introduced something entirely new: the Transformer architecture. [...] ## The Foundation of Modern AI\n\nWhen the Google researchers published Attention Is All You Need in 2017,\n\n[truncated: 2,168 of 6,164 chars]",
+          "content": "2024-2017 = 7",
           "error": null,
-          "latency_ms": 2468.323416993371,
-          "raw_chars": 6164,
-          "truncated": true,
-          "source_ids": [
-            "S11",
-            "S12",
-            "S2",
-            "S3",
-            "S13"
-          ]
+          "latency_ms": 0.1466249996155966,
+          "raw_chars": 0,
+          "truncated": false,
+          "source_ids": []
         }
       ],
       "reflection": null,
@@ -173,15 +221,15 @@
       "i": 7,
       "node": "reflect",
       "plan_version": 1,
-      "ts_offset_ms": 13549.621750004007,
+      "ts_offset_ms": 10040.620290999868,
       "tool_calls": [],
       "observations": [],
       "reflection": {
         "decision": "finalize",
-        "reasoning": "The observations identify the publication year of 'Attention Is All You Need' (2017) and the Nobel Prize year (2024) for neural network research, so the necessary inputs to compute the elapsed years are present; additional searching is unlikely to change the calculation.",
+        "reasoning": "Both sub-questions are directly answered by the web search summaries: the paper year (2017) and the Nobel Prize year (2024). The calculator step then gives the elapsed years (7), so further searching is unlikely to add useful evidence.",
         "covered": {
-          "In what year was the paper \"Attention Is All You Need\" published?": true,
-          "In what year was the 2024 Nobel Prize in Physics awarded for neural network research?": true
+          "What year was the paper 'Attention Is All You Need' published?": true,
+          "In what year was the Nobel Prize in Physics awarded for research on neural networks?": true
         },
         "open_gaps": [],
         "overruled_stop": false
@@ -192,7 +240,7 @@
       "i": 8,
       "node": "finalize",
       "plan_version": 1,
-      "ts_offset_ms": 15110.306500006118,
+      "ts_offset_ms": 11235.724000000118,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -204,60 +252,132 @@
       "sid": "S1",
       "url": "https://en.wikipedia.org/wiki/Attention_Is_All_You_Need",
       "title": "Attention Is All You Need - Wikipedia",
-      "snippet": "\"Attention Is All You Need\" is a 2017 research paper in machine learning authored by eight scientists and engineers working at Google. The paper introduced a new deep learning architecture known as the transformer \"Transformer (deep learning)\"), based on the attention mechanism proposed in 2014 by B",
+      "snippet": "\"Attention Is All You Need\" is a 2017 research paper on machine learning authored by eight scientists and engineers working at Google. The paper introduced a new deep learning architecture known as the transformer \"Transformer (deep learning)\"), based on the attention mechanism \"Attention (machine l",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S2",
-      "url": "https://parseur.com/blog/attention-is-all-you-need",
-      "title": "Attention Is All You Need Explained - The Paper That Changed AI - Parseur",
-      "snippet": "In 2017, a team of eight researchers at Google published a research paper with a bold title: \"Attention Is All You Need.\" At the time, it sounded almost provocative. Most AI systems still relied on older approaches that processed language step by step, one word at a time.\n\nBut this paper introduced ",
+      "url": "https://papers.nips.cc/paper/7181-attention-is-all-you-need",
+      "title": "Attention is All you Need",
+      "snippet": "# Attention is All you Need\n\nAshish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, Illia Polosukhin\n\nAdvances in Neural Information Processing Systems 30 (NIPS 2017)\n\nBibtex Metadata Paper Reviews\n\n## Abstract [...] The dominant sequence transduction ",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S3",
-      "url": "https://medium.com/@adnanmasood/attention-is-all-you-need-explained-like-youre-smart-and-busy-2a3d7436144f",
-      "title": "Attention Is All You Need, explained like you're smart and busy - Medium",
-      "snippet": "Sitemap\n\nOpen in app\n\nSign up\n\nSign in\n\n is the 2017 NeurIPS paper from Google Brain/Google Research that introduced the Transformer, a sequence-to-sequence architecture built entirely on attention, eliminating recurrence and convolutions.",
+      "url": "https://www.alphaxiv.org/abs/1706.03762",
+      "title": "Attention Is All You Need | alphaXiv",
+      "snippet": "AbstractPaper\n\nSubmitted 02 Aug 2023\n\n# Attention Is All You Need\n\nSpotlight at NeurIPS 2017\n\nDeepMindGoogle ResearchUniversity of Toronto\nAshish VaswaniAshish VaswaniNoam ShazeerNoam ShazeerNiki ParmarNiki ParmarJakob UszkoreitJakob UszkoreitLlion JonesLlion JonesAidan N. GomezAidan N. GomezLukasz ",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S4",
-      "url": "https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf",
-      "title": "[PDF] Attention is All you Need - NIPS",
-      "snippet": "Yoon Kim, Carl Denton, Luong Hoang, and Alexander M. Rush. Structured attention networks.\nIn International Conference on Learning Representations, 2017.\n Diederik Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In ICLR, 2015.\n Oleksii Kuchaiev and Boris Ginsburg. Factorization trick",
+      "url": "https://papers.neurips.cc/paper/7181-attention-is-all-you-need.pdf",
+      "title": "Attention is All you Need",
+      "snippet": "Attention Is All You Need Ashish Vaswani∗ Google Brain avaswani@google.com Noam Shazeer∗ Google Brain noam@google.com Niki Parmar∗ Google Research nikip@google.com Jakob Uszkoreit∗ Google Research usz@google.com Llion Jones∗ Google Research llion@google.com Aidan N. Gomez∗† University of Toronto aid",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S5",
-      "url": "https://papers.nips.cc/paper/7181-attention-is-all-you-need",
-      "title": "Attention is All you Need - NIPS",
-      "snippet": "# Attention is All you Need\n\nAshish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, Illia Polosukhin\n\nAdvances in Neural Information Processing Systems 30 (NIPS 2017)\n\n## Abstract [...] The dominant sequence transduction models are based on complex rec",
+      "url": "https://medium.com/@adnanmasood/attention-is-all-you-need-explained-like-youre-smart-and-busy-2a3d7436144f",
+      "title": "Attention Is All You Need, explained like you’re smart and busy",
+      "snippet": "Sitemap\n\nOpen in app\n\nSign up\n\nSign in\n\n is the 2017 NeurIPS paper from Google Brain/Google Research that introduced the Transformer, a sequence-to-sequence architecture built entirely on attention, eliminating recurrence and convolutions. [...] Its significance is hard to overstate: by making long-",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S6",
-      "url": "https://www.nobelprize.org/prizes/physics/2024/press-release",
-      "title": "Press release: The Nobel Prize in Physics 2024",
-      "snippet": "# Nobel Prize\n\n### Enhanced Page Navigation\n\n## Nobel Prize in Physics 2024\n\n## Share this\n\n# Press release\n\nEnglish  \nEnglish (pdf)  \nSwedish  \nSwedish (pdf)\n\nLogo\n\n8 October 2024\n\nThe Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJohn J. Hopfield  \nPrin",
+      "url": "https://en.wikipedia.org/wiki/2024",
+      "title": "2024 - Wikipedia",
+      "snippet": "Peace – Nihon Hidankyo, for its efforts to achieve a world free of nuclear weapons and for demonstrating through witness testimony that nuclear weapons must never be used again.(\n   Physics – John J. Hopfield and Geoffrey E. Hinton, for their foundational discoveries and inventions that enable machi",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S7",
-      "url": "https://www.nobelprize.org/prizes/physics/2024/popular-information",
-      "title": "The Nobel Prize in Physics 2024 - Popular science ...",
-      "snippet": "### The Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJOHN J. HOPFIELD  \nBorn 1933 in Chicago, IL, USA. PhD 1958 from Cornell University, Ithaca, NY, USA. Professor at Princeton University, NJ, USA.\n\nGEOFFREY HINTON  \nBorn 1947 in London, UK. PhD 1978 fro",
+      "url": "https://simple.wikipedia.org/wiki/2024",
+      "title": "2024 - Simple English Wikipedia, the free encyclopedia",
+      "snippet": "Image 5\n\nWikimedia Commons has media related to _2024_.\n\n2024 (MMXXIV) was a leap yearstarting on Monday of the Gregorian calendar, the 2024th year of the Common Era (CE) and _Anno Domini_ (AD) designations, the 24th year of the 3rd millennium, the 24th year of the 21st century, and the 5th year of ",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S8",
+      "url": "https://www.thefactsite.com/year/2024",
+      "title": "2024: Facts & Events That Happened in This Year - The Fact Site",
+      "snippet": "The 68th edition of the Eurovision Song Contest took place in Malmö, Sweden, in 2024.\n\nSwitzerland emerged victorious with the song “The Code,” performed by Nemo, who became the first non-binary winner in the contest’s history.\n\n## 2024 In Numbers\n\nLet’s explore the world of numbers! In Roman numera",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S9",
+      "url": "https://www.calendardate.com/2024.php",
+      "title": "2024 Calendar - United States",
+      "snippet": "Year 2024 is a leap year, with 366 days. The latest prior leap year occurred in 2020 and the next will be in 2028. The reason for the leap year is to reconcile the earth's orbit around the sun. By adding days to the year the seasons stay in step with the month's for each year. More information on Le",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S10",
+      "url": "https://www.britannica.com/topic/2024-Year-in-Review",
+      "title": "2024: Year in Review | Pop Culture, Images, Events, & Timeline",
+      "snippet": "_chevron\\_right_\n\n2024: Year in Review \n\n_close_\n\nAI-generated answers from Britannica articles. AI makes mistakes, so verify using Britannica articles.\n\n Load Next Page \n\nImage 12\n\n Feedback \n\n Corrections? Updates? Omissions? Let us know if you have suggestions to improve this article (requires lo",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S11",
+      "url": "https://www.nobelprize.org/prizes/physics/2024/press-release",
+      "title": "Press release: The Nobel Prize in Physics 2024 - NobelPrize.org",
+      "snippet": "Skip to content \n\n# Nobel Prize\n\n# Press release\n\nEnglish  \nEnglish (pdf)  \nSwedish  \nSwedish (pdf)\n\n8 October 2024\n\nThe Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJohn J. Hopfield  \nPrinceton University, NJ, USA\n\nGeoffrey Hinton  \nUniversity of Toront",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S12",
+      "url": "https://lamarr-institute.org/blog/thoughts-physics-nobel-prize-2024",
+      "title": "Thoughts about the Nobel Prize in Physics 2024 … ML Blog",
+      "snippet": "If you are reading this blog, you likely already know that the 2024 Nobel Prize in Physics has been awarded to John Hopfield and Geoffrey Hinton. To see why, let me just quote from the press release of the Nobel Committee for Physics: “When we talk about artificial intelligence, we often mean machin",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S13",
+      "url": "https://www.youtube.com/watch?v=itywoDU3sL8",
+      "title": "Neural Networks and the 2024 Nobel Prize in Physics - Sixty Symbols",
+      "snippet": "# Neural Networks and the 2024 Nobel Prize in Physics - Sixty Symbols\n## Channel: Sixty Symbols (verified)\n888K subscribers\n2.3K likes\n\n### Description\n59,026 views\nPosted: 2024-10-18\nThis video features Juan Garrahan, Phil Moriarty and Mike Pound... More links and info below  ↓ ↓ ↓\n\nThe 2024 Nobel ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S14",
+      "url": "https://physics.aps.org/articles/v17/146",
+      "title": "Physics - <i>Nobel Prize:</i> Mimicking Human Intelligence with Neural Networks",
+      "snippet": "APS Logo\nAPS Physics\nSearch\n\n# Nobel Prize: Mimicking Human Intelligence with Neural Networks\n\nFigure caption\nexpand figure\nFigure caption\n\n10 October 2024: We have replaced our initial short announcement with this full-length news story. [...] —Michael Schirber\n\nMichael Schirber is a Corresponding ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S15",
+      "url": "https://www.nsf.gov/news/nsf-congratulates-laureates-2024-nobel-prize-physics",
+      "title": "NSF congratulates laureates of the 2024 Nobel Prize in physics | NSF - U.S. National Science Foundation",
+      "snippet": "The U.S. National Science Foundation congratulates John J. Hopfield and Geoffrey E. Hinton for their Nobel Prize in physics. Their research and innovations helped make possible \"machines that learn\" — artificial neural networks with the ability to store and reconstruct information and recognize comp",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S16",
+      "url": "https://spectrum.ieee.org/nobel-prize-in-physics",
+      "title": "Nobel Prize in Physics: Why It Went to AI Researchers - IEEE Spectrum",
+      "snippet": "The Nobel Prize Committee for Physics caught the academic community off-guard by handing the 2024 award to John J. Hopfield and Geoffrey E. Hinton for their foundational work in neural networks.\n\nThe pair won the prize for their seminal papers, both published in the 1980s, that described rudimentary",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S17",
       "url": "https://www.nature.com/articles/s41746-024-01345-9",
       "title": "Artificial Intelligence awarded two Nobel Prizes for innovations that will shape the future of medicine | npj Digital Medicine",
       "snippet": "Metrics details\n\nJohn J. Hopfield and Geoffrey E. Hinton were awarded the 2024 Nobel Prize in Physics for developing machine learning technology using artificial neural networks. In Chemistry it was awarded to Demis Hassabis and John M. Jumper for developing an AI algorithm that solved the 50-year p",
@@ -265,54 +385,22 @@
       "first_seen_step": 1
     },
     {
-      "sid": "S9",
-      "url": "https://www.nsf.gov/news/nsf-congratulates-laureates-2024-nobel-prize-physics",
-      "title": "NSF congratulates laureates of the 2024 Nobel Prize in ...",
-      "snippet": "The U.S. National Science Foundation congratulates John J. Hopfield and Geoffrey E. Hinton for their Nobel Prize in physics. Their research and innovations helped make possible \"machines that learn\" — artificial neural networks with the ability to store and reconstruct information and recognize comp",
+      "sid": "S18",
+      "url": "https://www.nobelprize.org/prizes/physics/2024/popular-information",
+      "title": "The Nobel Prize in Physics 2024 - Popular science background - NobelPrize.org",
+      "snippet": "### The Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJOHN J. HOPFIELD  \nBorn 1933 in Chicago, IL, USA. PhD 1958 from Cornell University, Ithaca, NY, USA. Professor at Princeton University, NJ, USA.\n\nGEOFFREY HINTON  \nBorn 1947 in London, UK. PhD 1978 fro",
       "tool": "web_search",
       "first_seen_step": 1
-    },
-    {
-      "sid": "S10",
-      "url": "https://jqi.umd.edu/news/nobel-prize-celebrates-interplay-physics-and-ai",
-      "title": "Nobel Prize Celebrates Interplay of Physics and AI | Joint Quantum Institute",
-      "snippet": "UMD Joint Quantum Institute logo\n\nSearch\n\nSearch\n\n# Nobel Prize Celebrates Interplay of Physics and AI\n\nOctober 11, 2024\n\n(Credit: © Johan Jarnestad/The Royal Swedish Academy of Sciences) [...] \"We, and many others, thought that the RBM framework, applied by 2024 Nobel Physics Laureate Geoffrey Hint",
-      "tool": "web_search",
-      "first_seen_step": 1
-    },
-    {
-      "sid": "S11",
-      "url": "https://www.artificial-intelligence.blog/ai-news/attention-is-all-you-need",
-      "title": "Revolutionizing AI with the Transformer Model: “Attention Is All You Need” - AI Blog",
-      "snippet": "The article correctly identifies the “Attention Is All You Need” paper as a watershed moment in AI research. Published in June 2017 by eight Google Brain researchers, this paper introduced the Transformer architecture that fundamentally reshaped the AI landscape. The authors: Ashish Vaswani, Noam Sh",
-      "tool": "web_search",
-      "first_seen_step": 2
-    },
-    {
-      "sid": "S12",
-      "url": "https://www.semanticscholar.org/paper/Attention-is-All-you-Need-Vaswani-Shazeer/204e3073870fae3d05bcbc2f6a8e263d9b72e776",
-      "title": "[PDF] Attention is All you Need - Semantic Scholar",
-      "snippet": "Corpus ID: 13756489\n\n# Attention is All you Need\n\n```\n@inproceedings{Vaswani2017AttentionIA,\n  title={Attention is All you Need},\n  author={Ashish Vaswani and Noam Shazeer and Niki Parmar and Jakob Uszkoreit and Llion Jones and Aidan N. Gomez and Lukasz Kaiser and Illia Polosukhin},\n  booktitle={Neu",
-      "tool": "web_search",
-      "first_seen_step": 2
-    },
-    {
-      "sid": "S13",
-      "url": "https://arxiv.org/abs/1706.03762",
-      "title": "[1706.03762] Attention Is All You Need",
-      "snippet": "archive\n\n# Computer Science > Computation and Language\n\n# Title:Attention Is All You Need\n\n|  |  |\n --- |\n| Comments: | 15 pages, 5 figures |\n| Subjects: | Computation and Language (cs.CL); Machine Learning (cs.LG) |\n| Cite as: | arXiv:1706.03762 [cs.CL] |\n|  | (or  arXiv:1706.03762v7 [cs.CL] for th",
-      "tool": "web_search",
-      "first_seen_step": 2
     }
   ],
-  "answer": "“Attention Is All You Need” was published in **2017**, and the **2024 Nobel Prize in Physics** was awarded in **2024**, so **7 years** passed between them [S4][S6].",
+  "answer": "Between the publication of **“Attention Is All You Need” (2017)** and the **2024 Nobel Prize in Physics** awarded for neural network research, **7 years** passed ([S1][S11]).",
   "citations": [
-    "S4",
-    "S6"
+    "S1",
+    "S11"
   ],
   "coverage": {
-    "In what year was the paper \"Attention Is All You Need\" published?": true,
-    "In what year was the 2024 Nobel Prize in Physics awarded for neural network research?": true
+    "What year was the paper 'Attention Is All You Need' published?": true,
+    "In what year was the Nobel Prize in Physics awarded for research on neural networks?": true
   },
   "outcome": {
     "status": "completed",
@@ -328,92 +416,92 @@
         "model": "gpt-5.4-nano",
         "input_tokens": 240,
         "cached_tokens": 0,
+        "output_tokens": 123,
+        "reasoning_tokens": 38,
+        "cost_usd": 0.00020175,
+        "latency_ms": 1725.8599159995356,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 913,
+        "cached_tokens": 0,
         "output_tokens": 141,
-        "reasoning_tokens": 55,
-        "cost_usd": 0.00022425,
-        "latency_ms": 1813.7503750040196,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.00035885,
+        "latency_ms": 1743.5106670000096,
         "replayed": false
       },
       {
         "purpose": "act",
         "model": "gpt-5.4-nano",
-        "input_tokens": 847,
+        "input_tokens": 5788,
         "cached_tokens": 0,
-        "output_tokens": 73,
+        "output_tokens": 22,
         "reasoning_tokens": 0,
-        "cost_usd": 0.00026064999999999997,
-        "latency_ms": 1538.3543750067474,
-        "replayed": false
-      },
-      {
-        "purpose": "act",
-        "model": "gpt-5.4-nano",
-        "input_tokens": 3112,
-        "cached_tokens": 0,
-        "output_tokens": 29,
-        "reasoning_tokens": 0,
-        "cost_usd": 0.0006586500000000001,
-        "latency_ms": 2044.5150829909835,
+        "cost_usd": 0.0011851000000000001,
+        "latency_ms": 971.5369999994437,
         "replayed": false
       },
       {
         "purpose": "reflect",
         "model": "gpt-5.4-nano",
-        "input_tokens": 636,
+        "input_tokens": 812,
         "cached_tokens": 0,
-        "output_tokens": 153,
-        "reasoning_tokens": 39,
-        "cost_usd": 0.00031845,
-        "latency_ms": 2381.744541999069,
+        "output_tokens": 141,
+        "reasoning_tokens": 33,
+        "cost_usd": 0.00033864999999999996,
+        "latency_ms": 1691.1010410003655,
         "replayed": false
       },
       {
         "purpose": "finalize",
         "model": "gpt-5.4-nano",
-        "input_tokens": 963,
+        "input_tokens": 1145,
         "cached_tokens": 0,
-        "output_tokens": 50,
+        "output_tokens": 48,
         "reasoning_tokens": 0,
-        "cost_usd": 0.0002551,
-        "latency_ms": 1557.0562500070082,
+        "cost_usd": 0.000289,
+        "latency_ms": 1192.3709999991843,
         "replayed": false
       }
     ],
     "totals": {
-      "input_tokens": 5798,
+      "input_tokens": 8898,
       "cached_tokens": 0,
-      "output_tokens": 446,
-      "reasoning_tokens": 94,
-      "cost_usd": 0.0017171,
+      "output_tokens": 475,
+      "reasoning_tokens": 71,
+      "cost_usd": 0.00237335,
       "cache_hit_rate": 0.0
     },
     "by_purpose": {
       "plan": {
         "calls": 1,
-        "cost_usd": 0.00022425,
-        "output_tokens": 141
+        "cost_usd": 0.00020175,
+        "output_tokens": 123
       },
       "act": {
         "calls": 2,
-        "cost_usd": 0.0009193000000000001,
-        "output_tokens": 102
+        "cost_usd": 0.00154395,
+        "output_tokens": 163
       },
       "reflect": {
         "calls": 1,
-        "cost_usd": 0.00031845,
-        "output_tokens": 153
+        "cost_usd": 0.00033864999999999996,
+        "output_tokens": 141
       },
       "finalize": {
         "calls": 1,
-        "cost_usd": 0.0002551,
-        "output_tokens": 50
+        "cost_usd": 0.000289,
+        "output_tokens": 48
       }
     },
-    "search_credits": 3,
+    "search_credits": 4,
     "steps": 2
   },
   "timings_ms": {
-    "total": 15099.937666993355
+    "total": 11233.385540999734
   },
   "compaction": {
     "count": 0,

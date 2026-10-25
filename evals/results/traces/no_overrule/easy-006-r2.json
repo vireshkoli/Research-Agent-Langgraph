@@ -1,7 +1,7 @@
 {
   "schema_version": "1",
-  "run_id": "b527c01a75b9",
-  "ts": "2026-08-08T19:20:19+00:00",
+  "run_id": "fd98687687d0",
+  "ts": "2026-10-25T09:22:19+00:00",
   "question": "Which PEP proposed making the CPython global interpreter lock optional?",
   "variant": "no_overrule",
   "config": {
@@ -12,13 +12,13 @@
     "max_run_cost_usd": 0.05,
     "finalize_reserve_usd": 0.008,
     "compact_threshold_tokens": 12000,
-    "git_sha": "a4216f3",
-    "prompt_hash": "sha256:512e8e5d8eaa"
+    "git_sha": "e577c53",
+    "prompt_hash": "sha256:e2655640140a"
   },
   "plan": {
     "version": 1,
     "subquestions": [
-      "What PEP proposed making the CPython global interpreter lock optional (name/number)?"
+      "Which PEP is titled or describes making the CPython global interpreter lock (GIL) optional?"
     ],
     "replans": 0
   },
@@ -27,7 +27,7 @@
       "i": 1,
       "node": "plan",
       "plan_version": 0,
-      "ts_offset_ms": 1815.3890410030726,
+      "ts_offset_ms": 1844.715166998867,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -37,41 +37,34 @@
       "i": 2,
       "node": "act",
       "plan_version": 1,
-      "ts_offset_ms": 3713.8876660028473,
+      "ts_offset_ms": 3546.2263339995843,
       "tool_calls": [
         {
-          "call_id": "call_21pJvxZcmhM5ETQJm03jsovp",
+          "call_id": "call_B54IxUwKkXqh7ZFE7eGU1Okw",
           "name": "web_search",
           "args": {
-            "query": "PEP make the CPython global interpreter lock optional"
+            "query": "PEP make CPython GIL optional"
           }
         },
         {
-          "call_id": "call_T2TQPiPJ66FaLj7jZcPcahhn",
+          "call_id": "call_R1eq9ehx95u3uUwUXc47NsnY",
           "name": "web_search",
           "args": {
-            "query": "\"global interpreter lock\" optional PEP CPython"
+            "query": "site:peps.python.org optional global interpreter lock PEP"
           }
         },
         {
-          "call_id": "call_1iFJejRLqEvuL1GxJ0CejSFn",
+          "call_id": "call_K4MuuPFlRLk3xlpVBuFDgId2",
           "name": "web_search",
           "args": {
-            "query": "PEP optional GIL CPython"
+            "query": "PEP optional GIL CPython \"optional\" \"GIL\""
           }
         },
         {
-          "call_id": "call_IJkZlLDP4hbE457TPN7VUZA6",
+          "call_id": "call_AR7ttrn37AMHlVXQM6aGjpV7",
           "name": "web_search",
           "args": {
-            "query": "PEP 703 optional GIL"
-          }
-        },
-        {
-          "call_id": "call_lSCAXYsn17rBQUMzXnkXfpY0",
-          "name": "web_search",
-          "args": {
-            "query": "site:peps.python.org optional GIL PEP"
+            "query": "\"global interpreter lock\" optional PEP 537 554"
           }
         }
       ],
@@ -83,21 +76,21 @@
       "i": 3,
       "node": "observe",
       "plan_version": 1,
-      "ts_offset_ms": 7282.391375003499,
+      "ts_offset_ms": 7228.773999999248,
       "tool_calls": [],
       "observations": [
         {
-          "call_id": "call_21pJvxZcmhM5ETQJm03jsovp",
+          "call_id": "call_B54IxUwKkXqh7ZFE7eGU1Okw",
           "tool": "web_search",
           "args": {
-            "query": "PEP make the CPython global interpreter lock optional"
+            "query": "PEP make CPython GIL optional"
           },
           "ok": true,
-          "content": "Summary: PEP 703 makes the Global Interpreter Lock optional in CPython, allowing builds without it. The default remains GIL-enabled. Python 3.13 introduced a free-threaded option.\n\n[1] What is PEP 703?\n    https://pydevtools.com/handbook/explanation/what-is-pep-703\n    PEP 703: Making the Global Interpreter Lock Optional in CPython is the proposal that makes a no-GIL CPython build real. It adds a build configuration that removes the Global Interpreter Lock (GIL), the mutex that lets only one thread execute Python bytecode at a time, producing the free-threaded Python interpreter. [...] ## Learn More[](\n\n   PEP 703: Making the Global Interpreter Lock Optional in CPython\n   Steering Council acceptance notice on discuss.python.org\n   The official Python free-threading HOWTO\n   PEP 779: Criteria for supported status for free-threaded Python\n   Try Free-Threaded Python with uv\n   How to use free-threaded Python in a uv project\n\n## Mentioned in\n\n[2] PEP 703: Making the Global Interpreter Lock Optional (3.12 updates) - PEPs - Discussions on Python.org\n    https://discuss.python.org/t/pep-703-making-the-global-interpreter-lock-optional-3-12-updates/26503\n    I\u2019d appreciate your feedback on the PEP and the updates.\n\nThanks @colesbury for working on this PEP! It\u2019s clearly had a lot of thought put in to it and is tackling a really tough problem head on: the GIL.\n\nFeedback:\n\nThe global interpreter lock will remain the default for CPython builds and python.org downloads. A new build configuration flag, `--disable-gil` will be added to the configure script that will build CPython with support for running without the global interpreter lock. [...] # PEP 703: Making the Global Interpreter Lock Optional (3.12 updates)\n\nI\u2019d like to share updates to PEP 703. The changes are substantial enough that I figured a new thread was warranted. The main results are from rebasing on to Python 3.12 and include performance numbers. That implementation is available at GitHub - colesbury/nogil-3.12: Multithreaded Python without the GIL (experimental rebase on 3.12).\n\n`ob_ref_local`\n`_PyGC_HEAD`\n`Py_mod_gil` [...] Hi @davidfstr, thanks for your detailed feedback and suggestions. I\u2019ve made some edits to the PEP and I\u2019ve included responses are below.\n\nDoes the PEP (want to) recommend that C extension authors add support for `--disable-gil`?\n\n`--disable-gil`\n\nWorking C-API extensions are important, but I don\u2019t think it\u2019s necessary to make an \u201cofficial\u201d recommendation in the PEP.\n\n[3] PEP 703 \u2013 Making the Global Interpreter Lock Optional in ...\n    https://peps.python.org/pep-0703\n    # Python Enhancement Proposals\n\n Python \u00bb\n PEP Index\") \u00bb\n PEP 703\nPEP 703 \u2013 Making the Global Interpreter Lock Optional in CPython\n\n# PEP 703 \u2013 Making the Global Interpreter Lock Optional in CPython\n\nAuthor:\n:   Sam Gross\n\nSponsor:\n:   \u0141ukasz Langa\n\nDiscussions-To:\n:   Discourse thread\n\nStatus:\n:   Final\n\nType:\n:   Standards Track\n\nCreated:\n:   09-Jan-2023\n\nPython-Version:\n:   3.13\n\nPost-History:\n:   09-Jan-2023, 04-May-2023\n\nResolution:\n:   24-Oct-2023\n\nTable of Contents [...] The global interpreter lock will remain the default for CPython builds and python.org downloads. A new build configuration flag, `--disable-gil` will be added to the configure script that will build CPython with support for running without the global interpreter lock.\n\nWhen built with `--disable-gil`, CPython will define the `Py_GIL_DISABLED` macro in Python/patchlevel.h. The ABI tag will include the letter \u201ct\u201d (for \u201cthreading\u201d). [...] See PEP 1 for how to propose changes.\n\n## Abstract\n\nCPython\u2019s global interpreter lock (\u201cGIL\u201d) prevents multiple threads from executing Python code at the same time. The GIL is an obstacle to using multi-core CPUs from Python efficiently. This PEP proposes adding a build configuration (`--disable-gil`) to CPython to let it run Python code without the global interpreter lock and with the necessary changes needed to make the interpreter thread-safe.\n\n## Motivation\n\n[4] PEP 703:\n\n[truncated: 2,594 of 6,589 chars]",
+          "content": "[1] PEP 703 - Making the Global Interpreter Lock Optional in CPython | peps ...\n    https://peps.python.org/pep-0703/\n    The GIL is an obstacle to using multi-core CPUs from Python efficiently. This PEP proposes adding a build configuration (--disable-gil) to CPython to let it run Python code without the global interpreter lock and with the necessary changes needed to make the interpreter thread-safe. Motivation The GIL is a major obstacle to concurrency.\n\n[2] PEP 703: Making the Python global interpreter lock optional\n    https://lwn.net/Articles/919563/\n    A new build configuration flag, --without-gil will be added to the configure script that will build CPython without the global interpreter lock. The posting of a PEP is only one step in a long path toward integrating this change into the CPython interpreter; expect some extended discussions over the coming months.\n\n[3] PEP 703 - Making the Global Interpreter Lock Optional in CPython - GitHub\n    https://github.com/irthomasthomas/undecidability/issues/733\n    This PEP proposes adding a build configuration (--disable-gil) to CPython to let it run Python code without the global interpreter lock and with the necessary changes needed to make the interpreter thread-safe.\n\n[4] PEP 703: Making the Python global interpreter lock optional\n    https://lwn.net/Articles/919564/\n    There is a section of the PEP that mentions runtime selection as a goal: This PEP introduces a new build mode (--without-gil) that is not ABI compatible with the standard build mode. The additional build mode adds complexity for both Python core developers and extension developers.\n\n[5] What is PEP 703? | pydevtools\n    https://pydevtools.com/handbook/explanation/what-is-pep-703/\n    PEP 703: Making the Global Interpreter Lock Optional in CPython is the proposal that makes a no-GIL CPython build real. It adds a build configuration that removes the Global Interpreter Lock (GIL), the mutex that lets only one thread execute Python bytecode at a time, producing the free-threaded Python interpreter.",
           "error": null,
-          "latency_ms": 2366.188208005042,
-          "raw_chars": 6589,
-          "truncated": true,
+          "latency_ms": 1230.0798750002286,
+          "raw_chars": 2050,
+          "truncated": false,
           "source_ids": [
             "S1",
             "S2",
@@ -107,83 +100,63 @@
           ]
         },
         {
-          "call_id": "call_T2TQPiPJ66FaLj7jZcPcahhn",
+          "call_id": "call_R1eq9ehx95u3uUwUXc47NsnY",
           "tool": "web_search",
           "args": {
-            "query": "\"global interpreter lock\" optional PEP CPython"
+            "query": "site:peps.python.org optional global interpreter lock PEP"
           },
           "ok": true,
-          "content": "Summary: PEP 703 makes the Global Interpreter Lock optional in CPython, allowing builds without it. The GIL remains the default, but a --disable-gil option enables a free-threaded interpreter. Full GIL removal is future-dependent on ecosystem support.\n\n[1] What is PEP 703?\n    https://pydevtools.com/handbook/explanation/what-is-pep-703\n    PEP 703: Making the Global Interpreter Lock Optional in CPython is the proposal that makes a no-GIL CPython build real. It adds a build configuration that removes the Global Interpreter Lock (GIL), the mutex that lets only one thread execute Python bytecode at a time, producing the free-threaded Python interpreter. [...] ## Learn More[](\n\n   PEP 703: Making the Global Interpreter Lock Optional in CPython\n   Steering Council acceptance notice on discuss.python.org\n   The official Python free-threading HOWTO\n   PEP 779: Criteria for supported status for free-threaded Python\n   Try Free-Threaded Python with uv\n   How to use free-threaded Python in a uv project\n\n## Mentioned in\n\n[2] PEP 703: Making the Global Interpreter Lock Optional\n    https://discuss.python.org/t/pep-703-making-the-global-interpreter-lock-optional/22606\n    ### PEP 703 \u2013 Making the Global Interpreter Lock Optional in CPython |...\n\nCPython\u2019s global interpreter lock (\u201cGIL\u201d) prevents multiple threads from executing Python code at the same time. The GIL is an obstacle to using multi-core CPUs from Python efficiently. This PEP proposes adding a build configuration (--disable-gil)...\n\n(python.org uses aggressive front-end caching so you might need to refresh the page your browser to see latest changes)\n\nExciting stuff!\n\nawesome news! [...] # PEP 703: Making the Global Interpreter Lock Optional\n\nHi :wave:\n\n:wave:\n\nAs the sponsor of @colesbury\u2019s PEP, I\u2019d like to invite you all to discuss the proposal to solve the biggest scalability limitation of CPython by making it possible to build a version of the interpreter which doesn\u2019t use the Global Interpreter Lock. [...] I prefer `--enable-gil / --disable-gil` option.\n\n`--enable-gil / --disable-gil`\n\nI like `--enable-gil / --disable-gil` too. I\u2019ll wait a bit to see if there are additional comments on the build option naming and then update the PEP.\n\n`--enable-gil / --disable-gil`\n\nWhat is the impact on packaging, wheel tags, PyPI, pip, python org installers etc.?\n\nThanks for the response!\n\n[3] CPython without a global interpreter lock\n    https://lwn.net/Articles/940780\n    PEP 703 (\"Making the Global Interpreter Lock Optional in CPython\") was posted back in January, then revised in May. It proposes creating a second build of CPython using a new build configuration switch (\u2011\u2011disable-gil) that would \"run Python code without the global interpreter lock and with the necessary changes needed to make the interpreter thread-safe\". The GIL is a bottleneck for multi-threaded Python programs because it prevents more than one thread from executing Python at any given time. [...] As noted in last week's article, the lack of a GIL has some negative effects on the ongoing Faster CPython work, which is described in PEP 659 (\"Specializing Adaptive Interpreter\"). The no-GIL PEP mentions some of those problems and points to a specific specialization problem as an open issue for the no-GIL interpreter. For now, it looks like those problems are seen as challenges by the Faster CPython team, who are looking to work with Gross and others toward a no-GIL interpreter without [...] The core of the PEP is the \"Specification\" section, which describes the changes needed to CPython for no-GIL operation. It mentions two ways to control the no-GIL operation of the \u2011\u2011disable-gil build. First, if the Py\\_mod\\_gil slot of an extension module that is being loaded is not set to Py\\_mod\\_gil\\_not\\_used (or is not present at all), the interpreter will pause any current threads and re-enable the GIL before resuming them. It will issue a warning when that happens, so that users are\n\n[4] PEP 703 \u2013 Making the Global Interpreter\n\n[truncated: 3,009 of 7,008 chars]",
+          "content": "[1] PEP 703 - Making the Global Interpreter Lock Optional in CPython | peps ...\n    https://peps.python.org/pep-0703/\n    CPython's global interpreter lock (\"GIL\") prevents multiple threads from executing Python code at the same time. The GIL is an obstacle to using multi-core CPUs from Python efficiently. This PEP proposes adding a build configuration (--disable-gil) to...\n\n[2] PEP 684 - A Per-Interpreter GIL | peps.python.org\n    https://peps.python.org/pep-0684/\n    Since Python 1.5 (1997), CPython users can run multiple interpreters in the same process. However, interpreters in the same process have always shared a significant amount of global state. This is a source of bugs, with a growing impact as more and mo...\n\n[3] PEP 0 - Index of Python Enhancement Proposals (PEPs) | peps.python.org\n    https://peps.python.org/\n    This PEP contains the index of all Python Enhancement Proposals, known as PEPs. PEP numbers are assigned by the PEP editors, and once assigned are never changed. The version control history of the PEP texts represent their historical record.\n\n[4] PEP 779 - Criteria for supported status for free-threaded Python\n    https://peps.python.org/pep-0779/\n    The acceptance of PEP 703 (Making the Global Interpreter Lock Optional in CPython), as announced by the Steering Council, describes three phases of development for the work to remove the Global Interpreter Lock. Phase I started early in the development ...\n\n[5] PEP 311 - Simplified Global Interpreter Lock Acquisition for Extensions\n    https://peps.python.org/pep-0311/\n    This PEP proposes a simplified API for access to the Global Interpreter Lock (GIL) for Python extension modules. Specifically, it provides a solution for authors of complex multi-threaded extensions, where the current state of Python (i.e., the state of...",
           "error": null,
-          "latency_ms": 3505.5055420089047,
-          "raw_chars": 7008,
-          "truncated": true,
+          "latency_ms": 1276.61416599949,
+          "raw_chars": 1824,
+          "truncated": false,
           "source_ids": [
             "S1",
             "S6",
             "S7",
-            "S3",
-            "S5"
-          ]
-        },
-        {
-          "call_id": "call_1iFJejRLqEvuL1GxJ0CejSFn",
-          "tool": "web_search",
-          "args": {
-            "query": "PEP optional GIL CPython"
-          },
-          "ok": true,
-          "content": "Summary: PEP 703 makes the Global Interpreter Lock optional in CPython, allowing a free-threaded build. The GIL is removed to better utilize multi-core CPUs. The standard CPython build still uses the GIL.\n\n[1] What is PEP 703?\n    https://pydevtools.com/handbook/explanation/what-is-pep-703\n    PEP 703: Making the Global Interpreter Lock Optional in CPython is the proposal that makes a no-GIL CPython build real. It adds a build configuration that removes the Global Interpreter Lock (GIL), the mutex that lets only one thread execute Python bytecode at a time, producing the free-threaded Python interpreter.\n\n[2] PEP 703 \u2013 Making the Global Interpreter Lock Optional in CPython | peps.python.org\n    https://peps.python.org/pep-0703\n    The GIL is a CPython implementation detail that limits multithreaded parallelism, so it might seem unintuitive to think of it as a usability issue. However, library authors frequently care a great deal about performance and will design APIs that support working around the GIL. These workaround frequently lead to APIs that are more difficult to use. Consequently, users of these APIs may experience the GIL as a usability issue and not just a performance issue. [...] See PEP 1 for how to propose changes.\n\n## Abstract\n\nCPython\u2019s global interpreter lock (\u201cGIL\u201d) prevents multiple threads from executing Python code at the same time. The GIL is an obstacle to using multi-core CPUs from Python efficiently. This PEP proposes adding a build configuration (`--disable-gil`) to CPython to let it run Python code without the global interpreter lock and with the necessary changes needed to make the interpreter thread-safe.\n\n## Motivation [...] This PEP proposes switching from a generational cyclic garbage collector to a non-generational collector (when CPython is built without the GIL). That is equivalent to only having one generation (the \u201cold\u201d generation). There are two reasons for this proposed change.\n\n[3] CPython without a global interpreter lock [LWN.net]\n    https://lwn.net/Articles/940780\n    PEP 703 (\"Making the Global Interpreter Lock Optional in CPython\") was posted back in January, then revised in May. It proposes creating a second build of CPython using a new build configuration switch (\u2011\u2011disable-gil) that would \"run Python code without the global interpreter lock and with the necessary changes needed to make the interpreter thread-safe\". The GIL is a bottleneck for multi-threaded Python programs because it prevents more than one thread from executing Python at any given time. [...] As noted in last week's article, the lack of a GIL has some negative effects on the ongoing Faster CPython work, which is described in PEP 659 (\"Specializing Adaptive Interpreter\"). The no-GIL PEP mentions some of those problems and points to a specific specialization problem as an open issue for the no-GIL interpreter. For now, it looks like those problems are seen as challenges by the Faster CPython team, who are looking to work with Gross and others toward a no-GIL interpreter without [...] The core of the PEP is the \"Specification\" section, which describes the changes needed to CPython for no-GIL operation. It mentions two ways to control the no-GIL operation of the \u2011\u2011disable-gil build. First, if the Py\\_mod\\_gil slot of an extension module that is being loaded is not set to Py\\_mod\\_gil\\_not\\_used (or is not present at all), the interpreter will pause any current threads and re-enable the GIL before resuming them. It will issue a warning when that happens, so that users are\n\n[4] PEP 703 (Making the Global Interpreter Lock Optional in ...\n    https://discuss.python.org/t/pep-703-making-the-global-interpreter-lock-optional-in-cpython-acceptance/37075\n    Yes, removing the GIL is a big leap forward and will help exploit CPU parallelism in more workloads. No, it doesn\u2019t mean that previously CPython was \u201cmonocore\u201d. Saying so is just misrepresenting the current state of the CPython implementation. [...] # PEP 703 (Making the\n\n[truncated: 2,245 of 6,243 chars]",
-          "error": null,
-          "latency_ms": 828.3846249978524,
-          "raw_chars": 6243,
-          "truncated": true,
-          "source_ids": [
-            "S1",
-            "S3",
-            "S7",
             "S8",
-            "S5"
+            "S9"
           ]
         },
         {
-          "call_id": "call_IJkZlLDP4hbE457TPN7VUZA6",
+          "call_id": "call_K4MuuPFlRLk3xlpVBuFDgId2",
           "tool": "web_search",
           "args": {
-            "query": "PEP 703 optional GIL"
+            "query": "PEP optional GIL CPython \"optional\" \"GIL\""
           },
           "ok": true,
-          "content": "Summary: PEP 703 makes the Global Interpreter Lock optional in CPython, allowing for a free-threaded build that enables true parallelism on multi-core CPUs. This optional build is available in Python 3.14, but the standard build still uses the GIL.\n\n[1] What is PEP 703?\n    https://pydevtools.com/handbook/explanation/what-is-pep-703\n    PEP 703: Making the Global Interpreter Lock Optional in CPython is the proposal that makes a no-GIL CPython build real. It adds a build configuration that removes the Global Interpreter Lock (GIL), the mutex that lets only one thread execute Python bytecode at a time, producing the free-threaded Python interpreter.\n\n[2] Can SQLAlchemy benefit from PEP 703 (making the GIL optional)? \u00b7 sqlalchemy/sqlalchemy \u00b7 Discussion #10002 \u00b7 GitHub\n    https://github.com/sqlalchemy/sqlalchemy/discussions/10002\n    | Hi!  I'm Gabriel de Marmiesse and I'm helping Sam Gross to find out if maintainers of selected Python packages would benefit from PEP703.  If you don't know what is PEP 703, it's about making the global interpreter lock (GIL) optional.  Long story short, there would be a ~10% performance impact on single threaded programs, but would allow multithreaded programms to take full advantage of multiple cores.  You can play with it here.  If you have the time, we would like to know is if the [...] as a bit of a red flag; by being an option only, it's a given that GIL-less mode is free to break existing code, perhaps it would be better to move Python forward first to a fully compliant language first before adding this mode. will there be a warnings mode for code that does non-GIL-less unsafe things? ).  We'd have users demanding compatibility for this new mode immediately and it's unknown the extent of changes which would be needed in SQLAlchemy to accommodate them. I see there's a test [...] operation, we would be getting strange new race condition related issues reported (which are usually surprising behaviors in the database drivers that we would need to accommodate). 3. SQLAlchemy uses cython and it's not clear what impact this pep has on cython   Basically it's one thing to \"remove the GIL\" from python, OK that would be challenging, but to make it an option, that would be basically really bad for us as far as testing / CI / support (and also might be seen as a bit of a red\n\n[3] Faster Python: Unlocking the Python Global Interpreter Lock - The JetBrains Blog\n    https://blog.jetbrains.com/pycharm/2025/07/faster-python-unlocking-the-python-global-interpreter-lock\n    Python has not removed the GIL, but PEP 703 makes it optional and introduces a free-threaded build in Python 3.13. The standard build still uses the GIL, and this will remain the case until the ecosystem fully supports free-threaded operation. Work on the free-threaded path is continuing, and Python 3.14 will advance it beyond the experimental stage. Full removal depends on library compatibility and community adoption in the future.\n\n## Removing the GIL\n\n[4] What is PEP 703 and why is it important for Python? | Mohammad Khaki posted on the topic | LinkedIn\n    https://www.linkedin.com/posts/moekhaki_pep-703-making-the-global-interpreter-lock-activity-7384773591495790592-Ykjr\n    \u2753Python 3.14 includes PEP 703, but what is it? PEP 703 ( makes the Global Interpreter Lock (GIL) optional in CPython. The implementation began in Python 3.13 and is stabilized in Python 3.14. \u2753Why is it important? The GIL has been a major bottleneck for Python\u2019s performance on multi-core CPUs. It allowed only one thread to execute Python bytecode at a time, even on systems with multiple cores, preventing true parallelism in CPU-bound workloads. \u2753How does PEP 703 help? PEP 703 removes this [...] \ud83d\ude80 Big news for Python developers! The Global Interpreter Lock (GIL) - the single biggest limitation for Python\u2019s performance - is finally optional. Starting with Python 3.14, there\u2019s experimental support for a \u201cfree-threaded\u201d mode, which removes the GIL and allows true\n\n[truncated: 1,987 of 5,981 chars]",
+          "content": "[1] PEP 703 – Making the Global Interpreter Lock Optional in ...\n    https://peps.python.org/pep-0703/\n    Jan 9, 2023 · This PEP proposes adding a build configuration (--disable-gil) to CPython to let it run Python code without the global interpreter lock and with the necessary changes needed to make the interpreter thread-safe. The GIL is a major obstacle to concurrency.\n\n[2] PEP 703: Making the Python global interpreter lock optional\n    https://lwn.net/Articles/919563/\n    Jan 10, 2023 · In late 2021, LWN covered a plan to eliminate the Python global interpreter lock (GIL), thus improving the language's thread-level concurrency. This plan has now been codified as PEP 703, which includes an extensive discussion of the changes that would be made.\n\n[3] Meta Supports PEP 703: Making the GIL Optional in CPython\n    https://www.besthub.dev/articles/meta-supports-pep-703-making-the-gil-optional-in-cpython-25e9c98a1016\n    Jul 24, 2023 · Meta is actively promoting the adoption of PEP 703, titled “Making the Global Interpreter Lock Optional in CPython,” which aims to make the GIL optional in CPython.\n\n[4] Meta Supports PEP 703 to Make the CPython GIL Optional\n    https://www.besthub.dev/articles/meta-supports-pep-703-to-make-the-cpython-gil-optional-a1629edd67bc\n    Jul 14, 2023 · Meta is working to promote the adoption of PEP 703, a proposal that would make the Global Interpreter Lock (GIL) optional in CPython, improving multi‑threaded performance.\n\n[5] PEP 703: Making the Global Interpreter Lock Optional\n    https://discuss.python.org/t/pep-703-making-the-global-interpreter-lock-optional/22606\n    Jan 10, 2023 · CPython’s global interpreter lock (“GIL”) prevents multiple threads from executing Python code at the same time. The GIL is an obstacle to using multi-core CPUs from Python efficiently. This PEP proposes adding a build configuration (--disable-gil)...",
           "error": null,
-          "latency_ms": 868.6871669924585,
-          "raw_chars": 5981,
-          "truncated": true,
+          "latency_ms": 3679.972167001324,
+          "raw_chars": 1888,
+          "truncated": false,
           "source_ids": [
             "S1",
-            "S9",
-            "S5",
+            "S2",
             "S10",
-            "S3"
+            "S11",
+            "S12"
           ]
         },
         {
-          "call_id": "call_lSCAXYsn17rBQUMzXnkXfpY0",
+          "call_id": "call_AR7ttrn37AMHlVXQM6aGjpV7",
           "tool": "web_search",
           "args": {
-            "query": "site:peps.python.org optional GIL PEP"
+            "query": "\"global interpreter lock\" optional PEP 537 554"
           },
           "ok": true,
-          "content": "Summary: PEP 703 proposes making the Global Interpreter Lock optional in CPython. PEP 779 outlines criteria for supporting a free-threaded Python build. As of 2026, the free-threaded build is still optional.\n\n[1] PEP 703 \u2013 Making the Global Interpreter Lock Optional in CPython | peps.python.org\n    https://peps.python.org/pep-0703?featured_on=talkpython\n    See PEP 1 for how to propose changes.\n\n## Abstract\n\nCPython\u2019s global interpreter lock (\u201cGIL\u201d) prevents multiple threads from executing Python code at the same time. The GIL is an obstacle to using multi-core CPUs from Python efficiently. This PEP proposes adding a build configuration (`--disable-gil`) to CPython to let it run Python code without the global interpreter lock and with the necessary changes needed to make the interpreter thread-safe.\n\n## Motivation [...] This PEP proposes a new API `PyDict_FetchItem` which behaves like `PyDict_GetItem`, but returns a new reference instead of a borrowed reference. As described in Borrowed References, some uses of borrowed references that were safe when running with the GIL are unsafe when running without the GIL and need to be replaced by functions like `PyDict_FetchItem` that return new references. [...] The GIL is a CPython implementation detail that limits multithreaded parallelism, so it might seem unintuitive to think of it as a usability issue. However, library authors frequently care a great deal about performance and will design APIs that support working around the GIL. These workaround frequently lead to APIs that are more difficult to use. Consequently, users of these APIs may experience the GIL as a usability issue and not just a performance issue.\n\n[2] PEP 703 \u2013 Making the Global Interpreter Lock Optional in ...\n    https://peps.python.org/pep-0703\n    See PEP 1 for how to propose changes.\n\n## Abstract\n\nCPython\u2019s global interpreter lock (\u201cGIL\u201d) prevents multiple threads from executing Python code at the same time. The GIL is an obstacle to using multi-core CPUs from Python efficiently. This PEP proposes adding a build configuration (`--disable-gil`) to CPython to let it run Python code without the global interpreter lock and with the necessary changes needed to make the interpreter thread-safe.\n\n## Motivation [...] This PEP proposes a new API `PyDict_FetchItem` which behaves like `PyDict_GetItem`, but returns a new reference instead of a borrowed reference. As described in Borrowed References, some uses of borrowed references that were safe when running with the GIL are unsafe when running without the GIL and need to be replaced by functions like `PyDict_FetchItem` that return new references. [...] The GIL is a CPython implementation detail that limits multithreaded parallelism, so it might seem unintuitive to think of it as a usability issue. However, library authors frequently care a great deal about performance and will design APIs that support working around the GIL. These workaround frequently lead to APIs that are more difficult to use. Consequently, users of these APIs may experience the GIL as a usability issue and not just a performance issue.\n\n[3] PEP 779 \u2013 Criteria for supported status for free-threaded Python\n    https://peps.python.org/pep-0779\n    The acceptance of PEP 703 (Making the Global Interpreter Lock Optional in CPython), as announced by the Steering Council, describes three phases of development for the work to remove the Global Interpreter Lock. Phase I started early in the development of Python 3.13, and includes making the free-threaded (GIL-less) Python build available but explicitly experimental. Phase II would make the free-threaded build officially supported but still optional, and phase III would make the free-threaded\n\n[4] PEP 779 \u2013 Criteria for supported status for free-threaded Python | peps.python.org\n    https://peps.python.org/pep-0779#specification\n    The acceptance of PEP 703 (Making the Global Interpreter Lock Optional in CPython), as announced by the Steering Council,\n\n[truncated: 1,026 of 5,018 chars]",
+          "content": "[1] Global interpreter lock - Wikipedia\n    https://en.wikipedia.org/wiki/Global_interpreter_lock\n    A global interpreter lock (GIL) is a mutual-exclusion lock held by a programming language interpreter thread to avoid sharing code that is not thread-safe with other threads. In implementations with a GIL, there is always one GIL for each interpreter process.\n\n[2] PEP 703 – Making the Global Interpreter Lock Optional in CPython\n    https://peps.python.org/pep-0703/\n    CPython’s global interpreter lock (“GIL”) prevents multiple threads from executing Python code at the same time. The GIL is an obstacle to using multi-core CPUs from Python efficiently.\n\n[3] PEP 703: Making the Python global interpreter lock optional [LWN.net]\n    https://lwn.net/Articles/919563/\n    The global interpreter lock will remain the default for CPython builds and python.org downloads. A new build configuration flag, --without-gil will be added to the configure script that will build CPython without the global interpreter lock.\n\n[4] Python 3.14 will finally let us say goodbye to the Global Interpreter...\n    https://www.linkedin.com/posts/foma-lim_python-314-will-finally-let-us-say-goodbye-activity-7382348024443867136-PpAi\n    Python 3.14 introduces a significant development called free-threading, which allows disabling the Global Interpreter Lock (GIL) as an opt-in mode. The GIL has been a core bottleneck for CPU-bound multi-threaded programs, since one thread could execute Python bytecode at a time.\n\n[5] Python's Steering Council Plans to Make Its 'Global Interpreter Lock.....\n    https://developers.slashdot.org/story/23/07/29/037250/pythons-steering-council-plans-to-make-its-global-interpreter-lock-optional\n    Python's Global Interpreter Lock \"allows only one thread to hold the control of the Python interpreter,\" according to the tutorial site Real Python. (They add, \"it can be a performance bottleneck in CPU-bound and multi-threaded code.\")",
           "error": null,
-          "latency_ms": 866.4085420023184,
-          "raw_chars": 5018,
-          "truncated": true,
+          "latency_ms": 1753.6283749996073,
+          "raw_chars": 1953,
+          "truncated": false,
           "source_ids": [
-            "S11",
-            "S3",
-            "S12",
             "S13",
-            "S14"
+            "S1",
+            "S2",
+            "S14",
+            "S15"
           ]
         }
       ],
@@ -194,7 +167,7 @@
       "i": 4,
       "node": "reflect",
       "plan_version": 1,
-      "ts_offset_ms": 7284.6379580005305,
+      "ts_offset_ms": 7230.552749999333,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -204,17 +177,17 @@
       "i": 5,
       "node": "act",
       "plan_version": 1,
-      "ts_offset_ms": 10046.457207994536,
+      "ts_offset_ms": 8501.298208999287,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
-      "note": "The PEP is **PEP 703**, titled **\u201cMaking the Global Interpreter Lock Optional in CPython\u201d**. (Sources: [S3], [S11])"
+      "note": "The PEP that proposed making CPython’s **global interpreter lock (GIL) optional** is **PEP 703**: **“Making the Global Interpreter Lock Optional in CPython.”** ([S1])"
     },
     {
       "i": 6,
       "node": "observe",
       "plan_version": 1,
-      "ts_offset_ms": 10048.20308300259,
+      "ts_offset_ms": 8502.683083999727,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -224,7 +197,7 @@
       "i": 7,
       "node": "finalize",
       "plan_version": 1,
-      "ts_offset_ms": 11251.645875003305,
+      "ts_offset_ms": 9667.371541998364,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -234,123 +207,131 @@
   "sources": [
     {
       "sid": "S1",
-      "url": "https://pydevtools.com/handbook/explanation/what-is-pep-703",
-      "title": "What is PEP 703?",
-      "snippet": "PEP 703: Making the Global Interpreter Lock Optional in CPython is the proposal that makes a no-GIL CPython build real. It adds a build configuration that removes the Global Interpreter Lock (GIL), the mutex that lets only one thread execute Python bytecode at a time, producing the free-threaded Pyt",
+      "url": "https://peps.python.org/pep-0703/",
+      "title": "PEP 703 - Making the Global Interpreter Lock Optional in CPython | peps ...",
+      "snippet": "The GIL is an obstacle to using multi-core CPUs from Python efficiently. This PEP proposes adding a build configuration (--disable-gil) to CPython to let it run Python code without the global interpreter lock and with the necessary changes needed to make the interpreter thread-safe. Motivation The G",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S2",
-      "url": "https://discuss.python.org/t/pep-703-making-the-global-interpreter-lock-optional-3-12-updates/26503",
-      "title": "PEP 703: Making the Global Interpreter Lock Optional (3.12 updates) - PEPs - Discussions on Python.org",
-      "snippet": "I\u2019d appreciate your feedback on the PEP and the updates.\n\nThanks @colesbury for working on this PEP! It\u2019s clearly had a lot of thought put in to it and is tackling a really tough problem head on: the GIL.\n\nFeedback:\n\nThe global interpreter lock will remain the default for CPython builds and python.o",
+      "url": "https://lwn.net/Articles/919563/",
+      "title": "PEP 703: Making the Python global interpreter lock optional",
+      "snippet": "A new build configuration flag, --without-gil will be added to the configure script that will build CPython without the global interpreter lock. The posting of a PEP is only one step in a long path toward integrating this change into the CPython interpreter; expect some extended discussions over the",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S3",
-      "url": "https://peps.python.org/pep-0703",
-      "title": "PEP 703 \u2013 Making the Global Interpreter Lock Optional in ...",
-      "snippet": "# Python Enhancement Proposals\n\n Python \u00bb\n PEP Index\") \u00bb\n PEP 703\nPEP 703 \u2013 Making the Global Interpreter Lock Optional in CPython\n\n# PEP 703 \u2013 Making the Global Interpreter Lock Optional in CPython\n\nAuthor:\n:   Sam Gross\n\nSponsor:\n:   \u0141ukasz Langa\n\nDiscussions-To:\n:   Discourse thread\n\nStatus:\n:   ",
+      "url": "https://github.com/irthomasthomas/undecidability/issues/733",
+      "title": "PEP 703 - Making the Global Interpreter Lock Optional in CPython - GitHub",
+      "snippet": "This PEP proposes adding a build configuration (--disable-gil) to CPython to let it run Python code without the global interpreter lock and with the necessary changes needed to make the interpreter thread-safe.",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S4",
-      "url": "https://lwn.net/Articles/919563",
-      "title": "PEP 703: Making the Python global interpreter lock optional [LWN.net]",
-      "snippet": "> The global interpreter lock will remain the default for CPython builds and python.org downloads. A new build configuration flag, --without-gil will be added to the configure script that will build CPython without the global interpreter lock. [...] The posting of a PEP is only one step in a long pa",
+      "url": "https://lwn.net/Articles/919564/",
+      "title": "PEP 703: Making the Python global interpreter lock optional",
+      "snippet": "There is a section of the PEP that mentions runtime selection as a goal: This PEP introduces a new build mode (--without-gil) that is not ABI compatible with the standard build mode. The additional build mode adds complexity for both Python core developers and extension developers.",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S5",
-      "url": "https://blog.jetbrains.com/pycharm/2025/07/faster-python-unlocking-the-python-global-interpreter-lock",
-      "title": "Faster Python: Unlocking the Python Global Interpreter Lock",
-      "snippet": "The removal of the GIL has been a topic for almost a decade. In 2016, at the Python Language Summit, Larry Hastings presented his thoughts on performing a \u201cGIL-ectomy\u201d on the CPython interpreter and the progress he\u2019d made with this idea . This was a pioneering attempt to remove the Python GIL. In 20",
+      "url": "https://pydevtools.com/handbook/explanation/what-is-pep-703/",
+      "title": "What is PEP 703? | pydevtools",
+      "snippet": "PEP 703: Making the Global Interpreter Lock Optional in CPython is the proposal that makes a no-GIL CPython build real. It adds a build configuration that removes the Global Interpreter Lock (GIL), the mutex that lets only one thread execute Python bytecode at a time, producing the free-threaded Pyt",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S6",
-      "url": "https://discuss.python.org/t/pep-703-making-the-global-interpreter-lock-optional/22606",
-      "title": "PEP 703: Making the Global Interpreter Lock Optional",
-      "snippet": "### PEP 703 \u2013 Making the Global Interpreter Lock Optional in CPython |...\n\nCPython\u2019s global interpreter lock (\u201cGIL\u201d) prevents multiple threads from executing Python code at the same time. The GIL is an obstacle to using multi-core CPUs from Python efficiently. This PEP proposes adding a build config",
+      "url": "https://peps.python.org/pep-0684/",
+      "title": "PEP 684 - A Per-Interpreter GIL | peps.python.org",
+      "snippet": "Since Python 1.5 (1997), CPython users can run multiple interpreters in the same process. However, interpreters in the same process have always shared a significant amount of global state. This is a source of bugs, with a growing impact as more and mo...",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S7",
-      "url": "https://lwn.net/Articles/940780",
-      "title": "CPython without a global interpreter lock",
-      "snippet": "PEP 703 (\"Making the Global Interpreter Lock Optional in CPython\") was posted back in January, then revised in May. It proposes creating a second build of CPython using a new build configuration switch (\u2011\u2011disable-gil) that would \"run Python code without the global interpreter lock and with the neces",
+      "url": "https://peps.python.org/",
+      "title": "PEP 0 - Index of Python Enhancement Proposals (PEPs) | peps.python.org",
+      "snippet": "This PEP contains the index of all Python Enhancement Proposals, known as PEPs. PEP numbers are assigned by the PEP editors, and once assigned are never changed. The version control history of the PEP texts represent their historical record.",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S8",
-      "url": "https://discuss.python.org/t/pep-703-making-the-global-interpreter-lock-optional-in-cpython-acceptance/37075",
-      "title": "PEP 703 (Making the Global Interpreter Lock Optional in ...",
-      "snippet": "Yes, removing the GIL is a big leap forward and will help exploit CPU parallelism in more workloads. No, it doesn\u2019t mean that previously CPython was \u201cmonocore\u201d. Saying so is just misrepresenting the current state of the CPython implementation. [...] # PEP 703 (Making the Global Interpreter Lock Opti",
+      "url": "https://peps.python.org/pep-0779/",
+      "title": "PEP 779 - Criteria for supported status for free-threaded Python",
+      "snippet": "The acceptance of PEP 703 (Making the Global Interpreter Lock Optional in CPython), as announced by the Steering Council, describes three phases of development for the work to remove the Global Interpreter Lock. Phase I started early in the development ...",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S9",
-      "url": "https://github.com/sqlalchemy/sqlalchemy/discussions/10002",
-      "title": "Can SQLAlchemy benefit from PEP 703 (making the GIL optional)? \u00b7 sqlalchemy/sqlalchemy \u00b7 Discussion #10002 \u00b7 GitHub",
-      "snippet": "| Hi!  I'm Gabriel de Marmiesse and I'm helping Sam Gross to find out if maintainers of selected Python packages would benefit from PEP703.  If you don't know what is PEP 703, it's about making the global interpreter lock (GIL) optional.  Long story short, there would be a ~10% performance impact on",
+      "url": "https://peps.python.org/pep-0311/",
+      "title": "PEP 311 - Simplified Global Interpreter Lock Acquisition for Extensions",
+      "snippet": "This PEP proposes a simplified API for access to the Global Interpreter Lock (GIL) for Python extension modules. Specifically, it provides a solution for authors of complex multi-threaded extensions, where the current state of Python (i.e., the state of...",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S10",
-      "url": "https://www.linkedin.com/posts/moekhaki_pep-703-making-the-global-interpreter-lock-activity-7384773591495790592-Ykjr",
-      "title": "What is PEP 703 and why is it important for Python? | Mohammad Khaki posted on the topic | LinkedIn",
-      "snippet": "\u2753Python 3.14 includes PEP 703, but what is it? PEP 703 ( makes the Global Interpreter Lock (GIL) optional in CPython. The implementation began in Python 3.13 and is stabilized in Python 3.14. \u2753Why is it important? The GIL has been a major bottleneck for Python\u2019s performance on multi-core CPUs. It al",
+      "url": "https://www.besthub.dev/articles/meta-supports-pep-703-making-the-gil-optional-in-cpython-25e9c98a1016",
+      "title": "Meta Supports PEP 703: Making the GIL Optional in CPython",
+      "snippet": "Jul 24, 2023 · Meta is actively promoting the adoption of PEP 703, titled “Making the Global Interpreter Lock Optional in CPython,” which aims to make the GIL optional in CPython.",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S11",
-      "url": "https://peps.python.org/pep-0703?featured_on=talkpython",
-      "title": "PEP 703 \u2013 Making the Global Interpreter Lock Optional in CPython | peps.python.org",
-      "snippet": "See PEP 1 for how to propose changes.\n\n## Abstract\n\nCPython\u2019s global interpreter lock (\u201cGIL\u201d) prevents multiple threads from executing Python code at the same time. The GIL is an obstacle to using multi-core CPUs from Python efficiently. This PEP proposes adding a build configuration (`--disable-gil",
+      "url": "https://www.besthub.dev/articles/meta-supports-pep-703-to-make-the-cpython-gil-optional-a1629edd67bc",
+      "title": "Meta Supports PEP 703 to Make the CPython GIL Optional",
+      "snippet": "Jul 14, 2023 · Meta is working to promote the adoption of PEP 703, a proposal that would make the Global Interpreter Lock (GIL) optional in CPython, improving multi‑threaded performance.",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S12",
-      "url": "https://peps.python.org/pep-0779",
-      "title": "PEP 779 \u2013 Criteria for supported status for free-threaded Python",
-      "snippet": "The acceptance of PEP 703 (Making the Global Interpreter Lock Optional in CPython), as announced by the Steering Council, describes three phases of development for the work to remove the Global Interpreter Lock. Phase I started early in the development of Python 3.13, and includes making the free-th",
+      "url": "https://discuss.python.org/t/pep-703-making-the-global-interpreter-lock-optional/22606",
+      "title": "PEP 703: Making the Global Interpreter Lock Optional",
+      "snippet": "Jan 10, 2023 · CPython’s global interpreter lock (“GIL”) prevents multiple threads from executing Python code at the same time. The GIL is an obstacle to using multi-core CPUs from Python efficiently. This PEP proposes adding a build configuration (--disable-gil)...",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S13",
-      "url": "https://peps.python.org/pep-0779#specification",
-      "title": "PEP 779 \u2013 Criteria for supported status for free-threaded Python | peps.python.org",
-      "snippet": "The acceptance of PEP 703 (Making the Global Interpreter Lock Optional in CPython), as announced by the Steering Council, describes three phases of development for the work to remove the Global Interpreter Lock. Phase I started early in the development of Python 3.13, and includes making the free-th",
+      "url": "https://en.wikipedia.org/wiki/Global_interpreter_lock",
+      "title": "Global interpreter lock - Wikipedia",
+      "snippet": "A global interpreter lock (GIL) is a mutual-exclusion lock held by a programming language interpreter thread to avoid sharing code that is not thread-safe with other threads. In implementations with a GIL, there is always one GIL for each interpreter process.",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S14",
-      "url": "https://peps.python.org/pep-0779?featured_on=talkpython",
-      "title": "PEP 779 \u2013 Criteria for supported status for free-threaded Python | peps.python.org",
-      "snippet": "The acceptance of PEP 703 (Making the Global Interpreter Lock Optional in CPython), as announced by the Steering Council, describes three phases of development for the work to remove the Global Interpreter Lock. Phase I started early in the development of Python 3.13, and includes making the free-th",
+      "url": "https://www.linkedin.com/posts/foma-lim_python-314-will-finally-let-us-say-goodbye-activity-7382348024443867136-PpAi",
+      "title": "Python 3.14 will finally let us say goodbye to the Global Interpreter...",
+      "snippet": "Python 3.14 introduces a significant development called free-threading, which allows disabling the Global Interpreter Lock (GIL) as an opt-in mode. The GIL has been a core bottleneck for CPU-bound multi-threaded programs, since one thread could execute Python bytecode at a time.",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S15",
+      "url": "https://developers.slashdot.org/story/23/07/29/037250/pythons-steering-council-plans-to-make-its-global-interpreter-lock-optional",
+      "title": "Python's Steering Council Plans to Make Its 'Global Interpreter Lock.....",
+      "snippet": "Python's Global Interpreter Lock \"allows only one thread to hold the control of the Python interpreter,\" according to the tutorial site Real Python. (They add, \"it can be a performance bottleneck in CPU-bound and multi-threaded code.\")",
       "tool": "web_search",
       "first_seen_step": 1
     }
   ],
-  "answer": "PEP **703** (\u201c**Making the Global Interpreter Lock Optional**\u201d) proposed making the CPython global interpreter lock optional. [S3]",
+  "answer": "PEP 703 (“Making the Global Interpreter Lock Optional in CPython”) proposed making the CPython GIL optional. [S1]",
   "citations": [
-    "S3"
+    "S1"
   ],
   "coverage": {
-    "What PEP proposed making the CPython global interpreter lock optional (name/number)?": false
+    "Which PEP is titled or describes making the CPython global interpreter lock (GIL) optional?": false
   },
   "outcome": {
     "status": "completed",
@@ -366,76 +347,76 @@
         "model": "gpt-5.4-nano",
         "input_tokens": 222,
         "cached_tokens": 0,
-        "output_tokens": 141,
+        "output_tokens": 139,
         "reasoning_tokens": 67,
-        "cost_usd": 0.00022065,
-        "latency_ms": 1806.063334006467,
+        "cost_usd": 0.00021815000000000002,
+        "latency_ms": 1828.1466249991354,
         "replayed": false
       },
       {
         "purpose": "act",
         "model": "gpt-5.4-nano",
-        "input_tokens": 776,
+        "input_tokens": 854,
         "cached_tokens": 0,
-        "output_tokens": 130,
+        "output_tokens": 119,
         "reasoning_tokens": 0,
-        "cost_usd": 0.0003177,
-        "latency_ms": 1895.6586669955868,
+        "cost_usd": 0.00031955,
+        "latency_ms": 1698.389583001699,
         "replayed": false
       },
       {
         "purpose": "act",
         "model": "gpt-5.4-nano",
-        "input_tokens": 6260,
+        "input_tokens": 3474,
         "cached_tokens": 0,
-        "output_tokens": 40,
+        "output_tokens": 48,
         "reasoning_tokens": 0,
-        "cost_usd": 0.001302,
-        "latency_ms": 2757.4290829943493,
+        "cost_usd": 0.0007548,
+        "latency_ms": 1267.9916659999435,
         "replayed": false
       },
       {
         "purpose": "finalize",
         "model": "gpt-5.4-nano",
-        "input_tokens": 1109,
+        "input_tokens": 1074,
         "cached_tokens": 0,
-        "output_tokens": 33,
+        "output_tokens": 32,
         "reasoning_tokens": 0,
-        "cost_usd": 0.00026305,
-        "latency_ms": 1201.2182499893242,
+        "cost_usd": 0.0002548,
+        "latency_ms": 1162.2069999993982,
         "replayed": false
       }
     ],
     "totals": {
-      "input_tokens": 8367,
+      "input_tokens": 5624,
       "cached_tokens": 0,
-      "output_tokens": 344,
+      "output_tokens": 338,
       "reasoning_tokens": 67,
-      "cost_usd": 0.0021034,
+      "cost_usd": 0.0015473000000000002,
       "cache_hit_rate": 0.0
     },
     "by_purpose": {
       "plan": {
         "calls": 1,
-        "cost_usd": 0.00022065,
-        "output_tokens": 141
+        "cost_usd": 0.00021815000000000002,
+        "output_tokens": 139
       },
       "act": {
         "calls": 2,
-        "cost_usd": 0.0016197,
-        "output_tokens": 170
+        "cost_usd": 0.00107435,
+        "output_tokens": 167
       },
       "finalize": {
         "calls": 1,
-        "cost_usd": 0.00026305,
-        "output_tokens": 33
+        "cost_usd": 0.0002548,
+        "output_tokens": 32
       }
     },
-    "search_credits": 5,
+    "search_credits": 0,
     "steps": 2
   },
   "timings_ms": {
-    "total": 11249.023083000793
+    "total": 9663.420500000939
   },
   "compaction": {
     "count": 0,

@@ -1,7 +1,7 @@
 {
   "schema_version": "1",
-  "run_id": "259a7af4df77",
-  "ts": "2026-08-08T19:16:41+00:00",
+  "run_id": "0fdc45953c86",
+  "ts": "2026-10-25T09:19:31+00:00",
   "question": "Who was awarded the 2024 Nobel Prize in Physics, and what contribution was cited?",
   "variant": "no_overrule",
   "config": {
@@ -12,14 +12,14 @@
     "max_run_cost_usd": 0.05,
     "finalize_reserve_usd": 0.008,
     "compact_threshold_tokens": 12000,
-    "git_sha": "a4216f3",
-    "prompt_hash": "sha256:512e8e5d8eaa"
+    "git_sha": "e577c53",
+    "prompt_hash": "sha256:e2655640140a"
   },
   "plan": {
     "version": 1,
     "subquestions": [
-      "Who were the recipients of the 2024 Nobel Prize in Physics?",
-      "What contribution(s) or scientific discovery was cited in the Nobel Prize in Physics 2024 announcement?"
+      "Which individuals were awarded the 2024 Nobel Prize in Physics?",
+      "What contribution(s) to physics did the Nobel Prize in Physics 2024 cite for the laureates?"
     ],
     "replans": 0
   },
@@ -28,7 +28,7 @@
       "i": 1,
       "node": "plan",
       "plan_version": 0,
-      "ts_offset_ms": 1873.0672089877771,
+      "ts_offset_ms": 1756.0106670007372,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -38,27 +38,34 @@
       "i": 2,
       "node": "act",
       "plan_version": 1,
-      "ts_offset_ms": 4125.206124997931,
+      "ts_offset_ms": 3417.0152499991673,
       "tool_calls": [
         {
-          "call_id": "call_itl3J85u3BMcZluXcvRixxGJ",
+          "call_id": "call_gkG51RmlOOC8yA3jYg25y81k",
           "name": "web_search",
           "args": {
-            "query": "2024 Nobel Prize in Physics awarded to whom contribution cited"
+            "query": "2024 Nobel Prize in Physics awarded to whom contribution cited press release"
           }
         },
         {
-          "call_id": "call_NIaKRXfwEFvbNdg6AgHBEkAC",
+          "call_id": "call_Mc3ae6mbi1tkLLlNwiCnIjLO",
           "name": "web_search",
           "args": {
-            "query": "Nobel Prize in Physics 2024 press release contribution cited"
+            "query": "NobelPrize.org 2024 Physics Prize motivation cited contribution"
           }
         },
         {
-          "call_id": "call_XUYOCj63p0UAIecQ8iSAPo5n",
+          "call_id": "call_z3Sdp7z7ZtRYivuVVJ4GzqUo",
           "name": "web_search",
           "args": {
-            "query": "nobelprize.org Nobel Prize in Physics 2024 laureates citation"
+            "query": "2024 Nobel Prize in Physics two laureates motivation"
+          }
+        },
+        {
+          "call_id": "call_tQt1y5NJnDKV7zcrgzOdSsg4",
+          "name": "web_search",
+          "args": {
+            "query": "2024 Nobel Prize in Physics Nobel Prize press release motivation"
           }
         }
       ],
@@ -70,21 +77,21 @@
       "i": 3,
       "node": "observe",
       "plan_version": 1,
-      "ts_offset_ms": 6250.7380839961115,
+      "ts_offset_ms": 6323.588458999438,
       "tool_calls": [],
       "observations": [
         {
-          "call_id": "call_itl3J85u3BMcZluXcvRixxGJ",
+          "call_id": "call_gkG51RmlOOC8yA3jYg25y81k",
           "tool": "web_search",
           "args": {
-            "query": "2024 Nobel Prize in Physics awarded to whom contribution cited"
+            "query": "2024 Nobel Prize in Physics awarded to whom contribution cited press release"
           },
           "ok": true,
-          "content": "Summary: The 2024 Nobel Prize in Physics was awarded to John Hopfield and Geoffrey Hinton for foundational discoveries that enable machine learning with artificial neural networks. They shared the prize for their contributions to the development of neural networks, which laid the groundwork for modern machine learning.\n\n[1] The Nobel Prize in Physics 2024 - Popular science ...\n    https://www.nobelprize.org/prizes/physics/2024/popular-information\n    ### The Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJOHN J. HOPFIELD  \nBorn 1933 in Chicago, IL, USA. PhD 1958 from Cornell University, Ithaca, NY, USA. Professor at Princeton University, NJ, USA.\n\nGEOFFREY HINTON  \nBorn 1947 in London, UK. PhD 1978 from The University of Edinburgh, UK. Professor at University of Toronto, Canada.\n\n\u201cfor foundational discoveries and inventions that enable machine learning with artificial neural networks\u201d [...] This year\u2019s laureates used tools from physics to construct methods that helped lay the foundation for today\u2019s powerful machine learning. John Hopfield created a structure that can store and reconstruct information. Geoffrey Hinton invented a method that can independently discover properties in data and which has become important for the large artificial neural networks now in use.\n\n## They used physics to find patterns in information\n\nIllustration [...] The states in which the individual components can jointly exist can be analysed using statistical physics, and the probability of them occurring calculated. Some states are more probable than others; this depends on the amount of available energy, which is described in an equation by the nineteenth-century physicist Ludwig Boltzmann. Hinton\u2019s network utilised that equation, and the method was published in 1985 under the striking name of the Boltzmann machine.\n\n[2] A Nobel Prize for Plagiarism\n    https://people.idsia.ch/~juergen/physics-nobel-2024-plagiarism.html\n    | |  |  |  --- | | J\u00fcrgen Schmidhuber  Pronounce: You\\_again Shmidhoobuh  Technical Report IDSIA-24-24, IDSIA | AI Blog  @SchmidhuberAI  12/7/2024 (v1), 7/31/25 (v2), 10/7/25 (v3) |  ---   A Nobel Prize for Plagiarism   ---  Abstract. Sadly, the 2024 Nobel Prize in Physics awarded to Hopfield & Hinton is effectively a prize for plagiarism. They republished foundational methodologies for artificial neural networks developed by Ivakhnenko, Amari and others in Ukraine and Japan during the 1960s [...] Prize in Physics 2024,(#Nob24a) however, correctly cites Linnainmaa (1970),(#BP1) who first published it, and Werbos (1982),(#BP2) who first applied it to NNs.(#DLP)(#DLH)(#DL1) It does not mention, however, that even later surveys by Hinton neither cited the original work by Linnainmaa(#DLP) nor Amari's work (1967-68) on training networks with hidden layers through gradient descent.(#GD1) Reference (#BP4) has a compact history of backpropagation and its precursors.  Unlike his pre-2025 [...] in Physics 2024 was awarded for \u201cfoundational discoveries that enable machine learning with artificial NNs.\u201d(#Nob24a)(#NOBnat) Unfortunately, however, the awardees did not make any such foundational discoveries. Instead they republished methodologies developed in Ukraine and Japan in the 1960s and 1970s, as well as other techniques, without citing the original inventors. See Sec. 1-3 below.  I am one of the persons cited by the Nobel Foundation in the Scientific Background to the Nobel Prize in\n\n[3] WATCH: AI pioneers John Hopfield and Geoffrey Hinton win 2024 Nobel Prize in physics | PBS News\n    https://www.pbs.org/newshour/science/watch-live-the-winner-of-the-2024-nobel-prize-in-physics-is\n    STOCKHOLM (AP) \u2014 Two pioneers of artificial intelligence \u2013 John Hopfield and Geoffrey Hinton \u2013 won the Nobel Prize in physics Tuesday for helping create the building blocks of machine learning that is revolutionizing the way we work and live but also creates new threats to humanity, one of the winners\n\n[truncated: 3,877 of 7,866 chars]",
+          "content": "[1] Geoffrey Hinton - Wikipedia\n    https://en.wikipedia.org/wiki/Geoffrey_Hinton\n    \"Press release: The Nobel Prize in Physics 2024\". NobelPrize.org.\"The VinFuture 2024 Grand Prize honours 5 scientists for transformational contributions to the advancement of deep learning\". Việt Nam News.\n\n[2] Press release: The Nobel Prize in Physics 2024 - NobelPrize.org\n    https://www.nobelprize.org/prizes/physics/2024/press-release/\n    The Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to. John J. Hopfield Princeton University, NJ, USA. Geoffrey Hinton University of Toronto, Canada.To cite this section MLA style: Press release. NobelPrize.org.\n\n[3] Machine learning pioneers win Nobel prize in physics | The Guardian\n    https://www.theguardian.com/science/2024/oct/08/nobel-prize-physics-john-hopfield-geoffrey-hinton-machine-learning\n    Nobel prize in physics awarded to three scientists for work on quantum mechanics.\n\n[4] Allan Song on LinkedIn: Geoffrey Hinton wins Nobel Prize in Physics\n    https://www.linkedin.com/posts/allan-song-502a77a_geoffrey-hinton-wins-nobel-prize-in-physics-activity-7249786207109341186-HdFY\n    The Nobel Prize in Physics 2024. nobelprize.org. 25.It is no surprise the 2024 Nobel Prize in Physics was awarded to John Hopfield and Geoffrey Hinton, who are responsible for work in artificial neural networks that ultimately laid the foundation for today’s machine learning capabilities.\n\n[5] Nobel Prize 2024 Winners List: Recipient Name, Achievement from All...\n    https://www.jagranjosh.com/general-knowledge/list-of-2024-nobel-prize-winners-in-all-categories-1728376617-1\n    The 2024 Nobel Prize in Physics was awarded to John J. Hopfield and Geoffrey E. Hinton on October 8, 2024, in Stockholm, Sweden. They were recognized for their foundational work in machine learning using artificial neural networks.",
           "error": null,
-          "latency_ms": 2070.497916007298,
-          "raw_chars": 7866,
-          "truncated": true,
+          "latency_ms": 1685.563999999431,
+          "raw_chars": 1884,
+          "truncated": false,
           "source_ids": [
             "S1",
             "S2",
@@ -94,43 +101,63 @@
           ]
         },
         {
-          "call_id": "call_NIaKRXfwEFvbNdg6AgHBEkAC",
+          "call_id": "call_Mc3ae6mbi1tkLLlNwiCnIjLO",
           "tool": "web_search",
           "args": {
-            "query": "Nobel Prize in Physics 2024 press release contribution cited"
+            "query": "NobelPrize.org 2024 Physics Prize motivation cited contribution"
           },
           "ok": true,
-          "content": "Summary: The 2024 Nobel Prize in Physics was awarded to John Hopfield and Geoffrey Hinton for foundational discoveries in artificial neural networks, which enable machine learning. Their work laid the groundwork for modern deep learning and AI technologies.\n\n[1] Thoughts about the Nobel Prize in Physics 2024 \u2026 ML Blog\n    https://lamarr-institute.org/blog/thoughts-physics-nobel-prize-2024\n    If you are reading this blog, you likely already know that the 2024 Nobel Prize in Physics has been awarded to John Hopfield and Geoffrey Hinton. To see why, let me just quote from the press release of the Nobel Committee for Physics: \u201cWhen we talk about artificial intelligence, we often mean machine learning using artificial neural networks. This technology was originally inspired by the structure of the brain. In an artificial neural network, the brain\u2019s neurons are represented by nodes that [...] When elaborating on the scientific background to this year\u2019s Nobel Prize, the Nobel Committee cited a wide range of application areas for artificial neural networks in physics and other scientific disciplines. In this context, the IceCube neutrino detector project at the South Pole was mentioned . The project resulted in the first neutrino image of the Milky Way, a breakthrough which was achieved by TU Dortmund University educated scientist Mirco H\u00fcnnefeld in collaboration with the research [...] While he is arguably most famous as one of the discoverers and popularizers of the error backpropagation algorithm  which allows for training multilayer perceptrons (and has roots and precursors reaching further back ), the Nobel Committee cites his earlier contributions to theory and applications of  Boltzmann machines [15,16]. These extend and generalize Hopfield nets using concepts from statistical physics and played a crucial role in the development of what we now call deep learning.\n\n[2] Neural Networks and the 2024 Nobel Prize in Physics\n    https://www.youtube.com/watch?v=itywoDU3sL8\n    # Neural Networks and the 2024 Nobel Prize in Physics - Sixty Symbols\n## Sixty Symbols\n888000 subscribers\n2353 likes\n\n### Description\n58518 views\nPosted: 18 Oct 2024\nThis video features Juan Garrahan, Phil Moriarty and Mike Pound... More links and info below  \u2193 \u2193 \u2193\n\nThe 2024 Nobel Prize in Physics is awarded to John Hopfield and Geoffrey Hinton \u201cfor foundational discoveries and inventions that enable machine learning with artificial neural networks\u201d.\n\nNobel Prize press release -\n\n[3] WATCH: AI pioneers John Hopfield and Geoffrey Hinton win 2024 Nobel Prize in physics | PBS News\n    https://www.pbs.org/newshour/science/watch-live-the-winner-of-the-2024-nobel-prize-in-physics-is\n    Corder reported from The Hague, Netherlands and Borenstein reported from Washington. Associated Press reporter Matt O'Brien contributed from Providence, Rhode Island.\n\n## Find more of our Nobel Prize coverage\n\nSupport trusted journalism and civil dialogue.\n\n## Related\n\nBy Daniel Niemann, Maria Cheng, Mike Corder, Associated Press\n\nBy Associated Press\n\nBy Mary Clare Jalonick, Matt O'Brien, Associated Press\n\nBy Edith M. Lederer, Associated Press\n\nBy Kelvin Chan, Jill Lawless, Associated Press [...] By Aaron W. Harrison, The Conversation\n\nBy David Keyton, Seth Borenstein, John Leicester, Associated Press\n\nBy Jennifer Peltz, Associated Press\n\nBy Jocelyn Noveck, Matt O'Brien, Associated Press\n\nBy Kelvin Chan, Associated Press\n\n## Go Deeper\n\nDaniel Niemann, Associated Press\nDaniel Niemann, Associated Press\n\nSeth Borenstein, Associated Press\nSeth Borenstein, Associated Press\n\nMike Corder, Associated Press\nMike Corder, Associated Press\n\nSupport Provided By:\nLearn more\n\nJuly2026_WebAd_Sidebar [...] \"Instead of exceeding people in physical strength, it's going to exceed people in intellectual ability. We have no experience of what it's like to have things smarter than us. And it's going to be wonderful in many respects,\" Hinton said. \"But we also have to worry about a number of possible bad\n\n[truncated: 3,282 of 7,278 chars]",
+          "content": "[1] The Nobel Prize in Physics 2024 - NobelPrize.org\n    https://www.nobelprize.org/prizes/physics/2024/summary/\n    The Nobel Prize in Physics 2024 was awarded jointly to John J. Hopfield and Geoffrey Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural networks\" To cite this section MLA style: The Nobel Prize in Physics 2024. NobelPrize.org. Nobel Prize Outreach 2026.\n\n[2] The Nobel Prize in Physics 2024 - Prize announcement - NobelPrize.org\n    https://www.nobelprize.org/prizes/physics/2024/prize-announcement/_/\n    The Nobel Prize in Physics 2024 was awarded jointly to John J. Hopfield and Geoffrey Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural networks\"\n\n[3] PDF PO421655-1_fysik_2024_UF - kva.se\n    https://www.kva.se/app/uploads/2025/03/Nobelposter_2024_physics.pdf\n    The Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to John J. Hopfield and Geoffrey Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural networks\".\n\n[4] Nobel Prize in Physics 2024 - Nature\n    https://www.nature.com/collections/ehbjaifcgc\n    The Nobel Prize in Physics 2024 has been awarded to John J. Hopfield and Geoffrey E. Hinton \"for foundational discoveries and inventions that enable machine ...\n\n[5] 2024 The Nobel Prize in Physics - Nobeledge\n    https://www.nobeledge.org/prize/en/2024/physics\n    Nobel Prize in Physics, 2024: Geoffrey Hinton, John J. Hopfield. Biography, key achievements and the official award motivation in the Nobeledge archive.",
           "error": null,
-          "latency_ms": 2122.816375005641,
-          "raw_chars": 7278,
-          "truncated": true,
+          "latency_ms": 1494.0839170012623,
+          "raw_chars": 1647,
+          "truncated": false,
           "source_ids": [
             "S6",
             "S7",
-            "S3",
             "S8",
-            "S2"
+            "S9",
+            "S10"
           ]
         },
         {
-          "call_id": "call_XUYOCj63p0UAIecQ8iSAPo5n",
+          "call_id": "call_z3Sdp7z7ZtRYivuVVJ4GzqUo",
           "tool": "web_search",
           "args": {
-            "query": "nobelprize.org Nobel Prize in Physics 2024 laureates citation"
+            "query": "2024 Nobel Prize in Physics two laureates motivation"
           },
           "ok": true,
-          "content": "Summary: The 2024 Nobel Prize in Physics was awarded to John J. Hopfield and Geoffrey Hinton for foundational discoveries in machine learning with artificial neural networks. Each received half of the prize. The prize amount was 11 million Swedish kronor.\n\n[1] The Nobel Prize in Physics 2024 - NobelPrize.org\n    https://www.nobelprize.org/prizes/physics/2024/summary\n    Prize share: 1/2\n\nThe Nobel Prize in Physics 2024 was awarded jointly to John J. Hopfield and Geoffrey Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural networks\"\n\nTo cite this section   \nMLA style: The Nobel Prize in Physics 2024. NobelPrize.org. Nobel Prize Outreach 2026. Fri. 7 Aug 2026. \n\n### Explore prizes and laureates\n\n#### About the Nobel Prize organisation\n\n##### The Nobel Foundation [...] # Nobel Prize\n\n### Enhanced Page Navigation\n\n## Nobel Prize in Physics 2024\n\n## Share this\n\n# Nobel Prize in Physics 2024\n\nPhoto of John J. Hopfield\nPhoto of John J. Hopfield\n\n\u00a9 Nobel Prize Outreach. Photo: Nanaka Adachi\n\n### John J. Hopfield\n\nPrize share: 1/2\n\nPhoto of Geoffrey Hinton\nPhoto of Geoffrey Hinton\n\n\u00a9 Nobel Prize Outreach. Photo: Cl\u00e9ment Morin\n\n### Geoffrey Hinton\n\nPrize share: 1/2 [...] Tasked with a mission to manage Alfred Nobel's fortune and has ultimate responsibility for fulfilling the intentions of Nobel's will.\n\n##### The prize-awarding institutions\n\nFor more than a century, these academic institutions have worked independently to select Nobel Prize laureates.\n\n##### Outreach organisations\n\nSeveral outreach organisations and activities have been developed to inspire generations and disseminate knowledge about the Nobel Prize.\n\n###### Join us\n\nNobel Prize\n\n[2] Press release: The Nobel Prize in Physics 2024\n    https://www.nobelprize.org/prizes/physics/2024/press-release\n    # Nobel Prize\n\n### Enhanced Page Navigation\n\n## Nobel Prize in Physics 2024\n\n## Share this\n\n# Press release\n\nEnglish  \nEnglish (pdf)  \nSwedish  \nSwedish (pdf)\n\nLogo\n\n8 October 2024\n\nThe Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJohn J. Hopfield  \nPrinceton University, NJ, USA\n\nGeoffrey Hinton  \nUniversity of Toronto, Canada\n\n\u201cfor foundational discoveries and inventions that enable machine learning with artificial neural networks\u201d [...] ## They trained artificial neural networks using physics\n\nThis year\u2019s two Nobel Laureates in Physics have used tools from physics to develop methods that are the foundation of today\u2019s powerful machine learning. John Hopfield created an associative memory that can store and reconstruct images and other types of patterns in data. Geoffrey Hinton invented a method that can autonomously find properties in data, and so perform tasks such as identifying specific elements in pictures. [...] Prize amount: 11 million Swedish kronor, to be shared equally between the laureates. Further information: www.kva.se and www.nobelprize.org Press contact: Eva Nevelius, Press Secretary, +46 70 878 67 63, (/cdn-cgi/l/email-protection)  \nExperts: Olle Eriksson, +46 18 471 36 25, (/cdn-cgi/l/email-protection) and Anders Irb\u00e4ck, +46 46 222 34 93, (/cdn-cgi/l/email-protection), members of the Nobel Committee for Physics.\n\n[3] The Nobel Prize in Physics 2024 - Popular science ...\n    https://www.nobelprize.org/prizes/physics/2024/popular-information\n    ### The Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJOHN J. HOPFIELD  \nBorn 1933 in Chicago, IL, USA. PhD 1958 from Cornell University, Ithaca, NY, USA. Professor at Princeton University, NJ, USA.\n\nGEOFFREY HINTON  \nBorn 1947 in London, UK. PhD 1978 from The University of Edinburgh, UK. Professor at University of Toronto, Canada.\n\n\u201cfor foundational discoveries and inventions that enable machine learning with artificial neural networks\u201d [...] Science Editors: Ulf Danielsson, Olle Eriksson, Anders Irb\u00e4ck, and Ellen Moons, the Nobel Committee for Physics  \nText: Anna Davour \n\n[truncated: 3,415 of 7,409 chars]",
+          "content": "[1] The Nobel Prize in Physics 2024 - NobelPrize.org\n    https://www.nobelprize.org/prizes/physics/2024/summary/\n    The Nobel Prize in Physics 2024 was awarded jointly to John J. Hopfield and Geoffrey Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural networks\"\n\n[2] Press release: The Nobel Prize in Physics 2024 - NobelPrize.org\n    https://www.nobelprize.org/prizes/physics/2024/press-release/What/\n    They trained artificial neural networks using physics This year's two Nobel Laureates in Physics have used tools from physics to develop methods that are the foundation of today's powerful machine learning. John Hopfield created an associative memory that can store and reconstruct images and other types of patterns in data.\n\n[3] Nobel Prize in Physics 2024 - Nature\n    https://www.nature.com/collections/ehbjaifcgc\n    The Nobel Prize in Physics 2024 has been awarded to John J. Hopfield and Geoffrey E. Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural ...\n\n[4] PDF Nobel Prize in physics awarded to 2 scientists for discoveries that ...\n    https://phys.org/news/2024-10-nobel-prize-physics-awarded-discoveries.pdf\n    Two pioneers of artificial intelligence—John Hopfield and Geoffrey Hinton—won the Nobel Prize in physics Tuesday for helping create the building blocks of machine learning that is ...\n\n[5] The Nobel Prize in Physics 2024 - दृष्टि आईएएस\n    https://www.drishtiias.com/daily-updates/daily-news-analysis/the-nobel-prize-in-physics-2024\n    Source: TH Why in News? The 2024 Nobel Prize in Physics has been awarded by the Royal Swedish Academy of Sciences to John J. Hopfield and Geoffrey E. Hinton, two pioneers whose groundbreaking work laid the foundation for modern artificial neural networks (ANNs) and machine learning (ML).",
           "error": null,
-          "latency_ms": 1833.5947080049664,
-          "raw_chars": 7409,
-          "truncated": true,
+          "latency_ms": 2207.883499999298,
+          "raw_chars": 1863,
+          "truncated": false,
           "source_ids": [
-            "S9",
-            "S10",
-            "S1",
+            "S6",
             "S11",
-            "S12"
+            "S9",
+            "S12",
+            "S13"
+          ]
+        },
+        {
+          "call_id": "call_tQt1y5NJnDKV7zcrgzOdSsg4",
+          "tool": "web_search",
+          "args": {
+            "query": "2024 Nobel Prize in Physics Nobel Prize press release motivation"
+          },
+          "ok": true,
+          "content": "[1] Press release: The Nobel Prize in Physics 2024 - NobelPrize.org\n    https://www.nobelprize.org/prizes/physics/2024/press-release/What/\n    Oct 8, 2024 · This year’s two Nobel Laureates in Physics have used tools from physics to develop methods that are the foundation of today’s powerful machine learning. John Hopfield created an associative memory that can store and reconstruct images and other types of patterns in data.\n\n[2] The Nobel Prize in Physics 2024 - Prize announcement ...\n    https://www.nobelprize.org/prizes/physics/2024/prize-announcement/\n    The Nobel Prize in Physics 2024 was awarded jointly to John J. Hopfield and Geoffrey Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural networks\"\n\n[3] Geoffrey Hinton, John J. Hopfield — Nobel Prize in Physics ...\n    https://www.nobeledge.org/prize/en/2024/physics\n    Nobel Prize in Physics, 2024: Geoffrey Hinton, John J. Hopfield. Biography, key achievements and the official award motivation in the Nobeledge archive.\n\n[4] PO421655-1_fysik_2024_UF - kva.se\n    https://www.kva.se/app/uploads/2025/03/Nobelposter_2024_physics.pdf\n    The Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to John J. Hopfield and Geoffrey Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural networks\".\n\n[5] The Nobel Prize in Physics 2024: They trained artificial ...\n    https://www.kva.se/en/news/the-nobel-prize-in-physics-2024/\n    Oct 8, 2024 · This year’s two Nobel Laureates in Physics have used tools from physics to develop methods that are the foundation of today’s powerful machine learning. John Hopfield created an associative memory that can store and reconstruct images and other types of patterns in data.",
+          "error": null,
+          "latency_ms": 2904.5238329999847,
+          "raw_chars": 1815,
+          "truncated": false,
+          "source_ids": [
+            "S11",
+            "S14",
+            "S10",
+            "S8",
+            "S15"
           ]
         }
       ],
@@ -141,7 +168,7 @@
       "i": 4,
       "node": "reflect",
       "plan_version": 1,
-      "ts_offset_ms": 6253.071041996009,
+      "ts_offset_ms": 6325.056499999846,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -151,17 +178,17 @@
       "i": 5,
       "node": "act",
       "plan_version": 1,
-      "ts_offset_ms": 7757.797708996804,
+      "ts_offset_ms": 8134.3894170004205,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
-      "note": "The **2024 Nobel Prize in Physics** was awarded jointly to **John J. Hopfield** and **Geoffrey Hinton**. **[S10] [S9]**\n\nThe Nobel Prize citation was: **\u201cfor foundational discoveries and inventions th"
+      "note": "## Individuals awarded the 2024 Nobel Prize in Physics\nThe 2024 Nobel Prize in Physics was awarded jointly to **John J. Hopfield** and **Geoffrey Hinton**. [S6][S7][S14]\n\n## Contribution(s) cited\nThe "
     },
     {
       "i": 6,
       "node": "observe",
       "plan_version": 1,
-      "ts_offset_ms": 7759.01954199071,
+      "ts_offset_ms": 8135.803916999066,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -171,7 +198,7 @@
       "i": 7,
       "node": "finalize",
       "plan_version": 1,
-      "ts_offset_ms": 9367.604999992182,
+      "ts_offset_ms": 9677.471875000265,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -181,109 +208,134 @@
   "sources": [
     {
       "sid": "S1",
-      "url": "https://www.nobelprize.org/prizes/physics/2024/popular-information",
-      "title": "The Nobel Prize in Physics 2024 - Popular science ...",
-      "snippet": "### The Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJOHN J. HOPFIELD  \nBorn 1933 in Chicago, IL, USA. PhD 1958 from Cornell University, Ithaca, NY, USA. Professor at Princeton University, NJ, USA.\n\nGEOFFREY HINTON  \nBorn 1947 in London, UK. PhD 1978 fro",
+      "url": "https://en.wikipedia.org/wiki/Geoffrey_Hinton",
+      "title": "Geoffrey Hinton - Wikipedia",
+      "snippet": "\"Press release: The Nobel Prize in Physics 2024\". NobelPrize.org.\"The VinFuture 2024 Grand Prize honours 5 scientists for transformational contributions to the advancement of deep learning\". Việt Nam News.",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S2",
-      "url": "https://people.idsia.ch/~juergen/physics-nobel-2024-plagiarism.html",
-      "title": "A Nobel Prize for Plagiarism",
-      "snippet": "| |  |  |  --- | | J\u00fcrgen Schmidhuber  Pronounce: You\\_again Shmidhoobuh  Technical Report IDSIA-24-24, IDSIA | AI Blog  @SchmidhuberAI  12/7/2024 (v1), 7/31/25 (v2), 10/7/25 (v3) |  ---   A Nobel Prize for Plagiarism   ---  Abstract. Sadly, the 2024 Nobel Prize in Physics awarded to Hopfield & Hint",
+      "url": "https://www.nobelprize.org/prizes/physics/2024/press-release/",
+      "title": "Press release: The Nobel Prize in Physics 2024 - NobelPrize.org",
+      "snippet": "The Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to. John J. Hopfield Princeton University, NJ, USA. Geoffrey Hinton University of Toronto, Canada.To cite this section MLA style: Press release. NobelPrize.org.",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S3",
-      "url": "https://www.pbs.org/newshour/science/watch-live-the-winner-of-the-2024-nobel-prize-in-physics-is",
-      "title": "WATCH: AI pioneers John Hopfield and Geoffrey Hinton win 2024 Nobel Prize in physics | PBS News",
-      "snippet": "STOCKHOLM (AP) \u2014 Two pioneers of artificial intelligence \u2013 John Hopfield and Geoffrey Hinton \u2013 won the Nobel Prize in physics Tuesday for helping create the building blocks of machine learning that is revolutionizing the way we work and live but also creates new threats to humanity, one of the winne",
+      "url": "https://www.theguardian.com/science/2024/oct/08/nobel-prize-physics-john-hopfield-geoffrey-hinton-machine-learning",
+      "title": "Machine learning pioneers win Nobel prize in physics | The Guardian",
+      "snippet": "Nobel prize in physics awarded to three scientists for work on quantum mechanics.",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S4",
-      "url": "https://www.nsf.gov/news/nsf-congratulates-laureates-2024-nobel-prize-physics",
-      "title": "NSF congratulates laureates of the 2024 Nobel Prize in ...",
-      "snippet": "The U.S. National Science Foundation congratulates John J. Hopfield and Geoffrey E. Hinton for their Nobel Prize in physics. Their research and innovations helped make possible \"machines that learn\" \u2014 artificial neural networks with the ability to store and reconstruct information and recognize comp",
+      "url": "https://www.linkedin.com/posts/allan-song-502a77a_geoffrey-hinton-wins-nobel-prize-in-physics-activity-7249786207109341186-HdFY",
+      "title": "Allan Song on LinkedIn: Geoffrey Hinton wins Nobel Prize in Physics",
+      "snippet": "The Nobel Prize in Physics 2024. nobelprize.org. 25.It is no surprise the 2024 Nobel Prize in Physics was awarded to John Hopfield and Geoffrey Hinton, who are responsible for work in artificial neural networks that ultimately laid the foundation for today’s machine learning capabilities.",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S5",
-      "url": "https://en.wikipedia.org/wiki/Nobel_Prize_in_Physics",
-      "title": "Nobel Prize in Physics - Wikipedia",
-      "snippet": "The Nobel Prize in Physics is an annual award given by the Royal Swedish Academy of Sciences for those who have made the most outstanding contributions to mankind in the field of physics. It is one of the five Nobel Prizes established by the will of Alfred Nobel in 1895 and awarded since 1901, the o",
+      "url": "https://www.jagranjosh.com/general-knowledge/list-of-2024-nobel-prize-winners-in-all-categories-1728376617-1",
+      "title": "Nobel Prize 2024 Winners List: Recipient Name, Achievement from All...",
+      "snippet": "The 2024 Nobel Prize in Physics was awarded to John J. Hopfield and Geoffrey E. Hinton on October 8, 2024, in Stockholm, Sweden. They were recognized for their foundational work in machine learning using artificial neural networks.",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S6",
-      "url": "https://lamarr-institute.org/blog/thoughts-physics-nobel-prize-2024",
-      "title": "Thoughts about the Nobel Prize in Physics 2024 \u2026 ML Blog",
-      "snippet": "If you are reading this blog, you likely already know that the 2024 Nobel Prize in Physics has been awarded to John Hopfield and Geoffrey Hinton. To see why, let me just quote from the press release of the Nobel Committee for Physics: \u201cWhen we talk about artificial intelligence, we often mean machin",
+      "url": "https://www.nobelprize.org/prizes/physics/2024/summary/",
+      "title": "The Nobel Prize in Physics 2024 - NobelPrize.org",
+      "snippet": "The Nobel Prize in Physics 2024 was awarded jointly to John J. Hopfield and Geoffrey Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural networks\" To cite this section MLA style: The Nobel Prize in Physics 2024. NobelPrize.org. Nobel Prize Outreach",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S7",
-      "url": "https://www.youtube.com/watch?v=itywoDU3sL8",
-      "title": "Neural Networks and the 2024 Nobel Prize in Physics",
-      "snippet": "# Neural Networks and the 2024 Nobel Prize in Physics - Sixty Symbols\n## Sixty Symbols\n888000 subscribers\n2353 likes\n\n### Description\n58518 views\nPosted: 18 Oct 2024\nThis video features Juan Garrahan, Phil Moriarty and Mike Pound... More links and info below  \u2193 \u2193 \u2193\n\nThe 2024 Nobel Prize in Physics i",
+      "url": "https://www.nobelprize.org/prizes/physics/2024/prize-announcement/_/",
+      "title": "The Nobel Prize in Physics 2024 - Prize announcement - NobelPrize.org",
+      "snippet": "The Nobel Prize in Physics 2024 was awarded jointly to John J. Hopfield and Geoffrey Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural networks\"",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S8",
-      "url": "https://www.pnas.org/doi/10.1073/pnas.2423094122",
-      "title": "Profile of John Hopfield and Geoffrey Hinton: 2024 Nobel laureates in Physics",
-      "snippet": "Hopfield\u2019s second contribution was to consider how the connection weights among neurons could be thought of as storing memories, treated as patterns of activation values (+1 or \u22121) for each of a set of neurons. Rather than storing the memories as such, Hopfield stored the pattern of agreements and d",
+      "url": "https://www.kva.se/app/uploads/2025/03/Nobelposter_2024_physics.pdf",
+      "title": "PDF PO421655-1_fysik_2024_UF - kva.se",
+      "snippet": "The Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to John J. Hopfield and Geoffrey Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural networks\".",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S9",
-      "url": "https://www.nobelprize.org/prizes/physics/2024/summary",
-      "title": "The Nobel Prize in Physics 2024 - NobelPrize.org",
-      "snippet": "Prize share: 1/2\n\nThe Nobel Prize in Physics 2024 was awarded jointly to John J. Hopfield and Geoffrey Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural networks\"\n\nTo cite this section   \nMLA style: The Nobel Prize in Physics 2024. NobelPrize.org",
+      "url": "https://www.nature.com/collections/ehbjaifcgc",
+      "title": "Nobel Prize in Physics 2024 - Nature",
+      "snippet": "The Nobel Prize in Physics 2024 has been awarded to John J. Hopfield and Geoffrey E. Hinton \"for foundational discoveries and inventions that enable machine ...",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S10",
-      "url": "https://www.nobelprize.org/prizes/physics/2024/press-release",
-      "title": "Press release: The Nobel Prize in Physics 2024",
-      "snippet": "# Nobel Prize\n\n### Enhanced Page Navigation\n\n## Nobel Prize in Physics 2024\n\n## Share this\n\n# Press release\n\nEnglish  \nEnglish (pdf)  \nSwedish  \nSwedish (pdf)\n\nLogo\n\n8 October 2024\n\nThe Royal Swedish Academy of Sciences has decided to award the Nobel Prize in Physics 2024 to\n\nJohn J. Hopfield  \nPrin",
+      "url": "https://www.nobeledge.org/prize/en/2024/physics",
+      "title": "2024 The Nobel Prize in Physics - Nobeledge",
+      "snippet": "Nobel Prize in Physics, 2024: Geoffrey Hinton, John J. Hopfield. Biography, key achievements and the official award motivation in the Nobeledge archive.",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S11",
-      "url": "https://www.nobelprize.org/all-nobel-prizes-2024",
-      "title": "All Nobel Prizes 2024",
-      "snippet": "# Nobel Prize\n\nStatue of Alfred Nobel.\n\nPhoto: A. Mahmoud\n\n# NOBEL PRIZES 2024\n\n## The Nobel Prize in Physics 2024\n\n### John J. Hopfield\n\n\u201cfor foundational discoveries and inventions that enable machine learning with artificial neural networks\u201d\n\nPhoto of John J. Hopfield\nPhoto of John J. Hopfield\n\n\u00a9",
+      "url": "https://www.nobelprize.org/prizes/physics/2024/press-release/What/",
+      "title": "Press release: The Nobel Prize in Physics 2024 - NobelPrize.org",
+      "snippet": "They trained artificial neural networks using physics This year's two Nobel Laureates in Physics have used tools from physics to develop methods that are the foundation of today's powerful machine learning. John Hopfield created an associative memory that can store and reconstruct images and other t",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S12",
-      "url": "https://www.nobelprize.org/prizes/physics/2024/hinton/facts",
-      "title": "Geoffrey Hinton \u2013 Facts - Nobel Prize in Physics 2024",
-      "snippet": "To cite this section   \nMLA style: Geoffrey Hinton \u2013 Facts \u2013 2024. NobelPrize.org. Nobel Prize Outreach 2026. Thu. 30 Jul 2026. \n\n### Explore prizes and laureates\n\n#### About the Nobel Prize organisation\n\n##### The Nobel Foundation\n\nTasked with a mission to manage Alfred Nobel's fortune and has ulti",
+      "url": "https://phys.org/news/2024-10-nobel-prize-physics-awarded-discoveries.pdf",
+      "title": "PDF Nobel Prize in physics awarded to 2 scientists for discoveries that ...",
+      "snippet": "Two pioneers of artificial intelligence—John Hopfield and Geoffrey Hinton—won the Nobel Prize in physics Tuesday for helping create the building blocks of machine learning that is ...",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S13",
+      "url": "https://www.drishtiias.com/daily-updates/daily-news-analysis/the-nobel-prize-in-physics-2024",
+      "title": "The Nobel Prize in Physics 2024 - दृष्टि आईएएस",
+      "snippet": "Source: TH Why in News? The 2024 Nobel Prize in Physics has been awarded by the Royal Swedish Academy of Sciences to John J. Hopfield and Geoffrey E. Hinton, two pioneers whose groundbreaking work laid the foundation for modern artificial neural networks (ANNs) and machine learning (ML).",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S14",
+      "url": "https://www.nobelprize.org/prizes/physics/2024/prize-announcement/",
+      "title": "The Nobel Prize in Physics 2024 - Prize announcement ...",
+      "snippet": "The Nobel Prize in Physics 2024 was awarded jointly to John J. Hopfield and Geoffrey Hinton \"for foundational discoveries and inventions that enable machine learning with artificial neural networks\"",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S15",
+      "url": "https://www.kva.se/en/news/the-nobel-prize-in-physics-2024/",
+      "title": "The Nobel Prize in Physics 2024: They trained artificial ...",
+      "snippet": "Oct 8, 2024 · This year’s two Nobel Laureates in Physics have used tools from physics to develop methods that are the foundation of today’s powerful machine learning. John Hopfield created an associative memory that can store and reconstruct images and other types of patterns in data.",
       "tool": "web_search",
       "first_seen_step": 1
     }
   ],
-  "answer": "The 2024 Nobel Prize in Physics was awarded to John J. Hopfield and Geoffrey Hinton [S9]. The citation was for \u201cfoundational discoveries\u201d enabling machine learning with artificial neural networks, specifically their contributions to the development of these networks\u2014work that laid the groundwork for modern AI [S10][S9].",
+  "answer": "The 2024 Nobel Prize in Physics was awarded jointly to **John J. Hopfield** and **Geoffrey Hinton** [S6][S11].  \n\nThe Nobel Prize cited their contribution to physics for **fundamental work on artificial neural networks and related machine-learning methods—especially for the discovery of key principles that enable modern machine learning** [S6][S2].",
   "citations": [
-    "S9",
-    "S10"
+    "S6",
+    "S11",
+    "S2"
   ],
   "coverage": {
-    "Who were the recipients of the 2024 Nobel Prize in Physics?": false,
-    "What contribution(s) or scientific discovery was cited in the Nobel Prize in Physics 2024 announcement?": false
+    "Which individuals were awarded the 2024 Nobel Prize in Physics?": false,
+    "What contribution(s) to physics did the Nobel Prize in Physics 2024 cite for the laureates?": false
   },
   "outcome": {
     "status": "completed",
@@ -299,76 +351,76 @@
         "model": "gpt-5.4-nano",
         "input_tokens": 227,
         "cached_tokens": 0,
-        "output_tokens": 111,
-        "reasoning_tokens": 16,
-        "cost_usd": 0.00018415,
-        "latency_ms": 1862.7928749920102,
-        "replayed": false
-      },
-      {
-        "purpose": "act",
-        "model": "gpt-5.4-nano",
-        "input_tokens": 823,
-        "cached_tokens": 0,
         "output_tokens": 98,
-        "reasoning_tokens": 0,
-        "cost_usd": 0.00028710000000000004,
-        "latency_ms": 2245.7406250032363,
+        "reasoning_tokens": 14,
+        "cost_usd": 0.00016790000000000002,
+        "latency_ms": 1743.6923330005811,
         "replayed": false
       },
       {
         "purpose": "act",
         "model": "gpt-5.4-nano",
-        "input_tokens": 4226,
+        "input_tokens": 895,
         "cached_tokens": 0,
-        "output_tokens": 76,
+        "output_tokens": 119,
         "reasoning_tokens": 0,
-        "cost_usd": 0.0009402000000000001,
-        "latency_ms": 1501.3465829979395,
+        "cost_usd": 0.00032775,
+        "latency_ms": 1657.8250420006952,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 3451,
+        "cached_tokens": 0,
+        "output_tokens": 177,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.0009114500000000001,
+        "latency_ms": 1806.332125001063,
         "replayed": false
       },
       {
         "purpose": "finalize",
         "model": "gpt-5.4-nano",
-        "input_tokens": 857,
+        "input_tokens": 1159,
         "cached_tokens": 0,
-        "output_tokens": 70,
+        "output_tokens": 82,
         "reasoning_tokens": 0,
-        "cost_usd": 0.00025889999999999995,
-        "latency_ms": 1605.6296250026207,
+        "cost_usd": 0.0003343,
+        "latency_ms": 1539.314708999882,
         "replayed": false
       }
     ],
     "totals": {
-      "input_tokens": 6133,
+      "input_tokens": 5732,
       "cached_tokens": 0,
-      "output_tokens": 355,
-      "reasoning_tokens": 16,
-      "cost_usd": 0.0016703500000000001,
+      "output_tokens": 476,
+      "reasoning_tokens": 14,
+      "cost_usd": 0.0017414000000000002,
       "cache_hit_rate": 0.0
     },
     "by_purpose": {
       "plan": {
         "calls": 1,
-        "cost_usd": 0.00018415,
-        "output_tokens": 111
+        "cost_usd": 0.00016790000000000002,
+        "output_tokens": 98
       },
       "act": {
         "calls": 2,
-        "cost_usd": 0.0012273000000000002,
-        "output_tokens": 174
+        "cost_usd": 0.0012392000000000002,
+        "output_tokens": 296
       },
       "finalize": {
         "calls": 1,
-        "cost_usd": 0.00025889999999999995,
-        "output_tokens": 70
+        "cost_usd": 0.0003343,
+        "output_tokens": 82
       }
     },
-    "search_credits": 3,
+    "search_credits": 0,
     "steps": 2
   },
   "timings_ms": {
-    "total": 9365.258999998332
+    "total": 9671.634792000987
   },
   "compaction": {
     "count": 0,

@@ -1,7 +1,7 @@
 {
   "schema_version": "1",
-  "run_id": "c4776f953c61",
-  "ts": "2026-08-08T17:47:01+00:00",
+  "run_id": "55d826d279b6",
+  "ts": "2026-10-25T08:39:49+00:00",
   "question": "Who is the first-listed author of the paper 'Attention Is All You Need'?",
   "variant": "full",
   "config": {
@@ -12,13 +12,13 @@
     "max_run_cost_usd": 0.05,
     "finalize_reserve_usd": 0.008,
     "compact_threshold_tokens": 12000,
-    "git_sha": "ffb33e3",
-    "prompt_hash": "sha256:512e8e5d8eaa"
+    "git_sha": "e577c53",
+    "prompt_hash": "sha256:e2655640140a"
   },
   "plan": {
     "version": 1,
     "subquestions": [
-      "What is the author list order (first-listed author) for the paper titled 'Attention Is All You Need'?"
+      "What is the first-listed author of the paper titled 'Attention Is All You Need'?"
     ],
     "replans": 0
   },
@@ -27,7 +27,7 @@
       "i": 1,
       "node": "plan",
       "plan_version": 0,
-      "ts_offset_ms": 1598.2323750067735,
+      "ts_offset_ms": 1779.3730840003263,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -37,13 +37,27 @@
       "i": 2,
       "node": "act",
       "plan_version": 1,
-      "ts_offset_ms": 2793.1453750061337,
+      "ts_offset_ms": 3417.161584000496,
       "tool_calls": [
         {
-          "call_id": "call_Tzk3RHGwGZKJwy3jWFpFNx2f",
+          "call_id": "call_9KFUsWsGWRVvnHzBZl64DvUU",
           "name": "web_search",
           "args": {
-            "query": "\"Attention Is All You Need\" first author"
+            "query": "Attention Is All You Need first author"
+          }
+        },
+        {
+          "call_id": "call_1jeGH4S7cyNAMfRUVzAFsDK5",
+          "name": "web_search",
+          "args": {
+            "query": "paper \"Attention Is All You Need\" authors Vaswani first author"
+          }
+        },
+        {
+          "call_id": "call_890KUUZa2Or9HyBBpg49sJg9",
+          "name": "web_search",
+          "args": {
+            "query": "arXiv 1706.03762 Attention Is All You Need authors"
           }
         }
       ],
@@ -55,20 +69,20 @@
       "i": 3,
       "node": "observe",
       "plan_version": 1,
-      "ts_offset_ms": 5041.574500006391,
+      "ts_offset_ms": 6793.286125000122,
       "tool_calls": [],
       "observations": [
         {
-          "call_id": "call_Tzk3RHGwGZKJwy3jWFpFNx2f",
+          "call_id": "call_9KFUsWsGWRVvnHzBZl64DvUU",
           "tool": "web_search",
           "args": {
-            "query": "\"Attention Is All You Need\" first author"
+            "query": "Attention Is All You Need first author"
           },
           "ok": true,
-          "content": "Summary: The first author of \"Attention Is All You Need\" is Ashish Vaswani, with seven co-authors. This paper introduced the Transformer architecture, revolutionizing AI.\n\n[1] Techmeme - A profile of Ashish Vaswani, lead author of...\n    https://www.facebook.com/Techmeme/posts/a-profile-of-ashish-vaswani-lead-author-of-attention-is-all-you-need-and-essenti/1206321298196849\n    ## Techmeme's post\n\n### Techmeme\n\n3 September 2025  ·\n\nA profile of Ashish Vaswani, lead author of Attention Is All You Need and Essential AI co-founder, who says the transformer-based AI boom is stifling innovation\n\nFull context: \n\nAn AI Pioneer Worries Big Tech Is Blinding Itself to New Breakthroughs\n\nbloomberg.com\n\nAn AI Pioneer Worries Big Tech Is Blinding Itself to New Breakthroughs\n\n[2] ‪Ashish Vaswani‬ - ‪Google Scholar‬\n    https://scholar.google.com/citations?user=oR9sCGYAAAAJ&hl=en\n    |  |  |  |\n --- \n| Title Sort Sort by citationsSort by yearSort by title | Cited by  Cited by | Year |\n| Attention is all you need A Vaswani, N Shazeer, N Parmar, J Uszkoreit, L Jones, AN Gomez, ...  Advances in neural information processing systems 30, 2017 | 275197 | 2017 |\n| Relational inductive biases, deep learning, and graph networks PW Battaglia, JB Hamrick, V Bapst, A Sanchez-Gonzalez, V Zambaldi, ...  arXiv preprint arXiv:1806.01261 2 (3), 5, 2018 | 5457 | 2018 | [...] | One model to learn them all L Kaiser, AN Gomez, N Shazeer, A Vaswani, N Parmar, L Jones, ...  arXiv preprint arXiv:1706.05137, 2017 | 444 | 2017 |\n| Attention is all you need. CoRR abs/1706.03762 (2017) A Vaswani, N Shazeer, N Parmar, J Uszkoreit, L Jones, AN Gomez, ...  arXiv preprint arXiv:1706.03762 1 (2), 2017 | 438 | 2017 | [...] | Image transformer N Parmar, A Vaswani, J Uszkoreit, L Kaiser, N Shazeer, A Ku, D Tran  International conference on machine learning, 4055-4064, 2018 | 2683 | 2018 |\n| Attention is all you need. arXiv 2017 A Vaswani, N Shazeer, N Parmar, J Uszkoreit, L Jones, AN Gomez, ...  arXiv preprint arXiv:1706.03762 10, 2017 | 2478 | 2017 |\n\n[3] Attention is All you Need - NIPS\n    https://papers.nips.cc/paper/7181-attention-is-all-you-need\n    # Attention is All you Need\n\nAshish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, Illia Polosukhin\n\nAdvances in Neural Information Processing Systems 30 (NIPS 2017)\n\n## Abstract [...] #### Name Change Policy\n\nRequests for name changes in the electronic proceedings will be accepted with no questions asked. However name changes may cause bibliographic tracking issues. Authors are asked to consider this carefully and discuss it with their co-authors prior to requesting a name change in the electronic proceedings.\n\nUse the \"Report an Issue\" link to request a name change. [...] The dominant sequence transduction models are based on complex recurrent orconvolutional neural networks in an encoder and decoder configuration. The best performing such models also connect the encoder and decoder through an attentionm echanisms. We propose a novel, simple network architecture based solely onan attention mechanism, dispensing with recurrence and convolutions entirely.Experiments on two machine translation tasks show these models to be superiorin quality while being more\n\n[4] Attention is all you need | Proceedings of the 31st International Conference on Neural Information Processing Systems\n    https://dl.acm.org/doi/10.5555/3295222.3295349\n    Authors: Image 8Ashish Vaswani, Image 9Noam Shazeer, Image 10Niki Parmar, Image 11Jakob Uszkoreit, + 4, Image 12Llion Jones, Image 13Aidan N.Gomez, Image 14Łukasz Kaiser, Image 15Illia Polosukhin(Less)Authors Info & Claims\n\nNIPS'17: Proceedings of the 31st International Conference on Neural Information Processing Systems\n\nPages 6000 - 6010\n\nPublished: 04 December 2017Publication History\n\nAdditional metrics (Premium feature)\n\n5,247 citation 64,317 Downloads\n\n:1735-1780, 1997.\n\nDigital Library [...] Google Scholar\n\nNal Kalchbrenner, Lasse Espeholt,\n\n[truncated: 1,984 of 5,979 chars]",
+          "content": "Summary: The paper \"Attention Is All You Need\" was authored by eight scientists and engineers working at Google, including Noam Shazeer, who is recognized as the lead author. The paper introduced the transformer architecture, which relies entirely on attention mechanisms, and has become a foundational model in the field of artificial intelligence. The authors of the paper are Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Łukasz Kaiser, and Illia Polosukhin.\n\n[1] Attention Is All You Need - Wikipedia\n    https://en.wikipedia.org/wiki/Attention_Is_All_You_Need\n    \"Attention Is All You Need\" is a 2017 research paper on machine learning authored by eight scientists and engineers working at Google. The paper introduced a new deep learning architecture known as the transformer \"Transformer (deep learning)\"), based on the attention mechanism \"Attention (machine learning)\") proposed in 2014 by Bahdanau et al. The transformer approach it describes has become the main architecture of a wide variety of artificial intelligence systems, including large language [...] Seq2seq models with attention (including self-attention) still suffered from the same issue with recurrent networks, which is that they are hard to parallelize, which prevented them from being accelerated on GPUs. In 2016, decomposable attention applied a self-attention mechanism to feedforward networks, which are easy to parallelize, and achieved SOTA result in textual entailment with an order of magnitude fewer parameters than LSTMs. One of its authors, Jakob Uszkoreit, suspected that [...] Cite error: A list-defined reference named \"Gulati2020\" is not used in the content (see the help page).\n\n## External links\n\n[edit]\n\n \"Attention Is All You Need\" on Google Research\n \"Attention Is All You Need\" on arXiv\n Uszkoreit, Jakob (31 August 2017). \"Transformer: A Novel Neural Network Architecture for Language Understanding\". research.google. Retrieved 9 August 2024. A concurrent blog post on the Google Research blog.\n\n|  v  t  e  Google AI |\n\n[2] \"But Google is the author of 'Attention Is All You Need', they know how to build LLM's\"\n    https://www.reddit.com/r/ChatGPT/comments/125i04d/but_google_is_the_author_of_attention_is_all_you\n    [\"Attention Is All You Need\" is a 2017 research paper in machine learning authored by eight scientists working at Google. The paper introduced a new deep learning architecture known as the transformer [...] and what is now known as multimodal generative AI.]( 13 r/wikipedia•6mo ago    ### [\"Attention Is All You Need\" is a 2017 research paper in machine learning authored by eight scientists working at Google. The paper introduced a new deep learning architecture known as the transformer [...] [...] transformer [...] and what is now known as multimodal generative AI.](  [![Image 14: r/wikipedia - \"Attention Is All You Need\" is a 2017 research paper in machine learning authored by eight scientists working at Google. The paper introduced a new deep learning architecture known as the transformer [...] and what is now known as multimodal generative AI.]( \"Link from r/wikipedia - \\\"Attention Is All You Need\\\" is a 2017 research paper in machine learning authored by eight scientists working at [...] Noam Shazeer, the lead author of the original Transformer and Mixture-of-Experts papers (and several other groundbreaking work) leaves Google Deepmind to join OpenAIImage 11 r/accelerate•4mo ago    ### Noam Shazeer, the lead author of the original Transformer and Mixture-of-Experts papers (and several other groundbreaking work) leaves Google Deepmind to join OpenAI  Image 12: r/accelerate - Noam Shazeer, the lead author of the original Transformer and Mixture-of-Experts papers (and several\n\n[3] Attention Is All You Need | alphaXiv\n    https://www.alphaxiv.org/abs/1706.03762\n    Conceptual animation from Jakob Uszkoreit's author post. It starts with initial word embeddings and adds sentence-wide context through\n\n[truncated: 2,783 of 6,774 chars]",
           "error": null,
-          "latency_ms": 2246.634625000297,
-          "raw_chars": 5979,
+          "latency_ms": 814.5906250001644,
+          "raw_chars": 6774,
           "truncated": true,
           "source_ids": [
             "S1",
@@ -76,6 +90,46 @@
             "S3",
             "S4",
             "S5"
+          ]
+        },
+        {
+          "call_id": "call_1jeGH4S7cyNAMfRUVzAFsDK5",
+          "tool": "web_search",
+          "args": {
+            "query": "paper \"Attention Is All You Need\" authors Vaswani first author"
+          },
+          "ok": true,
+          "content": "Summary: Ashish Vaswani is the first author listed in the paper \"Attention Is All You Need,\" which was published in 2017 by eight researchers from Google. However, the paper explicitly states that all authors made equal contributions and the order was randomized. Vaswani, along with Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan Gomez, Łukasz Kaiser, and Illia Polosukhin, introduced the transformer architecture based on the attention mechanism.\n\n[1] Attention Is All You Need - Wikipedia\n    https://en.wikipedia.org/wiki/Attention_Is_All_You_Need\n    [edit]\n\nThe authors of the paper are Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan Gomez, Łukasz Kaiser\"), and Illia Polosukhin. All eight authors were \"equal contributors\" to the paper; the listed order was randomized (according to the paper itself). After the paper, each of the authors left Google to join other companies or to found startups. [...] \"Attention Is All You Need\" is a 2017 research paper on machine learning authored by eight scientists and engineers working at Google. The paper introduced a new deep learning architecture known as the transformer \"Transformer (deep learning)\"), based on the attention mechanism \"Attention (machine learning)\") proposed in 2014 by Bahdanau et al. The transformer approach it describes has become the main architecture of a wide variety of artificial intelligence systems, including large language [...] The paper's title is a reference to the song \"All You Need Is Love\" by the Beatles. The name \"Transformer\" was picked because Jakob Uszkoreit, one of the paper's authors, liked the sound of that word. An early design document was titled \"Transformers: Iterative Self-Attention and Processing for Various Tasks\", and included an illustration of six characters from the Transformers franchise. The team was named Team Transformer.\n\n## Methods discussed and introduced\n\n[edit]\n\n[2] Ashish Vaswani\n    https://medium.com/@1528371521zx/ashish-vaswani-68a1b2364346\n    Sitemap\n\nOpen in app\n\nSign up\n\nSign in\n\n mechanism. It hit me that I really need to introduce the first author of the foundational paper _Attention is All You Need_, Ashish Vaswani. So, the star of my seventeenth piece is none other than Ashish Vaswani.\n\n## About Ashish [...] Ashish was born in 1986 in India. He’s the kind of scholar who skyrocketed to fame because of a single paper. But before that game-changing attention paper, his research during his PhD was already focused on natural language processing. His PhD advisors were Liang Huang and David Chiang. His most notable PhD work? A paper where he was the first author, with Liang Huang and David Chiang as co-authors, called _Smaller Alignment Models for Better Translations: Unsupervised Word Alignment with the [...] Alignment with the ℓ0-norm_. This paper improved unsupervised word alignment models, boosting the accuracy of alignment and the quality of machine translations. Fun fact: a lot of breakthroughs in language models are tied to machine translation. Even _Attention is All You Need_ used English-to-German sequence-to-sequence translation data for training. So, Ashish’s research career has been super consistent. His PhD spanned from 2004 to 2014 — a full decade. His major breakthrough was like a “ten\n\n[3] AI Research Recap: Ok Transformers, You have My Attention\n    https://dannyfranklin.substack.com/p/research-recap-ok-you-have-my-attention\n    In 2017, Ashish Vaswani (and 7 other Google Researchers) published a research paper at the 31st Conference on Neural Information Processing Systems titled very simply “Attention Is All You Need”. Despite this quaint title, their 15 page paper described a new architecture for language models that revolutionized the state of the art at that time and kickstarted the future of AI leading to the GPT based large language models that we have today. Since its publication “Attention Is All You Need” has [...] When cracking open this paper I first\n\n[truncated: 2,478 of 6,475 chars]",
+          "error": null,
+          "latency_ms": 3373.897833999763,
+          "raw_chars": 6475,
+          "truncated": true,
+          "source_ids": [
+            "S1",
+            "S6",
+            "S7",
+            "S3",
+            "S8"
+          ]
+        },
+        {
+          "call_id": "call_890KUUZa2Or9HyBBpg49sJg9",
+          "tool": "web_search",
+          "args": {
+            "query": "arXiv 1706.03762 Attention Is All You Need authors"
+          },
+          "ok": true,
+          "content": "Summary: The authors of the paper \"Attention Is All You Need\" are Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Łukasz Kaiser, and Illia Polosukhin. All eight authors were \"equal contributors\" to the paper, and the listed order was randomized according to the paper itself. The paper was published in December 2017 and is available on arXiv with the identifier 1706.03762.\n\n[1] Attention Is All You Need - Wikipedia\n    https://en.wikipedia.org/wiki/Attention_Is_All_You_Need\n    [edit]\n\nThe authors of the paper are Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan Gomez, Łukasz Kaiser\"), and Illia Polosukhin. All eight authors were \"equal contributors\" to the paper; the listed order was randomized (according to the paper itself). After the paper, each of the authors left Google to join other companies or to found startups. [...] 1. 1 2 3 4 5 6 Vaswani, Ashish; Shazeer, Noam; Parmar, Niki; Uszkoreit, Jakob; Jones, Llion; Gomez, Aidan N; Kaiser, Łukasz; Polosukhin, Illia (December 2017). \"Attention is All you Need\" (PDF). In I. Guyon and U. Von Luxburg and S. Bengio and H. Wallach and R. Fergus and S. Vishwanathan and R. Garnett (ed.). 31st Conference on Neural Information Processing Systems (NIPS). Advances in Neural Information Processing Systems. Vol. 30. Curran Associates, Inc. arXiv \"ArXiv (identifier)\"):1706.03762. [...] Cite error: A list-defined reference named \"Gulati2020\" is not used in the content (see the help page).\n\n## External links\n\n[edit]\n\n \"Attention Is All You Need\" on Google Research\n \"Attention Is All You Need\" on arXiv\n Uszkoreit, Jakob (31 August 2017). \"Transformer: A Novel Neural Network Architecture for Language Understanding\". research.google. Retrieved 9 August 2024. A concurrent blog post on the Google Research blog.\n\n|  v  t  e  Google AI |\n\n[2] ‪Ashish Vaswani‬ - ‪Google Scholar‬\n    https://scholar.google.com/citations?user=oR9sCGYAAAAJ&hl=en\n    | Attention is all you need. CoRR abs/1706.03762 (2017) A Vaswani, N Shazeer, N Parmar, J Uszkoreit, L Jones, AN Gomez, ...  arXiv preprint arXiv:1706.03762 1 (2), 2017 | 451 | 2017 |\n| One model to learn them all L Kaiser, AN Gomez, N Shazeer, A Vaswani, N Parmar, L Jones, ...  arXiv preprint arXiv:1706.05137, 2017 | 448 | 2017 | [...] | Attention is all you need, 2023 A Vaswani, N Shazeer, N Parmar, J Uszkoreit, L Jones, AN Gomez, ...  URL  org/abs/1706.03762 1706, 03762, 2023 | 1601 | 2023 |\n| Music transformer CZA Huang, A Vaswani, J Uszkoreit, N Shazeer, I Simon, C Hawthorne, ...  arXiv preprint arXiv:1809.04281, 2018 | 1514 | 2018 | [...] | Image transformer N Parmar, A Vaswani, J Uszkoreit, L Kaiser, N Shazeer, A Ku, D Tran  International conference on machine learning, 4055-4064, 2018 | 2713 | 2018 |\n| Attention is all you need. arXiv 2017 A Vaswani, N Shazeer, N Parmar, J Uszkoreit, L Jones, AN Gomez, ...  arXiv preprint arXiv:1706.03762 10, 2017 | 2517 | 2017 |\n\n[3] Medium\n    https://medium.com/@hyponymous/paper-summary-attention-is-all-you-need-22c2c7a5e06\n    Attention Is All You Need (2017)  Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin\n\n[4] Attention is All you Need\n    https://papers.nips.cc/paper/7181-attention-is-all-you-need\n    # Attention is All you Need\n\nAshish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, Illia Polosukhin\n\nAdvances in Neural Information Processing Systems 30 (NIPS 2017)\n\nBibtex Metadata Paper Reviews\n\n## Abstract\n\n[5] Attention is All you Need\n    https://papers.neurips.cc/paper/7181-attention-is-all-you-need.pdf\n    Zhouhan Lin, Minwei Feng, Cicero Nogueira dos Santos, Mo Yu, Bing Xiang, Bowen Zhou, and Yoshua Bengio. A structured self-attentive sentence embedding. arXiv preprint arXiv:1703.03130, 2017.\n Samy Bengio Łukasz Kaiser. Can active memory replace attention? In Advances in Neural Information Processing Systems,\n\n[truncated: 991 of 4,985 chars]",
+          "error": null,
+          "latency_ms": 814.2197919996761,
+          "raw_chars": 4985,
+          "truncated": true,
+          "source_ids": [
+            "S1",
+            "S9",
+            "S10",
+            "S4",
+            "S8"
           ]
         }
       ],
@@ -86,7 +140,7 @@
       "i": 4,
       "node": "reflect",
       "plan_version": 1,
-      "ts_offset_ms": 5044.092750002164,
+      "ts_offset_ms": 6795.20254199997,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -96,62 +150,37 @@
       "i": 5,
       "node": "act",
       "plan_version": 1,
-      "ts_offset_ms": 6216.982083002222,
-      "tool_calls": [
-        {
-          "call_id": "call_bzeZ3dI7cXuZxMypC9oAOBu5",
-          "name": "fetch_page",
-          "args": {
-            "url": "https://papers.nips.cc/paper/7181-attention-is-all-you-need"
-          }
-        }
-      ],
+      "ts_offset_ms": 7924.58254200028,
+      "tool_calls": [],
       "observations": [],
       "reflection": null,
-      "note": null
+      "note": "The first-listed author of the paper **“Attention Is All You Need”** is **Ashish Vaswani**. [S4][S8][S1]"
     },
     {
       "i": 6,
       "node": "observe",
       "plan_version": 1,
-      "ts_offset_ms": 14765.013416006695,
+      "ts_offset_ms": 7926.026459000241,
       "tool_calls": [],
-      "observations": [
-        {
-          "call_id": "call_bzeZ3dI7cXuZxMypC9oAOBu5",
-          "tool": "fetch_page",
-          "args": {
-            "url": "https://papers.nips.cc/paper/7181-attention-is-all-you-need"
-          },
-          "ok": true,
-          "content": "Attention is All you Need\nhttps://papers.nips.cc/paper/7181-attention-is-all-you-need\n\nAttention is All you Need\n\nBibtex Metadata Paper Reviews\n\nAbstract\n\nThe dominant sequence transduction models are based on complex recurrent orconvolutional neural networks in an encoder and decoder configuration. The best performing such models also connect the encoder and decoder through an attentionm echanisms. We propose a novel, simple network architecture based solely onan attention mechanism, dispensing with recurrence and convolutions entirely.Experiments on two machine translation tasks show these models to be superiorin quality while being more parallelizable and requiring significantly less timeto train. Our single model with 165 million parameters, achieves 27.5 BLEU onEnglish-to-German translation, improving over the existing best ensemble result by over 1 BLEU. On English-to-French translation, we outperform the previoussingle state-of-the-art with model by 0.7 BLEU, achieving a BLEU score of 41.1.\n\nName Change Policy\n\n&times;\n\nRequests for name changes in the electronic proceedings will be accepted with no questions asked. However name changes may cause bibliographic tracking issues. Authors are asked to consider this carefully and discuss it with their co-authors prior to requesting a name change in the electronic proceedings.\n\nUse the \"Report an Issue\" link to request a name change.\n\nDo not remove: This comment is monitored to verify that the site is working properly",
-          "error": null,
-          "latency_ms": 8546.653000012157,
-          "raw_chars": 1406,
-          "truncated": false,
-          "source_ids": [
-            "S3"
-          ]
-        }
-      ],
+      "observations": [],
       "reflection": null,
-      "note": null
+      "note": "no tool calls"
     },
     {
       "i": 7,
       "node": "reflect",
       "plan_version": 1,
-      "ts_offset_ms": 17291.781916006585,
+      "ts_offset_ms": 9356.553708999854,
       "tool_calls": [],
       "observations": [],
       "reflection": {
-        "decision": "continue",
-        "reasoning": "Only one step’s summary claims the first author, but the fetched NIPS/Papers page content with the explicit author list wasn’t provided/confirmed, so the sub-question isn’t fully evidenced yet.",
+        "decision": "finalize",
+        "reasoning": "The web search results explicitly identify the author list and state that Ashish Vaswani is the first-listed author; no further evidence is needed.",
         "covered": {
-          "What is the author list order (first-listed author) for the paper titled 'Attention Is All You Need'?": false
+          "What is the first-listed author of the paper titled 'Attention Is All You Need'?": false
         },
         "open_gaps": [
-          "What is the author list order (first-listed author) for the paper titled 'Attention Is All You Need'?"
+          "What is the first-listed author of the paper titled 'Attention Is All You Need'?"
         ],
         "overruled_stop": false
       },
@@ -159,49 +188,9 @@
     },
     {
       "i": 8,
-      "node": "act",
-      "plan_version": 1,
-      "ts_offset_ms": 19131.620875006774,
-      "tool_calls": [],
-      "observations": [],
-      "reflection": null,
-      "note": "The first-listed author of **“Attention Is All You Need”** is **Ashish Vaswani**. This is shown in the official NIPS (NeurIPS) paper listing. (Source: [S3])"
-    },
-    {
-      "i": 9,
-      "node": "observe",
-      "plan_version": 1,
-      "ts_offset_ms": 19132.574582996313,
-      "tool_calls": [],
-      "observations": [],
-      "reflection": null,
-      "note": "no tool calls"
-    },
-    {
-      "i": 10,
-      "node": "reflect",
-      "plan_version": 1,
-      "ts_offset_ms": 20992.123541000183,
-      "tool_calls": [],
-      "observations": [],
-      "reflection": {
-        "decision": "finalize",
-        "reasoning": "The observations provide the needed direct answer: they state that the first-listed author of 'Attention Is All You Need' is Ashish Vaswani. No additional searching seems necessary.",
-        "covered": {
-          "What is the author list order (first-listed author) for the paper titled 'Attention Is All You Need'?": false
-        },
-        "open_gaps": [
-          "What is the author list order (first-listed author) for the paper titled 'Attention Is All You Need'?"
-        ],
-        "overruled_stop": false
-      },
-      "note": null
-    },
-    {
-      "i": 11,
       "node": "finalize",
       "plan_version": 1,
-      "ts_offset_ms": 22421.108541006106,
+      "ts_offset_ms": 10477.827499999876,
       "tool_calls": [],
       "observations": [],
       "reflection": null,
@@ -211,51 +200,92 @@
   "sources": [
     {
       "sid": "S1",
-      "url": "https://www.facebook.com/Techmeme/posts/a-profile-of-ashish-vaswani-lead-author-of-attention-is-all-you-need-and-essenti/1206321298196849",
-      "title": "Techmeme - A profile of Ashish Vaswani, lead author of...",
-      "snippet": "## Techmeme's post\n\n### Techmeme\n\n3 September 2025  ·\n\nA profile of Ashish Vaswani, lead author of Attention Is All You Need and Essential AI co-founder, who says the transformer-based AI boom is stifling innovation\n\nFull context: \n\nAn AI Pioneer Worries Big Tech Is Blinding Itself to New Breakthrou",
+      "url": "https://en.wikipedia.org/wiki/Attention_Is_All_You_Need",
+      "title": "Attention Is All You Need - Wikipedia",
+      "snippet": "\"Attention Is All You Need\" is a 2017 research paper on machine learning authored by eight scientists and engineers working at Google. The paper introduced a new deep learning architecture known as the transformer \"Transformer (deep learning)\"), based on the attention mechanism \"Attention (machine l",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S2",
-      "url": "https://scholar.google.com/citations?user=oR9sCGYAAAAJ&hl=en",
-      "title": "‪Ashish Vaswani‬ - ‪Google Scholar‬",
-      "snippet": "|  |  |  |\n --- \n| Title Sort Sort by citationsSort by yearSort by title | Cited by  Cited by | Year |\n| Attention is all you need A Vaswani, N Shazeer, N Parmar, J Uszkoreit, L Jones, AN Gomez, ...  Advances in neural information processing systems 30, 2017 | 275197 | 2017 |\n| Relational inductive ",
+      "url": "https://www.reddit.com/r/ChatGPT/comments/125i04d/but_google_is_the_author_of_attention_is_all_you",
+      "title": "\"But Google is the author of 'Attention Is All You Need', they know how to build LLM's\"",
+      "snippet": "[\"Attention Is All You Need\" is a 2017 research paper in machine learning authored by eight scientists working at Google. The paper introduced a new deep learning architecture known as the transformer [...] and what is now known as multimodal generative AI.]( 13 r/wikipedia•6mo ago    ### [\"Attentio",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S3",
-      "url": "https://papers.nips.cc/paper/7181-attention-is-all-you-need",
-      "title": "Attention is All you Need - NIPS",
-      "snippet": "# Attention is All you Need\n\nAshish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, Illia Polosukhin\n\nAdvances in Neural Information Processing Systems 30 (NIPS 2017)\n\n## Abstract [...] #### Name Change Policy\n\nRequests for name changes in the electron",
+      "url": "https://www.alphaxiv.org/abs/1706.03762",
+      "title": "Attention Is All You Need | alphaXiv",
+      "snippet": "Conceptual animation from Jakob Uszkoreit's author post. It starts with initial word embeddings and adds sentence-wide context through self-attention, repeating this step for all words in parallel. The decoder generates output words left-to-right while attending to encoder representations.\n\n## Does ",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S4",
-      "url": "https://dl.acm.org/doi/10.5555/3295222.3295349",
-      "title": "Attention is all you need | Proceedings of the 31st International Conference on Neural Information Processing Systems",
-      "snippet": "Authors: Image 8Ashish Vaswani, Image 9Noam Shazeer, Image 10Niki Parmar, Image 11Jakob Uszkoreit, + 4, Image 12Llion Jones, Image 13Aidan N.Gomez, Image 14Łukasz Kaiser, Image 15Illia Polosukhin(Less)Authors Info & Claims\n\nNIPS'17: Proceedings of the 31st International Conference on Neural Informat",
+      "url": "https://papers.nips.cc/paper/7181-attention-is-all-you-need",
+      "title": "Attention is All you Need",
+      "snippet": "# Attention is All you Need\n\nAshish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, Illia Polosukhin\n\nAdvances in Neural Information Processing Systems 30 (NIPS 2017)\n\nBibtex Metadata Paper Reviews\n\n## Abstract",
       "tool": "web_search",
       "first_seen_step": 1
     },
     {
       "sid": "S5",
-      "url": "https://parseur.com/blog/attention-is-all-you-need",
-      "title": "Attention Is All You Need Explained - The Paper That Changed AI | Parseur®",
-      "snippet": "The team, Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Łukasz Kaiser, and Illia Polosukhin, were all working at Google Brain at the time. Many of them have since gone on to found major AI companies of their own, which gives some sense of the calibre of res",
+      "url": "https://medium.com/@adnanmasood/attention-is-all-you-need-explained-like-youre-smart-and-busy-2a3d7436144f",
+      "title": "Attention Is All You Need, explained like you’re smart and busy",
+      "snippet": "Sign up with Google\n\nSign up with Facebook\n\nSign up with email\n\nAlready have an account? Sign in\n\n[](\n\n10\n\n[](\n\n10\n\n[](\n\n1\n\n[](\n\nImage 5: Adnan Masood, PhD.\n\nImage 6: Adnan Masood, PhD.\n\nFollow\n\n## Written by Adnan Masood, PhD.⁠\n\n2K followers\n\n·4 following\n\nDr. Adnan Masood is an Engineer, Thought L",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S6",
+      "url": "https://medium.com/@1528371521zx/ashish-vaswani-68a1b2364346",
+      "title": "Ashish Vaswani",
+      "snippet": "Sitemap\n\nOpen in app\n\nSign up\n\nSign in\n\n mechanism. It hit me that I really need to introduce the first author of the foundational paper _Attention is All You Need_, Ashish Vaswani. So, the star of my seventeenth piece is none other than Ashish Vaswani.\n\n## About Ashish [...] Ashish was born in 1986",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S7",
+      "url": "https://dannyfranklin.substack.com/p/research-recap-ok-you-have-my-attention",
+      "title": "AI Research Recap: Ok Transformers, You have My Attention",
+      "snippet": "In 2017, Ashish Vaswani (and 7 other Google Researchers) published a research paper at the 31st Conference on Neural Information Processing Systems titled very simply “Attention Is All You Need”. Despite this quaint title, their 15 page paper described a new architecture for language models that rev",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S8",
+      "url": "https://papers.neurips.cc/paper/7181-attention-is-all-you-need.pdf",
+      "title": "Attention is All you Need",
+      "snippet": "Attention Is All You Need Ashish Vaswani∗ Google Brain avaswani@google.com Noam Shazeer∗ Google Brain noam@google.com Niki Parmar∗ Google Research nikip@google.com Jakob Uszkoreit∗ Google Research usz@google.com Llion Jones∗ Google Research llion@google.com Aidan N. Gomez∗† University of Toronto aid",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S9",
+      "url": "https://scholar.google.com/citations?user=oR9sCGYAAAAJ&hl=en",
+      "title": "‪Ashish Vaswani‬ - ‪Google Scholar‬",
+      "snippet": "| Attention is all you need. CoRR abs/1706.03762 (2017) A Vaswani, N Shazeer, N Parmar, J Uszkoreit, L Jones, AN Gomez, ...  arXiv preprint arXiv:1706.03762 1 (2), 2017 | 451 | 2017 |\n| One model to learn them all L Kaiser, AN Gomez, N Shazeer, A Vaswani, N Parmar, L Jones, ...  arXiv preprint arXiv",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S10",
+      "url": "https://medium.com/@hyponymous/paper-summary-attention-is-all-you-need-22c2c7a5e06",
+      "title": "Medium",
+      "snippet": "Attention Is All You Need (2017)  Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin",
       "tool": "web_search",
       "first_seen_step": 1
     }
   ],
-  "answer": "The first-listed author of “Attention Is All You Need” is **Ashish Vaswani** [S3].",
+  "answer": "The first-listed author of the paper “Attention Is All You Need” is **Ashish Vaswani** [S4][S8].",
   "citations": [
-    "S3"
+    "S4",
+    "S8"
   ],
   "coverage": {
-    "What is the author list order (first-listed author) for the paper titled 'Attention Is All You Need'?": false
+    "What is the first-listed author of the paper titled 'Attention Is All You Need'?": false
   },
   "outcome": {
     "status": "completed",
@@ -271,114 +301,92 @@
         "model": "gpt-5.4-nano",
         "input_tokens": 225,
         "cached_tokens": 0,
-        "output_tokens": 77,
-        "reasoning_tokens": 10,
-        "cost_usd": 0.00014125,
-        "latency_ms": 1585.368041996844,
+        "output_tokens": 78,
+        "reasoning_tokens": 16,
+        "cost_usd": 0.0001425,
+        "latency_ms": 1770.000749999781,
         "replayed": false
       },
       {
         "purpose": "act",
         "model": "gpt-5.4-nano",
-        "input_tokens": 794,
+        "input_tokens": 856,
         "cached_tokens": 0,
-        "output_tokens": 26,
+        "output_tokens": 95,
         "reasoning_tokens": 0,
-        "cost_usd": 0.00019130000000000001,
-        "latency_ms": 1191.1996249982622,
+        "cost_usd": 0.00028995000000000003,
+        "latency_ms": 1634.4018330000836,
         "replayed": false
       },
       {
         "purpose": "act",
         "model": "gpt-5.4-nano",
-        "input_tokens": 2207,
+        "input_tokens": 4490,
         "cached_tokens": 0,
-        "output_tokens": 35,
+        "output_tokens": 38,
         "reasoning_tokens": 0,
-        "cost_usd": 0.00048515000000000006,
-        "latency_ms": 1169.520833005663,
+        "cost_usd": 0.0009455,
+        "latency_ms": 1126.266250000299,
         "replayed": false
       },
       {
         "purpose": "reflect",
         "model": "gpt-5.4-nano",
-        "input_tokens": 554,
+        "input_tokens": 725,
         "cached_tokens": 0,
-        "output_tokens": 142,
-        "reasoning_tokens": 39,
-        "cost_usd": 0.0002883,
-        "latency_ms": 2521.797791996505,
-        "replayed": false
-      },
-      {
-        "purpose": "act",
-        "model": "gpt-5.4-nano",
-        "input_tokens": 2558,
-        "cached_tokens": 0,
-        "output_tokens": 49,
-        "reasoning_tokens": 0,
-        "cost_usd": 0.0005728500000000001,
-        "latency_ms": 1833.827416994609,
-        "replayed": false
-      },
-      {
-        "purpose": "reflect",
-        "model": "gpt-5.4-nano",
-        "input_tokens": 554,
-        "cached_tokens": 0,
-        "output_tokens": 139,
-        "reasoning_tokens": 45,
-        "cost_usd": 0.00028455,
-        "latency_ms": 1855.8682079892606,
+        "output_tokens": 101,
+        "reasoning_tokens": 22,
+        "cost_usd": 0.00027125,
+        "latency_ms": 1427.2012500005076,
         "replayed": false
       },
       {
         "purpose": "finalize",
         "model": "gpt-5.4-nano",
-        "input_tokens": 550,
+        "input_tokens": 796,
         "cached_tokens": 0,
-        "output_tokens": 27,
+        "output_tokens": 32,
         "reasoning_tokens": 0,
-        "cost_usd": 0.00014375,
-        "latency_ms": 1425.2554999984568,
+        "cost_usd": 0.00019920000000000002,
+        "latency_ms": 1115.0253750001866,
         "replayed": false
       }
     ],
     "totals": {
-      "input_tokens": 7442,
+      "input_tokens": 7092,
       "cached_tokens": 0,
-      "output_tokens": 495,
-      "reasoning_tokens": 94,
-      "cost_usd": 0.0021071500000000003,
+      "output_tokens": 344,
+      "reasoning_tokens": 38,
+      "cost_usd": 0.0018484,
       "cache_hit_rate": 0.0
     },
     "by_purpose": {
       "plan": {
         "calls": 1,
-        "cost_usd": 0.00014125,
-        "output_tokens": 77
+        "cost_usd": 0.0001425,
+        "output_tokens": 78
       },
       "act": {
-        "calls": 3,
-        "cost_usd": 0.0012493,
-        "output_tokens": 110
+        "calls": 2,
+        "cost_usd": 0.0012354500000000001,
+        "output_tokens": 133
       },
       "reflect": {
-        "calls": 2,
-        "cost_usd": 0.00057285,
-        "output_tokens": 281
+        "calls": 1,
+        "cost_usd": 0.00027125,
+        "output_tokens": 101
       },
       "finalize": {
         "calls": 1,
-        "cost_usd": 0.00014375,
-        "output_tokens": 27
+        "cost_usd": 0.00019920000000000002,
+        "output_tokens": 32
       }
     },
-    "search_credits": 1,
-    "steps": 3
+    "search_credits": 3,
+    "steps": 2
   },
   "timings_ms": {
-    "total": 22418.029125008616
+    "total": 10474.355166999885
   },
   "compaction": {
     "count": 0,

@@ -24,58 +24,104 @@ number below can be traced back to the run that produced it.
 
 | Metric | Value | 95% CI |
 |---|---|---|
-| **pass@1** — a single attempt succeeds | **87.8%** | [70–95%] |
-| **pass^3** — *all three* attempts succeed | **76.7%** | [59–88%] |
+| **pass@1** — a single attempt succeeds | **96.7%** | [83–99%] |
+| **pass^3** — *all three* attempts succeed | **93.3%** | [79–98%] |
 | Tool recall | 100.0% | — |
-| Tool precision | **40.4%** | — |
+| Tool precision | 36.8% | see the caveat below |
 | Citation resolution (cited ids that exist) | 97.7% | — |
 | Invented-URL rate | 0.0% | — |
-| Cost per run | $0.0023 | p95 $0.0059 |
-| Latency | 15.4s p50 | 79.7s p95 |
+| Cost per run | $0.0024 | p95 $0.0042 |
+| Latency | 11.4s p50 | 25.7s p95 |
 
 Full breakdown, per-tier results and failure modes: **[evals/REPORT.md](evals/REPORT.md)**.
 
-### The headline finding is negative: the loop loses to one round of search
+### The headline finding: the loop's problem was its prompt, not its architecture
 
-The point of an evaluation is to be able to be wrong, so here is the result that matters. A
-**baseline** variant — plan once, issue every search in a single parallel round, answer — beats the
-full iterative agent on **every tier**:
+The point of an evaluation is to be able to be wrong, and this one has now been wrong about its own
+agent twice — in opposite directions. Both passes are kept here, because the second only means
+something against the first.
 
-| Tier | Full agent | Baseline (single round) |
+**Pass one.** A `baseline` variant — plan once, issue every search in one parallel round, answer —
+beat the full iterative agent on every tier: **94.4% against 87.8%**, three times cheaper. The
+conclusion on the evidence available was that iterative refinement was not merely failing to pay
+for itself but actively destructive. Those results are tagged [`v0.2.0-pre-gate`](../../releases/tag/v0.2.0-pre-gate)
+with their traces.
+
+**What the traces actually said.** The obvious reading is that the loop searches too much, and that
+turned out to be false. Only **2 of 305 searches** repeated a query and only 6% of calls returned
+nothing new. What the loop did was stop calling tools and keep going anyway: **77 of 228 rounds —
+34% — ran no tools at all.** `act` emits no calls when it believes it can answer, so each of those
+was the agent asking to stop, `reflect` overruling, and `act` proposing the same stop again. One
+adversarial case did this eight times consecutively.
+
+Two lines of prompt were responsible, and both are the kind of defect that no test catches:
+
+- `SYSTEM` said *"prefer several specific searches over one broad one"* and then, four lines later,
+  *"do not keep searching to feel thorough."* The first is about the width of one round and now
+  says so.
+- `REFLECT_SYSTEM` listed its two failure modes *"in order of how common they are"* and put
+  **stopping early first**. These very runs measured the opposite. The order is now inverted, the
+  measurement is quoted in the prompt, and a proposed stop puts the burden on reflect to name the
+  specific missing evidence.
+
+**Pass two, after fixing those two lines and changing nothing else:**
+
+| Tier | Full agent | Baseline | `gated` (cap overrules at 1) | `no_overrule` (cap at 0) |
+|---|---|---|---|---|
+| easy | 100.0% | 100.0% | 100.0% | 100.0% |
+| multi-hop | **93.9%** | 81.8% | 87.9% | 81.8% |
+| adversarial | 95.2% | **100.0%** | 76.2% | 85.7% |
+| **overall pass@1** | **96.7%** | 93.3% | 90.0% | 90.0% |
+| pass^3 | **93.3%** | 86.7% | 83.3% | 83.3% |
+| mean steps | 2.33 | 1.00 | 2.10 | 2.56 |
+| mean cost | $0.0024 | $0.0008 | $0.0023 | $0.0023 |
+
+The loop now beats the baseline it used to lose to. **That difference is not significant** —
++3.3 points, 95% paired interval [−1.1, +7.8], McNemar p = 0.375 — and the baseline remains both
+three times cheaper and still perfect on the adversarial tier, where it cannot be talked out of
+stopping. What is defensible is narrower and more useful than the original claim: the architecture
+was never the problem, and the measured failure was a prompt that told the model to fear the wrong
+mistake.
+
+### The fix that followed from the diagnosis made it worse
+
+Capping reflect's overrules is the obvious remedy for "34% of rounds are overruled stops". It was
+designed against the committed traces — three candidate rules simulated over all 90 runs before a
+line was written — and the best of them, one overrule then the stop is final, shipped as `gated`.
+
+It is the worst variant in the table, and it is the **only statistically significant result this
+project has produced**:
+
+| Comparison | Δ pass@1 | 95% paired CI | McNemar | Unique pass^3 wins |
+|---|---|---|---|---|
+| full vs `gated` | **+6.7 pts** | **[+1.1, +13.3]** | **p = 0.031** | 3 – 0 |
+| full vs `no_overrule` | +6.7 pts | [+0.0, +14.4] | p = 0.070 | 4 – 1 |
+| full vs baseline | +3.3 pts | [−1.1, +7.8] | p = 0.375 | 3 – 1 |
+
+Capping at one overrule and capping at zero both land on exactly 90.0%, from two independently run
+ablations. The mechanism is visible on the adversarial tier, where the effect is not monotonic in
+the number of rounds:
+
+| | steps | adversarial pass@1 |
 |---|---|---|
-| easy | 100.0% | 100.0% |
-| multi-hop | 78.8% | **84.8%** |
-| adversarial | 81.0% | **100.0%** |
-| **overall pass@1** | **87.8%** | **94.4%** |
-| mean steps | 2.5 | 1.0 |
-| mean cost | $0.0023 | $0.0008 |
+| baseline | 1.00 | 100.0% |
+| `gated` | 2.38 | 76.2% |
+| full | 3.38 | 95.2% |
 
-The baseline is **3× cheaper, 2.5× shorter, and more accurate.** For this task distribution and this
-model, iterative refinement is not just failing to pay for itself — it is actively destructive.
+Either answer immediately, or take enough rounds to establish that nothing is there. **The middle is
+the worst place to be** — a truncated investigation produces a confident wrong value rather than a
+refusal, and `wrong_value` is indeed the dominant failure mode on exactly those cases. Once the
+prompt stopped telling `reflect` to fear stopping, its overrules became worth paying for, and
+removing its authority removed something real. `gated` is kept rather than deleted: a well-motivated
+fix that was simulated before it was built and still measured worse is the most useful thing in this
+evaluation.
 
-**Why — and it is not over-searching.** Tool recall is already 100% at the first round: the agent
-finds everything it needs immediately, largely because a single `act` step emits four to six
-parallel searches. Everything after that is re-litigating evidence it already had.
-
-The obvious explanation would be that the loop keeps searching, and the traces say otherwise. Only
-**2 of 305 searches** repeat an earlier query, and only 6% of tool calls return nothing new. What
-the loop actually does is stop calling tools and keep going anyway: **77 of 228 rounds — 34% — ran
-no tools at all.** `act` emits no calls when it believes it can answer, so each of those rounds is
-the agent asking to stop, being overruled by `reflect`, and paying for an `act` call and a `reflect`
-call to do nothing. One adversarial case spends eight consecutive rounds this way. The defect is a
-stop condition that can be overruled without limit, not an agent that searches too much. On the
-adversarial tier the effect is starkest — those cases reward recognising that you should stop, and
-a variant that cannot help but stop scores 100% against the loop's 81%.
-
-**The `reflect` node is implicated.** It exists to catch premature *stopping*, and it fired: 35
-overrules across 90 runs. An ablation that makes act's stop decision final — `no_overrule` — scores
-**91.1% against the full agent's 87.8%** over all 90 runs, with fewer steps. But that gap is
-**+3.3 points with a 95% paired interval of [-4.4, +11.1] and McNemar p = 0.549**: directionally
-consistent with the rest of the evidence and nowhere near significant on its own. An earlier version
-of this README quoted 93.1% against 90.3% from a partial run that was missing the adversarial tier
-and looked stronger than it was; the tier was re-run and the comparison is now complete. Reflect is
-not exonerated — 34% of rounds are stops it overruled into nothing — but the ablation alone does not
-carry the claim, and it is reported at the strength the data supports.
+**One comparison here is confounded and should not be read as a before/after.** The 87.8% was
+measured in August and the 96.7% today, so two and a half months of web drift sit inside it
+alongside the prompt change. The four-way comparison in the second table was run back to back
+against one prompt set and is sound; the across-time one is indicative only. Every trace records
+the hash of the prompts that produced it, and `evals/REPORT.md` prints a banner if the committed
+results ever stop matching the code.
 
 **Is the judge trustworthy?** This finding rests on judge verdicts, so the judge was checked
 against 90 hand labels made before any verdict was visible: **Cohen's κ = 0.824** (raw agreement
@@ -85,15 +131,18 @@ are it being *stricter* than the human. Every pass rate here is therefore a floo
 flattering estimate, which is the direction an evaluation should fail in.
 
 **Caveats, stated rather than buried.** At 11 multi-hop and 7 adversarial cases the per-tier
-intervals are very wide, and the multi-hop difference (78.8% vs 84.8%) is well inside noise. The
-adversarial gap and the overall direction are more robust, but this is 30 cases, not 300. The honest
-claim is *"on this benchmark the loop did not earn its cost"*, not *"agent loops don't work"*.
+intervals are very wide and no single tier difference here is significant on its own. Only one
+comparison in this README is: capping reflect's overrules makes the agent worse. Everything else is
+a direction, not a result, and this is 30 cases, not 300. The honest claim is *"on this benchmark,
+with these prompts, the loop is no longer losing"* — not *"agent loops work"*, and emphatically not
+the reverse claim this same benchmark supported two months ago.
 
-`pass^3` is 76.7% against a pass@1 of 87.8%, and the gap between `pass^3` and `(pass@1)^3` is
-**+0.090**. Because x^k is convex, that quantity is non-negative whenever per-case rates differ at
+`pass^3` is 93.3% against a pass@1 of 96.7%, and the gap between `pass^3` and `(pass@1)^3` is
+**+0.030**. Because x^k is convex, that quantity is non-negative whenever per-case rates differ at
 all, so a positive value means failures are **concentrated in a fixed set of cases** rather than
-scattered randomly across runs. Those are specific hard cases to go and fix, not variance to average
-away.
+scattered randomly across runs. It has fallen from +0.090 as the overall rate rose, which is what
+fixing a systematic defect looks like: the remaining failures are fewer and closer to genuine
+run-to-run variance than to a fixed set of cases the agent cannot do.
 
 ---
 
@@ -248,20 +297,25 @@ uv run python -m research_agent.tools --demo   # exercise every tool once
 
 Written before anyone asks.
 
-- **The loop does not earn its cost on this benchmark.** A single round of parallel search beats it
-  on every tier, 3× cheaper. See the headline finding above. 34% of its rounds call no tools at all —
-  the agent asking to stop and being overruled — and 11 of 90 runs hit a tool cap instead of stopping.
-- **Tool precision understates the agent.** The headline 40.4% is matched/n_actual against
+- **The loop's margin over the baseline is not significant.** It wins overall (96.7% vs 93.3%) and
+  on multi-hop, but at +3.3 points with a paired interval of [−1.1, +7.8] and McNemar p = 0.375 that
+  is not a result to lean on. The baseline is still 3× cheaper and still perfect on the adversarial
+  tier. "The loop is better" is not supported; "the loop is no longer worse, and the prompt was the
+  problem" is.
+- **The headline reversed once, and could again.** This evaluation concluded the opposite in its
+  first pass, and the thing that changed was two lines of prompt. An n=30 benchmark that flips on a
+  prompt edit should be treated as a diagnostic instrument, not a leaderboard.
+- **Tool precision understates the agent.** The 36.8% is matched/n_actual against
   `expected_tools`, which names at most one call for 81 of 90 runs while the agent is designed to
   fan out several parallel searches per round. A correct four-way fan-out against a one-call
   expectation scores 25% with nothing wasted. The number is a lower bound confounded with the
   dataset's own thinness, and `evals/REPORT.md` now measures redundancy directly instead of
   inferring it from precision. The order score is likewise computed on only the 3 runs that declare
   a `tool_order`.
-- **The `no_overrule` ablation mixes two dates.** 20 of its runs were lost to a key rotation and
-  re-run later, so its easy and multi-hop runs are from one day and its adversarial runs from
-  another, with the web moving in between. The comparison is complete rather than truncated, but
-  the two halves are not contemporaneous and `REPORT.md` says so inline.
+- **The before/after across the prompt fix is confounded.** 87.8% was measured in August and 96.7%
+  today, so web drift sits inside that gap alongside the prompt change. The four-way comparison
+  between variants was run back to back against one prompt set and is sound; the across-time
+  comparison is indicative only.
 - **Judge costs were under-recorded and are now corrected.** Judge calls were priced at the 50%
   Batch rate while being issued synchronously, which halved every published judge figure. The
   committed results carry the corrected numbers, the discount is gone from the code, and the
@@ -295,16 +349,18 @@ Written before anyone asks.
 
 ## What I'd do next
 
-1. **Make the loop earn its place, or remove it.** The evidence says a single parallel round wins.
-   The loop's only defensible advantage is adaptive follow-up, so it should be gated on evidence that
-   follow-up is needed — if a round adds no new sources, finish. Right now `reflect` is biased the
-   other way and overrules correct stops.
-2. **A larger labelled sample.** 90 items puts κ's lower bound at 0.580; a few hundred would
+1. **Find out why the middle is the worst place to be.** The adversarial tier is not monotonic in
+   rounds — 1 round scores 100%, 2.4 rounds 76%, 3.4 rounds 95% — and that shape is the most
+   interesting unexplained thing here. It suggests a truncated investigation is worse than none,
+   which if it generalises is a real result about when to let an agent stop.
+2. **Re-run the first pass against the fixed prompts on the same day.** That is the only way to
+   separate the prompt fix from web drift, and it costs about $0.30.
+3. **A larger labelled sample.** 90 items puts κ's lower bound at 0.580; a few hundred would
    tighten it enough to distinguish "almost perfect" from "moderate".
-3. **A cross-family judge** (Claude or Gemini) to bound self-preference rather than disclaiming it.
-4. **Grow the dataset to ~100 cases.** The interval width at n=30 is the binding constraint on saying
+4. **A cross-family judge** (Claude or Gemini) to bound self-preference rather than disclaiming it.
+5. **Grow the dataset to ~100 cases.** The interval width at n=30 is the binding constraint on saying
    anything is better than anything else.
-5. **Make search results cheaper to read.** A rerank-and-truncate pass over search snippets before
+6. **Make search results cheaper to read.** A rerank-and-truncate pass over search snippets before
    they enter the prompt would cut input tokens materially at these step counts.
 
 ---

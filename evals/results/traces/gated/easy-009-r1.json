@@ -1,0 +1,460 @@
+{
+  "schema_version": "1",
+  "run_id": "76dde4edf66b",
+  "ts": "2026-10-25T08:19:53+00:00",
+  "question": "In what year did Rust reach its first stable release, 1.0?",
+  "variant": "gated",
+  "config": {
+    "agent_model": "gpt-5.4-nano",
+    "reasoning_effort": "none",
+    "max_steps": 8,
+    "max_seconds": 120.0,
+    "max_run_cost_usd": 0.05,
+    "finalize_reserve_usd": 0.008,
+    "compact_threshold_tokens": 12000,
+    "git_sha": "e577c53",
+    "prompt_hash": "sha256:e2655640140a"
+  },
+  "plan": {
+    "version": 1,
+    "subquestions": [
+      "What year was Rust 1.0 (the first stable release) released?"
+    ],
+    "replans": 0
+  },
+  "steps": [
+    {
+      "i": 1,
+      "node": "plan",
+      "plan_version": 0,
+      "ts_offset_ms": 1433.361917000184,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 2,
+      "node": "act",
+      "plan_version": 1,
+      "ts_offset_ms": 3072.3854170000777,
+      "tool_calls": [
+        {
+          "call_id": "call_j8W52FLwoCz4ewW2PUdRVwJj",
+          "name": "web_search",
+          "args": {
+            "query": "Rust 1.0 released year 2015 stable release"
+          }
+        },
+        {
+          "call_id": "call_V2EtjIYmTQEkAXfhvOgqTunn",
+          "name": "web_search",
+          "args": {
+            "query": "The Rust Programming Language 1.0 release date May 2015"
+          }
+        },
+        {
+          "call_id": "call_MMSMaHskVQhQZz0vBk3ITsqm",
+          "name": "web_search",
+          "args": {
+            "query": "rust 1.0.0 release announcement date"
+          }
+        },
+        {
+          "call_id": "call_vsM3FaARsX5fKTYof8kT5E8b",
+          "name": "web_search",
+          "args": {
+            "query": "Rust 1.0 blog post announced May 2015"
+          }
+        }
+      ],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 3,
+      "node": "observe",
+      "plan_version": 1,
+      "ts_offset_ms": 5865.419791999557,
+      "tool_calls": [],
+      "observations": [
+        {
+          "call_id": "call_j8W52FLwoCz4ewW2PUdRVwJj",
+          "tool": "web_search",
+          "args": {
+            "query": "Rust 1.0 released year 2015 stable release"
+          },
+          "ok": true,
+          "content": "Summary: The first stable release of Rust, Rust 1.0, was published on May 15, 2015. This release marked a significant change in Rust development, committing to backwards compatibility and establishing a solid foundation for large software projects. The release included stabilization of the vast majority of the standard library, making it no longer possible to use unstable features with a stable build of the compiler.\n\n[1] Rust (programming language) - Wikipedia\n    https://en.wikipedia.org/wiki/Rust_(programming_language)\n    On May 15, 2015, Rust 1.0 became the first stable release. One year later, the compiler had accumulated at least 1,400 contributors, and there were at least 5,000 third-party libraries published on the package management website Crates.io.: 43:15\n\n### 2015–2020: Servo and early adoption\n\n[edit&action=edit&section=5 \"Edit section: 2015–2020: Servo and early adoption\")] [...] Software developer Graydon Hoare created Rust in 2006 while working at Mozilla, which officially sponsored the project in 2009. The first stable release, Rust 1.0, was published in May 2015. The project has been sponsored by the Rust Foundation since February 2021. It has been adopted by many software projects, especially web services and system software. It has been studied academically and has a growing community of developers.\n\n## History [...] ]\n\nFollowing Rust 1.0, new features are developed in nightly versions, released daily. During each six-week release cycle, changes to nightly versions are released to beta, while changes from the previous beta version are released to a new stable version.\n\n[2] Rust: A systems programming language | by Mario García | Medium\n    https://medium.com/@mattdark/rust-a-systems-programming-language-272ca761dfa0\n    ## About\n\nRust is a systems programming language developed by the engineers of Mozilla. Rust could be categorized as a new language, as Rust 1.0, the first stable version was released on May 15th, 2015. The latest version today is Rust 1.20, that was released on August 31st, this year.\n\nRust is a compiled language like C or C++.\n\n[3] Rust 2015 - The Rust Edition Guide\n    https://doc.rust-lang.org/edition-guide/rust-2015/index.html\n    # Rust 2015\n\nRust 2015 has a theme of “stability”. It commenced with the release of 1.0, and is the “default edition”. The edition system was conceived in late 2017, but Rust 1.0 was released in May of 2015. As such, 2015 is the edition that you get when you don’t specify any particular edition, for backwards compatibility reasons. [...] “Stability” is the theme of Rust 2015 because 1.0 marked a huge change in Rust development. Previous to Rust 1.0, Rust was changing on a daily basis. This made it very difficult to write large software in Rust, and made it difficult to learn. With the release of Rust 1.0 and Rust 2015, we committed to backwards compatibility, ensuring a solid foundation for people to build projects on top of. [...] Since it’s the default edition, there’s no way to port your code to Rust 2015; it just is. You’ll be transitioning away from 2015, but never really to 2015. As such, there’s not much else to say about it!\n\n[4] 1.0.0 | Rust Changelogs\n    https://releases.rs/docs/1.0.0\n    ### 1.0.0\n\n# 1.0.0 #\n\n>  Released on: 15 May, 2015\n>  Branched from master on: 4 December, 2015\n\n ~1500 changes, numerous bugfixes\n\n## Highlights #\n\n The vast majority of the standard library is now `#[stable]`. It is no longer possible to use unstable features with a stable build of the compiler.\n Many popular crates on crates.io now work on the stable release channel.\n Arithmetic on basic integer types now checks for overflow in debug builds.\n\n## Language # [...] adjusting the tradeoffs in favor of the most common usage.\nA large number of remaining APIs in std were also stabilized\nduring this cycle; about 75% of the non-deprecated API surface\nis now stable.\nThe new string pattern API landed, which makes\nthe string slice API much more internally consistent and\n\n[truncated: 2,225 of 6,223 chars]",
+          "error": null,
+          "latency_ms": 2322.90783299959,
+          "raw_chars": 6223,
+          "truncated": true,
+          "source_ids": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5"
+          ]
+        },
+        {
+          "call_id": "call_V2EtjIYmTQEkAXfhvOgqTunn",
+          "tool": "web_search",
+          "args": {
+            "query": "The Rust Programming Language 1.0 release date May 2015"
+          },
+          "ok": true,
+          "content": "Summary: The first stable release of Rust 1.0 was published on May 15, 2015. This release marked the culmination of years of development by Graydon Hoare, who began the project in 2006 while working at Mozilla, which officially sponsored it in 2009. By the time of the 1.0 release, the project had attracted at least 1,400 contributors and over 5,000 third-party libraries on Crates.io. The sources also mention that the Rust Foundation has been sponsoring the project since February 2021.\n\n[1] Rust (programming language) - Wikipedia\n    https://en.wikipedia.org/wiki/Rust_(programming_language)\n    On May 15, 2015, Rust 1.0 became the first stable release. One year later, the compiler had accumulated at least 1,400 contributors, and there were at least 5,000 third-party libraries published on the package management website Crates.io.: 43:15\n\n### 2015–2020: Servo and early adoption\n\n[edit&action=edit&section=5 \"Edit section: 2015–2020: Servo and early adoption\")] [...] Software developer Graydon Hoare created Rust in 2006 while working at Mozilla, which officially sponsored the project in 2009. The first stable release, Rust 1.0, was published in May 2015. The project has been sponsored by the Rust Foundation since February 2021. It has been adopted by many software projects, especially web services and system software. It has been studied academically and has a growing community of developers.\n\n## History [...] Rust (programming language) \"Category:Rust (programming language)\")\n Compiled programming languages\n Concurrent programming languages\n Free and open source compilers\n Free software projects\n Functional languages\n Mozilla\n Multi-paradigm programming languages\n Pattern matching programming languages\n Procedural programming languages\n Programming languages created in 2015\n Software using the Apache license\n Software using the MIT license\n Statically typed programming languages\n\n[2] A brief introduction to the Rust programming language\n    https://www.adesso.de/en/news/blog/a-brief-introduction-to-the-rust-programming-language-2.jsp\n    has been able to successfully compile itself since 2011. The first stable version of the compiler and standard library, Rust 1.0, was released on 15 May 2015. [...] Rust is a modern, system-level programming language designed to offer high levels of performance, reliability and productivity. It grew out of a personal project of Mozilla employee Graydon Hoare. In 2009, Mozilla began sponsoring the project, which was officially announced in 2010 for the first time. That same year, the shift away from the initial compiler to a new one began. This compiler, which was written in Rust and goes by the name ‘rustc’, uses LLVM as its backend and has been able to [...] Rust is a unique programming language that allows developers to work at a high level of abstraction without having to sacrifice performance. Known as zero-cost abstraction, this principle is at the core of Rust’s philosophy and is a key thing that sets this language apart from many others. The concept of zero-cost abstraction is a simple but powerful one. Under it, abstract constructs and higher-order programming concepts embedded in the language can be used without having a negative impact on\n\n[3] Rust\n    https://baike.baidu.com/en/item/Rust/1528099\n    Expand\n\nBackground\n\nThe Rust programming language emerged in 2006 as a personal project by Mozilla employee Graydon Hoare, with Mozilla beginning to sponsor the project in 2009. The first version-numbered Rust compiler was released in January 2012. Rust 1.0, the first stable version, was released on May 15, 2015.\n\n6 [...] \"Rust\" was initially a personal project by Graydon Hoare of Mozilla. In 2009, Mozilla began sponsoring the project, with several Mozilla employees participating in the design and development of the Rust language. In August 2013, Graydon Hoare stepped down from his role as technical lead for Rust, and Brian Anderson took over. On May 15, 2015, the Rust 1.0 version was\n\n[truncated: 2,383 of 6,377 chars]",
+          "error": null,
+          "latency_ms": 2498.659249999946,
+          "raw_chars": 6377,
+          "truncated": true,
+          "source_ids": [
+            "S1",
+            "S6",
+            "S7",
+            "S2",
+            "S8"
+          ]
+        },
+        {
+          "call_id": "call_MMSMaHskVQhQZz0vBk3ITsqm",
+          "tool": "web_search",
+          "args": {
+            "query": "rust 1.0.0 release announcement date"
+          },
+          "ok": true,
+          "content": "Summary: On May 15, 2015, Rust 1.0 became the first stable release, marking a significant milestone in the evolution of the Rust programming language. This release introduced key innovations such as ownership, borrowing, and lifetimes, which provided memory safety without a garbage collector. The release was celebrated as a blend of academic rigor and practical pragmatism, addressing critical issues in software development.\n\n[1] The Rust Release Announcements\n    https://blog.rust-lang.org/releases\n    | Aug. 6 | Announcing Rust 1.2 |\n| June 25 | Rust 1.1 stable, the Community Subteam, and RustCamp |\n| May 15 | Announcing Rust 1.0 | [...] | Releases in 2026 |\n| Oct. 15 | Announcing Rust 1.99.1 |\n| Oct. 1 | Announcing Rust 1.99.0 |\n| Sept. 3 | Announcing Rust 1.98.1 |\n| Aug. 20 | Announcing Rust 1.98.0 |\n| July 16 | Announcing Rust 1.97.1 |\n| July 9 | Announcing Rust 1.97.0 |\n| June 30 | Announcing Rust 1.96.1 |\n| May 28 | Announcing Rust 1.96.0 |\n| Apr. 16 | Announcing Rust 1.95.0 |\n| Mar. 26 | Announcing Rust 1.94.1 |\n| Mar. 5 | Announcing Rust 1.94.0 |\n| Feb. 12 | Announcing Rust 1.93.1 |\n| Jan. 22 | Announcing Rust 1.93.0 | [...] | Releases in 2025 |\n| Dec. 11 | Announcing Rust 1.92.0 |\n| Nov. 10 | Announcing Rust 1.91.1 |\n| Oct. 30 | Announcing Rust 1.91.0 |\n| Sept. 18 | Announcing Rust 1.90.0 |\n| Aug. 7 | Announcing Rust 1.89.0 |\n| June 26 | Announcing Rust 1.88.0 |\n| May 15 | Announcing Rust 1.87.0 and ten years of Rust! |\n| Apr. 3 | Announcing Rust 1.86.0 |\n| Mar. 18 | Announcing Rust 1.85.1 |\n| Feb. 20 | Announcing Rust 1.85.0 and Rust 2024 |\n| Jan. 30 | Announcing Rust 1.84.1 |\n| Jan. 9 | Announcing Rust 1.84.0 |\n\n[2] Rust (programming language) - Wikipedia\n    https://en.wikipedia.org/wiki/Rust_(programming_language)\n    On May 15, 2015, Rust 1.0 became the first stable release. One year later, the compiler had accumulated at least 1,400 contributors, and there were at least 5,000 third-party libraries published on the package management website Crates.io.: 43:15\n\n### 2015–2020: Servo and early adoption\n\n[edit&action=edit&section=5 \"Edit section: 2015–2020: Servo and early adoption\")] [...] Software developer Graydon Hoare created Rust in 2006 while working at Mozilla, which officially sponsored the project in 2009. The first stable release, Rust 1.0, was published in May 2015. The project has been sponsored by the Rust Foundation since February 2021. It has been adopted by many software projects, especially web services and system software. It has been studied academically and has a growing community of developers.\n\n## History [...] Work shifted from the OCaml compiler to a self-hosting compiler (i.e., written in Rust) targeting LLVM. The ownership system was in place by 2010. The Rust logo was developed in 2011 based on a bicycle chainring. The early 2010s witnessed increasing involvement from full-time engineers at Mozilla and open source contributors.\n\nOn January 20, 2012, Rust 0.1 became the first public release for Windows, Linux, and MacOS.\n\n### 2012–2015: Evolution\n\n[3] Deciding whether to go to version 1.0.0 for a crate - help - The Rust Programming Language Forum\n    https://users.rust-lang.org/t/deciding-whether-to-go-to-version-1-0-0-for-a-crate/69005\n    | PSA: Please specify precise dependency versions in Cargo.toml  announcements | 50 | 14158 | February 14, 2022 | [...] ### How do I know when to release 1.0.0?\n\nIf your software is being used in production, it should probably already be 1.0.0. If you have a stable API on which users have come to depend, you should be 1.0.0. If you’re worrying a lot about backwards compatibility, you should probably already be 1.0.0. [...] | Topic |  | Replies | Views | Activity |\n ---  --- \n| Getting important crates to version 1.0  community | 64 | 5081 | June 6, 2023 |\n| Too many low-level crates are still at 0.x.x and unstable  community | 73 | 7714 | August 6, 2021 |\n| Why are the version numbers on crates.io so low?  community | 24 | 5798 | December 15, 2016 |\n|\n\n[truncated: 1,926 of 5,923 chars]",
+          "error": null,
+          "latency_ms": 2524.108124999657,
+          "raw_chars": 5923,
+          "truncated": true,
+          "source_ids": [
+            "S9",
+            "S1",
+            "S10",
+            "S11",
+            "S12"
+          ]
+        },
+        {
+          "call_id": "call_vsM3FaARsX5fKTYof8kT5E8b",
+          "tool": "web_search",
+          "args": {
+            "query": "Rust 1.0 blog post announced May 2015"
+          },
+          "ok": true,
+          "content": "Summary: On May 15, 2015, the Rust team published “Announcing Rust 1.0” on the official Rust blog, marking the language’s first stable release. The post describes Rust as “a new programming language aiming to make it easier to build reliable, efficient systems” that “combines low-level control over performance with high-level convenience and safety guarantees.” The 1.0 release was significant not only as a technical landmark but as a stability commitment: from that point forward, breaking changes were largely out of scope, signaling that the language was ready for production use after years of development sponsored by Mozilla.\n\n[1] Rust 1.0 Released | CenterConsulting\n    https://www.centerconsulting.com/code-library/milestones/2015-rust-released\n    CCCenterConsulting\n\nBook an audit\n\nServicesWorkResourcesCC DirectorBook an audit\n\n# Rust 1.0 Released\n\nmilestone May 15, 2015\n\nOn May 15, 2015, the Rust team published “Announcing Rust 1.0” on the official Rust blog, marking the language’s first stable release. The post describes Rust as “a new programming language aiming to make it easier to build reliable, efficient systems” that “combines low-level control over performance with high-level convenience and safety guarantees.” [...] A central claim of the announcement is that Rust reaches these goals “without requiring a garbage collector or runtime, making it possible to use Rust libraries as a ‘drop-in replacement’ for C.” The post argues that Rust’s type system embodies best practices distilled from generations of C and C++ programming, helping seasoned developers cut debugging time and helping newcomers avoid mysterious crashes from subtle mistakes. [...] The 1.0 release was significant not only as a technical landmark but as a stability commitment: from that point forward, breaking changes were largely out of scope, signaling that the language was ready for production use after years of development sponsored by Mozilla.\n\n## Sources\n\nPRIMARY \n\nLast verified June 7, 2026\n\n## Related\n\nRustGraydon HoareMozillaMemory SafetyOwnership and Borrowing\n\n<- Back to the Code Library\n\n[2] Rust 1.0 released [LWN.net]\n    https://lwn.net/Articles/644671\n    LWN.net Logo LWN  \n.net News from the source  LWN\n\n Content\n  + Weekly Edition\n  + Archives\n  + Search\n  + Kernel\n  + Security\n  + Events calendar\n  + Unread comments\n  + LWN FAQ\n  + Write for us\n Edition\n  + Return to the Development page\n\n|\n|\n\nLog in / Subscribe / Register\n\n# Rust 1.0 released\n\n[Posted May 15, 2015 by corbet] [...] Version 1.0 of the Rust language has been released. \"The 1.0 release marks the end of that churn. This release is the official beginning of our commitment to stability, and as such it offers a firm foundation for building applications and libraries. From this point forward, breaking changes are largely out of scope (some minor caveats apply, such as compiler bugs). That said, releasing 1.0 doesn’t mean that the Rust language is “done”. We have many improvements in store. In fact, the Nightly [...] Copyright © 2015, Eklektix, Inc.  \n Comments and public postings are copyrighted by their creators.  \n Linux is a registered trademark of Linus Torvalds\n\n[3] Rust 2015 - The Rust Edition Guide\n    https://doc.rust-lang.org/edition-guide/rust-2015/index.html\n    # Rust 2015\n\nRust 2015 has a theme of “stability”. It commenced with the release of 1.0, and is the “default edition”. The edition system was conceived in late 2017, but Rust 1.0 was released in May of 2015. As such, 2015 is the edition that you get when you don’t specify any particular edition, for backwards compatibility reasons. [...] “Stability” is the theme of Rust 2015 because 1.0 marked a huge change in Rust development. Previous to Rust 1.0, Rust was changing on a daily basis. This made it very difficult to write large software in Rust, and made it difficult to learn. With the release of Rust 1.0 and Rust 2015, we committed to backwards compatibility, ensuring a solid foundation for people to build\n\n[truncated: 2,346 of 6,343 chars]",
+          "error": null,
+          "latency_ms": 2790.142124999875,
+          "raw_chars": 6343,
+          "truncated": true,
+          "source_ids": [
+            "S13",
+            "S14",
+            "S3",
+            "S4",
+            "S15"
+          ]
+        }
+      ],
+      "reflection": null,
+      "note": null
+    },
+    {
+      "i": 4,
+      "node": "reflect",
+      "plan_version": 1,
+      "ts_offset_ms": 5868.177624999589,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": "skipped on first step"
+    },
+    {
+      "i": 5,
+      "node": "act",
+      "plan_version": 1,
+      "ts_offset_ms": 7058.723250000185,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": "Rust reached its first stable release (Rust **1.0**) in **2015**.  \n\n- The Rust changelog for **1.0.0** states it was **“Released on: 15 May, 2015”** ([S4])."
+    },
+    {
+      "i": 6,
+      "node": "observe",
+      "plan_version": 1,
+      "ts_offset_ms": 7059.934375000012,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": "no tool calls"
+    },
+    {
+      "i": 7,
+      "node": "reflect",
+      "plan_version": 1,
+      "ts_offset_ms": 8498.57266700019,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": {
+        "decision": "finalize",
+        "reasoning": "The web search results explicitly state that Rust 1.0 (the first stable release) was published on May 15, 2015, which directly answers the sub-question about the release year. No further evidence is needed.",
+        "covered": {
+          "What year was Rust 1.0 (the first stable release) released?": true
+        },
+        "open_gaps": [],
+        "overruled_stop": false
+      },
+      "note": null
+    },
+    {
+      "i": 8,
+      "node": "finalize",
+      "plan_version": 1,
+      "ts_offset_ms": 9825.516041999435,
+      "tool_calls": [],
+      "observations": [],
+      "reflection": null,
+      "note": null
+    }
+  ],
+  "sources": [
+    {
+      "sid": "S1",
+      "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+      "title": "Rust (programming language) - Wikipedia",
+      "snippet": "On May 15, 2015, Rust 1.0 became the first stable release. One year later, the compiler had accumulated at least 1,400 contributors, and there were at least 5,000 third-party libraries published on the package management website Crates.io.: 43:15\n\n### 2015–2020: Servo and early adoption\n\n[edit&actio",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S2",
+      "url": "https://medium.com/@mattdark/rust-a-systems-programming-language-272ca761dfa0",
+      "title": "Rust: A systems programming language | by Mario García | Medium",
+      "snippet": "## About\n\nRust is a systems programming language developed by the engineers of Mozilla. Rust could be categorized as a new language, as Rust 1.0, the first stable version was released on May 15th, 2015. The latest version today is Rust 1.20, that was released on August 31st, this year.\n\nRust is a co",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S3",
+      "url": "https://doc.rust-lang.org/edition-guide/rust-2015/index.html",
+      "title": "Rust 2015 - The Rust Edition Guide",
+      "snippet": "# Rust 2015\n\nRust 2015 has a theme of “stability”. It commenced with the release of 1.0, and is the “default edition”. The edition system was conceived in late 2017, but Rust 1.0 was released in May of 2015. As such, 2015 is the edition that you get when you don’t specify any particular edition, for",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S4",
+      "url": "https://releases.rs/docs/1.0.0",
+      "title": "1.0.0 | Rust Changelogs",
+      "snippet": "### 1.0.0\n\n# 1.0.0 #\n\n>  Released on: 15 May, 2015\n>  Branched from master on: 4 December, 2015\n\n ~1500 changes, numerous bugfixes\n\n## Highlights #\n\n The vast majority of the standard library is now `#[stable]`. It is no longer possible to use unstable features with a stable build of the compiler.\n ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S5",
+      "url": "https://stackoverflow.com/questions/67062157/when-do-rust-editions-such-as-2015-reach-end-of-life",
+      "title": "When do Rust editions, such as 2015, reach end of life?",
+      "snippet": "The quotes you cite are good; but I think your interpretation of them is not quite correct. Rust, as a project, does not \"reserve the right to drop support\"; rather, the backwards compatibility promise is intended specifically to prohibit this. In other words, yes, Rust follows semver (\"ver\" as in \"",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S6",
+      "url": "https://www.adesso.de/en/news/blog/a-brief-introduction-to-the-rust-programming-language-2.jsp",
+      "title": "A brief introduction to the Rust programming language",
+      "snippet": "has been able to successfully compile itself since 2011. The first stable version of the compiler and standard library, Rust 1.0, was released on 15 May 2015. [...] Rust is a modern, system-level programming language designed to offer high levels of performance, reliability and productivity. It grew",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S7",
+      "url": "https://baike.baidu.com/en/item/Rust/1528099",
+      "title": "Rust",
+      "snippet": "Expand\n\nBackground\n\nThe Rust programming language emerged in 2006 as a personal project by Mozilla employee Graydon Hoare, with Mozilla beginning to sponsor the project in 2009. The first version-numbered Rust compiler was released in January 2012. Rust 1.0, the first stable version, was released on",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S8",
+      "url": "https://rustfoundation.org/media/10-years-of-stable-rust-an-infrastructure-story",
+      "title": "10 Years of Stable Rust: An Infrastructure Story - The Rust Foundation",
+      "snippet": "By the time 1.0 was released in 2015, Rust had been overhauled so thoroughly and by so many people it was hardly recognizable as the same language. It had an advanced polymorphic type system developed by world experts, it performed well enough to regularly beat C++, it ran on most major LLVM targets",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S9",
+      "url": "https://blog.rust-lang.org/releases",
+      "title": "The Rust Release Announcements",
+      "snippet": "| Aug. 6 | Announcing Rust 1.2 |\n| June 25 | Rust 1.1 stable, the Community Subteam, and RustCamp |\n| May 15 | Announcing Rust 1.0 | [...] | Releases in 2026 |\n| Oct. 15 | Announcing Rust 1.99.1 |\n| Oct. 1 | Announcing Rust 1.99.0 |\n| Sept. 3 | Announcing Rust 1.98.1 |\n| Aug. 20 | Announcing Rust 1.",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S10",
+      "url": "https://users.rust-lang.org/t/deciding-whether-to-go-to-version-1-0-0-for-a-crate/69005",
+      "title": "Deciding whether to go to version 1.0.0 for a crate - help - The Rust Programming Language Forum",
+      "snippet": "| PSA: Please specify precise dependency versions in Cargo.toml  announcements | 50 | 14158 | February 14, 2022 | [...] ### How do I know when to release 1.0.0?\n\nIf your software is being used in production, it should probably already be 1.0.0. If you have a stable API on which users have come to de",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S11",
+      "url": "https://users.rust-lang.org/t/celebrating-10-years-of-rust-1-0/129570",
+      "title": "Celebrating 10 years of Rust 1.0 🦀 - announcements - The Rust Programming Language Forum",
+      "snippet": "| Why some people like to write with Rust language?  community | 38 | 3162 | August 12, 2025 | [...] | Topic |  | Replies | Views | Activity |\n ---  --- \n| My journey from C/C++ to the beauty of Rust Ownership  community | 0 | 187 | May 1, 2026 |\n| Trivia: Roots of Rust  community | 13 | 2114 | Sept",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S12",
+      "url": "https://www.businessinsider.com/halyna-hutchins-family-speaks-out-rust-charges-announcement-2023-1",
+      "title": "Halyna Hutchins' Family Speaks Out After 'Rust' Charges Announcement - Business Insider",
+      "snippet": "Baldwin, who was producing and starring in \"Rust,\" fatally shot 42-year-old Hutchins during a rehearsal inside a church building on the Bonanza Creek Ranch movie set on October 21, 2021.\n\nThe actor's attorney Luke Nikas told Insider that prosecutors' decision to bring charges against the actor \"dist",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S13",
+      "url": "https://www.centerconsulting.com/code-library/milestones/2015-rust-released",
+      "title": "Rust 1.0 Released | CenterConsulting",
+      "snippet": "CCCenterConsulting\n\nBook an audit\n\nServicesWorkResourcesCC DirectorBook an audit\n\n# Rust 1.0 Released\n\nmilestone May 15, 2015\n\nOn May 15, 2015, the Rust team published “Announcing Rust 1.0” on the official Rust blog, marking the language’s first stable release. The post describes Rust as “a new prog",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S14",
+      "url": "https://lwn.net/Articles/644671",
+      "title": "Rust 1.0 released [LWN.net]",
+      "snippet": "LWN.net Logo LWN  \n.net News from the source  LWN\n\n Content\n  + Weekly Edition\n  + Archives\n  + Search\n  + Kernel\n  + Security\n  + Events calendar\n  + Unread comments\n  + LWN FAQ\n  + Write for us\n Edition\n  + Return to the Development page\n\n|\n|\n\nLog in / Subscribe / Register\n\n# Rust 1.0 released\n\n[P",
+      "tool": "web_search",
+      "first_seen_step": 1
+    },
+    {
+      "sid": "S15",
+      "url": "https://www.phoronix.com/news/Rust-1.0-Released",
+      "title": "Rust 1.0 Language Officially Released - Phoronix",
+      "snippet": "Phoronix\n\n# Rust 1.0 Language Officially Released\n\nPROGRAMMING [...] or contacted via MichaelLarabel.com. [...] Michael Larabel is the principal author of Phoronix.com and founded the site in 2004 with a focus on enriching the Linux hardware experience. Michael has written more than 20,000 articles ",
+      "tool": "web_search",
+      "first_seen_step": 1
+    }
+  ],
+  "answer": "Rust reached its first stable release (1.0) in **2015** [S1][S4].",
+  "citations": [
+    "S1",
+    "S4"
+  ],
+  "coverage": {
+    "What year was Rust 1.0 (the first stable release) released?": true
+  },
+  "outcome": {
+    "status": "completed",
+    "early_exit_reason": null,
+    "used_deterministic_finalize": false,
+    "reflect_overrules": 0,
+    "error": null
+  },
+  "usage": {
+    "llm_calls": [
+      {
+        "purpose": "plan",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 225,
+        "cached_tokens": 0,
+        "output_tokens": 77,
+        "reasoning_tokens": 19,
+        "cost_usd": 0.00014125,
+        "latency_ms": 1422.6714169999468,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 852,
+        "cached_tokens": 0,
+        "output_tokens": 121,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.00032165,
+        "latency_ms": 1635.9143330000734,
+        "replayed": false
+      },
+      {
+        "purpose": "act",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 5669,
+        "cached_tokens": 0,
+        "output_tokens": 58,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.0012063,
+        "latency_ms": 1186.8616249994375,
+        "replayed": false
+      },
+      {
+        "purpose": "reflect",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 793,
+        "cached_tokens": 0,
+        "output_tokens": 108,
+        "reasoning_tokens": 19,
+        "cost_usd": 0.00029360000000000003,
+        "latency_ms": 1435.2601669997966,
+        "replayed": false
+      },
+      {
+        "purpose": "finalize",
+        "model": "gpt-5.4-nano",
+        "input_tokens": 1043,
+        "cached_tokens": 0,
+        "output_tokens": 27,
+        "reasoning_tokens": 0,
+        "cost_usd": 0.00024235000000000004,
+        "latency_ms": 1324.0650420002567,
+        "replayed": false
+      }
+    ],
+    "totals": {
+      "input_tokens": 8582,
+      "cached_tokens": 0,
+      "output_tokens": 391,
+      "reasoning_tokens": 38,
+      "cost_usd": 0.00220515,
+      "cache_hit_rate": 0.0
+    },
+    "by_purpose": {
+      "plan": {
+        "calls": 1,
+        "cost_usd": 0.00014125,
+        "output_tokens": 77
+      },
+      "act": {
+        "calls": 2,
+        "cost_usd": 0.00152795,
+        "output_tokens": 179
+      },
+      "reflect": {
+        "calls": 1,
+        "cost_usd": 0.00029360000000000003,
+        "output_tokens": 108
+      },
+      "finalize": {
+        "calls": 1,
+        "cost_usd": 0.00024235000000000004,
+        "output_tokens": 27
+      }
+    },
+    "search_credits": 4,
+    "steps": 2
+  },
+  "timings_ms": {
+    "total": 9822.141083999668
+  },
+  "compaction": {
+    "count": 0,
+    "compacted_upto": 0
+  }
+}
